@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Typeface Samples into Supabase</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        .info-box {
+            background: #f0f0f0;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Insert Typeface Samples into Supabase</h1>
+    
+    <div class="warning-box">
+        <strong>⚠️ Database Setup Required:</strong>
+        <p>Before running this script, make sure you have created the <code>typeface_samples</code> table in Supabase with the following schema:</p>
+        <ul>
+            <li><code>id</code> - UUID (primary key, auto-generated)</li>
+            <li><code>family_name</code> - TEXT (unique)</li>
+            <li><code>sample_texts</code> - TEXT or JSONB (stores JSON array of sample objects)</li>
+            <li><code>created_at</code> - TIMESTAMP</li>
+            <li><code>updated_at</code> - TIMESTAMP</li>
+        </ul>
+        <p>See <code>TYPEFACE_SAMPLES_SCHEMA.sql</code> for the SQL to create this table.</p>
+    </div>
+
+    <div class="info-box">
+        <strong>ℹ️ Instructions:</strong>
+        <ol>
+            <li>Make sure you have the Supabase client configured in <code>supabase-config.js</code></li>
+            <li>Create the <code>typeface_samples</code> table in your Supabase database</li>
+            <li>Click the button below to insert/update all typeface sample texts</li>
+            <li>Check the output area for results</li>
+        </ol>
+    </div>
+
+    <button id="insertBtn" onclick="runInsert()">Insert/Update Typeface Samples</button>
+    <button onclick="viewSamples()">View Existing Samples</button>
+    
+    <div id="output"></div>
+
+    <!-- Load Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Load Supabase config -->
+    <script src="supabase-config.js"></script>
+    
+    <!-- Load the insert script -->
+    <script src="insert-typeface-samples.js"></script>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : '';
+            output.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        async function runInsert() {
+            const btn = document.getElementById('insertBtn');
+            btn.disabled = true;
+            output.innerHTML = '';
+            log('Starting insertion process...', 'info');
+            
+            try {
+                const results = await insertTypefaceSamples();
+                log('\n=== Insertion Complete ===', 'success');
+                
+                results.forEach(result => {
+                    if (result.status === 'error') {
+                        log(`${result.familyName}: ERROR - ${result.error}`, 'error');
+                    } else {
+                        log(`${result.familyName}: ${result.status.toUpperCase()}`, 'success');
+                    }
+                });
+            } catch (error) {
+                log(`Fatal error: ${error.message}`, 'error');
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function viewSamples() {
+            output.innerHTML = '';
+            log('Fetching existing samples...', 'info');
+            
+            try {
+                const samples = await getTypefaceSamples();
+                
+                if (samples.length === 0) {
+                    log('No samples found in database.', 'info');
+                    return;
+                }
+                
+                log(`Found ${samples.length} typeface family/families:\n`, 'success');
+                
+                samples.forEach(item => {
+                    log(`\n${item.family_name}:`, 'success');
+                    log(`  Created: ${item.created_at}`);
+                    log(`  Updated: ${item.updated_at}`);
+                    log(`  Samples: ${item.sample_texts.length} text(s)`);
+                    item.sample_texts.forEach((sample, idx) => {
+                        log(`    ${idx + 1}. Type: ${sample.sampleType}, Size: ${sample.fontSize}px, Tracking: ${sample.letterSpacing}px`);
+                        log(`       Text: ${sample.text.substring(0, 60)}${sample.text.length > 60 ? '...' : ''}`);
+                    });
+                });
+            } catch (error) {
+                log(`Error: ${error.message}`, 'error');
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
+
