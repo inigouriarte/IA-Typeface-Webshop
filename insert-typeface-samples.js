@@ -158,7 +158,8 @@ async function insertTypefaceSamples() {
  */
 async function getTypefaceSamples(familyName = null) {
     try {
-        const res = await fetch('data/typeface-samples.json');
+        let res = await fetch('/api/data/typeface-samples');
+        if (!res.ok) res = await fetch('data/typeface-samples.json');
         if (!res.ok) throw new Error(res.statusText);
         let data = await res.json();
         if (!Array.isArray(data)) data = [];

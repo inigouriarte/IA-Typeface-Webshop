@@ -454,7 +454,8 @@ let productsCache = null;
 async function loadProducts() {
     if (productsCache !== null) return productsCache;
     try {
-        const res = await fetch('data/products.json');
+        let res = await fetch('/api/data/products');
+        if (!res.ok) res = await fetch('data/products.json');
         if (!res.ok) throw new Error(res.statusText);
         const data = await res.json();
         productsCache = Array.isArray(data) ? data : [];
