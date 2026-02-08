@@ -20,7 +20,7 @@ Then in Vercel: **Deployments** → … → **Redeploy** (or push to main).
 - `SESSION_SECRET` — copy the value from your local `.env`
 - `ADMIN_PASSWORD_HASH` — copy from your local `.env`
 
-Save, then **Redeploy** the latest deployment. After env vars are in the project, a new deployment (push or redeploy) is required for them to take effect.
+Save, then **Redeploy** the latest deployment. After env vars are in the project, a new deployment (push or redeploy) is required for them to take effect. If the site uses a Git-connected production branch, push to that branch to trigger a fresh build with env vars.
 
 ---
 
