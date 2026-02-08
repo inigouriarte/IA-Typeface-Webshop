@@ -54,24 +54,7 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'DM Mono';
-    src: url('fonts/DMMono-Regular.woff2') format('woff2'),
-         url('fonts/DMMono-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'DM Mono';
-    src: url('fonts/DMMono-Medium.woff2') format('woff2'),
-         url('fonts/DMMono-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
+/* Monospace UI font: system stack (no DMMono files in repo to avoid 404/font decode errors) */
 /* INDG Actio Font Faces */
 @font-face {
     font-family: 'INDG Actio';
@@ -332,7 +315,7 @@
     --font-logo-weight: 600;
     --font-logo-tracking: -0.5px;
     
-    --font-button-family: 'DM Mono', monospace;
+    --font-button-family: ui-monospace, "Cascadia Mono", "SF Mono", Monaco, Consolas, monospace;
     --font-button-size: 16px;
     --font-button-weight: 400;
     
