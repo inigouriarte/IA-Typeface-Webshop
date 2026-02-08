@@ -31,6 +31,22 @@ git pull origin main   # get latest from GitHub
 git push origin main   # send your commits to GitHub
 ```
 
+## Test the admin panel online (Railway)
+
+The admin panel needs a **Node server** (login, API, saving data). Vercel only serves the static site, so to test admin in the browser:
+
+1. Go to [Railway](https://railway.app) and sign in (e.g. with GitHub).
+2. **New Project** → **Deploy from GitHub repo** → select **inigouriarte/IA-Typeface-Webshop**.
+3. Railway will build and run `npm start`. Add **Environment Variables** in the project:
+   - `SESSION_SECRET` – random string (e.g. from `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`).
+   - `ADMIN_PASSWORD_HASH` – from `node scripts/hash-password.js "YourPassword"`,  
+     **or** set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` for Google login.
+   - Optional: `BASE_URL` = your Railway app URL (e.g. `https://your-app.railway.app`) if you use Google login.
+4. In the project, open **Settings** → **Networking** → **Generate Domain** to get a public URL.
+5. Open **https://your-app.railway.app/admin.html** and log in.
+
+Edits to products/samples are stored on Railway’s disk; they can be reset on redeploy unless you add a persistent volume.
+
 ## Not in Git (on purpose)
 
 - `.env` – secrets (password hash, Google credentials). Use `.env.example` as a template.
