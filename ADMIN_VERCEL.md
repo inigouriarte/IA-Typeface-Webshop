@@ -64,6 +64,38 @@ In the project: **Settings** → **Environment Variables**. Add:
 
 Use either password login or Google login (or both). For Google, set `ALLOWED_ADMIN_EMAILS` so only you can access.
 
+### Enable Google (Gmail) login – step by step
+
+1. **Create OAuth credentials**
+   - Go to [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials).
+   - Create or select a project.
+   - Click **Create credentials** → **OAuth client ID**.
+   - If asked, set **Application type** to **Web application** and add a **Consent screen** (e.g. internal or external, add your email as test user if external).
+
+2. **Configure the OAuth client**
+   - Application type: **Web application**.
+   - **Authorized redirect URIs** → **Add URI**:
+     - Production: `https://alphabets.indigoindigo.org/api/auth/google/callback`
+     - Local (optional): `http://localhost:3000/api/auth/google/callback`
+   - Create. Copy the **Client ID** and **Client secret**.
+
+3. **Add to your `.env`**
+   ```env
+   GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=your-client-secret
+   ALLOWED_ADMIN_EMAILS=your@gmail.com
+   BASE_URL=https://alphabets.indigoindigo.org
+   ```
+   `ALLOWED_ADMIN_EMAILS` is required for Google login; only these addresses can access admin.
+
+4. **Push to Vercel and redeploy**
+   - Run `npm run setup:vercel` (pushes all vars from `.env`, including `GOOGLE_*` and `BASE_URL`).
+   - Or in Vercel Dashboard → **Settings** → **Environment Variables**, add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `BASE_URL` for **Production** (and Preview if needed).
+   - Redeploy (push to main or **Deployments** → … → **Redeploy**).
+
+5. **Use it**
+   - Open **https://alphabets.indigoindigo.org/admin.html** and click **Sign in with Google**.
+
 ## 3. Redeploy
 
 After adding env vars and the Blob store, **redeploy** (e.g. push to main or **Deployments** → … → **Redeploy**).

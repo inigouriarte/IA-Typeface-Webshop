@@ -57,13 +57,13 @@
         <h2>Admin login</h2>
         <div id="login-msg" class="admin-msg" style="display: none;"></div>
         <div id="login-methods">
-          <form id="login-form" style="display: none;">
+          <div id="google-login-wrap" style="display: none;">
+            <a href="/api/auth/google" id="google-login-btn" class="btn btn-google">Sign in with Google</a>
+          </div>
+          <form id="login-form" style="display: none; margin-top: 1rem;">
             <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
             <button type="submit" class="btn">Log in with password</button>
           </form>
-          <div id="google-login-wrap" style="display: none; margin-top: 1rem;">
-            <a href="/api/auth/google" id="google-login-btn" class="btn btn-google">Sign in with Google</a>
-          </div>
           <p id="login-loading" style="margin: 0.5rem 0 0; color: #666;">Loading…</p>
         </div>
       </div>
@@ -213,6 +213,7 @@
     }
 
     // --- Auth flow ---
+    // 401 on /api/auth/me is expected when not logged in; browser will log it.
     async function checkAuth() {
       let ok = false;
       try {
