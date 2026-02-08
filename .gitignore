@@ -13,3 +13,4 @@ Thumbs.db
 # Editor
 *.swp
 *.swo
+.vercel
