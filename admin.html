@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Indigo Alphabets</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem; font-family: 'DM Mono', monospace; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .admin-header h1 { margin: 0; font-size: 1.25rem; font-weight: 500; }
+    .admin-nav { display: flex; gap: 1rem; }
+    .admin-nav a { color: inherit; text-decoration: none; opacity: 0.8; }
+    .admin-nav a:hover, .admin-nav a.active { opacity: 1; text-decoration: underline; }
+    .login-box { max-width: 320px; margin: 4rem auto; padding: 2rem; border: 1px solid rgba(0,0,0,0.15); }
+    .login-box h2 { margin: 0 0 1rem; font-size: 1rem; font-weight: 500; }
+    .login-box input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-family: inherit; box-sizing: border-box; }
+    .login-box button { width: 100%; padding: 0.6rem; font-family: inherit; cursor: pointer; }
+    .admin-msg { padding: 0.5rem; margin-bottom: 1rem; border-radius: 2px; }
+    .admin-msg.error { background: #fdd; color: #800; }
+    .admin-msg.success { background: #dfd; color: #080; }
+    .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .admin-tabs button { padding: 0.5rem 1rem; font-family: inherit; cursor: pointer; background: transparent; border: 1px solid rgba(0,0,0,0.2); }
+    .admin-tabs button.active { background: #000; color: #fff; border-color: #000; }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+    .products-toolbar { margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .products-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .products-table th, .products-table td { border: 1px solid rgba(0,0,0,0.15); padding: 0.35rem 0.5rem; text-align: left; }
+    .products-table th { background: rgba(0,0,0,0.06); }
+    .products-table input, .products-table select { width: 100%; font-family: inherit; font-size: inherit; box-sizing: border-box; }
+    .products-table .col-id { max-width: 140px; }
+    .products-table .col-num { max-width: 70px; }
+    .products-table .col-bool { max-width: 60px; }
+    .products-table .col-arr { max-width: 160px; }
+    .btn-small { padding: 0.2rem 0.5rem; font-family: inherit; cursor: pointer; font-size: 0.8rem; }
+    .samples-list { list-style: none; padding: 0; margin: 0; }
+    .samples-list li { border: 1px solid rgba(0,0,0,0.15); margin-bottom: 0.5rem; }
+    .samples-list summary { padding: 0.5rem 0.75rem; cursor: pointer; background: rgba(0,0,0,0.04); }
+    .samples-list pre { margin: 0; padding: 0.75rem; overflow-x: auto; font-size: 0.8rem; white-space: pre-wrap; }
+    .samples-actions { margin-bottom: 1rem; }
+    .samples-json-editor { width: 100%; min-height: 320px; font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.75rem; box-sizing: border-box; }
+    .btn { padding: 0.5rem 1rem; font-family: inherit; cursor: pointer; }
+    .btn-google { display: inline-block; text-align: center; text-decoration: none; background: #fff; border: 1px solid #dadce0; color: #3c4043; }
+    .btn-google:hover { background: #f8f9fa; }
+    #login-form input { margin-bottom: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <div id="login-view">
+      <div class="login-box">
+        <h2>Admin login</h2>
+        <div id="login-msg" class="admin-msg" style="display: none;"></div>
+        <div id="login-methods">
+          <form id="login-form" style="display: none;">
+            <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+            <button type="submit" class="btn">Log in with password</button>
+          </form>
+          <div id="google-login-wrap" style="display: none; margin-top: 1rem;">
+            <a href="/api/auth/google" id="google-login-btn" class="btn btn-google">Sign in with Google</a>
+          </div>
+          <p id="login-loading" style="margin: 0.5rem 0 0; color: #666;">Loading…</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="dashboard-view" style="display: none;">
+      <div class="admin-header">
+        <h1>Admin – Products &amp; content</h1>
+        <div class="admin-nav">
+          <a href="index.html">← Site</a>
+          <button type="button" class="btn-small" id="logout-btn">Log out</button>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab active" data-tab="products">Products</button>
+        <button type="button" class="admin-tab" data-tab="samples">Typeface samples</button>
+      </div>
+
+      <div id="products-panel" class="admin-panel active">
+        <div id="products-msg" class="admin-msg" style="display: none;"></div>
+        <div class="products-toolbar">
+          <button type="button" class="btn" id="products-add">Add product</button>
+          <button type="button" class="btn" id="products-save">Save products</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="products-table" id="products-table">
+            <thead>
+              <tr>
+                <th class="col-id">id</th>
+                <th>family_name</th>
+                <th>style_name</th>
+                <th>display_name</th>
+                <th class="col-num">font_weight</th>
+                <th>font_style</th>
+                <th>font_stretch</th>
+                <th class="col-num">price</th>
+                <th>currency</th>
+                <th class="col-num">glyph_count</th>
+                <th class="col-arr">unicode_ranges</th>
+                <th class="col-arr">language_support</th>
+                <th>file_path_woff2</th>
+                <th>file_path_woff</th>
+                <th class="col-bool">is_active</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="samples-panel" class="admin-panel">
+        <div id="samples-msg" class="admin-msg" style="display: none;"></div>
+        <div class="samples-actions">
+          <button type="button" class="btn" id="samples-save">Save typeface samples</button>
+        </div>
+        <textarea id="samples-json-editor" class="samples-json-editor" spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = {
+      async me() {
+        const r = await fetch('/api/auth/me', { credentials: 'include' });
+        return r.ok;
+      },
+      async login(password) {
+        const r = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ password }),
+        });
+        if (!r.ok) {
+          const d = await r.json().catch(() => ({}));
+          throw new Error(d.error || 'Login failed');
+        }
+      },
+      async logout() {
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      },
+      async getProducts() {
+        const r = await fetch('/api/admin/products', { credentials: 'include' });
+        if (!r.ok) throw new Error('Failed to load products');
+        return r.json();
+      },
+      async saveProducts(products) {
+        const r = await fetch('/api/admin/products', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(products),
+        });
+        if (!r.ok) {
+          const d = await r.json().catch(() => ({}));
+          throw new Error(d.error || 'Save failed');
+        }
+      },
+      async getSamples() {
+        const r = await fetch('/api/admin/typeface-samples', { credentials: 'include' });
+        if (!r.ok) throw new Error('Failed to load samples');
+        return r.json();
+      },
+      async saveSamples(samples) {
+        const r = await fetch('/api/admin/typeface-samples', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(samples),
+        });
+        if (!r.ok) {
+          const d = await r.json().catch(() => ({}));
+          throw new Error(d.error || 'Save failed');
+        }
+      },
+    };
+
+    function showMsg(el, text, type) {
+      el.textContent = text;
+      el.className = 'admin-msg ' + (type === 'error' ? 'error' : 'success');
+      el.style.display = 'block';
+      if (type === 'success') setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
+
+    function arrToStr(arr) {
+      if (Array.isArray(arr)) return arr.join(', ');
+      if (typeof arr === 'string') return arr;
+      return '';
+    }
+    function strToArr(s) {
+      if (Array.isArray(s)) return s;
+      if (typeof s !== 'string') return [];
+      return s.split(',').map(x => x.trim()).filter(Boolean);
+    }
+
+    // --- Auth flow ---
+    async function checkAuth() {
+      let ok = false;
+      try {
+        ok = await API.me();
+      } catch (_) {}
+      document.getElementById('login-view').style.display = ok ? 'none' : 'block';
+      document.getElementById('dashboard-view').style.display = ok ? 'block' : 'none';
+      if (ok) {
+        loadProducts();
+        loadSamples();
+      } else {
+        loadLoginMethods();
+        showLoginErrorFromUrl();
+      }
+      return ok;
+    }
+
+    async function loadLoginMethods() {
+      const loading = document.getElementById('login-loading');
+      const form = document.getElementById('login-form');
+      const googleWrap = document.getElementById('google-login-wrap');
+      try {
+        const r = await fetch('/api/auth/methods', { credentials: 'include' });
+        const m = await r.json();
+        loading.style.display = 'none';
+        if (m.password) {
+          form.style.display = 'block';
+          form.querySelector('input').required = true;
+        }
+        if (m.google) {
+          googleWrap.style.display = 'block';
+        }
+        if (!m.password && !m.google) {
+          document.getElementById('login-msg').textContent = 'No login method configured.';
+          document.getElementById('login-msg').className = 'admin-msg error';
+          document.getElementById('login-msg').style.display = 'block';
+        }
+      } catch (_) {
+        loading.textContent = 'Cannot reach server. Open admin from the same origin (e.g. http://localhost:3000/admin.html).';
+        loading.style.color = '#800';
+      }
+    }
+
+    function showLoginErrorFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const error = params.get('error');
+      if (!error) return;
+      const msgEl = document.getElementById('login-msg');
+      const messages = {
+        invalid_callback: 'Invalid login callback. Try again.',
+        token: 'Google sign-in failed (token). Try again.',
+        userinfo: 'Google sign-in failed (profile). Try again.',
+        session: 'Session error. Try again.',
+        not_allowed: 'Your Google account is not allowed to access admin.',
+        config: 'Google login is not configured.',
+      };
+      showMsg(msgEl, messages[error] || error, 'error');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgEl = document.getElementById('login-msg');
+      const password = document.getElementById('login-password').value;
+      if (!password) {
+        showMsg(msgEl, 'Enter your password', 'error');
+        return;
+      }
+      try {
+        await API.login(password);
+        await checkAuth();
+        document.getElementById('login-password').value = '';
+      } catch (err) {
+        showMsg(msgEl, err.message || 'Invalid password', 'error');
+      }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await API.logout();
+      await checkAuth();
+    });
+
+    // --- Tabs ---
+    document.querySelectorAll('.admin-tab').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('.admin-panel').forEach((p) => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
+      });
+    });
+
+    // --- Products ---
+    let productsData = [];
+
+    function productRow(p, index) {
+      const tr = document.createElement('tr');
+      tr.dataset.index = index;
+      const fields = [
+        'id', 'family_name', 'style_name', 'display_name', 'font_weight', 'font_style', 'font_stretch',
+        'price', 'currency', 'glyph_count', 'unicode_ranges', 'language_support',
+        'file_path_woff2', 'file_path_woff', 'is_active',
+      ];
+      fields.forEach((key) => {
+        const td = document.createElement('td');
+        const val = p[key];
+        if (key === 'unicode_ranges' || key === 'language_support') {
+          const input = document.createElement('input');
+          input.value = arrToStr(val);
+          input.placeholder = 'comma-separated';
+          input.addEventListener('change', () => {
+            productsData[index] = productsData[index] || {};
+            productsData[index][key] = strToArr(input.value);
+          });
+          td.appendChild(input);
+        } else if (key === 'is_active') {
+          const sel = document.createElement('select');
+          sel.innerHTML = '<option value="true">true</option><option value="false">false</option>';
+          sel.value = val === false ? 'false' : 'true';
+          sel.addEventListener('change', () => {
+            productsData[index] = productsData[index] || {};
+            productsData[index][key] = sel.value === 'true';
+          });
+          td.appendChild(sel);
+        } else {
+          const input = document.createElement('input');
+          input.value = val === undefined || val === null ? '' : String(val);
+          input.addEventListener('change', () => {
+            productsData[index] = productsData[index] || {};
+            let v = input.value;
+            if (key === 'font_weight' || key === 'glyph_count') v = parseInt(v, 10) || 0;
+            if (key === 'price') v = parseFloat(v) || 0;
+            productsData[index][key] = v;
+          });
+          td.appendChild(input);
+        }
+        tr.appendChild(td);
+      });
+      const delTd = document.createElement('td');
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'btn-small';
+      delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', () => {
+        productsData.splice(index, 1);
+        renderProducts();
+      });
+      delTd.appendChild(delBtn);
+      tr.appendChild(delTd);
+      return tr;
+    }
+
+    function renderProducts() {
+      const tbody = document.getElementById('products-tbody');
+      tbody.innerHTML = '';
+      productsData.forEach((p, i) => tbody.appendChild(productRow(p, i)));
+    }
+
+    async function loadProducts() {
+      const msgEl = document.getElementById('products-msg');
+      try {
+        productsData = await API.getProducts();
+        renderProducts();
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    }
+
+    document.getElementById('products-add').addEventListener('click', () => {
+      productsData.push({
+        id: '',
+        family_name: '',
+        style_name: 'Regular',
+        display_name: '',
+        font_weight: 400,
+        font_style: 'normal',
+        font_stretch: 'normal',
+        price: 0,
+        currency: 'EUR',
+        glyph_count: 0,
+        unicode_ranges: [],
+        language_support: [],
+        file_path_woff2: '',
+        file_path_woff: '',
+        is_active: true,
+      });
+      renderProducts();
+    });
+
+    document.getElementById('products-save').addEventListener('click', async () => {
+      const msgEl = document.getElementById('products-msg');
+      try {
+        const toSave = productsData.map((p) => ({
+          ...p,
+          unicode_ranges: Array.isArray(p.unicode_ranges) ? p.unicode_ranges : strToArr(p.unicode_ranges),
+          language_support: Array.isArray(p.language_support) ? p.language_support : strToArr(p.language_support),
+        }));
+        await API.saveProducts(toSave);
+        productsData = toSave;
+        renderProducts();
+        showMsg(msgEl, 'Products saved.', 'success');
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    });
+
+    // --- Typeface samples ---
+    async function loadSamples() {
+      const msgEl = document.getElementById('samples-msg');
+      try {
+        const samples = await API.getSamples();
+        document.getElementById('samples-json-editor').value = JSON.stringify(samples, null, 2);
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    }
+
+    document.getElementById('samples-save').addEventListener('click', async () => {
+      const msgEl = document.getElementById('samples-msg');
+      const raw = document.getElementById('samples-json-editor').value;
+      try {
+        const samples = JSON.parse(raw);
+        if (!Array.isArray(samples)) throw new Error('JSON must be an array');
+        await API.saveSamples(samples);
+        showMsg(msgEl, 'Typeface samples saved.', 'success');
+      } catch (err) {
+        showMsg(msgEl, err.message || 'Invalid JSON', 'error');
+      }
+    });
+
+    // Init
+    checkAuth();
+  </script>
+</body>
+</html>

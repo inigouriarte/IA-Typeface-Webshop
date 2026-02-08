@@ -13,6 +13,23 @@ Product and typeface sample data live here as JSON. No Supabase or other backend
   Used by `getTypefaceSamples()` (e.g. on `insert-samples.html`).  
   To refresh from the in-app data: open `insert-samples.html` → “Export typeface-samples.json” → save the download as `data/typeface-samples.json`.
 
+## Admin panel (edit content in the browser)
+
+To edit products and typeface samples from a simple admin UI with password protection:
+
+1. **One-time setup**
+   - Copy `.env.example` to `.env`.
+   - Generate a password hash: `npm run hash-password -- "YourSecurePassword"` and set `ADMIN_PASSWORD_HASH` in `.env`.
+   - Generate a random session secret, e.g. `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` and set `SESSION_SECRET` in `.env`.
+
+2. **Run the admin server**
+   - `npm install` then `npm run dev` (or `npm start`).
+   - Open **http://localhost:3000/admin.html** (use this URL so cookies work). Log in, then edit **Products** and **Typeface samples** and save. Changes are written to `data/products.json` and `data/typeface-samples.json`.
+
+**Google login (optional):** In [Google Cloud Console](https://console.cloud.google.com/apis/credentials) create an OAuth 2.0 Client ID (Web application). Add redirect URI `http://localhost:3000/api/auth/google/callback` (and your production URL if you deploy the admin). Put the Client ID and Client secret in `.env` as `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. You can remove `ADMIN_PASSWORD_HASH` to use only Google, or keep both. To restrict who can log in, set `ALLOWED_ADMIN_EMAILS=your@gmail.com` in `.env`.
+
+The public site (Vercel) still uses the static files; run the admin server locally (or on a host with a writable filesystem) when you want to edit content.
+
 ## Workflow with a spreadsheet
 
 1. **Edit in Excel/Google Sheets**  
