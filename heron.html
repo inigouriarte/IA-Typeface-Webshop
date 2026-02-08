@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>INDG Heron - Indigo Alphabets®</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="fonts/Heron/INDGHeron-ST.woff2" as="font" type="font/woff2" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="typeface-heron">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Indigo Alphabets®</div>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Typeface Hero Section -->
+    <section class="typeface-hero">
+        <div class="typeface-hero-content">
+            <h1 class="typeface-title" contenteditable="true" spellcheck="false">INDG Heron</h1>
+            <div class="typeface-description">
+                <p>A single-weight display typeface with strong character, ideal for headlines and branding.</p>
+            </div>
+            <div class="typeface-hero-buttons">
+                <button class="test-btn">TEST IT</button>
+                <button class="buy-btn">BUY IT</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Typeface Sections -->
+    <main class="typeface-detail-container">
+        <!-- Regular Section -->
+        <section class="typeface-section" data-font="heron2">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="heron2-regular">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="heron2-regular">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="heron2" data-sample="regular" data-target-match="heron2-regular" style="font-size: 120px; font-weight: 700; letter-spacing: 0px;">Heron</div>
+        </section>
+
+        <!-- Typeface Details Section -->
+        <section class="typeface-details">
+            <div class="typeface-details-content">
+                <!-- Column 1: Data category (labels) -->
+                <div class="details-column">
+                    <div class="detail-item">
+                        <div class="detail-label">Designer</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Version</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Formats</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Styles</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Glyphs</div>
+                    </div>
+                </div>
+                <!-- Column 2: Data input (values) -->
+                <div class="details-column">
+                    <div class="detail-item">
+                        <div class="detail-value">Iñigo Uriarte</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">1.0</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">OTF, TTF, WOFF, WOFF2</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">1</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">320</div>
+                    </div>
+                </div>
+                <!-- Column 3: "Unicode Ranges" title -->
+                <div class="details-column">
+                    <div class="detail-item">
+                        <div class="detail-label">Unicode Ranges</div>
+                    </div>
+                </div>
+                <!-- Column 4: Unicode ranges content -->
+                <div class="details-column">
+                    <div class="detail-item">
+                        <div class="detail-value unicode-ranges">
+                            Basic Latin<br>
+                            Latin 1-Supplement
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Available Styles and Pricing -->
+        <section class="typeface-pricing">
+            <div class="pricing-content">
+                <div class="typeface-controls-row">
+                    <div class="control-box">
+                        <div class="pricing-name">INDG Heron</div>
+                    </div>
+                    <div class="control-box">
+                        <div class="price">25€</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Test and Buy Buttons -->
+    <div class="typeface-hero-buttons">
+        <button class="test-btn">TEST IT</button>
+        <button class="buy-btn">BUY IT</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <a href="#top" class="back-to-top">▲ Back to top</a>
+            <a href="#licensing" class="footer-link">Licensing</a>
+            <h3 class="typeface-list-heading">Typefaces</h3>
+        </div>
+        <div class="footer-content">
+            <div class="typeface-columns">
+                <div class="typeface-column">
+                    <div><a href="alvica.html" style="text-decoration: none; color: var(--color-text-light);">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none; color: var(--color-text-light);">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none; color: var(--color-text-light);">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none; color: var(--color-text-light);">Luara</a></div>
+                </div>
+                <div class="typeface-column">
+                    <div><a href="zigrid.html" style="text-decoration: none; color: var(--color-text-light);">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none; color: var(--color-text-light);">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none; color: var(--color-text-light);">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none; color: var(--color-text-light);">Heron</a></div>
+                </div>
+                <div class="typeface-column">
+                    <div><a href="naora.html" style="text-decoration: none; color: var(--color-text-light);">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none; color: var(--color-text-light);">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none; color: var(--color-text-light);">OE Quadrat</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>©2026 Indigo Alphabets</p>
+            </div>
+            <div class="footer-email">
+                <p>hi@indigoindigo.org</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://instagram.com/indigo______indigo" class="footer-link" target="_blank">Follow me on IG</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="bottom-bar-content">
+            <span class="bottom-bar-item" id="cursor-coords">X 0000 px Y 0000 px</span>
+            <span class="bottom-bar-item" id="current-date">01.01.2026</span>
+            <span class="bottom-bar-item" id="current-time">00.00.00</span>
+            <span class="bottom-bar-item">52.5034°N 13.4698°E</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

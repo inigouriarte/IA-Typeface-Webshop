@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>Indigo Alphabets®</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="fonts/Alvica/INDGAlvica-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Indigo Alphabets®</div>
+            <nav class="nav">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Intro Section -->
+    <section class="intro">
+        <p>Hey, good to have you here.</p>
+        <p>Take your time and explore a selection of typefaces designed with care by Iñigo Uriarte.</p>
+    </section>
+
+    <!-- Typefaces Section -->
+    <main class="typefaces-container" id="typefaces">
+        <!-- INDG Alvica -->
+        <section class="typeface-section" data-font="alvica" id="alvica">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name"><a href="alvica.html" style="text-decoration: none; color: inherit;">INDG Alvica</a></h2>
+                </div>
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Regular</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option" data-value="100">Thin</div>
+                            <div class="dropdown-option" data-value="300">Light</div>
+                            <div class="dropdown-option selected" data-value="400">Regular</div>
+                            <div class="dropdown-option" data-value="600">Semibold</div>
+                            <div class="dropdown-option" data-value="700">Bold</div>
+                            <div class="dropdown-option" data-value="900">Black</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="alvica">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="alvica">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="alvica.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="alvica" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">Alvica</div>
+        </section>
+
+        <!-- INDG Actio -->
+        <section class="typeface-section" data-font="actio">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Actio</h2>
+                </div>
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Regular</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option" data-weight="100" data-stretch="normal">Thin</div>
+                            <div class="dropdown-option" data-weight="100" data-stretch="expanded">Thin Expanded</div>
+                            <div class="dropdown-option" data-weight="300" data-stretch="normal">Light</div>
+                            <div class="dropdown-option" data-weight="300" data-stretch="expanded">Light Expanded</div>
+                            <div class="dropdown-option selected" data-weight="400" data-stretch="normal">Regular</div>
+                            <div class="dropdown-option" data-weight="400" data-stretch="expanded">Regular Expanded</div>
+                            <div class="dropdown-option" data-weight="700" data-stretch="normal">Bold</div>
+                            <div class="dropdown-option" data-weight="700" data-stretch="expanded">Bold Expanded</div>
+                            <div class="dropdown-option" data-weight="900" data-stretch="normal">Black</div>
+                            <div class="dropdown-option" data-weight="900" data-stretch="expanded">Black Expanded</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="actio">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="actio">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="actio.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="actio" style="font-size: 120px; font-weight: 400; font-stretch: normal; letter-spacing: 0px;">Actio</div>
+        </section>
+
+        <!-- INDG Modus -->
+        <section class="typeface-section" data-font="modus" id="modus">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Modus</h2>
+                </div>
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Grey</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-value="400">Grey</div>
+                            <div class="dropdown-option" data-value="900">Black</div>
+                            <div class="dropdown-option" data-value="100">White</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="modus">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="modus">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="modus.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">MODUS</div>
+        </section>
+
+        <!-- INDG Luara -->
+        <section class="typeface-section" data-font="luara" id="luara">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Luara</h2>
+                </div>
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="luara">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="luara">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="luara.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="luara" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">Luara</div>
+        </section>
+
+        <!-- INDG Zigrid -->
+        <section class="typeface-section" data-font="zigrid" id="zigrid">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Zigrid</h2>
+                </div>
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="zigrid">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="zigrid">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="zigrid.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="zigrid" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">Zigrid</div>
+        </section>
+
+        <!-- INDG Dale -->
+        <section class="typeface-section" data-font="dale" id="dale">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Dale</h2>
+                </div>
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Regular</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="140" data-target="dale">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="dale">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="dale.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" style="font-size: 140px; font-weight: 500; font-style: normal; letter-spacing: 0px;">DALE</div>
+        </section>
+
+        <!-- INDG Peqat -->
+        <section class="typeface-section" data-font="peqat" id="peqat">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Peqat</h2>
+                </div>
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Norma</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-weight="400">Norma</div>
+                            <div class="dropdown-option" data-weight="700">Capitalis</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="peqat">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="peqat">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="peqat.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="peqat" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">Peqat</div>
+        </section>
+
+        <!-- INDG Heron (second instance) -->
+        <section class="typeface-section" data-font="heron2" id="heron">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Heron</h2>
+                </div>
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="heron2">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="heron2">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="heron.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="heron2" style="font-size: 120px; font-weight: 700; letter-spacing: 0px;">Heron</div>
+        </section>
+
+        <!-- INDG Naora -->
+        <section class="typeface-section" data-font="naora" id="naora">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Naora</h2>
+                </div>
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="100" data-target="naora">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="naora">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="naora.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="naora" style="font-size: 100px; font-weight: 400; letter-spacing: 0px;">Naora</div>
+        </section>
+
+        <!-- INDG Sifora -->
+        <section class="typeface-section" data-font="sifora" id="sifora">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">INDG Sifora</h2>
+                </div>
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="sifora">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="sifora">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="sifora.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="sifora" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">Sifora</div>
+        </section>
+
+        <!-- Old English Quadrat -->
+        <section class="typeface-section" data-font="oequadrat" id="oequadrat">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <h2 class="typeface-name">Old English Quadrat</h2>
+                </div>
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">10</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="oequadrat">
+                        <span class="control-label">400</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label">-10</span>
+                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="oequadrat">
+                        <span class="control-label">+10</span>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <a href="oequadrat.html" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        <span class="play-icon">▶</span>
+                        <span>Much more</span>
+                    </a>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="oequadrat" style="font-size: 120px; font-weight: 700; letter-spacing: 0px;">Old English</div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <a href="#top" class="back-to-top">▲ Back to top</a>
+            <a href="#licensing" class="footer-link">Licensing</a>
+            <h3 class="typeface-list-heading">Typefaces</h3>
+        </div>
+        <div class="footer-content">
+            <div class="typeface-columns">
+                <div class="typeface-column">
+                    <div><a href="alvica.html" style="text-decoration: none; color: inherit;">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none; color: inherit;">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none; color: inherit;">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none; color: inherit;">Luara</a></div>
+                </div>
+                <div class="typeface-column">
+                    <div><a href="zigrid.html" style="text-decoration: none; color: inherit;">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none; color: inherit;">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none; color: inherit;">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none; color: inherit;">Heron</a></div>
+                </div>
+                <div class="typeface-column">
+                    <div><a href="naora.html" style="text-decoration: none; color: inherit;">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none; color: inherit;">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none; color: inherit;">OE Quadrat</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>©2026 Indigo Alphabets</p>
+            </div>
+            <div class="footer-email">
+                <p>hi@indigoindigo.org</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://instagram.com/indigo______indigo" class="footer-link" target="_blank">Follow me on IG</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="bottom-bar-content">
+            <span class="bottom-bar-item" id="cursor-coords">X 0000 px Y 0000 px</span>
+            <span class="bottom-bar-item" id="current-date">01.01.2026</span>
+            <span class="bottom-bar-item" id="current-time">00.00.00</span>
+            <span class="bottom-bar-item">52.5034°N 13.4698°E</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

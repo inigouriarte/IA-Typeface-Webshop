@@ -1,0 +1,36 @@
+[
+  {
+    "id": "alvica-regular-001",
+    "family_name": "INDG Alvica",
+    "style_name": "Regular",
+    "display_name": "INDG Alvica Regular",
+    "font_weight": 400,
+    "font_style": "normal",
+    "font_stretch": "normal",
+    "price": 17,
+    "currency": "EUR",
+    "glyph_count": 794,
+    "unicode_ranges": ["Basic Latin", "Latin 1-Supplement", "Latin Extended-A", "Greek and Coptic", "Cyrillic"],
+    "language_support": ["Latin", "Greek", "Cyrillic"],
+    "file_path_woff2": "fonts/Alvica/INDGAlvica-Regular.woff2",
+    "file_path_woff": "fonts/Alvica/INDGAlvica-Regular.woff",
+    "is_active": true
+  },
+  {
+    "id": "alvica-bold-002",
+    "family_name": "INDG Alvica",
+    "style_name": "Bold",
+    "display_name": "INDG Alvica Bold",
+    "font_weight": 700,
+    "font_style": "normal",
+    "font_stretch": "normal",
+    "price": 17,
+    "currency": "EUR",
+    "glyph_count": 794,
+    "unicode_ranges": ["Basic Latin", "Latin 1-Supplement", "Latin Extended-A", "Greek and Coptic", "Cyrillic"],
+    "language_support": ["Latin", "Greek", "Cyrillic"],
+    "file_path_woff2": "fonts/Alvica/INDGAlvica-Bold.woff2",
+    "file_path_woff": "fonts/Alvica/INDGAlvica-Bold.woff",
+    "is_active": true
+  }
+]
