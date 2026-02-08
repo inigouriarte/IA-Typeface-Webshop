@@ -159,7 +159,12 @@ app.get('/api/auth/google/callback', async (req, res) => {
   if (userRes.statusCode !== 200) return res.redirect('/admin.html?error=userinfo');
   const user = JSON.parse(userRes.data);
   const email = (user.email || '').toLowerCase();
-  if (ALLOWED_ADMIN_EMAILS.length > 0 && !ALLOWED_ADMIN_EMAILS.includes(email)) {
+
+  // Google login requires an explicit allow-list; otherwise anyone could enter.
+  if (ALLOWED_ADMIN_EMAILS.length === 0) {
+    return res.redirect('/admin.html?error=allowed_emails_required');
+  }
+  if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
     return res.redirect('/admin.html?error=not_allowed');
   }
 

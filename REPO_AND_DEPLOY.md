@@ -41,11 +41,28 @@ The admin panel needs a **Node server** (login, API, saving data). Vercel only s
    - `SESSION_SECRET` – random string (e.g. from `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`).
    - `ADMIN_PASSWORD_HASH` – from `node scripts/hash-password.js "YourPassword"`,  
      **or** set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` for Google login.
-   - Optional: `BASE_URL` = your Railway app URL (e.g. `https://your-app.railway.app`) if you use Google login.
+   - For **Google login**: set `ALLOWED_ADMIN_EMAILS=your@gmail.com` (comma-separated). Only these emails can access; no one can log in until this is set.
+   - `BASE_URL` = your admin URL with **https** (e.g. `https://your-app.railway.app`). Required for Google OAuth redirect.
 4. In the project, open **Settings** → **Networking** → **Generate Domain** to get a public URL.
-5. Open **https://your-app.railway.app/admin.html** and log in.
+5. Open **https://your-app.railway.app/admin.html** (use **https**, not http).
 
 Edits to products/samples are stored on Railway’s disk; they can be reset on redeploy unless you add a persistent volume.
+
+### Subdomain and ERR_SSL_PROTOCOL_ERROR
+
+**ERR_SSL_PROTOCOL_ERROR** usually means the browser is using **https://** but the server is only speaking HTTP, or the subdomain is not set up for SSL.
+
+- **Use the host HTTPS URL**  
+  Use the URL your host gives you, e.g. **https://your-app.railway.app**. Railway provides HTTPS for `*.railway.app` automatically.
+
+- **Custom subdomain (e.g. admin.yourdomain.com)**  
+  1. In Railway: **Settings** → **Networking** → **Custom Domain** → add your subdomain.  
+  2. In your DNS: add a **CNAME** for that subdomain pointing to the value Railway shows (e.g. `xxx.railway.app`).  
+  3. Wait for DNS and for Railway to issue the certificate, then open **https://admin.yourdomain.com/admin.html**.  
+  Do not use **http://** for the admin in production (cookies and OAuth expect HTTPS).
+
+- **If you see the error on a custom URL**  
+  Use **https://** and ensure the domain is added in the host dashboard and DNS is correct. If the host does not support your domain yet, use the default **https://xxx.railway.app** URL first.
 
 ## Not in Git (on purpose)
 

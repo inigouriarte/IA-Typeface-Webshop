@@ -44,6 +44,10 @@
     .btn-google { display: inline-block; text-align: center; text-decoration: none; background: #fff; border: 1px solid #dadce0; color: #3c4043; }
     .btn-google:hover { background: #f8f9fa; }
     #login-form input { margin-bottom: 0.75rem; }
+    /* Override main site’s cursor: none so cursor is visible in admin */
+    .admin-wrap, .admin-wrap * { cursor: revert; }
+    .admin-wrap input, .admin-wrap textarea, .admin-wrap select { cursor: text; caret-color: #000; }
+    .admin-wrap button, .admin-wrap a[href], .admin-wrap .btn, .admin-wrap .btn-small { cursor: pointer; }
   </style>
 </head>
 <body>
@@ -252,6 +256,7 @@
         userinfo: 'Google sign-in failed (profile). Try again.',
         session: 'Session error. Try again.',
         not_allowed: 'Your Google account is not allowed to access admin.',
+        allowed_emails_required: 'Google login requires ALLOWED_ADMIN_EMAILS in server .env. Add your email so only you can access.',
         config: 'Google login is not configured.',
       };
       showMsg(msgEl, messages[error] || error, 'error');
