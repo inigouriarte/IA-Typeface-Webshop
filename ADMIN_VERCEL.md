@@ -2,6 +2,28 @@
 
 The admin panel works on your Vercel deployment. After deploy, open **https://your-site.vercel.app/admin.html** and log in.
 
+## Fix: "No login method configured"
+
+If the live admin page shows this message, the **deployed** app has no login env vars. Do one of the following.
+
+**Option A – One command (from a terminal where Node/npm work, e.g. VS Code terminal):**
+
+```bash
+cd c:\Users\inigo\typeface-webshop
+npm run setup:vercel
+```
+
+Then in Vercel: **Deployments** → … → **Redeploy** (or push to main).
+
+**Option B – Manual:** In [Vercel Dashboard](https://vercel.com/dashboard) → your project → **Settings** → **Environment Variables**, add **Production** (and Preview if you use it):
+
+- `SESSION_SECRET` — copy the value from your local `.env`
+- `ADMIN_PASSWORD_HASH` — copy from your local `.env`
+
+Save, then **Redeploy** the latest deployment. After env vars are in the project, a new deployment (push or redeploy) is required for them to take effect.
+
+---
+
 ## One-command setup (recommended)
 
 From the project folder (with Vercel CLI linked: `vercel link`):
