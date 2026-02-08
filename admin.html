@@ -127,6 +127,17 @@
   </div>
 
   <script>
+    /** Parse response as JSON; if server returned HTML (e.g. 404 page), throw so we can show a clear message. */
+    async function parseJson(r) {
+      const text = await r.text();
+      if (text.trimStart().startsWith('<')) {
+        const e = new Error('API returned a page instead of JSON. Use the dev server (npm run dev) and open http://localhost:3000/admin.html, or use your deployed site.');
+        e.isHtmlResponse = true;
+        throw e;
+      }
+      return JSON.parse(text || 'null');
+    }
+
     const API = {
       async me() {
         const r = await fetch('/api/auth/me', { credentials: 'include' });
@@ -140,7 +151,7 @@
           body: JSON.stringify({ password }),
         });
         if (!r.ok) {
-          const d = await r.json().catch(() => ({}));
+          const d = await parseJson(r).catch((e) => { if (e && e.isHtmlResponse) throw e; return {}; });
           throw new Error(d.error || 'Login failed');
         }
       },
@@ -150,7 +161,7 @@
       async getProducts() {
         const r = await fetch('/api/admin/products', { credentials: 'include' });
         if (!r.ok) throw new Error('Failed to load products');
-        return r.json();
+        return parseJson(r);
       },
       async saveProducts(products) {
         const r = await fetch('/api/admin/products', {
@@ -160,14 +171,14 @@
           body: JSON.stringify(products),
         });
         if (!r.ok) {
-          const d = await r.json().catch(() => ({}));
+          const d = await parseJson(r).catch((e) => { if (e && e.isHtmlResponse) throw e; return {}; });
           throw new Error(d.error || 'Save failed');
         }
       },
       async getSamples() {
         const r = await fetch('/api/admin/typeface-samples', { credentials: 'include' });
         if (!r.ok) throw new Error('Failed to load samples');
-        return r.json();
+        return parseJson(r);
       },
       async saveSamples(samples) {
         const r = await fetch('/api/admin/typeface-samples', {
@@ -177,7 +188,7 @@
           body: JSON.stringify(samples),
         });
         if (!r.ok) {
-          const d = await r.json().catch(() => ({}));
+          const d = await parseJson(r).catch((e) => { if (e && e.isHtmlResponse) throw e; return {}; });
           throw new Error(d.error || 'Save failed');
         }
       },
@@ -225,7 +236,7 @@
       const googleWrap = document.getElementById('google-login-wrap');
       try {
         const r = await fetch('/api/auth/methods', { credentials: 'include' });
-        const m = await r.json();
+        const m = await parseJson(r);
         loading.style.display = 'none';
         if (m.password) {
           form.style.display = 'block';
@@ -239,9 +250,12 @@
           document.getElementById('login-msg').className = 'admin-msg error';
           document.getElementById('login-msg').style.display = 'block';
         }
-      } catch (_) {
-        loading.textContent = 'Cannot reach server. Open admin from the same origin (e.g. http://localhost:3000/admin.html).';
-        loading.style.color = '#800';
+      } catch (e) {
+        loading.style.display = 'none';
+        const msg = e && e.isHtmlResponse ? e.message : 'Cannot reach server. Open admin from the same origin (e.g. http://localhost:3000/admin.html).';
+        document.getElementById('login-msg').textContent = msg;
+        document.getElementById('login-msg').className = 'admin-msg error';
+        document.getElementById('login-msg').style.display = 'block';
       }
     }
 
