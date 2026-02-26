@@ -46,7 +46,7 @@ The admin panel needs a **Node server** (login, API, saving data). Vercel only s
 4. In the project, open **Settings** → **Networking** → **Generate Domain** to get a public URL.
 5. Open **https://your-app.railway.app/admin.html** (use **https**, not http).
 
-Edits to products/samples are stored on Railway’s disk; they can be reset on redeploy unless you add a persistent volume.
+Edits to index and typeface detail content are stored on Railway’s disk; they can be reset on redeploy unless you add a persistent volume.
 
 ### Subdomain and ERR_SSL_PROTOCOL_ERROR
 

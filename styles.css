@@ -54,7 +54,7 @@
     font-display: swap;
 }
 
-/* Monospace UI font: system stack (no DMMono files in repo to avoid 404/font decode errors) */
+/* Monospace UI font: DM Mono from Google Fonts (loaded via link in each HTML), fallback to system mono */
 /* INDG Actio Font Faces */
 @font-face {
     font-family: 'INDG Actio';
@@ -315,7 +315,7 @@
     --font-logo-weight: 600;
     --font-logo-tracking: -0.5px;
     
-    --font-button-family: ui-monospace, "Cascadia Mono", "SF Mono", Monaco, Consolas, monospace;
+    --font-button-family: 'DM Mono', ui-monospace, "Cascadia Mono", "SF Mono", Monaco, Consolas, monospace;
     --font-button-size: 16px;
     --font-button-weight: 400;
     
@@ -371,7 +371,7 @@ body {
     width: 50px;
     height: 50px;
     pointer-events: none;
-    z-index: 10003;
+    z-index: 10004;
     transform: translate(-50%, -50%);
     mix-blend-mode: difference;
     transition: transform 1s ease;
@@ -408,7 +408,7 @@ body::after {
     bottom: 0;
     width: 1px;
     background-color: var(--color-stroke);
-    z-index: 10002;
+    z-index: 10003;
     pointer-events: none;
 }
 
@@ -453,13 +453,13 @@ p:last-child {
     color: #ffffff;
 }
 
-/* Header */
+/* Header: always on top of dropdown */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10001;
+    z-index: 10002;
     padding: 32px var(--layout-padding-desktop);
     border-bottom: 1px solid var(--color-stroke);
     background-color: rgba(248, 248, 248, 0.7);
@@ -485,6 +485,7 @@ p:last-child {
     color: var(--color-primary);
     white-space: nowrap;
     text-align: left;
+    text-decoration: none;
 }
 
 .nav {
@@ -645,20 +646,21 @@ input[type="range"]:hover,
     left: 50%;
     color: var(--color-primary);
     font-family: var(--font-text-family);
-    font-size: var(--font-text-size);
+    font-size: calc(3 * var(--font-text-size));
     font-weight: var(--font-text-weight);
-    letter-spacing: var(--font-text-tracking);
-    line-height: 1.25;
-    margin-bottom: 0;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 25px;
     padding-left: 10px;
     padding-right: 10px;
     max-width: calc(50vw - var(--layout-padding-desktop));
+    box-sizing: border-box;
     animation: fadeIn 0.4s ease-in;
 }
 
 .intro p:first-child {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 25px;
 }
 
 /* About Section */
@@ -714,10 +716,16 @@ input[type="range"]:hover,
     min-height: 200px;
 }
 
+/* Main/content: explicit low stacking so #dropdown-portal (body sibling) paints on top */
+main {
+    position: relative;
+    z-index: 0;
+}
 /* Typefaces Container */
 .typefaces-container {
     max-width: var(--layout-max-width);
     margin: 0 auto;
+    overflow: visible;
 }
 
 .typeface-section {
@@ -749,17 +757,14 @@ input[type="range"]:hover,
     width: 100vw;
     flex-wrap: wrap;
     position: relative;
-    z-index: 1;
     flex-shrink: 0;
     flex-grow: 0;
 }
 
-.typeface-controls-row:has(.custom-dropdown.open) {
-    z-index: 9998;
-}
 
+/* Section with open dropdown: menu is in portal so no need to raise section z-index */
 .typeface-section:has(.custom-dropdown.open) {
-    z-index: 9998;
+    overflow: visible;
 }
 
 .typeface-controls-row:not(:first-child) {
@@ -993,10 +998,72 @@ input[type="range"]:hover,
     pointer-events: all;
     z-index: 9999;
     overflow: visible;
+    border: 1px solid var(--color-stroke);
+    border-top: none;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 
-.typeface-section:has(.custom-dropdown.open) {
+/* Z-index scale: main=0, dropdown portal=1000, header+bottom-bar=10002, body lines=10003, cursor=10004 */
+#dropdown-portal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
     overflow: visible;
+    z-index: 1000;
+    pointer-events: none;
+}
+#dropdown-portal > * {
+    pointer-events: auto;
+}
+/* Menu when rendered in portal (same look as open state, position from JS) */
+#dropdown-portal .dropdown-menu.dropdown-menu--portal {
+    position: fixed;
+    z-index: 1;
+    max-height: none;
+    margin-bottom: 100px;
+    opacity: 0;
+    visibility: visible;
+    pointer-events: auto;
+    overflow: visible;
+    background-color: rgba(248, 248, 248, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--color-stroke);
+    border-top: none;
+    margin-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    /* top, left, width set by script from trigger getBoundingClientRect() */
+}
+#dropdown-portal .dropdown-menu.dropdown-menu--portal.dropdown-menu--portal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+#dropdown-portal .dropdown-menu.dropdown-menu--portal.dropdown-menu--portal-closing {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+#dropdown-portal .dropdown-option:first-child {
+    border-top: none;
+}
+#dropdown-portal .dropdown-menu.opentype-menu {
+    border-right: none;
+}
+#dropdown-portal .dropdown-menu.opentype-menu::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-stroke);
+    pointer-events: none;
 }
 
 .dropdown-option {
@@ -1064,14 +1131,15 @@ input[type="range"]:hover,
     font-family: var(--font-button-family);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     width: 100%;
     justify-content: space-between;
     box-sizing: border-box;
     margin: 0;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
     padding: 0;
+    padding-right: 0;
 }
 
 .control-box:first-child .slider-container {
@@ -1090,6 +1158,21 @@ input[type="range"]:hover,
     min-width: 28px;
     text-align: center;
     flex-shrink: 0;
+}
+
+.control-icon-size {
+    font-variant: small-caps;
+    font-feature-settings: "smcp" 1;
+    text-align: left;
+    min-width: 0;
+    width: min-content;
+}
+.control-icon-tracking {
+    font-variant: small-caps;
+    font-feature-settings: "smcp" 1;
+    text-align: left;
+    min-width: 0;
+    width: min-content;
 }
 
 .font-size-slider,
@@ -1141,14 +1224,15 @@ input[type="range"]:hover,
     font-weight: var(--font-button-weight);
     line-height: 1;
     cursor: none;
-    padding: 0;
+    padding: 0 10px;
     margin: 0;
-    margin-left: 10px;
-    margin-right: 10px;
     transition: opacity 0.2s;
     width: 100%;
+    min-height: 100%;
+    height: 100%;
     box-sizing: border-box;
     justify-content: left;
+    text-decoration: none;
 }
 
 .more-btn span {
@@ -1159,12 +1243,21 @@ input[type="range"]:hover,
     white-space: nowrap;
 }
 
+/* Whole "much more" control-box is clickable */
+.control-box:has(.more-btn) {
+    align-items: stretch;
+    padding: 0;
+}
+.control-box:has(.more-btn) .more-btn {
+    min-height: 100%;
+}
+
 .control-box:first-child .more-btn {
-    padding-left: 0;
+    padding-left: 10px;
 }
 
 .control-box:last-child .more-btn {
-    padding-right: 0;
+    padding-right: 10px;
 }
 
 .more-btn * {
@@ -1173,6 +1266,26 @@ input[type="range"]:hover,
 
 .more-btn:hover {
     color: var(--color-primary);
+    opacity: 1;
+}
+
+/* Much more box: blue background, white text when hovering anywhere on the typeface section */
+.control-box:has(.more-btn) {
+    transition: background-color 0.3s ease;
+}
+.typeface-section .more-btn,
+.typeface-section .more-btn * {
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+.typeface-section:hover .control-box:has(.more-btn) {
+    background-color: var(--color-primary);
+}
+.typeface-section:hover .control-box:has(.more-btn) .more-btn,
+.typeface-section:hover .control-box:has(.more-btn) .more-btn * {
+    color: #fff;
+}
+.typeface-section:hover .control-box:has(.more-btn) .more-btn:hover {
+    color: #fff;
     opacity: 1;
 }
 
@@ -1260,10 +1373,9 @@ input[type="range"]:hover,
 /* Footer */
 .footer {
     background-color: var(--color-background);
-    padding: 0px var(--layout-padding-desktop) 0px;
-    padding-top: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    padding: 3rem var(--layout-padding-desktop) 3rem;
+    margin-top: 0;
+    margin-bottom: 0;
     border-top: 1px solid var(--color-stroke);
     position: relative;
 }
@@ -1274,14 +1386,14 @@ input[type="range"]:hover,
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 2rem;
 }
 
 .footer-content {
@@ -1306,10 +1418,12 @@ input[type="range"]:hover,
     display: flex;
     gap: 50px;
     text-align: left;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    padding-left: 10px;
+    padding-right: 10px;
     justify-content: flex-start;
     align-items: flex-start;
 }
@@ -1332,9 +1446,11 @@ input[type="range"]:hover,
 
 .typeface-column div a {
     color: inherit;
+    transition: color 0.2s;
 }
 
-.typeface-column div:hover {
+.typeface-column div:hover,
+.typeface-column div a:hover {
     color: var(--color-primary);
 }
 
@@ -1422,16 +1538,16 @@ body.typeface-oequadrat .typeface-column a[href="oequadrat.html"]:hover {
     grid-template-rows: repeat(1, 1fr);
     justify-content: center;
     align-items: center;
-    row-gap: 0px;
+    row-gap: 0;
     box-sizing: border-box;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 2rem;
+    padding-bottom: 0;
     padding-left: 10px;
     padding-right: 10px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     flex-wrap: wrap;
 }
 
@@ -1484,7 +1600,8 @@ p {
 .footer-tech {
     max-width: var(--layout-max-width);
     margin: 0 auto;
-    padding-top: 30px;
+    padding-top: 2.5rem;
+    margin-top: 2.5rem;
     border-top: 1px solid var(--color-stroke);
     display: flex;
     gap: 30px;
@@ -1512,7 +1629,7 @@ p {
     font-family: var(--font-button-family);
     font-size: var(--font-button-size);
     color: var(--color-text-light);
-    z-index: 1000;
+    z-index: 10002;
     min-height: 44px;
     box-sizing: border-box;
 }
@@ -1549,14 +1666,16 @@ p {
 
 .contact-questions {
     position: relative;
-    left:50%;
+    left: 50%;
+    max-width: calc(50vw - var(--layout-padding-desktop));
+    box-sizing: border-box;
     color: var(--color-primary);
     font-family: var(--font-text-family);
-    font-size: var(--font-text-size);
+    font-size: calc(3 * var(--font-text-size));
     font-weight: var(--font-text-weight);
-    letter-spacing: var(--font-text-tracking);
-    line-height: 1.25;
-    margin-bottom: 50px;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 25px;
     padding-left: 10px;
     padding-right: 10px;
     animation: fadeIn 0.4s ease-in;
@@ -1564,14 +1683,15 @@ p {
 
 .contact-questions p {
     color: var(--color-primary);
+    margin-bottom: 25px;
 }
 
 .contact-questions p:first-child {
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .contact-questions p:last-child {
-    margin-bottom: 250px;
+    margin-bottom: 100px;
 }
 
 .contact-email {
@@ -1579,13 +1699,14 @@ p {
     left: 50%;
     transform: translateX(-100%);
     text-align: right;
-    max-width: 600px;
+    max-width: calc(50vw - var(--layout-padding-desktop));
+    box-sizing: border-box;
     color: var(--color-primary);
     font-family: var(--font-text-family);
-    font-size: var(--font-text-size);
+    font-size: calc(3 * var(--font-text-size));
     font-weight: var(--font-text-weight);
-    letter-spacing: var(--font-text-tracking);
-    line-height: 1.25;
+    letter-spacing: -2px;
+    line-height: 1;
     word-break: break-all;
     padding-left: 10px;
     padding-right: 10px;
@@ -2068,6 +2189,19 @@ body.typeface-oequadrat .pricing-name {
     -ms-overflow-style: none; /* IE and Edge */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    width: calc(100% + 1px); /* extend 1px right to avoid stroke stacking */
+    border-right: none;
+    position: relative;
+}
+.opentype-dropdown .dropdown-menu::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-stroke);
+    pointer-events: none;
 }
 
 .opentype-dropdown .dropdown-menu::-webkit-scrollbar {
@@ -2085,7 +2219,10 @@ body.typeface-oequadrat .pricing-name {
 }
 
 .opentype-menu .dropdown-option:nth-child(odd) {
-    border-right: 1px solid var(--color-stroke);
+    border-right: 1px solid var(--color-stroke); /* column divider only */
+}
+.opentype-menu .dropdown-option:nth-child(even) {
+    border-right: none;
 }
 
 .opentype-menu .dropdown-option:hover {

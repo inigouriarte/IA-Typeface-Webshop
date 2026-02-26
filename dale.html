@@ -16,7 +16,7 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">Indigo Alphabets®</div>
+            <a href="index.html" class="logo">Indigo Alphabets®</a>
             <nav class="nav">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
@@ -41,7 +41,7 @@
 
     <!-- Typeface Sections -->
     <main class="typeface-detail-container">
-        <!-- Regular Section -->
+        <!-- regular Section -->
         <section class="typeface-section" data-font="dale">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -59,23 +59,55 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
                         <input type="range" class="font-size-slider" min="10" max="400" value="140" data-target="dale-regular">
-                        <span class="control-label">400</span>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="dale-regular">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-regular">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="regular" data-target-match="dale-regular" style="font-size: 140px; font-weight: 500; font-style: normal; letter-spacing: 0px;">DALE</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="regular" data-target-match="dale-regular" style="font-size: 140px; letter-spacing: 0em; font-weight: 500; font-style: normal;">Sphinx of black quartz, judge my vow.</div>
         </section>
 
-        <!-- Italic Section -->
+        <!-- alphabet Section -->
+        <section class="typeface-section" data-font="dale">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Regular</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="70" data-target="dale-alphabet">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-alphabet">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="alphabet" data-target-match="dale-alphabet" style="font-size: 70px; letter-spacing: 0em; font-weight: 500; font-style: normal;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</div>
+        </section>
+
+        <!-- italic Section -->
         <section class="typeface-section" data-font="dale">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -93,23 +125,22 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="dale-italic">
-                        <span class="control-label">400</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="100" data-target="dale-italic">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="dale-italic">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-italic">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="italic" data-target-match="dale-italic" style="font-size: 120px; font-weight: 500; font-style: italic; letter-spacing: 0px;">Dale Italic</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="italic" data-target-match="dale-italic" style="font-size: 100px; letter-spacing: 0em; font-weight: 500; font-style: italic;">Italic adds emphasis and rhythm to editorial layouts.</div>
         </section>
 
-        <!-- Oblique Section -->
+        <!-- oblique Section -->
         <section class="typeface-section" data-font="dale">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -127,20 +158,52 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="dale-oblique">
-                        <span class="control-label">400</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="100" data-target="dale-oblique">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="dale-oblique">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-oblique">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="oblique" data-target-match="dale-oblique" style="font-size: 120px; font-weight: 500; font-style: oblique; letter-spacing: 0px;">Dale Oblique</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="oblique" data-target-match="dale-oblique" style="font-size: 100px; letter-spacing: 0em; font-weight: 500; font-style: oblique;">Oblique offers a subtle slant with a different flavour.</div>
+        </section>
+
+        <!-- body Section -->
+        <section class="typeface-section" data-font="dale">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Regular</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="28" data-target="dale-body">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-body">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="body" data-target-match="dale-body" style="font-size: 28px; letter-spacing: 0em; font-weight: 500; font-style: normal;">Dale’s three styles—Regular, Italic, and Oblique—give editors flexibility for captions, pull quotes, and body text.</div>
         </section>
 
         <!-- Typeface Details Section -->
@@ -256,21 +319,21 @@
         <div class="footer-content">
             <div class="typeface-columns">
                 <div class="typeface-column">
-                    <div><a href="alvica.html" style="text-decoration: none; color: var(--color-text-light);">Alvica</a></div>
-                    <div><a href="actio.html" style="text-decoration: none; color: var(--color-text-light);">Actio</a></div>
-                    <div><a href="modus.html" style="text-decoration: none; color: var(--color-text-light);">Modus</a></div>
-                    <div><a href="luara.html" style="text-decoration: none; color: var(--color-text-light);">Luara</a></div>
+                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="zigrid.html" style="text-decoration: none; color: var(--color-text-light);">Zigrid</a></div>
-                    <div><a href="dale.html" style="text-decoration: none; color: var(--color-text-light);">Dale</a></div>
-                    <div><a href="peqat.html" style="text-decoration: none; color: var(--color-text-light);">Peqat</a></div>
-                    <div><a href="heron.html" style="text-decoration: none; color: var(--color-text-light);">Heron</a></div>
+                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="naora.html" style="text-decoration: none; color: var(--color-text-light);">Naora</a></div>
-                    <div><a href="sifora.html" style="text-decoration: none; color: var(--color-text-light);">Sifora</a></div>
-                    <div><a href="oequadrat.html" style="text-decoration: none; color: var(--color-text-light);">OE Quadrat</a></div>
+                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
                 </div>
             </div>
         </div>
@@ -300,4 +363,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-

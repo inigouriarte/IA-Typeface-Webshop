@@ -1,0 +1,690 @@
+{
+  "actio": {
+    "description": "A versatile typeface with expanded and normal variants, designed for both display and text use.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "2.1",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "10",
+      "glyphs": "650",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement",
+        "Latin Extended-A"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "stretch": "normal",
+        "fontSize": 120,
+        "text": "Actio displays versatility through its expanded and normal variants.",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "stretch": "normal",
+        "fontSize": 70,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 700,
+        "stretch": "normal",
+        "fontSize": 140,
+        "text": "BOLD EXPRESSION",
+        "sampleId": "bold"
+      },
+      {
+        "weight": 400,
+        "stretch": "expanded",
+        "fontSize": 100,
+        "text": "EXPANDED WIDTH",
+        "sampleId": "expanded"
+      },
+      {
+        "weight": 400,
+        "stretch": "expanded",
+        "fontSize": 32,
+        "text": "The expanded width variant gives headlines a confident, open presence while the normal width works for running text.",
+        "sampleId": "expanded-body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Actio Family",
+        "price": "150€"
+      },
+      {
+        "name": "INDG Actio Thin",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Thin Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Light",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Light Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Regular",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Regular Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Bold",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Bold Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Black",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Black Expanded",
+        "price": "20€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "alvica": {
+    "description": "Swiss-knife (you get it?), everyday use, highly versatile, all-in-one typographic family. INDG Alvica counters its sober appearance with a broad set of quirky alternates.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "2.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "6",
+      "glyphs": "794",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement",
+        "Latin Extended-A",
+        "Greek and Coptic",
+        "Cyrillic",
+        "Cyrillic Supplement",
+        "General Punctuation",
+        "Cyrillic Extended A",
+        "Supplemental Punctuation",
+        "Cyrillic Extended B",
+        "Alphabetic Presentation Forms"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 600,
+        "fontSize": 120,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "semibold"
+      },
+      {
+        "weight": 400,
+        "fontSize": 100,
+        "text": "AaBbCcDdEeFfGgHhliJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 700,
+        "fontSize": 240,
+        "text": "\"Irreversible\"",
+        "sampleId": "bold"
+      },
+      {
+        "weight": 400,
+        "fontSize": 30,
+        "text": "Das Wort Schwung bezieht sich im Sinne von eine schnelle, bogenförmige Bewegung auf eine dynamische, kraftvolle Aktivität oder eine elegante Geste, die sowohl körperliche als auch metaphorische Bedeutung haben kann.",
+        "sampleId": "bold-de"
+      },
+      {
+        "weight": 400,
+        "fontSize": 70,
+        "text": "Τα Εξάρχεια είναι συνοικία της Αθήνας που βρίσκεται βόρεια της οδού Αχαρνών και ανατολικά της οδού Πατησίων. Η περιοχή είναι γνωστή για το πλούσιο πολιτιστικό και κοινωνικό της ιστορικό.",
+        "sampleId": "greek"
+      },
+      {
+        "weight": 400,
+        "fontSize": 70,
+        "text": "У 1964 році на Печерську відкрито музей історії України, який розповідає про багатовікову спадщину країни та її культуру. Це місце стало важливим центром для дослідження національної ідентичності.",
+        "sampleId": "cyrillic"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Alvica Family",
+        "price": "102€"
+      },
+      {
+        "name": "INDG Alvica Thin",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Light",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Regular",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Semibold",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Bold",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Black",
+        "price": "17€"
+      }
+    ],
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "liga",
+      "ss02",
+      "zero",
+      "ss03",
+      "dlig",
+      "ss04",
+      "smcp",
+      "ss05",
+      "salt",
+      "ss06",
+      "ss01",
+      "ss07"
+    ]
+  },
+  "dale": {
+    "description": "A typeface with Regular, Italic, and Oblique variants, offering flexibility for editorial design.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "3",
+      "glyphs": "420",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement",
+        "Latin Extended-A"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 500,
+        "style": "normal",
+        "fontSize": 140,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 500,
+        "style": "normal",
+        "fontSize": 70,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 500,
+        "style": "italic",
+        "fontSize": 100,
+        "text": "Italic adds emphasis and rhythm to editorial layouts.",
+        "sampleId": "italic"
+      },
+      {
+        "weight": 500,
+        "style": "oblique",
+        "fontSize": 100,
+        "text": "Oblique offers a subtle slant with a different flavour.",
+        "sampleId": "oblique"
+      },
+      {
+        "weight": 500,
+        "style": "normal",
+        "fontSize": 28,
+        "text": "Dale’s three styles—Regular, Italic, and Oblique—give editors flexibility for captions, pull quotes, and body text.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Dale Family",
+        "price": "60€"
+      },
+      {
+        "name": "INDG Dale Regular",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Dale Italic",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Dale Oblique",
+        "price": "20€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "heron2": {
+    "description": "A single-weight display typeface with strong character, ideal for headlines and branding.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "320",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 700,
+        "fontSize": 180,
+        "text": "HERON",
+        "sampleId": "display"
+      },
+      {
+        "weight": 700,
+        "fontSize": 90,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 700,
+        "fontSize": 120,
+        "text": "Strong character for headlines and branding.",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 700,
+        "fontSize": 60,
+        "text": "0123456789",
+        "sampleId": "numbers"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Heron",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "luara": {
+    "description": "A single-weight typeface with elegant simplicity, designed for refined typographic expression.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "350",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 120,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "fontSize": 75,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 400,
+        "fontSize": 90,
+        "text": "Elegant simplicity for refined typography.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 400,
+        "fontSize": 28,
+        "text": "Luara’s single weight and clear proportions make it suitable for titles, captions, and short runs of text where a calm, refined tone is needed.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Luara",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "modus": {
+    "description": "A distinctive typeface with Grey, Black, and White variants, perfect for experimental typography.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "3",
+      "glyphs": "450",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 120,
+        "text": "MODUS GREY",
+        "sampleId": "grey"
+      },
+      {
+        "weight": 400,
+        "fontSize": 65,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "grey-alphabet"
+      },
+      {
+        "weight": 900,
+        "fontSize": 140,
+        "text": "MODUS BLACK",
+        "sampleId": "black"
+      },
+      {
+        "weight": 100,
+        "fontSize": 100,
+        "text": "MODUS WHITE",
+        "sampleId": "white"
+      },
+      {
+        "weight": 400,
+        "fontSize": 32,
+        "text": "Grey, Black, and White—three variants for experimental and editorial typography.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Modus Family",
+        "price": "60€"
+      },
+      {
+        "name": "INDG Modus Grey",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Modus Black",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Modus White",
+        "price": "20€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "naora": {
+    "description": "A delicate single-weight typeface with refined proportions, perfect for elegant typography.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "360",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 110,
+        "text": "Naora",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "fontSize": 65,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 400,
+        "fontSize": 75,
+        "text": "Delicate proportions, refined details.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 400,
+        "fontSize": 26,
+        "text": "A single weight with careful spacing makes Naora ideal for elegant headings, invitations, and short paragraphs.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Naora",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "oequadrat": {
+    "description": "A blackletter typeface inspired by Old English typography, bringing historical character to modern design.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "280",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 700,
+        "fontSize": 130,
+        "text": "Old English Quadrat",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 700,
+        "fontSize": 75,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 700,
+        "fontSize": 90,
+        "text": "Thus was the doom of men decreed.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 700,
+        "fontSize": 36,
+        "text": "Blackletter brings historical character to headlines, certificates, and editorial accents.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "Old English Quadrat",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "peqat": {
+    "description": "A typeface with two distinct styles: Norma and Capitalis, each with unique character.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "2",
+      "glyphs": "400",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 110,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "norma"
+      },
+      {
+        "weight": 400,
+        "fontSize": 68,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "norma-alphabet"
+      },
+      {
+        "weight": 700,
+        "fontSize": 140,
+        "text": "PEQAT CAPITALIS",
+        "sampleId": "capitalis"
+      },
+      {
+        "weight": 700,
+        "fontSize": 85,
+        "text": "Capitalis lends a classical, monumental tone.",
+        "sampleId": "capitalis-phrase"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Peqat Family",
+        "price": "45€"
+      },
+      {
+        "name": "INDG Peqat Norma",
+        "price": "25€"
+      },
+      {
+        "name": "INDG Peqat Capitalis",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "sifora": {
+    "description": "A single-weight typeface with clean lines and modern aesthetics.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "340",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 115,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "fontSize": 72,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 400,
+        "fontSize": 85,
+        "text": "Clean lines and modern aesthetics.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 400,
+        "fontSize": 28,
+        "text": "Sifora works for interfaces, titles, and body text where clarity and a contemporary look are needed.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Sifora",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "zigrid": {
+    "description": "A geometric typeface with a single weight, characterized by its grid-based construction.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "380",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 130,
+        "text": "ZIGRID",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "fontSize": 72,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 400,
+        "fontSize": 85,
+        "text": "Grid-based construction, geometric clarity.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 400,
+        "fontSize": 55,
+        "text": "0123456789",
+        "sampleId": "numbers"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Zigrid",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  }
+}

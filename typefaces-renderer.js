@@ -2,6 +2,12 @@
  * Render typeface sections from configuration data
  */
 
+var typefacesConfig = (function () {
+    if (typeof require !== 'undefined') try { return require('./typefaces-data.js').typefacesConfig; } catch (e) {}
+    if (typeof window !== 'undefined' && window.typefacesConfig) return window.typefacesConfig;
+    return [];
+})();
+
 /**
  * Render a dropdown menu based on typeface configuration
  * @param {Object} typeface - Typeface configuration object
@@ -65,7 +71,7 @@ function renderTypefaceSection(typeface) {
     const dropdownHtml = renderDropdownMenu(typeface);
 
     // Build style attribute for typeface sample
-    let styleAttr = `font-size: ${typeface.fontSize}px; letter-spacing: ${typeface.letterSpacing}px;`;
+    let styleAttr = `font-size: ${typeface.fontSize}px; letter-spacing: ${typeface.letterSpacing}em;`;
     if (typeface.fontWeight) {
         styleAttr += ` font-weight: ${typeface.fontWeight};`;
     }
@@ -92,21 +98,19 @@ function renderTypefaceSection(typeface) {
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
                         <input type="range" class="font-size-slider" min="10" max="400" value="${typeface.fontSize}" data-target="${typeface.id}">
-                        <span class="control-label">400</span>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="${typeface.letterSpacing}" data-target="${typeface.id}">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="${typeface.letterSpacing}" data-target="${typeface.id}">
                     </div>
                 </div>
                 <div class="control-box">
                     ${typeface.hasLink 
-                        ? `<a href="${typeface.linkUrl}" class="more-btn" style="text-decoration: none; display: flex; align-items: center;">
+                        ? `<a href="${typeface.linkUrl}" class="more-btn">
                         <span class="play-icon">▶</span>
                         <span>Much more</span>
                     </a>`
@@ -123,9 +127,15 @@ function renderTypefaceSection(typeface) {
 
 /**
  * Render all typeface sections
+ * @param {Array} [config] - Optional typefaces config (uses typefacesConfig if not provided)
  * @returns {string} HTML string for all typeface sections
  */
-function renderAllTypefaces() {
-    return typefacesConfig.map(typeface => renderTypefaceSection(typeface)).join('\n\n');
+function renderAllTypefaces(config) {
+    const c = config || typefacesConfig;
+    return c.map(typeface => renderTypefaceSection(typeface)).join('\n\n');
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { renderTypefaceSection, renderAllTypefaces, renderDropdownMenu };
 }
 

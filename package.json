@@ -9,7 +9,9 @@
     "deploy:prod": "vercel --prod",
     "dev": "node server.js",
     "start": "node server.js",
-    "hash-password": "node scripts/hash-password.js", "setup:vercel": "node scripts/setup-vercel-admin.js"
+    "hash-password": "node scripts/hash-password.js",
+    "setup:vercel": "node scripts/setup-vercel-admin.js",
+    "sync-admin": "node scripts/sync-admin-data.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

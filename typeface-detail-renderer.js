@@ -4,8 +4,36 @@
  */
 
 /**
+ * Canonical order for OpenType features in the dropdown (ligatures → case → figures → alternates → stylistic sets → rest).
+ */
+var OPENTYPE_FEATURE_ORDER = [
+    'liga', 'calt', 'clig', 'dlig',   // ligatures / contextual
+    'smcp', 'c2sc',                    // case
+    'onum', 'lnum', 'tnum', 'zero',   // figures
+    'salt',                            // stylistic alternates
+    'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'ss10', 'ss11', 'ss12', 'ss13', 'ss14', 'ss15', 'ss16', 'ss17', 'ss18', 'ss19', 'ss20'
+];
+
+function sortOpenTypeFeatures(features) {
+    const order = OPENTYPE_FEATURE_ORDER;
+    const orderIndex = (tag) => {
+        const i = order.indexOf(tag);
+        if (i >= 0) return i;
+        const ss = /^ss(\d+)$/.exec(tag);
+        if (ss) return 1000 + parseInt(ss[1], 10);
+        return 2000;
+    };
+    return [...features].sort((a, b) => {
+        const ia = orderIndex(a);
+        const ib = orderIndex(b);
+        if (ia !== ib) return ia - ib;
+        return a.localeCompare(b);
+    });
+}
+
+/**
  * Render the OpenType features dropdown menu
- * @param {Array} features - Array of feature tags
+ * @param {Array} features - Array of feature tags (shown in sensible order)
  * @returns {string} HTML string for OpenType dropdown
  */
 function renderOpenTypeDropdown(features = []) {
@@ -13,7 +41,8 @@ function renderOpenTypeDropdown(features = []) {
         return '';
     }
 
-    const options = features.map(feature => 
+    const sorted = sortOpenTypeFeatures(features);
+    const options = sorted.map(feature =>
         `                            <div class="dropdown-option" data-feature="${feature}">${feature}</div>`
     ).join('\n');
 
@@ -166,7 +195,7 @@ function renderSampleSection(config, detailConfig, sample, sampleIndex) {
     }
 
     // Build style attribute
-    let styleAttr = `font-size: ${sample.fontSize}px; letter-spacing: 0px;`;
+    let styleAttr = `font-size: ${sample.fontSize}px; letter-spacing: 0em;`;
     if (sample.weight) styleAttr += ` font-weight: ${sample.weight};`;
     if (sample.stretch) styleAttr += ` font-stretch: ${sample.stretch};`;
     if (sample.style) styleAttr += ` font-style: ${sample.style};`;
@@ -180,16 +209,14 @@ function renderSampleSection(config, detailConfig, sample, sampleIndex) {
 ${dropdownHtml}
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
                         <input type="range" class="font-size-slider" min="10" max="400" value="${sample.fontSize}" data-target="${targetId}">
-                        <span class="control-label">400</span>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="${targetId}">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="${targetId}">
                     </div>
                 </div>
 ${openTypeHtml}
@@ -339,11 +366,11 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
 ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="typeface-${typefaceId === 'heron2' ? 'heron' : typefaceId}">
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">Indigo Alphabets®</div>
+            <a href="index.html" class="logo">Indigo Alphabets®</a>
             <nav class="nav">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
@@ -391,21 +418,21 @@ ${pricingSection}
         <div class="footer-content">
             <div class="typeface-columns">
                 <div class="typeface-column">
-                    <div><a href="alvica.html" style="text-decoration: none; color: var(--color-text-light);">Alvica</a></div>
-                    <div>Actio</div>
-                    <div>Modus</div>
-                    <div>Luara</div>
+                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div>Zigrid</div>
-                    <div>Dale</div>
-                    <div>Peqat</div>
-                    <div>Heron</div>
+                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div>Naora</div>
-                    <div>Sifora</div>
-                    <div>OE Quadrat</div>
+                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
                 </div>
             </div>
         </div>
@@ -435,5 +462,18 @@ ${pricingSection}
 ${openTypeScript}    <script src="script.js"></script>
 </body>
 </html>`;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        renderSampleSection,
+        renderDetailsSection,
+        renderPricingSection,
+        renderTypefaceDetailPage,
+        renderOpenTypeDropdown,
+        renderWeightDropdown,
+        renderWeightStretchDropdown,
+        renderStyleDropdown
+    };
 }
 

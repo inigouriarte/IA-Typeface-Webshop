@@ -13,17 +13,17 @@ A clean, minimalist typeface showcase website inspired by the Indigo Alphabets d
 - **Responsive Design**: Works on desktop and mobile devices
 - **Smooth Scrolling**: Navigation with smooth scroll behavior
 
-## Data (products & typeface samples)
+## Data
 
-Product and typeface sample data are stored as JSON in **`data/`** (no database or Supabase). See **`data/README.md`** for editing with a spreadsheet and export workflow.
+Index and typeface detail content are stored in **`data/index-content.json`** and **`data/typeface-detail-content.json`**. Edit them in the admin panel (see **`data/README.md`**) or run `npm run sync-admin` after editing to update the site.
 
 ## Files
 
 - `index.html` - Main HTML structure
 - `styles.css` - Styling and layout
 - `script.js` - Interactive functionality
-- `data/products.json` - Font products (edit or export from a spreadsheet)
-- `data/typeface-samples.json` - Typeface sample texts per family
+- `data/index-content.json` - Homepage typeface list (edit via admin)
+- `data/typeface-detail-content.json` - Detail page content per typeface (edit via admin)
 
 ## Usage
 

@@ -1,15 +1,16 @@
 # Admin panel on Vercel
 
-The admin panel works on your Vercel deployment. After deploy, open **https://your-site.vercel.app/admin.html** and log in.
+The admin panel (login) works on your Vercel deployment. After deploy, open **https://your-site.vercel.app/admin.html** and log in.
+
+**Note:** Content (index and typeface detail pages) is edited via the admin when running **locally** (`npm run dev`). After saving, run `npm run sync-admin` to update `typefaces-data.js` and `typeface-detail-data.js`, then commit and deploy. The Vercel deployment serves the static site; it does not run the admin API for editing content.
 
 ## Fix: "No login method configured"
 
-If the live admin page shows this message, the **deployed** app has no login env vars. Do one of the following.
+If the live admin page shows this message, the **deployed** app has no login env vars.
 
-**Option A – One command (from a terminal where Node/npm work, e.g. VS Code terminal):**
+**Option A – One command:**
 
 ```bash
-cd c:\Users\inigo\typeface-webshop
 npm run setup:vercel
 ```
 
@@ -17,10 +18,10 @@ Then in Vercel: **Deployments** → … → **Redeploy** (or push to main).
 
 **Option B – Manual:** In [Vercel Dashboard](https://vercel.com/dashboard) → your project → **Settings** → **Environment Variables**, add **Production** (and Preview if you use it):
 
-- `SESSION_SECRET` — copy the value from your local `.env`
-- `ADMIN_PASSWORD_HASH` — copy from your local `.env`
+- `SESSION_SECRET` — copy from your local `.env`
+- `ADMIN_PASSWORD_HASH` — from `node scripts/hash-password.js "YourPassword"`, or use Google login (see below)
 
-Save, then **Redeploy** the latest deployment. After env vars are in the project, a new deployment (push or redeploy) is required for them to take effect. If the site uses a Git-connected production branch, push to that branch to trigger a fresh build with env vars.
+Save, then **Redeploy**.
 
 ---
 
@@ -32,30 +33,19 @@ From the project folder (with Vercel CLI linked: `vercel link`):
 npm run setup:vercel
 ```
 
-This script will:
-1. Create a Blob store named `admin-data` (if the CLI supports it).
-2. Push your `.env` variables (SESSION_SECRET, ADMIN_PASSWORD_HASH, ALLOWED_ADMIN_EMAILS, etc.) to Vercel **production** and **preview**.
+This pushes your `.env` variables (SESSION_SECRET, ADMIN_PASSWORD_HASH, ALLOWED_ADMIN_EMAILS, GOOGLE_*, BASE_URL) to Vercel **production** and **preview**.
 
-Then redeploy (e.g. `npm run deploy:prod` or push to main) and open **https://your-domain.vercel.app/admin.html**.
+Then redeploy and open **https://your-domain.vercel.app/admin.html**.
 
 ---
 
-## Manual setup
-
-### 1. Create a Blob store (one-time)
-
-1. In [Vercel Dashboard](https://vercel.com/dashboard), open your project (**typeface-webshop** / IA-Typeface-Webshop).
-2. Go to **Storage** → **Create Database** → **Blob** → **Continue**.
-3. Name the store (e.g. `admin-data`) and create it.
-4. The project gets a `BLOB_READ_WRITE_TOKEN` env var automatically.
-
-## 2. Environment variables
+## Manual setup: environment variables
 
 In the project: **Settings** → **Environment Variables**. Add:
 
 | Variable | Required | Notes |
 |----------|----------|--------|
-| `SESSION_SECRET` | Yes | Long random string (e.g. from `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`) |
+| `SESSION_SECRET` | Yes | Long random string (e.g. `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`) |
 | `ADMIN_PASSWORD_HASH` | Or Google | From `node scripts/hash-password.js "YourPassword"` |
 | `GOOGLE_CLIENT_ID` | Or password | From [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
 | `GOOGLE_CLIENT_SECRET` | For Google | From Google Cloud Console |
@@ -64,46 +54,14 @@ In the project: **Settings** → **Environment Variables**. Add:
 
 Use either password login or Google login (or both). For Google, set `ALLOWED_ADMIN_EMAILS` so only you can access.
 
-### Enable Google (Gmail) login – step by step
+### Google login – redirect URI
 
-1. **Create OAuth credentials**
-   - Go to [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials).
-   - Create or select a project.
-   - Click **Create credentials** → **OAuth client ID**.
-   - If asked, set **Application type** to **Web application** and add a **Consent screen** (e.g. internal or external, add your email as test user if external).
+In Google Cloud Console, add **Authorized redirect URI**:  
+`https://your-domain.vercel.app/api/auth/google/callback`  
+(and `http://localhost:3000/api/auth/google/callback` for local dev).
 
-2. **Configure the OAuth client**
-   - Application type: **Web application**.
-   - **Authorized redirect URIs** → **Add URI**:
-     - Production: `https://alphabets.indigoindigo.org/api/auth/google/callback`
-     - Local (optional): `http://localhost:3000/api/auth/google/callback`
-   - Create. Copy the **Client ID** and **Client secret**.
+---
 
-3. **Add to your `.env`**
-   ```env
-   GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
-   GOOGLE_CLIENT_SECRET=your-client-secret
-   ALLOWED_ADMIN_EMAILS=your@gmail.com
-   BASE_URL=https://alphabets.indigoindigo.org
-   ```
-   `ALLOWED_ADMIN_EMAILS` is required for Google login; only these addresses can access admin.
+## Redeploy
 
-4. **Push to Vercel and redeploy**
-   - Run `npm run setup:vercel` (pushes all vars from `.env`, including `GOOGLE_*` and `BASE_URL`).
-   - Or in Vercel Dashboard → **Settings** → **Environment Variables**, add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `BASE_URL` for **Production** (and Preview if needed).
-   - Redeploy (push to main or **Deployments** → … → **Redeploy**).
-
-5. **Use it**
-   - Open **https://alphabets.indigoindigo.org/admin.html** and click **Sign in with Google**.
-
-## 3. Redeploy
-
-After adding env vars and the Blob store, **redeploy** (e.g. push to main or **Deployments** → … → **Redeploy**).
-
-## 4. Use the admin
-
-- Open **https://your-domain.vercel.app/admin.html**.
-- Log in with password or Google (depending on what you configured).
-- Edit **Products** and **Typeface samples**; changes are stored in Vercel Blob and shown on the public site.
-
-The public site loads products/samples from the API (Blob or static fallback), so edits in the admin appear on the live site.
+After adding env vars, **redeploy** (push to main or **Deployments** → … → **Redeploy**).

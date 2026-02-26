@@ -4,18 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin – Indigo Alphabets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem; font-family: ui-monospace, "Cascadia Mono", "SF Mono", Monaco, Consolas, monospace; }
+    /* Override main site cursor:none so cursor is visible in admin */
+    body.admin-page,
+    body.admin-page * { cursor: default !important; }
+    body.admin-page input,
+    body.admin-page textarea,
+    body.admin-page select { cursor: text !important; caret-color: #000; }
+    body.admin-page button,
+    body.admin-page a[href],
+    body.admin-page .btn,
+    body.admin-page .btn-small,
+    body.admin-page .col-resize-handle,
+    body.admin-page .row-resize-handle { cursor: pointer !important; }
+    body.admin-page .col-resize-handle { cursor: col-resize !important; }
+    body.admin-page .row-resize-handle { cursor: ns-resize !important; }
+    /* Hide main site margin lines (body::before / body::after) */
+    body.admin-page::before,
+    body.admin-page::after { display: none !important; }
+    .admin-wrap { max-width: none; width: 100%; margin: 0 auto; padding: 2rem; font-family: 'DM Mono', ui-monospace, monospace; font-size: 0.9rem; box-sizing: border-box; }
     .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
     .admin-header h1 { margin: 0; font-size: 1.25rem; font-weight: 500; }
-    .admin-nav { display: flex; gap: 1rem; }
+    .admin-nav { display: flex; gap: 1rem; align-items: center; }
     .admin-nav a { color: inherit; text-decoration: none; opacity: 0.8; }
     .admin-nav a:hover, .admin-nav a.active { opacity: 1; text-decoration: underline; }
-    .login-box { max-width: 320px; margin: 4rem auto; padding: 2rem; border: 1px solid rgba(0,0,0,0.15); }
-    .login-box h2 { margin: 0 0 1rem; font-size: 1rem; font-weight: 500; }
-    .login-box input { width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-family: inherit; box-sizing: border-box; }
-    .login-box button { width: 100%; padding: 0.6rem; font-family: inherit; cursor: pointer; }
     .admin-msg { padding: 0.5rem; margin-bottom: 1rem; border-radius: 2px; }
     .admin-msg.error { background: #fdd; color: #800; }
     .admin-msg.success { background: #dfd; color: #080; }
@@ -24,110 +40,106 @@
     .admin-tabs button.active { background: #000; color: #fff; border-color: #000; }
     .admin-panel { display: none; }
     .admin-panel.active { display: block; }
-    .products-toolbar { margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .products-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    .products-table th, .products-table td { border: 1px solid rgba(0,0,0,0.15); padding: 0.35rem 0.5rem; text-align: left; }
-    .products-table th { background: rgba(0,0,0,0.06); }
-    .products-table input, .products-table select { width: 100%; font-family: inherit; font-size: inherit; box-sizing: border-box; }
-    .products-table .col-id { max-width: 140px; }
-    .products-table .col-num { max-width: 70px; }
-    .products-table .col-bool { max-width: 60px; }
-    .products-table .col-arr { max-width: 160px; }
-    .btn-small { padding: 0.2rem 0.5rem; font-family: inherit; cursor: pointer; font-size: 0.8rem; }
-    .samples-list { list-style: none; padding: 0; margin: 0; }
-    .samples-list li { border: 1px solid rgba(0,0,0,0.15); margin-bottom: 0.5rem; }
-    .samples-list summary { padding: 0.5rem 0.75rem; cursor: pointer; background: rgba(0,0,0,0.04); }
-    .samples-list pre { margin: 0; padding: 0.75rem; overflow-x: auto; font-size: 0.8rem; white-space: pre-wrap; }
-    .samples-actions { margin-bottom: 1rem; }
-    .samples-json-editor { width: 100%; min-height: 320px; font-family: ui-monospace, "Cascadia Mono", "SF Mono", Monaco, Consolas, monospace; font-size: 0.85rem; padding: 0.75rem; box-sizing: border-box; }
+    .sheet-toolbar { margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .sheet-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; table-layout: fixed; }
+    .sheet-table th, .sheet-table td { border: none; border-bottom: 1px solid rgba(0,0,0,0.15); padding: 0.35rem 0.5rem; text-align: left; vertical-align: top; }
+    .sheet-table th { background: rgba(0,0,0,0.06); white-space: nowrap; position: relative; }
+    .sheet-table .col-resize-handle { position: absolute; top: 0; right: 0; width: 8px; height: 100%; cursor: col-resize; z-index: 1; }
+    body.admin-page.col-resizing { user-select: none; }
+    .sheet-table tr { position: relative; }
+    .sheet-table td.td-actions { position: relative; }
+    .sheet-table .row-resize-handle { position: absolute; bottom: 0; left: 0; right: 0; height: 6px; cursor: ns-resize; }
+    .sheet-table input, .sheet-table select, .sheet-table textarea { width: 100%; font-family: inherit; font-size: inherit; box-sizing: border-box; border: none; background: transparent; outline: none; box-shadow: none; padding: 0; margin: 0; resize: none; }
+    .sheet-table input:focus, .sheet-table textarea:focus { background: rgba(0,0,0,0.03); }
+    .sheet-table textarea { min-height: 2.2em; resize: vertical; }
+    .sheet-table .col-id { min-width: 160px; }
+    .sheet-table .col-num { min-width: 100px; }
+    .sheet-table .col-check { min-width: 70px; text-align: center; }
+    .sheet-table .col-json { min-width: 280px; }
+    .sheet-table .col-actions { width: 72px; }
     .btn { padding: 0.5rem 1rem; font-family: inherit; cursor: pointer; }
-    .btn-google { display: inline-block; text-align: center; text-decoration: none; background: #fff; border: 1px solid #dadce0; color: #3c4043; }
-    .btn-google:hover { background: #f8f9fa; }
-    #login-form input { margin-bottom: 0.75rem; }
-    /* Override main site’s cursor: none so cursor is visible in admin */
-    .admin-wrap, .admin-wrap * { cursor: revert; }
-    .admin-wrap input, .admin-wrap textarea, .admin-wrap select { cursor: text; caret-color: #000; }
-    .admin-wrap button, .admin-wrap a[href], .admin-wrap .btn, .admin-wrap .btn-small { cursor: pointer; }
+    .btn-small { padding: 0.2rem 0.5rem; font-family: inherit; cursor: pointer; font-size: 0.8rem; }
+    .sync-hint { color: #666; font-size: 0.85rem; margin-left: 0.5rem; }
   </style>
 </head>
-<body>
+<body class="admin-page">
   <div class="admin-wrap">
-    <div id="login-view">
-      <div class="login-box">
-        <h2>Admin login</h2>
-        <div id="login-msg" class="admin-msg" style="display: none;"></div>
-        <div id="login-methods">
-          <div id="google-login-wrap" style="display: none;">
-            <a href="/api/auth/google" id="google-login-btn" class="btn btn-google">Sign in with Google</a>
-          </div>
-          <form id="login-form" style="display: none; margin-top: 1rem;">
-            <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
-            <button type="submit" class="btn">Log in with password</button>
-          </form>
-          <p id="login-loading" style="margin: 0.5rem 0 0; color: #666;">Loading…</p>
-        </div>
+    <div class="admin-header">
+      <h1>Content – Index &amp; typeface detail pages</h1>
+      <div class="admin-nav">
+        <a href="index.html">← Site</a>
       </div>
     </div>
 
-    <div id="dashboard-view" style="display: none;">
-      <div class="admin-header">
-        <h1>Admin – Products &amp; content</h1>
-        <div class="admin-nav">
-          <a href="index.html">← Site</a>
-          <button type="button" class="btn-small" id="logout-btn">Log out</button>
-        </div>
-      </div>
-
       <div class="admin-tabs">
-        <button type="button" class="admin-tab active" data-tab="products">Products</button>
-        <button type="button" class="admin-tab" data-tab="samples">Typeface samples</button>
+        <button type="button" class="admin-tab active" data-tab="index">Index page</button>
+        <button type="button" class="admin-tab" data-tab="detail">Typeface detail pages</button>
       </div>
 
-      <div id="products-panel" class="admin-panel active">
-        <div id="products-msg" class="admin-msg" style="display: none;"></div>
-        <div class="products-toolbar">
-          <button type="button" class="btn" id="products-add">Add product</button>
-          <button type="button" class="btn" id="products-save">Save products</button>
+      <div id="index-panel" class="admin-panel active">
+        <div id="index-msg" class="admin-msg" style="display: none;"></div>
+        <div class="sheet-toolbar">
+          <button type="button" class="btn" id="index-add">Add row</button>
+          <button type="button" class="btn" id="index-save">Save</button>
+          <span class="sync-hint">After saving, run <code>npm run build</code> to regenerate the site from this content.</span>
         </div>
         <div style="overflow-x: auto;">
-          <table class="products-table" id="products-table">
+          <table class="sheet-table" id="index-table">
+            <colgroup><col><col><col><col><col><col><col><col><col><col><col class="col-actions"></col></colgroup>
             <thead>
               <tr>
                 <th class="col-id">id</th>
-                <th>family_name</th>
-                <th>style_name</th>
-                <th>display_name</th>
-                <th class="col-num">font_weight</th>
-                <th>font_style</th>
-                <th>font_stretch</th>
-                <th class="col-num">price</th>
-                <th>currency</th>
-                <th class="col-num">glyph_count</th>
-                <th class="col-arr">unicode_ranges</th>
-                <th class="col-arr">language_support</th>
-                <th>file_path_woff2</th>
-                <th>file_path_woff</th>
-                <th class="col-bool">is_active</th>
+                <th>name</th>
+                <th>displayName</th>
+                <th>linkUrl</th>
+                <th class="col-id">dropdownType</th>
+                <th class="col-num">fontSize</th>
+                <th class="col-num">letterSpacing</th>
+                <th class="col-check">isOneStyle</th>
+                <th class="col-num">fontWeight</th>
+                <th class="col-json">dropdown config (JSON)</th>
                 <th></th>
               </tr>
             </thead>
-            <tbody id="products-tbody"></tbody>
+            <tbody id="index-tbody"></tbody>
           </table>
         </div>
       </div>
 
-      <div id="samples-panel" class="admin-panel">
-        <div id="samples-msg" class="admin-msg" style="display: none;"></div>
-        <div class="samples-actions">
-          <button type="button" class="btn" id="samples-save">Save typeface samples</button>
+      <div id="detail-panel" class="admin-panel">
+        <div id="detail-msg" class="admin-msg" style="display: none;"></div>
+        <div class="sheet-toolbar">
+          <button type="button" class="btn" id="detail-add">Add row</button>
+          <button type="button" class="btn" id="detail-save">Save</button>
+          <span class="sync-hint">After saving, run <code>npm run build</code> to regenerate the site from this content.</span>
         </div>
-        <textarea id="samples-json-editor" class="samples-json-editor" spellcheck="false"></textarea>
+        <div style="overflow-x: auto;">
+          <table class="sheet-table" id="detail-table">
+            <colgroup><col><col><col><col><col><col><col><col><col><col><col><col><col class="col-actions"></col></colgroup>
+            <thead>
+              <tr>
+                <th class="col-id">id</th>
+                <th>description</th>
+                <th>designer</th>
+                <th>version</th>
+                <th>formats</th>
+                <th>styles</th>
+                <th>glyphs</th>
+                <th>unicodeRanges</th>
+                <th class="col-check">hasOpenType</th>
+                <th>openTypeFeatures</th>
+                <th class="col-json">samples (JSON)</th>
+                <th class="col-json">pricing (JSON)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="detail-tbody"></tbody>
+          </table>
+        </div>
       </div>
-    </div>
   </div>
 
   <script>
-    /** Parse response as JSON; if server returned HTML (e.g. 404 page), throw so we can show a clear message. */
     async function parseJson(r) {
       const text = await r.text();
       if (text.trimStart().startsWith('<')) {
@@ -139,57 +151,38 @@
     }
 
     const API = {
-      async me() {
-        const r = await fetch('/api/auth/me', { credentials: 'include' });
-        return r.ok;
-      },
-      async login(password) {
-        const r = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ password }),
-        });
-        if (!r.ok) {
-          const d = await parseJson(r).catch((e) => { if (e && e.isHtmlResponse) throw e; return {}; });
-          throw new Error(d.error || 'Login failed');
-        }
-      },
-      async logout() {
-        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
-      },
-      async getProducts() {
-        const r = await fetch('/api/admin/products', { credentials: 'include' });
-        if (!r.ok) throw new Error('Failed to load products');
+      async getIndexContent() {
+        let r = await fetch('data/index-content.json');
+        if (!r.ok) r = await fetch('/api/admin/index-content');
+        if (!r.ok) throw new Error('Failed to load index content. Run npm run dev and open from http://localhost:3000/admin.html');
         return parseJson(r);
       },
-      async saveProducts(products) {
-        const r = await fetch('/api/admin/products', {
+      async saveIndexContent(data) {
+        const r = await fetch('/api/admin/index-content', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(products),
+          body: JSON.stringify(data),
         });
         if (!r.ok) {
-          const d = await parseJson(r).catch((e) => { if (e && e.isHtmlResponse) throw e; return {}; });
-          throw new Error(d.error || 'Save failed');
+          const d = await parseJson(r).catch(() => ({}));
+          throw new Error((d && d.error) || 'Save failed');
         }
       },
-      async getSamples() {
-        const r = await fetch('/api/admin/typeface-samples', { credentials: 'include' });
-        if (!r.ok) throw new Error('Failed to load samples');
+      async getTypefaceDetailContent() {
+        let r = await fetch('data/typeface-detail-content.json');
+        if (!r.ok) r = await fetch('/api/admin/typeface-detail-content');
+        if (!r.ok) throw new Error('Failed to load typeface detail content. Run npm run dev and open from http://localhost:3000/admin.html');
         return parseJson(r);
       },
-      async saveSamples(samples) {
-        const r = await fetch('/api/admin/typeface-samples', {
+      async saveTypefaceDetailContent(data) {
+        const r = await fetch('/api/admin/typeface-detail-content', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(samples),
+          body: JSON.stringify(data),
         });
         if (!r.ok) {
-          const d = await parseJson(r).catch((e) => { if (e && e.isHtmlResponse) throw e; return {}; });
-          throw new Error(d.error || 'Save failed');
+          const d = await parseJson(r).catch(() => ({}));
+          throw new Error((d && d.error) || 'Save failed');
         }
       },
     };
@@ -201,106 +194,227 @@
       if (type === 'success') setTimeout(() => { el.style.display = 'none'; }, 3000);
     }
 
-    function arrToStr(arr) {
-      if (Array.isArray(arr)) return arr.join(', ');
-      if (typeof arr === 'string') return arr;
-      return '';
-    }
-    function strToArr(s) {
-      if (Array.isArray(s)) return s;
-      if (typeof s !== 'string') return [];
-      return s.split(',').map(x => x.trim()).filter(Boolean);
+    const INDEX_MAIN_KEYS = ['id', 'name', 'displayName', 'linkUrl', 'dropdownType', 'fontSize', 'letterSpacing', 'isOneStyle', 'fontWeight'];
+
+    function getIndexExtra(row) {
+      const extra = {};
+      Object.keys(row).forEach((k) => {
+        if (!INDEX_MAIN_KEYS.includes(k)) extra[k] = row[k];
+      });
+      return Object.keys(extra).length ? extra : null;
     }
 
-    // --- Auth flow ---
-    // 401 on /api/auth/me is expected when not logged in; browser will log it.
-    async function checkAuth() {
-      let ok = false;
-      try {
-        ok = await API.me();
-      } catch (_) {}
-      document.getElementById('login-view').style.display = ok ? 'none' : 'block';
-      document.getElementById('dashboard-view').style.display = ok ? 'block' : 'none';
-      if (ok) {
-        loadProducts();
-        loadSamples();
-      } else {
-        loadLoginMethods();
-        showLoginErrorFromUrl();
-      }
-      return ok;
+    const indexRowHeights = {};
+    const detailRowHeights = {};
+
+    function setupRowResize(tr, rowKey, heightsMap) {
+      const handle = tr.querySelector('.row-resize-handle');
+      if (!handle) return;
+      let startY = 0, startHeight = 0;
+      handle.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        startY = e.pageY;
+        startHeight = tr.offsetHeight;
+        const onMove = (e2) => {
+          const dy = e2.pageY - startY;
+          const h = Math.max(40, startHeight + dy);
+          heightsMap[rowKey] = h;
+          tr.style.minHeight = h + 'px';
+        };
+        const onUp = () => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
     }
 
-    async function loadLoginMethods() {
-      const loading = document.getElementById('login-loading');
-      const form = document.getElementById('login-form');
-      const googleWrap = document.getElementById('google-login-wrap');
-      try {
-        const r = await fetch('/api/auth/methods', { credentials: 'include' });
-        const m = await parseJson(r);
-        loading.style.display = 'none';
-        if (m.password) {
-          form.style.display = 'block';
-          form.querySelector('input').required = true;
+    function indexRow(row, index) {
+      const tr = document.createElement('tr');
+      tr.dataset.index = index;
+      const rowKey = (row.id || '').trim() || 'idx-' + index;
+      tr.dataset.rowKey = rowKey;
+      if (indexRowHeights[rowKey]) tr.style.minHeight = indexRowHeights[rowKey] + 'px';
+      const hasLink = row.hasLink !== false;
+      tr.innerHTML = '<td><input type="text" data-key="id" value="' + escapeAttr(row.id || '') + '"></td>' +
+        '<td><input type="text" data-key="name" value="' + escapeAttr(row.name || '') + '"></td>' +
+        '<td><input type="text" data-key="displayName" value="' + escapeAttr(row.displayName || '') + '"></td>' +
+        '<td><input type="text" data-key="linkUrl" value="' + escapeAttr(row.linkUrl || '') + '"></td>' +
+        '<td><input type="text" data-key="dropdownType" value="' + escapeAttr(row.dropdownType || '') + '" placeholder="weight|custom|style|weight-stretch"></td>' +
+        '<td><input type="number" data-key="fontSize" value="' + (row.fontSize ?? 120) + '"></td>' +
+        '<td><input type="number" step="any" data-key="letterSpacing" value="' + (row.letterSpacing ?? 0) + '"></td>' +
+        '<td class="col-check"><input type="checkbox" data-key="isOneStyle" ' + (row.isOneStyle ? 'checked' : '') + '></td>' +
+        '<td><input type="number" data-key="fontWeight" value="' + (row.fontWeight ?? '') + '" placeholder=""></td>' +
+        '<td class="col-json"><textarea data-key="extra" placeholder="{}">' + escapeText(JSON.stringify(getIndexExtra(row) || {}, null, 2)) + '</textarea></td>' +
+        '<td class="td-actions"><button type="button" class="btn-small" data-action="delete">Delete</button><div class="row-resize-handle" title="Drag to resize row"></div></td>';
+      setupRowResize(tr, rowKey, indexRowHeights);
+      tr.querySelector('[data-action="delete"]').addEventListener('click', () => {
+        indexData.splice(index, 1);
+        renderIndex();
+      });
+      tr.querySelectorAll('input, textarea').forEach((el) => {
+        el.addEventListener('change', () => {
+          indexData[index] = indexData[index] || {};
+          const key = el.dataset.key;
+          if (key === 'extra') {
+            try {
+              const parsed = JSON.parse(el.value || '{}');
+              Object.keys(parsed).forEach((k) => { indexData[index][k] = parsed[k]; });
+            } catch (_) {}
+            return;
+          }
+          if (key === 'isOneStyle') indexData[index][key] = el.checked;
+          else if (key === 'fontSize' || key === 'fontWeight' || key === 'letterSpacing') indexData[index][key] = el.value === '' ? undefined : Number(el.value);
+          else indexData[index][key] = el.value;
+          if (key === 'linkUrl' && el.value) indexData[index].hasLink = true;
+        });
+      });
+      return tr;
+    }
+
+    function escapeAttr(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function escapeText(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    let indexData = [];
+
+    function renderIndex() {
+      const tbody = document.getElementById('index-tbody');
+      tbody.innerHTML = '';
+      indexData.forEach((row, i) => tbody.appendChild(indexRow(row, i)));
+    }
+
+    function collectIndexRow(tr) {
+      const index = parseInt(tr.dataset.index, 10);
+      const row = {};
+      tr.querySelectorAll('[data-key]').forEach((el) => {
+        const key = el.dataset.key;
+        if (key === 'extra') {
+          try {
+            const parsed = JSON.parse(el.value || '{}');
+            Object.assign(row, parsed);
+          } catch (_) {}
+          return;
         }
-        if (m.google) {
-          googleWrap.style.display = 'block';
-        }
-        if (!m.password && !m.google) {
-          document.getElementById('login-msg').textContent = 'No login method configured.';
-          document.getElementById('login-msg').className = 'admin-msg error';
-          document.getElementById('login-msg').style.display = 'block';
-        }
-      } catch (e) {
-        loading.style.display = 'none';
-        const msg = e && e.isHtmlResponse ? e.message : 'Cannot reach server. Open admin from the same origin (e.g. http://localhost:3000/admin.html).';
-        document.getElementById('login-msg').textContent = msg;
-        document.getElementById('login-msg').className = 'admin-msg error';
-        document.getElementById('login-msg').style.display = 'block';
-      }
+        if (key === 'isOneStyle') row[key] = el.checked;
+        else if (key === 'fontSize' || key === 'fontWeight' || key === 'letterSpacing') row[key] = el.value === '' ? undefined : Number(el.value);
+        else row[key] = el.value;
+      });
+      row.hasLink = row.linkUrl ? true : (row.hasLink !== false);
+      return row;
     }
 
-    function showLoginErrorFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const error = params.get('error');
-      if (!error) return;
-      const msgEl = document.getElementById('login-msg');
-      const messages = {
-        invalid_callback: 'Invalid login callback. Try again.',
-        token: 'Google sign-in failed (token). Try again.',
-        userinfo: 'Google sign-in failed (profile). Try again.',
-        session: 'Session error. Try again.',
-        not_allowed: 'Your Google account is not allowed to access admin.',
-        allowed_emails_required: 'Google login requires ALLOWED_ADMIN_EMAILS in server .env. Add your email so only you can access.',
-        config: 'Google login is not configured.',
-      };
-      showMsg(msgEl, messages[error] || error, 'error');
-      window.history.replaceState({}, '', window.location.pathname);
+    function detailRow(id, config, index) {
+      const c = config || {};
+      const d = c.details || {};
+      const tr = document.createElement('tr');
+      tr.dataset.id = id;
+      const samplesStr = JSON.stringify(c.samples || [], null, 2);
+      const pricingStr = JSON.stringify(c.pricing || [], null, 2);
+      const unicodeStr = Array.isArray(d.unicodeRanges) ? d.unicodeRanges.join(', ') : '';
+      const featuresStr = Array.isArray(c.openTypeFeatures) ? c.openTypeFeatures.join(', ') : '';
+      if (detailRowHeights[id]) tr.style.minHeight = detailRowHeights[id] + 'px';
+      tr.innerHTML = '<td><input type="text" data-key="id" value="' + escapeAttr(id) + '"></td>' +
+        '<td><textarea data-key="description" placeholder="Short description">' + escapeText(c.description || '') + '</textarea></td>' +
+        '<td><input type="text" data-key="designer" value="' + escapeAttr(d.designer || '') + '"></td>' +
+        '<td><input type="text" data-key="version" value="' + escapeAttr(d.version || '') + '"></td>' +
+        '<td><input type="text" data-key="formats" value="' + escapeAttr(d.formats || '') + '"></td>' +
+        '<td><input type="text" data-key="styles" value="' + escapeAttr(d.styles || '') + '"></td>' +
+        '<td><input type="text" data-key="glyphs" value="' + escapeAttr(d.glyphs || '') + '"></td>' +
+        '<td><input type="text" data-key="unicodeRanges" value="' + escapeAttr(unicodeStr) + '" placeholder="comma-separated"></td>' +
+        '<td class="col-check"><input type="checkbox" data-key="hasOpenType" ' + (c.hasOpenType ? 'checked' : '') + '></td>' +
+        '<td><input type="text" data-key="openTypeFeatures" value="' + escapeAttr(featuresStr) + '" placeholder="comma-separated"></td>' +
+        '<td class="col-json"><textarea data-key="samples">' + escapeText(samplesStr) + '</textarea></td>' +
+        '<td class="col-json"><textarea data-key="pricing">' + escapeText(pricingStr) + '</textarea></td>' +
+        '<td class="td-actions"><button type="button" class="btn-small" data-action="delete">Delete</button><div class="row-resize-handle" title="Drag to resize row"></div></td>';
+      setupRowResize(tr, id, detailRowHeights);
+      tr.querySelector('[data-action="delete"]').addEventListener('click', () => {
+        delete detailData[tr.dataset.id];
+        renderDetail();
+      });
+      tr.querySelectorAll('input, textarea').forEach((el) => {
+        el.addEventListener('change', () => {
+          const newId = tr.querySelector('[data-key="id"]').value.trim() || id;
+          if (newId !== id) {
+            delete detailData[id];
+            id = newId;
+            tr.dataset.id = id;
+          }
+          detailData[id] = detailData[id] || {};
+          const key = el.dataset.key;
+          if (key === 'id') return;
+          if (key === 'description') detailData[id].description = el.value;
+          else if (key === 'hasOpenType') detailData[id].hasOpenType = el.checked;
+          else if (key === 'unicodeRanges') {
+            detailData[id].details = detailData[id].details || {};
+            detailData[id].details.unicodeRanges = el.value.split(',').map((x) => x.trim()).filter(Boolean);
+          } else if (key === 'openTypeFeatures') {
+            detailData[id].openTypeFeatures = el.value.split(',').map((x) => x.trim()).filter(Boolean);
+          } else if (key === 'samples') {
+            try { detailData[id].samples = JSON.parse(el.value || '[]'); } catch (_) {}
+          } else if (key === 'pricing') {
+            try { detailData[id].pricing = JSON.parse(el.value || '[]'); } catch (_) {}
+          } else {
+            detailData[id].details = detailData[id].details || {};
+            detailData[id].details[key] = el.value;
+          }
+        });
+      });
+      return tr;
     }
 
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const msgEl = document.getElementById('login-msg');
-      const password = document.getElementById('login-password').value;
-      if (!password) {
-        showMsg(msgEl, 'Enter your password', 'error');
-        return;
-      }
-      try {
-        await API.login(password);
-        await checkAuth();
-        document.getElementById('login-password').value = '';
-      } catch (err) {
-        showMsg(msgEl, err.message || 'Invalid password', 'error');
-      }
-    });
+    let detailData = {};
 
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await API.logout();
-      await checkAuth();
-    });
+    function renderDetail() {
+      const tbody = document.getElementById('detail-tbody');
+      tbody.innerHTML = '';
+      Object.keys(detailData).sort().forEach((id) => tbody.appendChild(detailRow(id, detailData[id])));
+    }
 
-    // --- Tabs ---
+    function collectDetailFromTable() {
+      const out = {};
+      document.querySelectorAll('#detail-tbody tr').forEach((tr) => {
+        const idInput = tr.querySelector('[data-key="id"]');
+        const id = (idInput && idInput.value.trim()) || tr.dataset.id;
+        if (!id) return;
+        const desc = tr.querySelector('[data-key="description"]');
+        const designer = tr.querySelector('[data-key="designer"]');
+        const version = tr.querySelector('[data-key="version"]');
+        const formats = tr.querySelector('[data-key="formats"]');
+        const styles = tr.querySelector('[data-key="styles"]');
+        const glyphs = tr.querySelector('[data-key="glyphs"]');
+        const unicode = tr.querySelector('[data-key="unicodeRanges"]');
+        const hasOT = tr.querySelector('[data-key="hasOpenType"]');
+        const features = tr.querySelector('[data-key="openTypeFeatures"]');
+        const samplesEl = tr.querySelector('[data-key="samples"]');
+        const pricingEl = tr.querySelector('[data-key="pricing"]');
+        let samples = [];
+        let pricing = [];
+        try { samples = JSON.parse(samplesEl.value || '[]'); } catch (_) {}
+        try { pricing = JSON.parse(pricingEl.value || '[]'); } catch (_) {}
+        out[id] = {
+          description: desc ? desc.value : '',
+          details: {
+            designer: designer ? designer.value : '',
+            version: version ? version.value : '',
+            formats: formats ? formats.value : '',
+            styles: styles ? styles.value : '',
+            glyphs: glyphs ? glyphs.value : '',
+            unicodeRanges: unicode ? unicode.value.split(',').map((x) => x.trim()).filter(Boolean) : [],
+          },
+          samples,
+          pricing,
+          hasOpenType: hasOT ? hasOT.checked : false,
+          openTypeFeatures: features ? features.value.split(',').map((x) => x.trim()).filter(Boolean) : [],
+        };
+      });
+      return out;
+    }
+
     document.querySelectorAll('.admin-tab').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.admin-tab').forEach((b) => b.classList.remove('active'));
@@ -310,146 +424,156 @@
       });
     });
 
-    // --- Products ---
-    let productsData = [];
+    async function loadIndex() {
+      const msgEl = document.getElementById('index-msg');
+      try {
+        indexData = await API.getIndexContent();
+        renderIndex();
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    }
 
-    function productRow(p, index) {
-      const tr = document.createElement('tr');
-      tr.dataset.index = index;
-      const fields = [
-        'id', 'family_name', 'style_name', 'display_name', 'font_weight', 'font_style', 'font_stretch',
-        'price', 'currency', 'glyph_count', 'unicode_ranges', 'language_support',
-        'file_path_woff2', 'file_path_woff', 'is_active',
-      ];
-      fields.forEach((key) => {
-        const td = document.createElement('td');
-        const val = p[key];
-        if (key === 'unicode_ranges' || key === 'language_support') {
-          const input = document.createElement('input');
-          input.value = arrToStr(val);
-          input.placeholder = 'comma-separated';
-          input.addEventListener('change', () => {
-            productsData[index] = productsData[index] || {};
-            productsData[index][key] = strToArr(input.value);
-          });
-          td.appendChild(input);
-        } else if (key === 'is_active') {
-          const sel = document.createElement('select');
-          sel.innerHTML = '<option value="true">true</option><option value="false">false</option>';
-          sel.value = val === false ? 'false' : 'true';
-          sel.addEventListener('change', () => {
-            productsData[index] = productsData[index] || {};
-            productsData[index][key] = sel.value === 'true';
-          });
-          td.appendChild(sel);
-        } else {
-          const input = document.createElement('input');
-          input.value = val === undefined || val === null ? '' : String(val);
-          input.addEventListener('change', () => {
-            productsData[index] = productsData[index] || {};
-            let v = input.value;
-            if (key === 'font_weight' || key === 'glyph_count') v = parseInt(v, 10) || 0;
-            if (key === 'price') v = parseFloat(v) || 0;
-            productsData[index][key] = v;
-          });
-          td.appendChild(input);
+    document.getElementById('index-add').addEventListener('click', () => {
+      indexData.push({ id: '', name: '', displayName: '', linkUrl: '', dropdownType: '', fontSize: 120, letterSpacing: 0, isOneStyle: false, hasLink: true });
+      renderIndex();
+    });
+
+    document.getElementById('index-save').addEventListener('click', async () => {
+      const msgEl = document.getElementById('index-msg');
+      try {
+        const rows = [];
+        document.querySelectorAll('#index-tbody tr').forEach((tr) => rows.push(collectIndexRow(tr)));
+        await API.saveIndexContent(rows);
+        indexData = rows;
+        renderIndex();
+        showMsg(msgEl, 'Index content saved.', 'success');
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    });
+
+    async function loadDetail() {
+      const msgEl = document.getElementById('detail-msg');
+      try {
+        detailData = await API.getTypefaceDetailContent();
+        renderDetail();
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    }
+
+    document.getElementById('detail-add').addEventListener('click', () => {
+      const id = prompt('Typeface id (e.g. myfont):') || 'new';
+      if (detailData[id]) return alert('Id already exists.');
+      detailData[id] = {
+        description: '',
+        details: { designer: '', version: '', formats: '', styles: '', glyphs: '', unicodeRanges: [] },
+        samples: [],
+        pricing: [],
+        hasOpenType: false,
+        openTypeFeatures: [],
+      };
+      renderDetail();
+    });
+
+    document.getElementById('detail-save').addEventListener('click', async () => {
+      const msgEl = document.getElementById('detail-msg');
+      try {
+        detailData = collectDetailFromTable();
+        await API.saveTypefaceDetailContent(detailData);
+        renderDetail();
+        showMsg(msgEl, 'Typeface detail content saved.', 'success');
+      } catch (err) {
+        showMsg(msgEl, err.message, 'error');
+      }
+    });
+
+    function initColumnResize(tableId) {
+      const table = document.getElementById(tableId);
+      if (!table) return;
+      const cols = table.querySelectorAll('colgroup col');
+      const headers = table.querySelectorAll('thead tr th');
+      const numCols = cols.length;
+      const n = headers.length - 1; /* last column (actions) not resizable */
+
+      /* Per-column width so we only change the column being resized */
+      const colWidths = [];
+
+      function applyColWidth(i, w) {
+        colWidths[i] = w;
+        const col = cols[i];
+        const th = headers[i];
+        const px = w + 'px';
+        if (col) col.style.width = px;
+        if (th) th.style.width = px;
+      }
+
+      function totalTableWidth() {
+        let sum = 0;
+        for (let c = 0; c < numCols; c++) {
+          const w = colWidths[c];
+          if (w != null) sum += w;
+          else {
+            const el = cols[c] && cols[c].style.width ? cols[c] : headers[c];
+            const parsed = el && parseInt(el.style.width || (el.offsetWidth && el.offsetWidth), 10);
+            sum += (parsed && !isNaN(parsed)) ? parsed : 80;
+          }
         }
-        tr.appendChild(td);
-      });
-      const delTd = document.createElement('td');
-      const delBtn = document.createElement('button');
-      delBtn.type = 'button';
-      delBtn.className = 'btn-small';
-      delBtn.textContent = 'Delete';
-      delBtn.addEventListener('click', () => {
-        productsData.splice(index, 1);
-        renderProducts();
-      });
-      delTd.appendChild(delBtn);
-      tr.appendChild(delTd);
-      return tr;
-    }
+        return sum;
+      }
 
-    function renderProducts() {
-      const tbody = document.getElementById('products-tbody');
-      tbody.innerHTML = '';
-      productsData.forEach((p, i) => tbody.appendChild(productRow(p, i)));
-    }
+      function syncTableWidth() {
+        table.style.width = totalTableWidth() + 'px';
+      }
 
-    async function loadProducts() {
-      const msgEl = document.getElementById('products-msg');
-      try {
-        productsData = await API.getProducts();
-        renderProducts();
-      } catch (err) {
-        showMsg(msgEl, err.message, 'error');
+      /* Initialize column widths from current layout; last column fixed 72px */
+      const actionsCol = numCols - 1;
+      for (let i = 0; i < numCols; i++) {
+        const th = headers[i];
+        if (i === actionsCol) {
+          applyColWidth(i, 72);
+        } else {
+          const w = (th && th.offsetWidth) || 80;
+          applyColWidth(i, w);
+        }
+      }
+      syncTableWidth();
+
+      for (let i = 0; i < n; i++) {
+        const th = headers[i];
+        const handle = document.createElement('div');
+        handle.className = 'col-resize-handle';
+        handle.title = 'Drag to resize column';
+        th.appendChild(handle);
+        handle.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const startX = e.pageX;
+          const startW = colWidths[i] != null ? colWidths[i] : (th.offsetWidth || 80);
+          document.body.classList.add('col-resizing');
+          const onMove = (e2) => {
+            e2.preventDefault();
+            const dw = e2.pageX - startX;
+            const w = Math.max(40, startW + dw);
+            applyColWidth(i, w);
+            syncTableWidth();
+          };
+          const onUp = () => {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            document.body.classList.remove('col-resizing');
+          };
+          document.addEventListener('mousemove', onMove, { passive: false });
+          document.addEventListener('mouseup', onUp);
+        });
       }
     }
 
-    document.getElementById('products-add').addEventListener('click', () => {
-      productsData.push({
-        id: '',
-        family_name: '',
-        style_name: 'Regular',
-        display_name: '',
-        font_weight: 400,
-        font_style: 'normal',
-        font_stretch: 'normal',
-        price: 0,
-        currency: 'EUR',
-        glyph_count: 0,
-        unicode_ranges: [],
-        language_support: [],
-        file_path_woff2: '',
-        file_path_woff: '',
-        is_active: true,
-      });
-      renderProducts();
-    });
-
-    document.getElementById('products-save').addEventListener('click', async () => {
-      const msgEl = document.getElementById('products-msg');
-      try {
-        const toSave = productsData.map((p) => ({
-          ...p,
-          unicode_ranges: Array.isArray(p.unicode_ranges) ? p.unicode_ranges : strToArr(p.unicode_ranges),
-          language_support: Array.isArray(p.language_support) ? p.language_support : strToArr(p.language_support),
-        }));
-        await API.saveProducts(toSave);
-        productsData = toSave;
-        renderProducts();
-        showMsg(msgEl, 'Products saved.', 'success');
-      } catch (err) {
-        showMsg(msgEl, err.message, 'error');
-      }
-    });
-
-    // --- Typeface samples ---
-    async function loadSamples() {
-      const msgEl = document.getElementById('samples-msg');
-      try {
-        const samples = await API.getSamples();
-        document.getElementById('samples-json-editor').value = JSON.stringify(samples, null, 2);
-      } catch (err) {
-        showMsg(msgEl, err.message, 'error');
-      }
-    }
-
-    document.getElementById('samples-save').addEventListener('click', async () => {
-      const msgEl = document.getElementById('samples-msg');
-      const raw = document.getElementById('samples-json-editor').value;
-      try {
-        const samples = JSON.parse(raw);
-        if (!Array.isArray(samples)) throw new Error('JSON must be an array');
-        await API.saveSamples(samples);
-        showMsg(msgEl, 'Typeface samples saved.', 'success');
-      } catch (err) {
-        showMsg(msgEl, err.message || 'Invalid JSON', 'error');
-      }
-    });
-
-    // Init
-    checkAuth();
+    loadIndex();
+    loadDetail();
+    initColumnResize('index-table');
+    initColumnResize('detail-table');
   </script>
 </body>
 </html>

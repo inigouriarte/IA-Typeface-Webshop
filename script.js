@@ -3,15 +3,16 @@
  * @param {string} selector - CSS selector for sliders
  * @param {string} styleProperty - CSS style property to update (e.g., 'fontSize', 'letterSpacing')
  * @param {string} defaultDefaultValue - Default value if not specified in HTML
+ * @param {string} [unit='px'] - Unit for the value (e.g. 'px', 'em'). Use 'em' for letterSpacing so it scales with font size.
  */
-function initializeSliders(selector, styleProperty, defaultDefaultValue) {
+function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
+    var u = (unit === undefined || unit === null) ? 'px' : unit;
     document.querySelectorAll(selector).forEach(slider => {
         const defaultValue = slider.getAttribute('value') || defaultDefaultValue;
         let previousValue = slider.value;
         let mouseDownTime = 0;
         let hasMoved = false;
         
-        // Helper function to find the target sample element
         function findSample() {
             const section = slider.closest('.typeface-section');
             let sample = section ? section.querySelector('.typeface-sample') : null;
@@ -25,11 +26,10 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue) {
         slider.addEventListener('input', function() {
             const sample = findSample();
             if (sample) {
-                sample.style[styleProperty] = this.value + 'px';
+                sample.style[styleProperty] = this.value + u;
             }
         });
         
-        // Reset to default on track click (not thumb drag)
         slider.addEventListener('mousedown', function(e) {
             previousValue = this.value;
             mouseDownTime = Date.now();
@@ -44,12 +44,11 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue) {
         
         slider.addEventListener('mouseup', function(e) {
             const clickDuration = Date.now() - mouseDownTime;
-            // If it was a quick click (< 200ms) and value didn't change much, reset to default
-            if (clickDuration < 200 && !hasMoved && Math.abs(this.value - previousValue) < 5) {
+            if (clickDuration < 200 && !hasMoved && Math.abs(parseFloat(this.value) - parseFloat(previousValue)) < (u === 'em' ? 0.02 : 5)) {
                 const sample = findSample();
                 if (sample) {
                     this.value = defaultValue;
-                    sample.style[styleProperty] = defaultValue + 'px';
+                    sample.style[styleProperty] = defaultValue + u;
                 }
             }
             mouseDownTime = 0;
@@ -61,8 +60,129 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue) {
 // Initialize font size sliders
 initializeSliders('.font-size-slider', 'fontSize', '120');
 
-// Initialize letter spacing sliders
-initializeSliders('.letter-spacing-slider', 'letterSpacing', '0');
+// Initialize letter spacing sliders (em = relative to font size)
+initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
+
+// --- Typeface dropdown: portal-based (menu rendered at body so never clipped, backdrop always works) ---
+(function() {
+    var portal = null;
+    var currentOpen = null; // { dropdown, menu } when a typeface dropdown is open
+
+    /**
+     * Dropdown portal alignment – one config per style (font weight) type only. Edit here to tune alignment.
+     * Opentype is positioned separately and not affected by this config.
+     */
+    var DROPDOWN_PORTAL_ALIGN = {
+        styleHomepageFirst: { leftOffset: -1, widthDelta: 1, align: 'left' },
+        styleHomepageRest:  { leftOffset: -1, widthDelta: 1, align: 'left' },
+        styleDetail:        { leftOffset: 0, widthDelta: 0, align: 'left' }
+    };
+
+    function getPortal() {
+        if (!portal) {
+            portal = document.createElement('div');
+            portal.id = 'dropdown-portal';
+            document.body.appendChild(portal);
+        }
+        return portal;
+    }
+
+    function isTypefaceDropdown(dropdown) {
+        return dropdown && dropdown.closest && dropdown.closest('.typeface-section') !== null;
+    }
+
+    function getDropdownPortalType(dropdown) {
+        if (dropdown.classList.contains('opentype-dropdown')) return 'opentype';
+        var main = dropdown.closest('main');
+        var section = dropdown.closest('.typeface-section');
+        var isHomepage = main && main.classList.contains('typefaces-container');
+        var isFirstSection = main && section && section === main.querySelector('.typeface-section');
+        if (isHomepage && isFirstSection) return 'styleHomepageFirst';
+        if (isHomepage) return 'styleHomepageRest';
+        return 'styleDetail';
+    }
+
+    /** OpenType dropdown: fixed positioning, detached from DROPDOWN_PORTAL_ALIGN. */
+    function positionOpenTypeDropdownInPortal(menu, trigger) {
+        if (!menu || !trigger) return;
+        var r = trigger.getBoundingClientRect();
+        var w = r.width - 1;
+        menu.style.top = r.bottom + 'px';
+        menu.style.width = (w + 2) + 'px';
+        menu.style.left = (r.right - w - 2) + 'px';
+    }
+
+    function positionMenuInPortal(menu, trigger, dropdown) {
+        if (!menu || !trigger || !dropdown) return;
+        if (dropdown.classList.contains('opentype-dropdown')) {
+            positionOpenTypeDropdownInPortal(menu, trigger);
+            return;
+        }
+        var type = getDropdownPortalType(dropdown);
+        var c = DROPDOWN_PORTAL_ALIGN[type] || DROPDOWN_PORTAL_ALIGN.styleDetail;
+        var r = trigger.getBoundingClientRect();
+        var w = r.width - 1 + (c.widthDelta || 0);
+        menu.style.top = r.bottom + 'px';
+        menu.style.width = w + 'px';
+        menu.style.left = (r.left + (c.leftOffset || 0)) + 'px';
+    }
+
+    function openTypefaceInPortal(dropdown) {
+        if (!isTypefaceDropdown(dropdown)) return;
+        var trigger = dropdown.querySelector('.dropdown-trigger');
+        var menu = dropdown.querySelector('.dropdown-menu');
+        if (!trigger || !menu) return;
+        closeTypefacePortal(true);
+        getPortal().appendChild(menu);
+        menu.classList.add('dropdown-menu--portal');
+        positionMenuInPortal(menu, trigger, dropdown);
+        currentOpen = { dropdown: dropdown, menu: menu, trigger: trigger };
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() { menu.classList.add('dropdown-menu--portal-visible'); });
+        });
+    }
+
+    function closeTypefacePortal(immediate) {
+        if (!currentOpen) return;
+        var dropdown = currentOpen.dropdown;
+        var menu = currentOpen.menu;
+        var trigger = currentOpen.trigger;
+        currentOpen = null;
+        if (immediate) {
+            menu.style.top = '';
+            menu.style.left = '';
+            menu.style.width = '';
+            menu.classList.remove('dropdown-menu--portal', 'dropdown-menu--portal-visible', 'dropdown-menu--portal-closing');
+            dropdown.appendChild(menu);
+            return;
+        }
+        menu.classList.remove('dropdown-menu--portal-visible');
+        menu.classList.add('dropdown-menu--portal-closing');
+        menu.addEventListener('transitionend', function onEnd(e) {
+            if (e.target !== menu || e.propertyName !== 'opacity') return;
+            menu.removeEventListener('transitionend', onEnd);
+            menu.style.top = '';
+            menu.style.left = '';
+            menu.style.width = '';
+            menu.classList.remove('dropdown-menu--portal', 'dropdown-menu--portal-visible', 'dropdown-menu--portal-closing');
+            dropdown.appendChild(menu);
+        });
+    }
+
+    function repositionPortalMenu() {
+        if (currentOpen) positionMenuInPortal(currentOpen.menu, currentOpen.trigger, currentOpen.dropdown);
+    }
+
+    window.TypefaceDropdownPortal = {
+        open: openTypefaceInPortal,
+        close: closeTypefacePortal,
+        isTypeface: isTypefaceDropdown,
+        reposition: repositionPortalMenu
+    };
+
+    window.addEventListener('scroll', repositionPortalMenu, true);
+    window.addEventListener('resize', repositionPortalMenu);
+})();
 
 // Custom dropdown functionality
 document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
@@ -70,104 +190,70 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
     const menu = dropdown.querySelector('.dropdown-menu');
     const options = dropdown.querySelectorAll('.dropdown-option');
     const selectedText = dropdown.querySelector('.dropdown-selected');
+    const isTypeface = () => window.TypefaceDropdownPortal && window.TypefaceDropdownPortal.isTypeface(dropdown);
     
-    // Toggle dropdown
     trigger.addEventListener('click', function(e) {
         e.stopPropagation();
-        const isOpen = dropdown.classList.contains('open');
+        const wasOpen = dropdown.classList.contains('open');
         
-        // Close all other dropdowns
         document.querySelectorAll('.custom-dropdown').forEach(d => {
             if (d !== dropdown) {
+                if (window.TypefaceDropdownPortal && window.TypefaceDropdownPortal.isTypeface(d)) window.TypefaceDropdownPortal.close(true);
                 d.classList.remove('open');
             }
         });
         
-        // Toggle current dropdown
-        dropdown.classList.toggle('open', !isOpen);
+        dropdown.classList.toggle('open', !wasOpen);
         
-        // If opening OpenType dropdown, update selected state in menu
-        if (!isOpen && dropdown.classList.contains('opentype-dropdown')) {
-            const section = dropdown.closest('.typeface-section');
-            if (section) {
-                const sample = section.querySelector('.typeface-sample');
-                if (sample) {
-                    updateOpenTypeSelectedText(dropdown, sample);
+        if (!wasOpen) {
+            if (isTypeface()) window.TypefaceDropdownPortal.open(dropdown);
+            if (dropdown.classList.contains('opentype-dropdown')) {
+                const section = dropdown.closest('.typeface-section');
+                if (section) {
+                    const sample = section.querySelector('.typeface-sample');
+                    if (sample) updateOpenTypeSelectedText(dropdown, sample);
                 }
             }
+        } else {
+            if (isTypeface()) window.TypefaceDropdownPortal.close();
         }
     });
     
-    // Handle option selection
     options.forEach(option => {
         option.addEventListener('click', function(e) {
             e.stopPropagation();
             
-            // Don't close dropdown for OpenType features (they use checkboxes)
-            const isOpenTypeDropdown = dropdown.classList.contains('opentype-dropdown');
-            const isOpenTypeOption = this.classList.contains('opentype-option') || this.closest('.opentype-option');
-            
-            if (isOpenTypeDropdown || isOpenTypeOption) {
-                // OpenType features are handled by checkbox handlers, don't close dropdown
+            if (dropdown.classList.contains('opentype-dropdown') || this.classList.contains('opentype-option') || this.closest('.opentype-option')) return;
+            if (dropdown.classList.contains('nav-dropdown')) {
+                dropdown.classList.remove('open');
                 return;
             }
             
-            // If it's a navigation dropdown with links, just close the dropdown
-            // The link will handle navigation naturally
-            if (dropdown.classList.contains('nav-dropdown')) {
-                dropdown.classList.remove('open');
-                return; // Let the link navigate naturally
-            }
-            
-            // Remove selected class from all options
             options.forEach(opt => opt.classList.remove('selected'));
-            
-            // Add selected class to clicked option
             this.classList.add('selected');
+            if (selectedText) selectedText.textContent = this.textContent;
             
-            // Update trigger text
-            if (selectedText) {
-                selectedText.textContent = this.textContent;
-            }
-            
-            // Get the weight, stretch, and style values
             const weight = this.getAttribute('data-weight') || this.getAttribute('data-value');
             const stretch = this.getAttribute('data-stretch');
             const style = this.getAttribute('data-style');
-            
-            // Update font weight, stretch, and style on typeface sample
             const section = dropdown.closest('.typeface-section');
-            const target = section ? section.getAttribute('data-font') : null;
-            // Find the sample in the same section
-            const sample = section ? section.querySelector(`.typeface-sample`) : null;
+            const sample = section ? section.querySelector('.typeface-sample') : null;
             if (sample) {
-                if (weight) {
-                    sample.style.fontWeight = weight;
-                }
-                if (stretch) {
-                    sample.style.fontStretch = stretch;
-                } else {
-                    sample.style.fontStretch = 'normal';
-                }
-                if (style) {
-                    sample.style.fontStyle = style;
-                } else {
-                    sample.style.fontStyle = 'normal';
-                }
+                if (weight) sample.style.fontWeight = weight;
+                sample.style.fontStretch = stretch || 'normal';
+                sample.style.fontStyle = style || 'normal';
             }
             
-            // Close dropdown
+            if (isTypeface()) window.TypefaceDropdownPortal.close();
             dropdown.classList.remove('open');
         });
     });
 });
 
-// Close dropdown when clicking outside
 document.addEventListener('click', function(e) {
-    if (!e.target.closest('.custom-dropdown')) {
-        document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
-            dropdown.classList.remove('open');
-        });
+    if (!e.target.closest('.custom-dropdown') && !e.target.closest('#dropdown-portal')) {
+        if (window.TypefaceDropdownPortal) window.TypefaceDropdownPortal.close();
+        document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('open'));
     }
 });
 
@@ -441,105 +527,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ============================================================================
-// Product data (from data/products.json – edit there or export from spreadsheet)
-// ============================================================================
-
-let productsCache = null;
-
-/**
- * Load products from data/products.json (cached after first load)
- * @returns {Promise<Array>} Array of all product objects
- */
-async function loadProducts() {
-    if (productsCache !== null) return productsCache;
-    try {
-        let res = await fetch('/api/data/products');
-        if (!res.ok) res = await fetch('data/products.json');
-        if (!res.ok) throw new Error(res.statusText);
-        const data = await res.json();
-        productsCache = Array.isArray(data) ? data : [];
-        return productsCache;
-    } catch (error) {
-        console.error('Error loading products:', error);
-        productsCache = [];
-        return [];
-    }
-}
-
-/**
- * Fetch all active products
- * @returns {Promise<Array>} Array of product objects
- */
-async function fetchAllProducts() {
-    const data = await loadProducts();
-    return data
-        .filter(p => p.is_active !== false)
-        .sort((a, b) => (a.family_name || '').localeCompare(b.family_name) || (a.font_weight || 0) - (b.font_weight || 0));
-}
-
-/**
- * Fetch products by family name
- * @param {string} familyName - The font family name (e.g., 'INDG Alvica')
- * @returns {Promise<Array>} Array of product objects for that family
- */
-async function fetchProductsByFamily(familyName) {
-    const data = await loadProducts();
-    return data
-        .filter(p => p.is_active !== false && p.family_name === familyName)
-        .sort((a, b) => (a.font_weight || 0) - (b.font_weight || 0));
-}
-
-/**
- * Fetch a single product by ID
- * @param {string} productId - The product ID
- * @returns {Promise<Object|null>} Product object or null if not found
- */
-async function fetchProductById(productId) {
-    const data = await loadProducts();
-    const product = data.find(p => p.is_active !== false && p.id === productId);
-    return product || null;
-}
-
-/**
- * Find a product by font specifications
- * @param {string} familyName - Font family name
- * @param {number} fontWeight - Font weight (100-900)
- * @param {string} fontStyle - Font style ('normal', 'italic', 'oblique')
- * @param {string} fontStretch - Font stretch ('normal', 'expanded', etc.)
- * @returns {Promise<Object|null>} Product object or null if not found
- */
-async function findProductBySpecs(familyName, fontWeight, fontStyle = 'normal', fontStretch = 'normal') {
-    const data = await loadProducts();
-    return data.find(p =>
-        p.is_active !== false &&
-        p.family_name === familyName &&
-        Number(p.font_weight) === Number(fontWeight) &&
-        (p.font_style || 'normal') === fontStyle &&
-        (p.font_stretch || 'normal') === fontStretch
-    ) || null;
-}
-
-/**
- * Get all unique font families
- * @returns {Promise<Array>} Array of unique family names
- */
-async function getAllFontFamilies() {
-    const data = await loadProducts();
-    const families = [...new Set(data.filter(p => p.is_active !== false).map(p => p.family_name).filter(Boolean))];
-    return families.sort();
-}
-
-// Example: Load products on page load (optional - uncomment to use)
-// document.addEventListener('DOMContentLoaded', async function() {
-//     const products = await fetchAllProducts();
-//     console.log('Loaded products:', products);
-//     
-//     // You can now use the products data to populate your page
-//     // For example, update prices, show product info, etc.
-// });
-
 // OpenType Feature Detection and Toggling
+// Canonical order for OpenType features (same as typeface-detail-renderer.js)
+var OPENTYPE_FEATURE_ORDER = [
+    'liga', 'calt', 'clig', 'dlig',
+    'smcp', 'c2sc',
+    'onum', 'lnum', 'tnum', 'zero',
+    'salt',
+    'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'ss10', 'ss11', 'ss12', 'ss13', 'ss14', 'ss15', 'ss16', 'ss17', 'ss18', 'ss19', 'ss20'
+];
+
+function sortOpenTypeFeaturesList(features) {
+    const order = OPENTYPE_FEATURE_ORDER;
+    const orderIndex = function (tag) {
+        const i = order.indexOf(tag);
+        if (i >= 0) return i;
+        const ss = /^ss(\d+)$/.exec(tag);
+        if (ss) return 1000 + parseInt(ss[1], 10);
+        return 2000;
+    };
+    return [...features].sort(function (a, b) {
+        const ia = orderIndex(a);
+        const ib = orderIndex(b);
+        if (ia !== ib) return ia - ib;
+        return String(a).localeCompare(b);
+    });
+}
+
 // Font file mapping for feature detection
 const fontFileMap = {
     'INDG Alvica': 'fonts/Alvica/INDGAlvica-Regular.woff2',
@@ -644,20 +658,49 @@ function getFontFamilyFromSection(section) {
 }
 
 /**
- * Populate OpenType dropdown with detected features
- * @param {Element} dropdown - The OpenType dropdown element
- * @param {Array} features - Array of feature tags
+ * Attach click handlers to existing OpenType dropdown options (does not replace content).
+ * Reorders options to match OPENTYPE_FEATURE_ORDER so the list is sensible.
+ */
+function attachOpenTypeDropdownBehavior(dropdown) {
+    const menu = dropdown.querySelector('.opentype-menu');
+    if (!menu) return;
+
+    const options = Array.from(menu.querySelectorAll('.dropdown-option[data-feature]'));
+    const features = options.map(function (el) { return el.getAttribute('data-feature'); });
+    const sorted = sortOpenTypeFeaturesList(features);
+    sorted.forEach(function (feature) {
+        const option = options.find(function (el) { return el.getAttribute('data-feature') === feature; });
+        if (option) menu.appendChild(option);
+    });
+
+    menu.querySelectorAll('.dropdown-option[data-feature]').forEach(option => {
+        option.classList.add('opentype-option');
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const feature = this.getAttribute('data-feature');
+            const section = dropdown.closest('.typeface-section');
+            const sample = section ? section.querySelector('.typeface-sample') : null;
+            if (sample && feature) {
+                const isSelected = this.classList.contains('selected');
+                this.classList.toggle('selected', !isSelected);
+                toggleOpenTypeFeature(sample, feature, !isSelected);
+                updateOpenTypeSelectedText(dropdown, sample);
+            }
+        });
+    });
+}
+
+/**
+ * Populate OpenType dropdown with a given list of features (replaces menu content).
+ * Used only when the page has no pre-rendered features (e.g. fallback).
  */
 function populateOpenTypeDropdown(dropdown, features) {
     const menu = dropdown.querySelector('.opentype-menu');
     if (!menu) return;
-    
-    // Clear existing options
+
     menu.innerHTML = '';
-    
-    // Remove duplicates and sort
-    const uniqueFeatures = [...new Set(features)].sort();
-    
+    const uniqueFeatures = sortOpenTypeFeaturesList([...new Set(features)]);
+
     uniqueFeatures.forEach(feature => {
         const option = document.createElement('div');
         option.className = 'dropdown-option opentype-option';
@@ -665,25 +708,17 @@ function populateOpenTypeDropdown(dropdown, features) {
         option.textContent = feature;
         menu.appendChild(option);
     });
-    
-    // Add click handler for options
+
     menu.querySelectorAll('.opentype-option').forEach(option => {
         option.addEventListener('click', function(e) {
             e.stopPropagation();
-            
             const feature = this.getAttribute('data-feature');
             const section = dropdown.closest('.typeface-section');
             const sample = section ? section.querySelector('.typeface-sample') : null;
-            
             if (sample && feature) {
-                // Toggle selected class
                 const isSelected = this.classList.contains('selected');
                 this.classList.toggle('selected', !isSelected);
-                
-                // Toggle feature
                 toggleOpenTypeFeature(sample, feature, !isSelected);
-                
-                // Update selected features display
                 updateOpenTypeSelectedText(dropdown, sample);
             }
         });
@@ -777,22 +812,37 @@ function toggleOpenTypeFeature(sample, feature, enabled) {
 }
 
 /**
- * Initialize OpenType dropdowns for all typeface sections
+ * Initialize OpenType dropdowns for all typeface sections.
+ * Uses the features already in the DOM (from openTypeFeatures in typeface config) so each
+ * typeface only shows its own features. Falls back to detection only when no options are present.
  */
 async function initializeOpenTypeDropdowns() {
     const opentypeDropdowns = document.querySelectorAll('.opentype-dropdown');
-    
+
     for (const dropdown of opentypeDropdowns) {
+        const menu = dropdown.querySelector('.opentype-menu');
+        if (!menu) continue;
+
+        const existingOptions = menu.querySelectorAll('.dropdown-option[data-feature]');
+        if (existingOptions.length > 0) {
+            // Page already has per-typeface features from config; just attach behavior
+            attachOpenTypeDropdownBehavior(dropdown);
+            const section = dropdown.closest('.typeface-section');
+            const sample = section ? section.querySelector('.typeface-sample') : null;
+            if (sample) updateOpenTypeSelectedText(dropdown, sample);
+            continue;
+        }
+
+        // No pre-rendered features: fallback to detection (e.g. legacy or index)
         const section = dropdown.closest('.typeface-section');
         if (!section) continue;
-        
+
         const fontFamily = getFontFamilyFromSection(section);
         if (!fontFamily || !fontFileMap[fontFamily]) {
-            // Use fallback features if font not in map
             populateOpenTypeDropdown(dropdown, ['liga', 'calt', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'smcp', 'zero', 'salt']);
             continue;
         }
-        
+
         const fontPath = fontFileMap[fontFamily];
         const features = await detectOpenTypeFeatures(fontPath);
         populateOpenTypeDropdown(dropdown, features);

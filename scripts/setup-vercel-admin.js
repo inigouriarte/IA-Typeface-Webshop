@@ -1,10 +1,9 @@
 /**
- * One-time setup: create Vercel Blob store and push .env to Vercel.
+ * One-time setup: push .env to Vercel for admin auth.
  * Run: node scripts/setup-vercel-admin.js
  * Requires: vercel CLI linked and logged in (vercel link).
  *
- * 1. Creates Blob store "admin-data" (if not exists).
- * 2. Pushes SESSION_SECRET, ADMIN_PASSWORD_HASH, ALLOWED_ADMIN_EMAILS (and optional GOOGLE_*, BASE_URL) to Vercel production + preview.
+ * Pushes SESSION_SECRET, ADMIN_PASSWORD_HASH, ALLOWED_ADMIN_EMAILS (and optional GOOGLE_*, BASE_URL) to Vercel production + preview.
  */
 
 const { spawnSync } = require('child_process');
@@ -62,11 +61,7 @@ function main() {
 
   const env = parseEnv(fs.readFileSync(ENV_PATH, 'utf8'));
 
-  console.log('1. Creating Blob store "admin-data" (if needed)...');
-  run(VERCEL_CMD + ' ' + [...VERCEL_ARGS, 'blob', 'store', 'add', 'admin-data'].join(' '), { allowFail: true });
-  console.log('   (If it already exists or CLI is old, that’s ok.)\n');
-
-  console.log('2. Pushing env vars to Vercel (production + preview)...');
+  console.log('Pushing env vars to Vercel (production + preview)...');
   for (const key of ENV_KEYS) {
     const value = env[key];
     if (!value) continue;
@@ -76,7 +71,7 @@ function main() {
     console.log('   Set', key);
   }
 
-  console.log('\nDone. Redeploy (e.g. push to main or run `vercel --prod`) so the new env + Blob are used.');
+  console.log('\nDone. Redeploy (e.g. push to main or run `vercel --prod`) so the new env vars are used.');
 }
 
 main();

@@ -16,7 +16,7 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">Indigo Alphabets®</div>
+            <a href="index.html" class="logo">Indigo Alphabets®</a>
             <nav class="nav">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
@@ -41,7 +41,7 @@
 
     <!-- Typeface Sections -->
     <main class="typeface-detail-container">
-        <!-- Regular Section -->
+        <!-- regular Section -->
         <section class="typeface-section" data-font="sifora">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -49,20 +49,88 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="sifora-regular">
-                        <span class="control-label">400</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="115" data-target="sifora-regular">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="sifora-regular">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="sifora-regular">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="sifora" data-sample="regular" data-target-match="sifora-regular" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">Sifora</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="sifora" data-sample="regular" data-target-match="sifora-regular" style="font-size: 115px; letter-spacing: 0em; font-weight: 400;">Sphinx of black quartz, judge my vow.</div>
+        </section>
+
+        <!-- alphabet Section -->
+        <section class="typeface-section" data-font="sifora">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="72" data-target="sifora-alphabet">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="sifora-alphabet">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="sifora" data-sample="alphabet" data-target-match="sifora-alphabet" style="font-size: 72px; letter-spacing: 0em; font-weight: 400;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789</div>
+        </section>
+
+        <!-- phrase Section -->
+        <section class="typeface-section" data-font="sifora">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="85" data-target="sifora-phrase">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="sifora-phrase">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="sifora" data-sample="phrase" data-target-match="sifora-phrase" style="font-size: 85px; letter-spacing: 0em; font-weight: 400;">Clean lines and modern aesthetics.</div>
+        </section>
+
+        <!-- body Section -->
+        <section class="typeface-section" data-font="sifora">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <span class="one-style-text">One style</span>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="28" data-target="sifora-body">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="sifora-body">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="sifora" data-sample="body" data-target-match="sifora-body" style="font-size: 28px; letter-spacing: 0em; font-weight: 400;">Sifora works for interfaces, titles, and body text where clarity and a contemporary look are needed.</div>
         </section>
 
         <!-- Typeface Details Section -->
@@ -153,21 +221,21 @@
         <div class="footer-content">
             <div class="typeface-columns">
                 <div class="typeface-column">
-                    <div><a href="alvica.html" style="text-decoration: none; color: var(--color-text-light);">Alvica</a></div>
-                    <div><a href="actio.html" style="text-decoration: none; color: var(--color-text-light);">Actio</a></div>
-                    <div><a href="modus.html" style="text-decoration: none; color: var(--color-text-light);">Modus</a></div>
-                    <div><a href="luara.html" style="text-decoration: none; color: var(--color-text-light);">Luara</a></div>
+                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="zigrid.html" style="text-decoration: none; color: var(--color-text-light);">Zigrid</a></div>
-                    <div><a href="dale.html" style="text-decoration: none; color: var(--color-text-light);">Dale</a></div>
-                    <div><a href="peqat.html" style="text-decoration: none; color: var(--color-text-light);">Peqat</a></div>
-                    <div><a href="heron.html" style="text-decoration: none; color: var(--color-text-light);">Heron</a></div>
+                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="naora.html" style="text-decoration: none; color: var(--color-text-light);">Naora</a></div>
-                    <div><a href="sifora.html" style="text-decoration: none; color: var(--color-text-light);">Sifora</a></div>
-                    <div><a href="oequadrat.html" style="text-decoration: none; color: var(--color-text-light);">OE Quadrat</a></div>
+                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
                 </div>
             </div>
         </div>
@@ -197,4 +265,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-

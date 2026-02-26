@@ -16,7 +16,7 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">Indigo Alphabets®</div>
+            <a href="index.html" class="logo">Indigo Alphabets®</a>
             <nav class="nav">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
@@ -41,7 +41,7 @@
 
     <!-- Typeface Sections -->
     <main class="typeface-detail-container">
-        <!-- Grey Section -->
+        <!-- grey Section -->
         <section class="typeface-section" data-font="modus">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -59,23 +59,55 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
                         <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="modus-grey">
-                        <span class="control-label">400</span>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="modus-grey">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="modus-grey">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="grey" data-target-match="modus-grey" style="font-size: 120px; font-weight: 400; letter-spacing: 0px;">MODUS GREY</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="grey" data-target-match="modus-grey" style="font-size: 120px; letter-spacing: 0em; font-weight: 400;">MODUS GREY</div>
         </section>
 
-        <!-- Black Section -->
+        <!-- grey-alphabet Section -->
+        <section class="typeface-section" data-font="modus">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Grey</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-value="400">Grey</div>
+                            <div class="dropdown-option" data-value="900">Black</div>
+                            <div class="dropdown-option" data-value="100">White</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="65" data-target="modus-grey-alphabet">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="modus-grey-alphabet">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="grey-alphabet" data-target-match="modus-grey-alphabet" style="font-size: 65px; letter-spacing: 0em; font-weight: 400;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</div>
+        </section>
+
+        <!-- black Section -->
         <section class="typeface-section" data-font="modus">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -93,23 +125,22 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
                         <input type="range" class="font-size-slider" min="10" max="400" value="140" data-target="modus-black">
-                        <span class="control-label">400</span>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="modus-black">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="modus-black">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="black" data-target-match="modus-black" style="font-size: 140px; font-weight: 900; letter-spacing: 0px;">MODUS BLACK</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="black" data-target-match="modus-black" style="font-size: 140px; letter-spacing: 0em; font-weight: 900;">MODUS BLACK</div>
         </section>
 
-        <!-- White Section -->
+        <!-- white Section -->
         <section class="typeface-section" data-font="modus">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -127,20 +158,52 @@
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">10</span>
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
                         <input type="range" class="font-size-slider" min="10" max="400" value="100" data-target="modus-white">
-                        <span class="control-label">400</span>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
-                        <span class="control-label">-10</span>
-                        <input type="range" class="letter-spacing-slider" min="-10" max="10" value="0" data-target="modus-white">
-                        <span class="control-label">+10</span>
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="modus-white">
                     </div>
                 </div>
+
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="white" data-target-match="modus-white" style="font-size: 100px; font-weight: 100; letter-spacing: 0px;">MODUS WHITE</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="white" data-target-match="modus-white" style="font-size: 100px; letter-spacing: 0em; font-weight: 100;">MODUS WHITE</div>
+        </section>
+
+        <!-- body Section -->
+        <section class="typeface-section" data-font="modus">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Grey</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-value="400">Grey</div>
+                            <div class="dropdown-option" data-value="900">Black</div>
+                            <div class="dropdown-option" data-value="100">White</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="32" data-target="modus-body">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="modus-body">
+                    </div>
+                </div>
+
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="modus" data-sample="body" data-target-match="modus-body" style="font-size: 32px; letter-spacing: 0em; font-weight: 400;">Grey, Black, and White—three variants for experimental and editorial typography.</div>
         </section>
 
         <!-- Typeface Details Section -->
@@ -255,21 +318,21 @@
         <div class="footer-content">
             <div class="typeface-columns">
                 <div class="typeface-column">
-                    <div><a href="alvica.html" style="text-decoration: none; color: var(--color-text-light);">Alvica</a></div>
-                    <div><a href="actio.html" style="text-decoration: none; color: var(--color-text-light);">Actio</a></div>
-                    <div><a href="modus.html" style="text-decoration: none; color: var(--color-text-light);">Modus</a></div>
-                    <div><a href="luara.html" style="text-decoration: none; color: var(--color-text-light);">Luara</a></div>
+                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="zigrid.html" style="text-decoration: none; color: var(--color-text-light);">Zigrid</a></div>
-                    <div><a href="dale.html" style="text-decoration: none; color: var(--color-text-light);">Dale</a></div>
-                    <div><a href="peqat.html" style="text-decoration: none; color: var(--color-text-light);">Peqat</a></div>
-                    <div><a href="heron.html" style="text-decoration: none; color: var(--color-text-light);">Heron</a></div>
+                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="naora.html" style="text-decoration: none; color: var(--color-text-light);">Naora</a></div>
-                    <div><a href="sifora.html" style="text-decoration: none; color: var(--color-text-light);">Sifora</a></div>
-                    <div><a href="oequadrat.html" style="text-decoration: none; color: var(--color-text-light);">OE Quadrat</a></div>
+                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
                 </div>
             </div>
         </div>
@@ -299,4 +362,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
