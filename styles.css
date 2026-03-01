@@ -698,7 +698,7 @@ input[type="range"]:hover,
 
 /* About Section */
 .about-section {
-    padding: 150px var(--layout-padding-desktop);
+    padding: 150px 40px;
     margin: 0;
     position: relative;
     min-height: 100vh;
@@ -1115,29 +1115,20 @@ main {
     pointer-events: auto;
 }
 
-/* Dedicated backdrop so blur works reliably (menu sits on top with transparent background) */
-.dropdown-portal-backdrop {
-    position: fixed;
-    inset: 0;
-    background-color: var(--color-surface);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    z-index: 0;
-    pointer-events: none;
-}
-
 /* Menu when rendered in portal (same look as open state, position from JS) */
 #dropdown-portal .dropdown-menu.dropdown-menu--portal {
     position: fixed;
     z-index: 1;
     max-height: none;
     margin-bottom: 100px;
-    margin-top: -1px; /* Overlap 1px to avoid stroke stacking with control row */
+    margin-top: 0;
     opacity: 0;
     visibility: visible;
     pointer-events: auto;
     overflow: visible;
-    background-color: transparent;
+    background-color: var(--color-surface);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid var(--color-stroke);
     border-top: none;
     padding-left: 0;
@@ -1826,6 +1817,23 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         max-width: 100%;
         text-align: left;
         font-size: calc(1.5 * var(--font-text-size));
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .about-section .about-spacer {
+        display: none;
+    }
+
+    .about-text {
+        max-width: 100%;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .header {

@@ -139,14 +139,10 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var menu = dropdown.querySelector('.dropdown-menu');
         if (!trigger || !menu) return;
         closeTypefacePortal(true);
-        var p = getPortal();
-        var backdrop = document.createElement('div');
-        backdrop.className = 'dropdown-portal-backdrop';
-        p.appendChild(backdrop);
-        p.appendChild(menu);
+        getPortal().appendChild(menu);
         menu.classList.add('dropdown-menu--portal');
         positionMenuInPortal(menu, trigger, dropdown);
-        currentOpen = { dropdown: dropdown, menu: menu, trigger: trigger, backdrop: backdrop };
+        currentOpen = { dropdown: dropdown, menu: menu, trigger: trigger };
         requestAnimationFrame(function() {
             requestAnimationFrame(function() { menu.classList.add('dropdown-menu--portal-visible'); });
         });
@@ -157,9 +153,7 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var dropdown = currentOpen.dropdown;
         var menu = currentOpen.menu;
         var trigger = currentOpen.trigger;
-        var backdrop = currentOpen.backdrop;
         currentOpen = null;
-        if (backdrop && backdrop.parentNode) backdrop.parentNode.removeChild(backdrop);
         if (immediate) {
             menu.style.top = '';
             menu.style.left = '';
