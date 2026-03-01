@@ -46,8 +46,8 @@ function renderFooter(options = {}) {
     return `    <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
-            <a href="#top" class="back-to-top">▲ Back to top</a>
-            <a href="#licensing" class="footer-link">Licensing</a>
+            <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> Back to top</a>
+            <a href="licensing.html" class="footer-link">Licensing</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">

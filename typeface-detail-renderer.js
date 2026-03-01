@@ -4,6 +4,24 @@
  */
 
 /**
+ * Single source for typeface id → font file path (for preload and OpenType feature detection).
+ * Add one entry here when adding a new typeface so the dropdown shows only that font's features.
+ */
+var TYPEFACE_FONT_PATHS = {
+    alvica: 'fonts/Alvica/INDGAlvica-Semibold.woff2',
+    actio: 'fonts/Actio/INDGActio-RegularNormal.woff2',
+    modus: 'fonts/Modus/INDGModus-Grey.woff2',
+    luara: 'fonts/Luara/INDG Luara.woff2',
+    dale: 'fonts/Dale/INDGDale-Regular.woff2',
+    peqat: 'fonts/Peqat/INDGPeqat-Norma.woff2',
+    heron2: 'fonts/Heron/INDGHeron-ST.woff2',
+    naora: 'fonts/Naora/INDG Naora.woff2',
+    sifora: 'fonts/Sifora/INDGSifora-Regular.woff2',
+    zigrid: 'fonts/Zigrid/INDG Zigrid.woff2',
+    oequadrat: 'fonts/Old English Quadrat/Old-English-Quadrat.woff2'
+};
+
+/**
  * Canonical order for OpenType features in the dropdown (ligatures → case → figures → alternates → stylistic sets → rest).
  */
 var OPENTYPE_FEATURE_ORDER = [
@@ -13,6 +31,13 @@ var OPENTYPE_FEATURE_ORDER = [
     'salt',                            // stylistic alternates
     'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'ss10', 'ss11', 'ss12', 'ss13', 'ss14', 'ss15', 'ss16', 'ss17', 'ss18', 'ss19', 'ss20'
 ];
+
+/** Title-case a string but keep "INDG" unchanged. */
+function toTitleCaseKeepINDG(str) {
+    return str.split(' ').map(function (word) {
+        return word === 'INDG' ? 'INDG' : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+}
 
 function sortOpenTypeFeatures(features) {
     const order = OPENTYPE_FEATURE_ORDER;
@@ -37,12 +62,8 @@ function sortOpenTypeFeatures(features) {
  * @returns {string} HTML string for OpenType dropdown
  */
 function renderOpenTypeDropdown(features = []) {
-    if (!features || features.length === 0) {
-        return '';
-    }
-
-    const sorted = sortOpenTypeFeatures(features);
-    const options = sorted.map(feature =>
+    const list = features && features.length ? sortOpenTypeFeatures(features) : [];
+    const options = list.map(feature =>
         `                            <div class="dropdown-option" data-feature="${feature}">${feature}</div>`
     ).join('\n');
 
@@ -50,7 +71,7 @@ function renderOpenTypeDropdown(features = []) {
                     <div class="custom-dropdown opentype-dropdown">
                         <button class="dropdown-trigger" type="button">
                             <span class="dropdown-arrow">▼</span>
-                            <span class="dropdown-selected">Opentype Features</span>
+                            <span class="dropdown-selected">OT features</span>
                         </button>
                         <div class="dropdown-menu opentype-menu">
 ${options}
@@ -200,8 +221,8 @@ function renderSampleSection(config, detailConfig, sample, sampleIndex) {
     if (sample.stretch) styleAttr += ` font-stretch: ${sample.stretch};`;
     if (sample.style) styleAttr += ` font-style: ${sample.style};`;
 
-    // OpenType dropdown
-    const openTypeHtml = detailConfig.hasOpenType ? renderOpenTypeDropdown(detailConfig.openTypeFeatures) : '';
+    // OpenType dropdown (always empty here; script.js detects from font so only this typeface's features appear)
+    const openTypeHtml = renderOpenTypeDropdown([]);
 
     return `        <!-- ${sample.sampleId || 'Sample'} Section -->
         <section class="typeface-section" data-font="${config.id}">
@@ -219,6 +240,9 @@ ${dropdownHtml}
                         <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="${targetId}">
                     </div>
                 </div>
+                <div class="control-box capitalize-btn-box">
+                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">A</button>
+                </div>
 ${openTypeHtml}
             </div>
             <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}" style="${styleAttr}">${sample.text}</div>
@@ -230,22 +254,17 @@ ${openTypeHtml}
  * @param {Object} details - Details object
  * @returns {string} HTML string for details section
  */
-function renderDetailsSection(details) {
+function renderDetailsSection(details, openTypeFeatures) {
     const unicodeRanges = details.unicodeRanges.map(range => range).join('<br>\n                            ');
 
     return `        <!-- Typeface Details Section -->
         <section class="typeface-details">
+            <h2 class="typeface-pricing-title">Typeface Data</h2>
             <div class="typeface-details-content">
                 <!-- Column 1: Data category (labels) -->
                 <div class="details-column">
                     <div class="detail-item">
                         <div class="detail-label">Designer</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Version</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Formats</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Styles</div>
@@ -260,30 +279,36 @@ function renderDetailsSection(details) {
                         <div class="detail-value">${details.designer}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-value">${details.version}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-value">${details.formats}</div>
-                    </div>
-                    <div class="detail-item">
                         <div class="detail-value">${details.styles}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-value">${details.glyphs}</div>
                     </div>
                 </div>
-                <!-- Column 3: "Unicode Ranges" title -->
+                <!-- Column 3: Right-side labels (Unicode Ranges, OT features, Formats) -->
                 <div class="details-column">
                     <div class="detail-item">
-                        <div class="detail-label">Unicode Ranges</div>
+                        <div class="detail-label">Unicode ranges</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">OT features</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Formats</div>
                     </div>
                 </div>
-                <!-- Column 4: Unicode ranges content -->
+                <!-- Column 4: Right-side values -->
                 <div class="details-column">
                     <div class="detail-item">
                         <div class="detail-value unicode-ranges">
                             ${unicodeRanges}
                         </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value detail-value-ot-features">—</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">${details.formats}</div>
                     </div>
                 </div>
             </div>
@@ -309,6 +334,7 @@ function renderPricingSection(pricing) {
 
     return `        <!-- Available Styles and Pricing -->
         <section class="typeface-pricing">
+            <h2 class="typeface-pricing-title">Pricing</h2>
             <div class="pricing-content">
 ${pricingRows}
             </div>
@@ -324,18 +350,7 @@ ${pricingRows}
  */
 function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
     const title = `${config.displayName} - Indigo Alphabets®`;
-    const fontFile = typefaceId === 'alvica' ? 'fonts/Alvica/INDGAlvica-Semibold.woff2' : 
-                     typefaceId === 'actio' ? 'fonts/Actio/INDGActio-RegularNormal.woff2' :
-                     typefaceId === 'modus' ? 'fonts/Modus/INDGModus-Grey.woff2' :
-                     typefaceId === 'luara' ? 'fonts/Luara/INDG Luara.woff2' :
-                     typefaceId === 'dale' ? 'fonts/Dale/INDGDale-Regular.woff2' :
-                     typefaceId === 'peqat' ? 'fonts/Peqat/INDGPeqat-Norma.woff2' :
-                     typefaceId === 'heron2' ? 'fonts/Heron/INDGHeron-ST.woff2' :
-                     typefaceId === 'naora' ? 'fonts/Naora/INDG Naora.woff2' :
-                     typefaceId === 'sifora' ? 'fonts/Sifora/INDGSifora-Regular.woff2' :
-                     typefaceId === 'zigrid' ? 'fonts/Zigrid/INDG Zigrid.woff2' :
-                     typefaceId === 'oequadrat' ? 'fonts/Old English Quadrat/Old-English-Quadrat.woff2' : null;
-
+    const fontFile = TYPEFACE_FONT_PATHS[typefaceId] || null;
     const preloadLink = fontFile ? `    <link rel="preload" href="${fontFile}" as="font" type="font/woff2" crossorigin>\n` : '';
 
     // Render all sample sections
@@ -347,17 +362,17 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
     const detailsSection = renderDetailsSection(detailConfig.details);
     const pricingSection = renderPricingSection(detailConfig.pricing);
 
-    // Determine if OpenType.js is needed
-    const openTypeScript = detailConfig.hasOpenType ? 
-        `    <!-- OpenType.js library for font feature detection -->
+    // OpenType.js needed on all detail pages so dropdown can show/detect features
+    const openTypeScript = `    <!-- OpenType.js library for font feature detection -->
     <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js"></script>
-    ` : '';
+    `;
 
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <title>${title}</title>
@@ -375,6 +390,7 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
+                <button type="button" class="theme-toggle" aria-label="Toggle dark mode">Dark</button>
             </nav>
         </div>
     </header>
@@ -387,8 +403,8 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
                 <p>${detailConfig.description}</p>
             </div>
             <div class="typeface-hero-buttons">
-                <button class="test-btn">TEST IT</button>
-                <button class="buy-btn">BUY IT</button>
+                <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
+                <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
             </div>
         </div>
     </section>
@@ -404,15 +420,15 @@ ${pricingSection}
 
     <!-- Test and Buy Buttons -->
     <div class="typeface-hero-buttons">
-        <button class="test-btn">TEST IT</button>
-        <button class="buy-btn">BUY IT</button>
+        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
+        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
-            <a href="#top" class="back-to-top">▲ Back to top</a>
-            <a href="#licensing" class="footer-link">Licensing</a>
+            <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> Back to top</a>
+            <a href="licensing.html" class="footer-link">Licensing</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">
@@ -459,6 +475,7 @@ ${pricingSection}
         </div>
     </div>
 
+    <script>window.__TYPEFACE_FONT_PATHS__ = ${JSON.stringify(TYPEFACE_FONT_PATHS)};</script>
 ${openTypeScript}    <script src="script.js"></script>
 </body>
 </html>`;

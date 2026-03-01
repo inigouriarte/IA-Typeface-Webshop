@@ -48,7 +48,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '2.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '6',
         glyphs: '794',
         unicodeRanges: [
@@ -139,7 +139,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '10',
         glyphs: '650',
         unicodeRanges: [
@@ -221,7 +221,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '3',
         glyphs: '450',
         unicodeRanges: [
@@ -262,7 +262,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '1',
         glyphs: '350',
         unicodeRanges: [
@@ -291,7 +291,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '1',
         glyphs: '380',
         unicodeRanges: [
@@ -335,7 +335,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '3',
         glyphs: '420',
         unicodeRanges: [
@@ -383,7 +383,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '2',
         glyphs: '400',
         unicodeRanges: [
@@ -420,7 +420,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '1',
         glyphs: '320',
         unicodeRanges: [
@@ -449,7 +449,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '1',
         glyphs: '360',
         unicodeRanges: [
@@ -478,7 +478,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '1',
         glyphs: '340',
         unicodeRanges: [
@@ -507,7 +507,7 @@ const typefaceDetailConfig = {
         details: {
         designer: 'Iñigo Uriarte',
         version: '1.0',
-        formats: 'OTF, TTF, WOFF, WOFF2',
+        formats: 'otf, ttf, woff, woff2',
         styles: '1',
         glyphs: '280',
         unicodeRanges: [

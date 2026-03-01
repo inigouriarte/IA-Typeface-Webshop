@@ -108,6 +108,9 @@ function renderTypefaceSection(typeface) {
                         <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="${typeface.letterSpacing}" data-target="${typeface.id}">
                     </div>
                 </div>
+                <div class="control-box capitalize-btn-box">
+                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">A</button>
+                </div>
                 <div class="control-box">
                     ${typeface.hasLink 
                         ? `<a href="${typeface.linkUrl}" class="more-btn">

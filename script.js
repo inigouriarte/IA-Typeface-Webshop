@@ -1,3 +1,9 @@
+/* Dark mode: apply saved theme before paint to reduce flash */
+(function () {
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+})();
+
 /**
  * Initialize slider functionality
  * @param {string} selector - CSS selector for sliders
@@ -121,7 +127,7 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var type = getDropdownPortalType(dropdown);
         var c = DROPDOWN_PORTAL_ALIGN[type] || DROPDOWN_PORTAL_ALIGN.styleDetail;
         var r = trigger.getBoundingClientRect();
-        var w = r.width - 1 + (c.widthDelta || 0);
+        var w = r.width + (c.widthDelta || 0);
         menu.style.top = r.bottom + 'px';
         menu.style.width = w + 'px';
         menu.style.left = (r.left + (c.leftOffset || 0)) + 'px';
@@ -133,10 +139,14 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var menu = dropdown.querySelector('.dropdown-menu');
         if (!trigger || !menu) return;
         closeTypefacePortal(true);
-        getPortal().appendChild(menu);
+        var p = getPortal();
+        var backdrop = document.createElement('div');
+        backdrop.className = 'dropdown-portal-backdrop';
+        p.appendChild(backdrop);
+        p.appendChild(menu);
         menu.classList.add('dropdown-menu--portal');
         positionMenuInPortal(menu, trigger, dropdown);
-        currentOpen = { dropdown: dropdown, menu: menu, trigger: trigger };
+        currentOpen = { dropdown: dropdown, menu: menu, trigger: trigger, backdrop: backdrop };
         requestAnimationFrame(function() {
             requestAnimationFrame(function() { menu.classList.add('dropdown-menu--portal-visible'); });
         });
@@ -147,7 +157,9 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var dropdown = currentOpen.dropdown;
         var menu = currentOpen.menu;
         var trigger = currentOpen.trigger;
+        var backdrop = currentOpen.backdrop;
         currentOpen = null;
+        if (backdrop && backdrop.parentNode) backdrop.parentNode.removeChild(backdrop);
         if (immediate) {
             menu.style.top = '';
             menu.style.left = '';
@@ -346,6 +358,16 @@ document.querySelectorAll('.typeface-sample').forEach(sample => {
     });
 });
 
+// Toggle uppercase display (reversible) when capitalize button is clicked
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.capitalize-btn')) return;
+    const btn = e.target.closest('.capitalize-btn');
+    const section = btn.closest('.typeface-section');
+    if (!section) return;
+    section.classList.toggle('capitalize-active');
+    btn.classList.toggle('active');
+});
+
 // Bottom bar functionality: cursor coordinates, date, and time
 function updateCursorCoordinates(e) {
     const coordsElement = document.getElementById('cursor-coords');
@@ -451,6 +473,30 @@ function initCustomCursor() {
     animateCursor();
 }
 
+// Typeface details: keep table rows aligned – row height = max content height in row, rounded up to 50px
+function syncTypefaceDetailRowHeights() {
+    var container = document.querySelector('.typeface-details-content');
+    if (!container) return;
+    var columns = container.querySelectorAll('.details-column');
+    if (columns.length === 0) return;
+    var rowCount = columns[0].querySelectorAll('.detail-item').length;
+    if (rowCount === 0) return;
+    container.querySelectorAll('.detail-item').forEach(function (el) { el.style.height = ''; });
+    for (var r = 0; r < rowCount; r++) {
+        var maxH = 0;
+        var rowItems = [];
+        for (var c = 0; c < columns.length; c++) {
+            var item = columns[c].querySelectorAll('.detail-item')[r];
+            if (!item) continue;
+            rowItems.push(item);
+            var h = item.getBoundingClientRect().height;
+            if (h > maxH) maxH = h;
+        }
+        var rowHeight = Math.ceil(maxH / 50) * 50;
+        rowItems.forEach(function (el) { el.style.height = rowHeight + 'px'; });
+    }
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
     // Remove inline styles from nav element to allow CSS to control it
@@ -458,6 +504,47 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nav) {
         nav.removeAttribute('style');
     }
+
+    // Mobile: inject hamburger button and toggle nav in overlay
+    (function initMobileHeaderMenu() {
+        const header = document.querySelector('.header');
+        const headerContent = document.querySelector('.header-content');
+        if (!header || !headerContent || !nav) return;
+        if (document.querySelector('.header-menu-toggle')) return;
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'header-menu-toggle';
+        toggle.setAttribute('aria-label', 'Open menu');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.innerHTML = '<span></span><span></span><span></span>';
+        headerContent.insertBefore(toggle, nav);
+
+        function closeMenu() {
+            header.classList.remove('nav-open');
+            toggle.setAttribute('aria-label', 'Open menu');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function openMenu() {
+            header.classList.add('nav-open');
+            toggle.setAttribute('aria-label', 'Close menu');
+            toggle.setAttribute('aria-expanded', 'true');
+        }
+
+        toggle.addEventListener('click', function() {
+            if (header.classList.contains('nav-open')) closeMenu();
+            else openMenu();
+        });
+
+        nav.querySelectorAll('a, .theme-toggle').forEach(function(el) {
+            el.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (header.classList.contains('nav-open') && !header.contains(e.target)) closeMenu();
+        });
+    })();
     
     // Initialize custom cursor
     initCustomCursor();
@@ -525,6 +612,9 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('resize', updateVerticalLine);
         window.addEventListener('scroll', updateVerticalLine);
     }
+
+    syncTypefaceDetailRowHeights();
+    window.addEventListener('resize', syncTypefaceDetailRowHeights);
 });
 
 // OpenType Feature Detection and Toggling
@@ -573,59 +663,88 @@ const fontFileMap = {
 const fontFeaturesCache = {};
 
 /**
- * Detect OpenType features from a font file
- * @param {string} fontPath - Path to the font file
+ * Collect feature tags from a table object (GSUB or GPOS). Tries multiple shapes opentype.js may use.
+ */
+function collectFeatureTagsFromTable(table) {
+    const tags = [];
+    if (!table) return tags;
+    const list = table.features || table.featureList || (Array.isArray(table) ? table : null);
+    if (list) {
+        list.forEach(function (entry) {
+            const tag = entry.tag || entry.featureTag || (typeof entry === 'string' ? entry : null);
+            if (tag && !tags.includes(tag)) tags.push(tag);
+        });
+    }
+    return tags;
+}
+
+/**
+ * Load a font with opentype.js (supports callback or Promise API).
+ * opentype.js does not support WOFF2; use .woff or .ttf for detection.
+ */
+function loadFontForDetection(path) {
+    return new Promise(function (resolve, reject) {
+        opentype.load(path, function (err, font) {
+            if (err) reject(err);
+            else resolve(font);
+        });
+    });
+}
+
+/**
+ * Extract feature tags from a loaded font (GSUB/GPOS). Handles opentype.js table shape.
+ */
+function extractFeaturesFromFont(font) {
+    const features = [];
+    if (font.tables) {
+        collectFeatureTagsFromTable(font.tables.gsub).forEach(function (t) { if (!features.includes(t)) features.push(t); });
+        collectFeatureTagsFromTable(font.tables.gpos).forEach(function (t) { if (!features.includes(t)) features.push(t); });
+    }
+    if (features.length === 0 && typeof font.toTables === 'function') {
+        const tables = font.toTables();
+        if (tables && tables.gsub) collectFeatureTagsFromTable(tables.gsub).forEach(function (t) { if (!features.includes(t)) features.push(t); });
+        if (tables && tables.gpos) collectFeatureTagsFromTable(tables.gpos).forEach(function (t) { if (!features.includes(t)) features.push(t); });
+    }
+    return features.filter(function (f) { return f !== 'kern'; });
+}
+
+/**
+ * Detect OpenType features from a font file. opentype.js does not support WOFF2,
+ * so we try .woff when the path is .woff2.
+ * @param {string} fontPath - Path to the font file (e.g. .woff2 or .woff)
  * @returns {Promise<Array>} Array of feature tags
  */
 async function detectOpenTypeFeatures(fontPath) {
     if (fontFeaturesCache[fontPath]) {
         return fontFeaturesCache[fontPath];
     }
+    if (typeof opentype === 'undefined') {
+        return [];
+    }
+
+    var pathToTry = fontPath;
+    if (/\.woff2$/i.test(fontPath)) {
+        pathToTry = fontPath.replace(/\.woff2$/i, '.woff');
+    }
 
     try {
-        if (typeof opentype === 'undefined') {
-            console.warn('opentype.js not loaded, using fallback features');
-            // Return common OpenType features as fallback
-            return ['liga', 'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'smcp', 'onum', 'tnum', 'lnum', 'zero', 'salt'];
-        }
-
-        const font = await opentype.load(fontPath);
-        const features = [];
-        
-        if (font.tables && font.tables.gsub && font.tables.gsub.features) {
-            font.tables.gsub.features.forEach(feature => {
-                if (feature.tag) {
-                    features.push(feature.tag);
+        var font = await loadFontForDetection(pathToTry);
+        if (!font) return [];
+        var list = extractFeaturesFromFont(font);
+        fontFeaturesCache[fontPath] = list;
+        return list;
+    } catch (e) {
+        if (pathToTry !== fontPath) {
+            try {
+                font = await loadFontForDetection(fontPath);
+                if (font) {
+                    var list2 = extractFeaturesFromFont(font);
+                    fontFeaturesCache[fontPath] = list2;
+                    return list2;
                 }
-            });
+            } catch (e2) {}
         }
-        
-        if (font.tables && font.tables.gpos && font.tables.gpos.features) {
-            font.tables.gpos.features.forEach(feature => {
-                if (feature.tag && !features.includes(feature.tag)) {
-                    features.push(feature.tag);
-                }
-            });
-        }
-
-        // Also check for common features that might not be in GSUB/GPOS
-        const commonFeatures = ['liga', 'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'smcp', 'onum', 'tnum', 'lnum', 'zero', 'salt'];
-        commonFeatures.forEach(feat => {
-            if (!features.includes(feat)) {
-                // Try to detect if feature exists by checking font tables
-                features.push(feat);
-            }
-        });
-
-        // Filter out 'kern' feature
-        const filteredFeatures = features.filter(feat => feat !== 'kern');
-        
-        fontFeaturesCache[fontPath] = filteredFeatures;
-        return filteredFeatures;
-    } catch (error) {
-        console.error('Error detecting OpenType features:', error);
-        // Return common features as fallback
-        return ['liga', 'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'smcp', 'onum', 'tnum', 'lnum', 'zero', 'salt'];
+        return [];
     }
 }
 
@@ -692,37 +811,46 @@ function attachOpenTypeDropdownBehavior(dropdown) {
 
 /**
  * Populate OpenType dropdown with a given list of features (replaces menu content).
- * Used only when the page has no pre-rendered features (e.g. fallback).
+ * When showEmptyPlaceholder is true, adds a single "No features" item so the dropdown stays visible.
  */
-function populateOpenTypeDropdown(dropdown, features) {
+function populateOpenTypeDropdown(dropdown, features, showEmptyPlaceholder = false) {
     const menu = dropdown.querySelector('.opentype-menu');
     if (!menu) return;
 
     menu.innerHTML = '';
-    const uniqueFeatures = sortOpenTypeFeaturesList([...new Set(features)]);
+    const list = features && features.length ? sortOpenTypeFeaturesList([...new Set(features)]) : [];
 
-    uniqueFeatures.forEach(feature => {
-        const option = document.createElement('div');
-        option.className = 'dropdown-option opentype-option';
-        option.setAttribute('data-feature', feature);
-        option.textContent = feature;
-        menu.appendChild(option);
-    });
-
-    menu.querySelectorAll('.opentype-option').forEach(option => {
-        option.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const feature = this.getAttribute('data-feature');
-            const section = dropdown.closest('.typeface-section');
-            const sample = section ? section.querySelector('.typeface-sample') : null;
-            if (sample && feature) {
-                const isSelected = this.classList.contains('selected');
-                this.classList.toggle('selected', !isSelected);
-                toggleOpenTypeFeature(sample, feature, !isSelected);
-                updateOpenTypeSelectedText(dropdown, sample);
-            }
+    if (list.length === 0 && showEmptyPlaceholder) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'dropdown-option opentype-option opentype-empty-placeholder';
+        placeholder.textContent = 'No features';
+        placeholder.style.opacity = '0.7';
+        placeholder.style.pointerEvents = 'none';
+        menu.appendChild(placeholder);
+    } else {
+        list.forEach(feature => {
+            const option = document.createElement('div');
+            option.className = 'dropdown-option opentype-option';
+            option.setAttribute('data-feature', feature);
+            option.textContent = feature;
+            menu.appendChild(option);
         });
-    });
+
+        menu.querySelectorAll('.opentype-option[data-feature]').forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const feature = this.getAttribute('data-feature');
+                const section = dropdown.closest('.typeface-section');
+                const sample = section ? section.querySelector('.typeface-sample') : null;
+                if (sample && feature) {
+                    const isSelected = this.classList.contains('selected');
+                    this.classList.toggle('selected', !isSelected);
+                    toggleOpenTypeFeature(sample, feature, !isSelected);
+                    updateOpenTypeSelectedText(dropdown, sample);
+                }
+            });
+        });
+    }
 }
 
 /**
@@ -813,11 +941,12 @@ function toggleOpenTypeFeature(sample, feature, enabled) {
 
 /**
  * Initialize OpenType dropdowns for all typeface sections.
- * Uses the features already in the DOM (from openTypeFeatures in typeface config) so each
- * typeface only shows its own features. Falls back to detection only when no options are present.
+ * On detail pages: uses window.__TYPEFACE_FONT_PATHS__[data-font] and detects from the font file
+ * so only features present in that typeface appear. Waits for opentype.js to load before detecting.
  */
 async function initializeOpenTypeDropdowns() {
     const opentypeDropdowns = document.querySelectorAll('.opentype-dropdown');
+    const fontPathsByTypefaceId = typeof window !== 'undefined' ? window.__TYPEFACE_FONT_PATHS__ : null;
 
     for (const dropdown of opentypeDropdowns) {
         const menu = dropdown.querySelector('.opentype-menu');
@@ -825,7 +954,6 @@ async function initializeOpenTypeDropdowns() {
 
         const existingOptions = menu.querySelectorAll('.dropdown-option[data-feature]');
         if (existingOptions.length > 0) {
-            // Page already has per-typeface features from config; just attach behavior
             attachOpenTypeDropdownBehavior(dropdown);
             const section = dropdown.closest('.typeface-section');
             const sample = section ? section.querySelector('.typeface-sample') : null;
@@ -833,27 +961,100 @@ async function initializeOpenTypeDropdowns() {
             continue;
         }
 
-        // No pre-rendered features: fallback to detection (e.g. legacy or index)
         const section = dropdown.closest('.typeface-section');
         if (!section) continue;
 
-        const fontFamily = getFontFamilyFromSection(section);
-        if (!fontFamily || !fontFileMap[fontFamily]) {
-            populateOpenTypeDropdown(dropdown, ['liga', 'calt', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'smcp', 'zero', 'salt']);
+        let fontPath = null;
+        const typefaceId = section.getAttribute('data-font');
+        if (fontPathsByTypefaceId && typefaceId && fontPathsByTypefaceId[typefaceId]) {
+            fontPath = fontPathsByTypefaceId[typefaceId];
+        }
+        if (!fontPath) {
+            const fontFamily = getFontFamilyFromSection(section);
+            if (fontFamily && fontFileMap[fontFamily]) fontPath = fontFileMap[fontFamily];
+        }
+        if (!fontPath) {
+            populateOpenTypeDropdown(dropdown, [], true);
             continue;
         }
 
-        const fontPath = fontFileMap[fontFamily];
         const features = await detectOpenTypeFeatures(fontPath);
-        populateOpenTypeDropdown(dropdown, features);
+        populateOpenTypeDropdown(dropdown, features, features.length === 0);
     }
+
+    updateDetailsOTFeaturesRow(fontPathsByTypefaceId);
 }
 
-// Initialize OpenType dropdowns when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeOpenTypeDropdowns);
-} else {
-    // DOM already loaded
-    initializeOpenTypeDropdowns();
+/**
+ * On typeface detail pages, fill the "OT features" row in the details section with features detected from the font.
+ */
+async function updateDetailsOTFeaturesRow(fontPathsByTypefaceId) {
+    const el = document.querySelector('.detail-value-ot-features');
+    if (!el || !fontPathsByTypefaceId) return;
+    const section = document.querySelector('.typeface-section[data-font]');
+    const typefaceId = section && section.getAttribute('data-font');
+    if (!typefaceId || !fontPathsByTypefaceId[typefaceId]) return;
+    const fontPath = fontPathsByTypefaceId[typefaceId];
+    try {
+        const features = await detectOpenTypeFeatures(fontPath);
+        el.textContent = features.length ? sortOpenTypeFeaturesList(features).join(', ') : '—';
+    } catch (e) {
+        el.textContent = '—';
+    }
+    syncTypefaceDetailRowHeights();
 }
+
+/**
+ * Wait for opentype.js to be available (it loads async), then init dropdowns.
+ */
+function runOpenTypeInitWhenReady() {
+    if (typeof opentype !== 'undefined') {
+        initializeOpenTypeDropdowns();
+        return;
+    }
+    window.addEventListener('load', function onLoad() {
+        window.removeEventListener('load', onLoad);
+        if (typeof opentype !== 'undefined') {
+            initializeOpenTypeDropdowns();
+            return;
+        }
+        setTimeout(function retry() {
+            initializeOpenTypeDropdowns();
+        }, 300);
+    });
+    setTimeout(function earlyRetry() {
+        if (typeof opentype !== 'undefined') initializeOpenTypeDropdowns();
+    }, 100);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runOpenTypeInitWhenReady);
+} else {
+    runOpenTypeInitWhenReady();
+}
+
+// Dark mode toggle
+(function () {
+    function toggleTheme() {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            html.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+    function initThemeToggle() {
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.theme-toggle')) toggleTheme();
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemeToggle);
+    } else {
+        initThemeToggle();
+    }
+})();
 
