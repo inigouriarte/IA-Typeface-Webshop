@@ -363,8 +363,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
     const pricingSection = renderPricingSection(detailConfig.pricing);
 
     // OpenType.js needed on all detail pages so dropdown can show/detect features
-    const openTypeScript = `    <!-- OpenType.js library for font feature detection -->
-    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js"></script>
+    const openTypeScript = `    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js" defer></script>
     `;
 
     return `<!DOCTYPE html>
@@ -378,6 +377,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
     <title>${title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -427,7 +427,7 @@ ${pricingSection}
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
-            <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> Back to top</a>
+            <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
             <a href="licensing.html" class="footer-link">Licensing</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
@@ -476,7 +476,7 @@ ${pricingSection}
     </div>
 
     <script>window.__TYPEFACE_FONT_PATHS__ = ${JSON.stringify(TYPEFACE_FONT_PATHS)};</script>
-${openTypeScript}    <script src="script.js"></script>
+${openTypeScript}    <script src="script.js" defer></script>
 </body>
 </html>`;
 }

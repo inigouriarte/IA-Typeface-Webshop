@@ -108,10 +108,13 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         return 'styleDetail';
     }
 
+    var isMobile = function() { return window.innerWidth <= 768; };
+
     /** OpenType dropdown: fixed positioning, detached from DROPDOWN_PORTAL_ALIGN. */
-    function positionOpenTypeDropdownInPortal(menu, trigger) {
+    function positionOpenTypeDropdownInPortal(menu, trigger, dropdown) {
         if (!menu || !trigger) return;
-        var r = trigger.getBoundingClientRect();
+        var box = dropdown && dropdown.closest && dropdown.closest('.control-box');
+        var r = (isMobile() && box) ? box.getBoundingClientRect() : trigger.getBoundingClientRect();
         var w = r.width - 1;
         menu.style.top = r.bottom + 'px';
         menu.style.width = (w + 2) + 'px';
@@ -121,12 +124,13 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
     function positionMenuInPortal(menu, trigger, dropdown) {
         if (!menu || !trigger || !dropdown) return;
         if (dropdown.classList.contains('opentype-dropdown')) {
-            positionOpenTypeDropdownInPortal(menu, trigger);
+            positionOpenTypeDropdownInPortal(menu, trigger, dropdown);
             return;
         }
         var type = getDropdownPortalType(dropdown);
         var c = DROPDOWN_PORTAL_ALIGN[type] || DROPDOWN_PORTAL_ALIGN.styleDetail;
-        var r = trigger.getBoundingClientRect();
+        var box = dropdown.closest('.control-box');
+        var r = (isMobile() && box) ? box.getBoundingClientRect() : trigger.getBoundingClientRect();
         var w = r.width + (c.widthDelta || 0);
         menu.style.top = r.bottom + 'px';
         menu.style.width = w + 'px';
