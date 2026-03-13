@@ -69,6 +69,56 @@ initializeSliders('.font-size-slider', 'fontSize', '120');
 // Initialize letter spacing sliders (em = relative to font size)
 initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
 
+// Static tooltip above control box on hover (size slider, tracking slider, caps button), with fade in/out
+(function () {
+    var tooltip = null;
+
+    function getTooltip() {
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.id = 'control-hint-tooltip';
+            document.body.appendChild(tooltip);
+        }
+        return tooltip;
+    }
+
+    function getHintForElement(el) {
+        if (!el) return null;
+        var box = el.closest && el.closest('.control-box');
+        if (!box) return null;
+        if (box.querySelector('.font-size-slider')) return { text: 'Size control', box: box };
+        if (box.querySelector('.letter-spacing-slider')) return { text: 'Tracking control', box: box };
+        if (box.querySelector('.capitalize-btn')) return { text: 'All caps on/off', box: box };
+        return null;
+    }
+
+    function showHint(text) {
+        var el = getTooltip();
+        el.textContent = text;
+        el.classList.add('visible');
+    }
+
+    function hideHint() {
+        if (tooltip) tooltip.classList.remove('visible');
+    }
+
+    document.addEventListener('mouseover', function (e) {
+        var hint = getHintForElement(e.target);
+        if (hint) {
+            showHint(hint.text);
+        }
+    });
+
+    document.addEventListener('mouseout', function (e) {
+        var related = e.relatedTarget;
+        if (!related || !document.body.contains(related)) {
+            hideHint();
+            return;
+        }
+        if (!getHintForElement(related)) hideHint();
+    });
+})();
+
 // --- Typeface dropdown: portal-based (menu rendered at body so never clipped, backdrop always works) ---
 (function() {
     var portal = null;
@@ -1054,5 +1104,28 @@ if (document.readyState === 'loading') {
     } else {
         initThemeToggle();
     }
+})();
+
+// Paste as plain text in contenteditable so section formatting is preserved
+(function () {
+    function onPaste(e) {
+        var el = e.target;
+        if (el.getAttribute('contenteditable') !== 'true') return;
+        e.preventDefault();
+        var data = (e.clipboardData || (window.clipboardData && window.clipboardData.getData && { getData: function (t) { return window.clipboardData.getData(t); } }));
+        var text = data && data.getData('text/plain');
+        if (text == null) return;
+        if (document.execCommand && document.execCommand('insertText', false, text)) return;
+        var sel = window.getSelection();
+        if (!sel.rangeCount) return;
+        sel.deleteFromDocument();
+        var range = sel.getRangeAt(0);
+        var textNode = document.createTextNode(text);
+        range.insertNode(textNode);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    document.addEventListener('paste', onPaste, true);
 })();
 

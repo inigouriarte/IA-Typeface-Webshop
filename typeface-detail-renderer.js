@@ -317,14 +317,43 @@ function renderDetailsSection(details, openTypeFeatures) {
 
 /**
  * Render the pricing section
+ * Shows only two rows:
+ * - "Complete family (X styles)" – using the family price
+ * - "Style" – using the single-style price
  * @param {Array} pricing - Array of pricing objects
+ * @param {Object} details - Details object (to read styles count)
  * @returns {string} HTML string for pricing section
  */
-function renderPricingSection(pricing) {
-    const pricingRows = pricing.map(item => 
+function renderPricingSection(pricing, details) {
+    if (!pricing || !pricing.length) {
+        return '';
+    }
+
+    // Try to detect a "family" price row; fall back to first item
+    const familyItem = pricing.find(item => /family/i.test(item.name)) || pricing[0];
+
+    // Try to detect a single-style price row by excluding family; fall back to second/first
+    let styleItem = pricing.find(item => !/family/i.test(item.name));
+    if (!styleItem) {
+        styleItem = pricing[1] || pricing[0];
+    }
+
+    const stylesCount = details && details.styles ? details.styles : '';
+    const stylesLabel = stylesCount ? `Complete family (${stylesCount} styles)` : 'Complete family';
+
+    const pricingRows = [
+        {
+            label: stylesLabel,
+            price: familyItem.price
+        },
+        {
+            label: 'Style',
+            price: styleItem.price
+        }
+    ].map(item =>
         `                <div class="typeface-controls-row">
                     <div class="control-box">
-                        <div class="pricing-name">${item.name}</div>
+                        <div class="pricing-name">${item.label}</div>
                     </div>
                     <div class="control-box">
                         <div class="price">${item.price}</div>
@@ -360,7 +389,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
 
     // Render details and pricing
     const detailsSection = renderDetailsSection(detailConfig.details);
-    const pricingSection = renderPricingSection(detailConfig.pricing);
+    const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details);
 
     // OpenType.js needed on all detail pages so dropdown can show/detect features
     const openTypeScript = `    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js" defer></script>
@@ -400,7 +429,7 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
         <div class="typeface-hero-content">
             <h1 class="typeface-title" contenteditable="true" spellcheck="false">${config.displayName}</h1>
             <div class="typeface-description">
-                <p>${detailConfig.description}</p>
+                <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
             </div>
             <div class="typeface-hero-buttons">
                 <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>

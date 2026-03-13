@@ -332,10 +332,14 @@
     --font-text-weight: 400;
     --font-text-tracking: -0.5px;
     
-    /* Layout: content sits --layout-inset (20px) inside the margin lines; single variable for consistency */
+    /* Layout: single horizontal margin variable. All desktop content aligns to the margin lines (no extra inset). */
     --layout-margin: 25px; /* Distance from viewport edge to margin lines (vertical lines) */
-    --layout-inset: 20px; /* Inset from layout margin; all content padding uses this (via --layout-content-padding or var(--layout-inset)) */
-    --layout-content-padding: calc(var(--layout-margin) + var(--layout-inset)); /* Total horizontal padding for content (e.g. header, footer, control row) */
+    --layout-inset: 0px; /* No additional inset; kept for backwards-compatibility if needed */
+    --layout-content-padding: var(--layout-margin); /* Horizontal padding for header, footer, control rows, etc. */
+
+    /* Text and box paddings */
+    --text-padding: 20px;       /* Default horizontal padding for bodies of text */
+    --box-text-padding: 10px;   /* Default padding for text inside boxed UI rows */
     --layout-padding-desktop: var(--layout-content-padding);
     --layout-max-width: 3000px;
     --breakpoint-mobile: 768px;
@@ -510,6 +514,8 @@ p:last-child {
     white-space: nowrap;
     text-align: left;
     text-decoration: none;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
 }
 
 .nav {
@@ -517,6 +523,8 @@ p:last-child {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
 }
 
 .nav a,
@@ -665,6 +673,16 @@ input[type="range"]:hover,
     color: var(--color-primary);
 }
 
+[contenteditable="true"]:focus {
+    outline: none;
+}
+
+/* About & Licensing: no focus outline when editing text */
+.about-section [contenteditable="true"]:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 /* Intro Section */
 .intro {
     text-align: left;
@@ -673,6 +691,9 @@ input[type="range"]:hover,
     margin: 0;
     position: relative;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .intro p {
@@ -685,8 +706,8 @@ input[type="range"]:hover,
     letter-spacing: -2px;
     line-height: 1.1;
     margin-bottom: 25px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
     max-width: calc(50vw - var(--layout-content-padding));
     box-sizing: border-box;
     animation: fadeIn 0.4s ease-in;
@@ -703,6 +724,9 @@ input[type="range"]:hover,
     margin: 0;
     position: relative;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .about-section::before {
@@ -726,8 +750,8 @@ input[type="range"]:hover,
     align-items: flex-start;
     position: relative;
     left: 0;
-    padding-left: var(--layout-inset);
-    padding-right: var(--layout-inset);
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
     max-width: calc(50vw - var(--layout-content-padding));
 }
 
@@ -782,6 +806,7 @@ main {
     border-top: none;
 }
 
+/* Control row: horizontal position comes from --layout-content-padding only (see :root). Change layout margins there to move the content edge. */
 .typeface-controls-row {
     display: flex;
     align-items: center;
@@ -790,8 +815,8 @@ main {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     width: 100vw;
-    padding-left: var(--layout-content-padding);
-    padding-right: var(--layout-content-padding);
+    padding-left: 0px;
+    padding-right: 0px;
     box-sizing: border-box;
     flex-wrap: wrap;
     position: relative;
@@ -916,8 +941,9 @@ main {
 }
 
 .capitalize-btn {
-    width: 50px;
-    height: 50px;
+    width: 49px;
+    height: 48px;
+    margin: 1px 0 1px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -934,6 +960,13 @@ main {
 
 .capitalize-btn:hover {
     color: var(--color-text);
+}
+
+.capitalize-btn:focus,
+.capitalize-btn:focus-visible,
+.capitalize-btn.active:focus,
+.capitalize-btn.active:focus-visible {
+    outline: none;
 }
 
 .capitalize-btn.active {
@@ -959,23 +992,24 @@ main {
     line-height: 1;
     box-sizing: border-box;
     margin: 0;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 0;
-    padding-left: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.control-box:first-child .typeface-name {
-    padding-left: 0;
-    margin-left: 0;
+.typeface-name a {
+    display: block;
+    padding: 0 var(--box-text-padding);
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.control-box:last-child .typeface-name {
+.control-box:first-child .typeface-name a {
+    padding-left: 0;
+}
+
+.control-box:last-child .typeface-name a {
     padding-right: 0;
-    margin-right: 0;
 }
 
 .one-style-text {
@@ -1025,10 +1059,6 @@ main {
 
 .control-box:first-child .custom-dropdown {
     padding-left: 0;
-}
-
-.control-box:first-child .dropdown-selected {
-    margin-left: 0;
 }
 
 .control-box:last-child .custom-dropdown {
@@ -1152,18 +1182,15 @@ main {
     padding-left: 0;
     padding-right: 0;
     box-sizing: border-box;
-    transform: translateY(-6px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease;
     /* top, left, width set by script from trigger getBoundingClientRect() */
 }
 
 #dropdown-portal .dropdown-menu.dropdown-menu--portal.dropdown-menu--portal-visible {
     opacity: 1;
-    transform: translateY(0);
 }
 #dropdown-portal .dropdown-menu.dropdown-menu--portal.dropdown-menu--portal-closing {
     opacity: 0;
-    transform: translateY(-6px);
 }
 #dropdown-portal .dropdown-option:first-child {
     border-top: none;
@@ -1253,20 +1280,15 @@ main {
     justify-content: space-between;
     box-sizing: border-box;
     margin: 0;
-    margin-left: 10px;
-    margin-right: var(--layout-inset);
-    padding: 0;
-    padding-right: 0;
+    padding: 0 var(--box-text-padding);
 }
 
 .control-box:first-child .slider-container {
     padding-left: 0;
-    margin-left: 0;
 }
 
 .control-box:last-child .slider-container {
     padding-right: 0;
-    margin-right: 0;
 }
 
 .control-label {
@@ -1330,6 +1352,37 @@ main {
     background: var(--color-primary);
     border: none;
     cursor: none;
+}
+
+/* Static control hint tooltip (left, flush to layout margin and bottom bar, no gap, backdrop, fade in/out) */
+#control-hint-tooltip {
+    position: fixed;
+    left: 0;
+    margin-left: var(--layout-content-padding);
+    bottom: 50px;
+    z-index: 9999;
+    pointer-events: none;
+    height: 50px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-button-family);
+    font-size: var(--font-button-size);
+    font-weight: var(--font-button-weight);
+    color: var(--color-text-light);
+    background: var(--color-surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--color-stroke);
+    border-radius: 0;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.35s ease-in-out;
+}
+
+#control-hint-tooltip.visible {
+    opacity: 1;
 }
 
 .more-btn {
@@ -1496,7 +1549,7 @@ main {
 /* Footer */
 .footer {
     background-color: var(--color-background);
-    padding: 50px var(--layout-content-padding) 50px;
+    padding: 10px var(--layout-content-padding) 10px;
     margin-top: 0;
     margin-bottom: 0;
     border-top: 1px solid var(--color-stroke);
@@ -1666,10 +1719,12 @@ body.typeface-oequadrat .typeface-column a[href="oequadrat.html"]:hover {
     box-sizing: border-box;
     padding-top: 0px;
     padding-bottom: 0;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
     margin-left: 0;
     margin-right: 0;
     margin-top: 50px;
-    margin-bottom: 0px;
+    margin-bottom: 25px;
     flex-wrap: wrap;
 }
 
@@ -1771,6 +1826,24 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     align-items: left;
     gap: 30px;
     flex-wrap: wrap;
+}
+
+/* Apply main text padding to footer/top/bottom text elements instead of containers */
+.footer-top .back-to-top,
+.footer-top .footer-link,
+.footer-top .typeface-list-heading {
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
+}
+
+.typeface-column div {
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
+}
+
+.bottom-bar-item {
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
 }
 
 .bottom-bar-item {
@@ -2216,6 +2289,9 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     margin: 0;
     position: relative;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .contact-section::before {
@@ -2234,8 +2310,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     letter-spacing: -2px;
     line-height: 1;
     margin-bottom: 25px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
     animation: fadeIn 0.4s ease-in;
 }
 
@@ -2266,8 +2342,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     letter-spacing: -2px;
     line-height: 1;
     word-break: break-all;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
     animation: fadeIn 0.4s ease-in;
 }
 
@@ -2306,7 +2382,10 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     padding: 250px var(--layout-content-padding) 0px;
     text-align: center;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
     border-bottom: none;
+    box-sizing: border-box;
 }
 
 .typeface-hero-content {
@@ -2521,8 +2600,8 @@ body.typeface-oequadrat .typeface-title {
     letter-spacing: var(--font-text-tracking);
     line-height: 1.25;
     margin-bottom: 0;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: var(--text-padding);
+    padding-right: var(--text-padding);
     max-width: calc(50vw - var(--layout-content-padding));
     margin-top: 0;
     margin-left: 0;
@@ -2584,7 +2663,7 @@ body.typeface-oequadrat .typeface-title {
     border-left: 1px solid var(--color-stroke);
     border-bottom: 1px solid var(--color-stroke);
     border-right: none;
-    padding: 10px;
+    padding: var(--box-text-padding);
     padding-right: 50px;
     box-sizing: border-box;
     min-height: 50px;
@@ -2593,7 +2672,7 @@ body.typeface-oequadrat .typeface-title {
 
 .details-column:first-child .detail-item {
     border-left: none;
-    padding-left: calc(var(--layout-content-padding) + 10px);
+    padding-left: calc(var(--layout-content-padding) + var(--box-text-padding));
 }
 
 .details-column:last-child .detail-item {
@@ -2650,8 +2729,10 @@ body.typeface-oequadrat .typeface-title {
 }
 
 .pricing-content {
-    max-width: var(--layout-max-width);
-    margin: 0 auto;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -2704,7 +2785,7 @@ body.typeface-oequadrat .typeface-title {
 
 .typeface-pricing .typeface-controls-row .control-box {
     border-bottom: none;
-    padding: 10px;
+    padding: var(--box-text-padding);
     box-sizing: border-box;
     min-height: 50px;
     align-items: center;
@@ -2763,7 +2844,7 @@ body.typeface-oequadrat .typeface-title {
 }
 
 .opentype-menu .dropdown-option {
-    padding: 10px 15px;
+    padding: var(--box-text-padding) 15px;
     font-family: var(--font-button-family);
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
