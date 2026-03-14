@@ -686,35 +686,5 @@
     ],
     "hasOpenType": false,
     "openTypeFeatures": []
-  },
-  "dracma": {
-    "description": "aaghrsr",
-    "details": {
-      "designer": "Iñigo Uriarte",
-      "version": "1.0",
-      "formats": "ttf, otf, woff, woff2",
-      "styles": "1",
-      "glyphs": "30",
-      "unicodeRanges": [
-        "Basic Latin",
-        "Latin 1-Supplement"
-      ]
-    },
-    "hasOpenType": false,
-    "openTypeFeatures": [],
-    "samples": [
-      {
-        "weight": 400,
-        "fontSize": 120,
-        "text": "The quick brown fox jumps over the lazy dog.",
-        "sampleId": "regular"
-      }
-    ],
-    "pricing": [
-      {
-        "name": "INDG Dracma",
-        "price": "30"
-      }
-    ]
   }
 }
