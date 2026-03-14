@@ -44,7 +44,7 @@ if (typeof typefaceDetailConfig !== 'object' || typefaceDetailConfig === null ||
 }
 
 const { renderAllTypefaces } = require('./typefaces-renderer.js');
-const { renderTypefaceDetailPage } = require('./typeface-detail-renderer.js');
+const { renderTypefaceDetailPage, generateFooterColumns } = require('./typeface-detail-renderer.js');
 
 function buildIndex() {
     const indexPath = path.join(ROOT, 'index.html');
@@ -56,6 +56,15 @@ function buildIndex() {
         process.exit(1);
     }
     html = html.replace(mainRegex, '<main class="typefaces-container" id="typefaces">\n' + typefacesHtml + '\n    </main>');
+
+    // Update footer with dynamic font list
+    const footerColumnsRegex = /<div class="typeface-columns">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*(<div class="footer-bottom">)/;
+    if (footerColumnsRegex.test(html)) {
+        const columns = generateFooterColumns(typefacesConfig, 'text-decoration: none; color: inherit;');
+        html = html.replace(footerColumnsRegex, '<div class="typeface-columns">\n' + columns + '\n            </div>\n        </div>\n        $1');
+        console.log('Built index.html (footer updated)');
+    }
+
     fs.writeFileSync(indexPath, html, 'utf8');
     console.log('Built index.html (typeface sections injected)');
 }
@@ -69,7 +78,7 @@ function buildDetailPages() {
             continue;
         }
         const detailConfig = typefaceDetailConfig[typefaceId];
-        const html = renderTypefaceDetailPage(typefaceId, config, detailConfig);
+        const html = renderTypefaceDetailPage(typefaceId, config, detailConfig, typefacesConfig);
         const outFile = typefaceId === 'heron2' ? 'heron.html' : typefaceId + '.html';
         const outPath = path.join(ROOT, outFile);
         fs.writeFileSync(outPath, html, 'utf8');
