@@ -32,6 +32,11 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
   const { fromNodeHeaders } = await import('better-auth/node');
   const { auth } = await import('./lib/auth.mjs');
 
+  // Ensure auth tables exist (safe to run on every boot – idempotent)
+  const { getMigrations } = await import('better-auth/db/migration');
+  const { runMigrations } = await getMigrations(auth.options);
+  await runMigrations();
+
   const app = express();
 
   // Better Auth handler – MUST be mounted before express.json()
