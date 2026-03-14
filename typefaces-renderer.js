@@ -88,7 +88,7 @@ function renderTypefaceSection(typeface) {
     const sampleText = typeface.displayName.replace('INDG ', '').replace('Old English ', '');
 
     return `        <!-- ${typeface.name} -->
-        <section class="typeface-section" data-font="${typeface.id}"${typeface.id === 'alvica' ? ' id="alvica"' : typeface.id === 'modus' ? ' id="modus"' : typeface.id === 'luara' ? ' id="luara"' : typeface.id === 'zigrid' ? ' id="zigrid"' : typeface.id === 'dale' ? ' id="dale"' : typeface.id === 'peqat' ? ' id="peqat"' : typeface.id === 'heron2' ? ' id="heron"' : typeface.id === 'naora' ? ' id="naora"' : typeface.id === 'sifora' ? ' id="sifora"' : typeface.id === 'oequadrat' ? ' id="oequadrat"' : ''}>
+        <section class="typeface-section" data-font="${typeface.id}"${typeface.id === 'alvica' ? ' id="alvica"' : typeface.id === 'modus' ? ' id="modus"' : typeface.id === 'luara' ? ' id="luara"' : typeface.id === 'zigrid' ? ' id="zigrid"' : typeface.id === 'dale' ? ' id="dale"' : typeface.id === 'peqat' ? ' id="peqat"' : typeface.id === 'heron2' ? ' id="heron"' : typeface.id === 'naora' ? ' id="naora"' : typeface.id === 'sifora' ? ' id="sifora"' : typeface.id === 'stycka' ? ' id="stycka"' : typeface.id === 'oequadrat' ? ' id="oequadrat"' : ''}>
             <div class="typeface-controls-row">
                 <div class="control-box">
                     ${nameElement}
@@ -113,11 +113,11 @@ function renderTypefaceSection(typeface) {
                 </div>
                 <div class="control-box">
                     ${typeface.hasLink 
-                        ? `<a href="${typeface.linkUrl}" class="more-btn">
+                        ? `<a href="${typeface.linkUrl}" class="more-btn" draggable="false">
                         <span class="play-icon">▶</span>
                         <span>Much more</span>
                     </a>`
-                        : `<button class="more-btn">
+                        : `<button type="button" class="more-btn" draggable="false">
                         <span class="play-icon">▶</span>
                         <span>Much more</span>
                     </button>`

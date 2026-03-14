@@ -160,15 +160,14 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
 
     var isMobile = function() { return window.innerWidth <= 768; };
 
-    /** OpenType dropdown: fixed positioning, detached from DROPDOWN_PORTAL_ALIGN. */
+    /** OpenType dropdown: fixed positioning, aligned to control-box so it reaches the right margin. */
     function positionOpenTypeDropdownInPortal(menu, trigger, dropdown) {
         if (!menu || !trigger) return;
         var box = dropdown && dropdown.closest && dropdown.closest('.control-box');
-        var r = (isMobile() && box) ? box.getBoundingClientRect() : trigger.getBoundingClientRect();
-        var w = r.width - 1;
+        var r = box ? box.getBoundingClientRect() : trigger.getBoundingClientRect();
         menu.style.top = r.bottom + 'px';
-        menu.style.width = (w + 2) + 'px';
-        menu.style.left = (r.right - w - 2) + 'px';
+        menu.style.left = r.left + 'px';
+        menu.style.width = r.width + 'px';
     }
 
     function positionMenuInPortal(menu, trigger, dropdown) {
@@ -254,6 +253,7 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
     
     trigger.addEventListener('click', function(e) {
         e.stopPropagation();
+        if (dropdown.classList.contains('no-ot-features')) return;
         const wasOpen = dropdown.classList.contains('open');
         
         document.querySelectorAll('.custom-dropdown').forEach(d => {
@@ -351,6 +351,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 });
             }
         }
+    });
+});
+
+// Prevent "Much more" button/link from being draggable (avoids pasting into typeface sample on drop)
+document.querySelectorAll('.more-btn').forEach(btn => {
+    btn.addEventListener('dragstart', function(e) {
+        e.preventDefault();
     });
 });
 
@@ -553,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nav.removeAttribute('style');
     }
 
-    // Mobile: inject hamburger button and toggle nav in overlay
+    // Mobile: inject hamburger button; open menu is rendered in #dropdown-portal so it matches other dropdowns
     (function initMobileHeaderMenu() {
         const header = document.querySelector('.header');
         const headerContent = document.querySelector('.header-content');
@@ -568,13 +575,44 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.innerHTML = '<span></span><span></span><span></span>';
         headerContent.insertBefore(toggle, nav);
 
+        function getPortal() {
+            var p = document.getElementById('dropdown-portal');
+            if (!p) {
+                p = document.createElement('div');
+                p.id = 'dropdown-portal';
+                document.body.appendChild(p);
+            }
+            return p;
+        }
+
+        function getMobilePanel() {
+            return document.querySelector('#dropdown-portal .mobile-nav-panel');
+        }
+
         function closeMenu() {
+            var panel = getMobilePanel();
+            if (panel) {
+                while (panel.firstChild) nav.appendChild(panel.firstChild);
+                panel.remove();
+            }
             header.classList.remove('nav-open');
             toggle.setAttribute('aria-label', 'Open menu');
             toggle.setAttribute('aria-expanded', 'false');
         }
 
         function openMenu() {
+            var portal = getPortal();
+            var panel = document.createElement('div');
+            panel.className = 'dropdown-menu dropdown-menu--portal dropdown-menu--portal-visible mobile-nav-panel';
+            panel.style.top = (header.offsetHeight - 1) + 'px';
+            panel.style.left = '0';
+            panel.style.right = '0';
+            panel.style.width = '100%';
+            while (nav.firstChild) panel.appendChild(nav.firstChild);
+            panel.querySelectorAll('a, .theme-toggle').forEach(function(el) {
+                el.addEventListener('click', closeMenu);
+            });
+            portal.appendChild(panel);
             header.classList.add('nav-open');
             toggle.setAttribute('aria-label', 'Close menu');
             toggle.setAttribute('aria-expanded', 'true');
@@ -585,12 +623,11 @@ document.addEventListener('DOMContentLoaded', function() {
             else openMenu();
         });
 
-        nav.querySelectorAll('a, .theme-toggle').forEach(function(el) {
-            el.addEventListener('click', closeMenu);
-        });
-
         document.addEventListener('click', function(e) {
-            if (header.classList.contains('nav-open') && !header.contains(e.target)) closeMenu();
+            if (!header.classList.contains('nav-open')) return;
+            var panel = getMobilePanel();
+            if (panel && !panel.contains(e.target) && !toggle.contains(e.target)) closeMenu();
+            if (!panel && !header.contains(e.target)) closeMenu();
         });
     })();
     
@@ -704,6 +741,7 @@ const fontFileMap = {
     'INDG Naora': 'fonts/Naora/INDG Naora.woff2',
     'INDG Peqat': 'fonts/Peqat/INDGPeqat-Norma.woff2',
     'INDG Sifora': 'fonts/Sifora/INDGSifora-Regular.woff2',
+    'INDG Stycka': 'fonts/Stycka/INDG-Stycka.woff2',
     'Old English Quadrat': 'fonts/Old English Quadrat/Old-English-Quadrat.woff2'
 };
 
@@ -818,6 +856,7 @@ function getFontFamilyFromSection(section) {
         'naora': 'INDG Naora',
         'peqat': 'INDG Peqat',
         'sifora': 'INDG Sifora',
+        'stycka': 'INDG Stycka',
         'oequadrat': 'Old English Quadrat'
     };
     
@@ -863,12 +902,20 @@ function attachOpenTypeDropdownBehavior(dropdown) {
  */
 function populateOpenTypeDropdown(dropdown, features, showEmptyPlaceholder = false) {
     const menu = dropdown.querySelector('.opentype-menu');
+    const trigger = dropdown.querySelector('.dropdown-trigger');
+    const selectedSpan = dropdown.querySelector('.dropdown-selected');
+    const arrowSpan = dropdown.querySelector('.dropdown-arrow');
     if (!menu) return;
 
     menu.innerHTML = '';
     const list = features && features.length ? sortOpenTypeFeaturesList([...new Set(features)]) : [];
+    const hasNoFeatures = list.length === 0 && showEmptyPlaceholder;
 
-    if (list.length === 0 && showEmptyPlaceholder) {
+    if (hasNoFeatures) {
+        dropdown.classList.add('no-ot-features');
+        if (selectedSpan) selectedSpan.textContent = 'No OT features';
+        if (arrowSpan) arrowSpan.style.display = 'none';
+        if (trigger) trigger.setAttribute('disabled', 'disabled');
         const placeholder = document.createElement('div');
         placeholder.className = 'dropdown-option opentype-option opentype-empty-placeholder';
         placeholder.textContent = 'No features';
@@ -876,6 +923,10 @@ function populateOpenTypeDropdown(dropdown, features, showEmptyPlaceholder = fal
         placeholder.style.pointerEvents = 'none';
         menu.appendChild(placeholder);
     } else {
+        dropdown.classList.remove('no-ot-features');
+        if (selectedSpan) selectedSpan.textContent = 'OT features';
+        if (arrowSpan) arrowSpan.style.display = '';
+        if (trigger) trigger.removeAttribute('disabled');
         list.forEach(feature => {
             const option = document.createElement('div');
             option.className = 'dropdown-option opentype-option';
@@ -1083,6 +1134,13 @@ if (document.readyState === 'loading') {
 
 // Dark mode toggle
 (function () {
+    function updateThemeToggleLabels() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+            btn.textContent = isDark ? 'Light' : 'Dark';
+            btn.setAttribute('aria-label', isDark ? 'Toggle light mode' : 'Toggle dark mode');
+        });
+    }
     function toggleTheme() {
         var html = document.documentElement;
         var isDark = html.getAttribute('data-theme') === 'dark';
@@ -1093,8 +1151,10 @@ if (document.readyState === 'loading') {
             html.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
         }
+        updateThemeToggleLabels();
     }
     function initThemeToggle() {
+        updateThemeToggleLabels();
         document.addEventListener('click', function (e) {
             if (e.target.closest('.theme-toggle')) toggleTheme();
         });

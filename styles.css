@@ -288,6 +288,16 @@
     font-display: swap;
 }
 
+/* INDG Stycka Font Face */
+@font-face {
+    font-family: 'INDG Stycka';
+    src: url('fonts/Stycka/INDG-Stycka.woff2') format('woff2'),
+         url('fonts/Stycka/INDG-Stycka.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Old English Quadrat Font Face */
 @font-face {
     font-family: 'Old English Quadrat';
@@ -350,11 +360,11 @@ html[data-theme="dark"] {
     --color-primary: #3888FF;
     --color-text: #e8e8e8;
     --color-text-light: #9d9998;
-    --color-background: #1E1F21;
+    --color-background: #161719;
     --color-border: #2a2a2a;
     --color-select-border: #555555;
     --color-stroke: #3d3a38;
-    --color-surface: rgba(30, 31, 33, 0.92);
+    --color-surface: rgba(22, 23, 25, 0.92);
     --color-on-primary: #e8e8e8;
     --color-footer-muted: #5c5957;
 }
@@ -566,7 +576,7 @@ p:last-child {
 
 html[data-theme="dark"] .theme-toggle {
     color: var(--color-primary);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /* Navigation Dropdown */
@@ -694,6 +704,12 @@ input[type="range"]:hover,
     max-height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.intro::-webkit-scrollbar {
+    display: none;
 }
 
 .intro p {
@@ -815,8 +831,8 @@ main {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     width: 100vw;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: var(--layout-content-padding);
+    padding-right: var(--layout-content-padding);
     box-sizing: border-box;
     flex-wrap: wrap;
     position: relative;
@@ -922,21 +938,29 @@ main {
     padding: 0;
 }
 
-/* Index: 6-box rows (name, one-style, size, tracking, capitalize, much more) – equal width except capitalize */
+/* Index: 6-box rows (name, one-style, size, tracking, capitalize, much more) – four equal boxes + capitalize (50px) + last box stretches to right margin */
 .typeface-controls-row:has(.more-btn) .control-box:nth-child(1),
 .typeface-controls-row:has(.more-btn) .control-box:nth-child(2),
 .typeface-controls-row:has(.more-btn) .control-box:nth-child(3),
-.typeface-controls-row:has(.more-btn) .control-box:nth-child(4),
-.typeface-controls-row:has(.more-btn) .control-box:nth-child(6) {
+.typeface-controls-row:has(.more-btn) .control-box:nth-child(4) {
     flex: 0 0 calc((100vw - 2 * var(--layout-content-padding) - 50px) / 5);
 }
 
-/* Detail: 5-box rows – four equal boxes + capitalize (50px) fixed */
+.typeface-controls-row:has(.more-btn) .control-box:last-child {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Detail: 5-box rows – three equal boxes + capitalize (50px) + last box stretches to right margin */
 .typeface-controls-row:has(.capitalize-btn-box):not(:has(.more-btn)) .control-box:nth-child(1),
 .typeface-controls-row:has(.capitalize-btn-box):not(:has(.more-btn)) .control-box:nth-child(2),
-.typeface-controls-row:has(.capitalize-btn-box):not(:has(.more-btn)) .control-box:nth-child(3),
-.typeface-controls-row:has(.capitalize-btn-box):not(:has(.more-btn)) .control-box:nth-child(5) {
+.typeface-controls-row:has(.capitalize-btn-box):not(:has(.more-btn)) .control-box:nth-child(3) {
     flex: 0 0 calc((100vw - 2 * var(--layout-content-padding) - 50px) / 4);
+    min-width: 0;
+}
+
+.typeface-controls-row:has(.capitalize-btn-box):not(:has(.more-btn)) .control-box:last-child {
+    flex: 1 1 0;
     min-width: 0;
 }
 
@@ -959,7 +983,7 @@ main {
 }
 
 .capitalize-btn:hover {
-    color: var(--color-text);
+    color: var(--color-primary);
 }
 
 .capitalize-btn:focus,
@@ -1004,14 +1028,6 @@ main {
     width: 100%;
 }
 
-.control-box:first-child .typeface-name a {
-    padding-left: 0;
-}
-
-.control-box:last-child .typeface-name a {
-    padding-right: 0;
-}
-
 .one-style-text {
     color: var(--color-text-light);
     font-family: var(--font-button-family);
@@ -1020,19 +1036,12 @@ main {
     line-height: 1;
     width: 100%;
     box-sizing: border-box;
-    padding: 0;
+    padding: 0 var(--box-text-padding);
     margin: 0;
-    margin-left: 10px;
-    margin-right: 10px;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.control-box:first-child .one-style-text {
-    padding-left: 0;
-    margin-left: 0;
 }
 
 .control-box:last-child .one-style-text {
@@ -1209,6 +1218,35 @@ main {
     pointer-events: none;
 }
 
+/* Mobile nav panel (rendered in portal) – options look like .dropdown-option */
+#dropdown-portal .mobile-nav-panel a,
+#dropdown-portal .mobile-nav-panel .theme-toggle {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    min-height: 50px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--color-stroke);
+    color: var(--color-primary);
+    font-family: var(--font-button-family);
+    font-size: var(--font-button-size);
+    font-weight: var(--font-button-weight);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+#dropdown-portal .mobile-nav-panel a:first-child {
+    border-top: 1px solid var(--color-stroke);
+}
+#dropdown-portal .mobile-nav-panel a:last-of-type,
+#dropdown-portal .mobile-nav-panel .theme-toggle {
+    border-bottom: 1px solid var(--color-stroke);
+}
+#dropdown-portal .mobile-nav-panel a:hover,
+#dropdown-portal .mobile-nav-panel .theme-toggle:hover {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
 .dropdown-option {
     height: 50px;
     min-height: 50px;
@@ -1370,7 +1408,7 @@ main {
     font-family: var(--font-button-family);
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
-    color: var(--color-text-light);
+    color: var(--color-primary);
     background: var(--color-surface);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -1537,6 +1575,10 @@ main {
     font-family: 'INDG Sifora', sans-serif;
 }
 
+.typeface-sample[data-font="stycka"] {
+    font-family: 'INDG Stycka', sans-serif;
+}
+
 .typeface-sample[data-font="oequadrat"] {
     font-family: 'Old English Quadrat', sans-serif;
     font-weight: 400 !important;
@@ -1637,6 +1679,7 @@ body.typeface-peqat .typeface-column a[href="peqat.html"],
 body.typeface-heron .typeface-column a[href="heron.html"],
 body.typeface-naora .typeface-column a[href="naora.html"],
 body.typeface-sifora .typeface-column a[href="sifora.html"],
+body.typeface-stycka .typeface-column a[href="stycka.html"],
 body.typeface-oequadrat .typeface-column a[href="oequadrat.html"] {
     color: var(--color-footer-muted);
 }
@@ -1651,6 +1694,7 @@ body.typeface-peqat .typeface-column a[href="peqat.html"]:hover,
 body.typeface-heron .typeface-column a[href="heron.html"]:hover,
 body.typeface-naora .typeface-column a[href="naora.html"]:hover,
 body.typeface-sifora .typeface-column a[href="sifora.html"]:hover,
+body.typeface-stycka .typeface-column a[href="stycka.html"]:hover,
 body.typeface-oequadrat .typeface-column a[href="oequadrat.html"]:hover {
     color: var(--color-footer-muted);
 }
@@ -1888,8 +1932,13 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     transform: translateY(-6.5px) rotate(-45deg);
 }
 
-/* Mobile: narrow header, hamburger menu, hide sliders and bottom bar */
+/* Mobile: no layout margin; use text/box padding only for spacing */
 @media (max-width: 768px) {
+    :root {
+        --layout-margin: 0;
+        --layout-content-padding: 0;
+    }
+
     body,
     body * {
         cursor: auto;
@@ -1904,11 +1953,15 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         display: none;
     }
 
+    #control-hint-tooltip {
+        display: none !important;
+    }
+
     .intro {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
     }
 
     .intro p {
@@ -1916,13 +1969,15 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         max-width: 100%;
         text-align: left;
         font-size: calc(1.5 * var(--font-text-size));
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .about-section {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
     }
 
     .about-content {
@@ -1948,7 +2003,7 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .header {
-        padding: 16px var(--layout-inset);
+        padding: 16px 0;
     }
 
     .header-content {
@@ -1959,79 +2014,12 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 
     .header-menu-toggle {
         display: flex;
+        padding-right: calc(var(--box-text-padding) + 5px);
     }
 
-    /* Burger menu: same style as .nav-dropdown .dropdown-menu */
-    .nav {
+    /* Mobile: in-header nav is hidden; open menu is rendered in #dropdown-portal and uses same styles as other dropdowns */
+    .header .nav {
         display: none;
-        position: fixed;
-        top: var(--line-top, 77px); /* Below header; JS sets --line-top to header.offsetHeight */
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-        gap: 0;
-        padding: 0;
-        background-color: transparent;
-        isolation: isolate;
-        border: 1px solid var(--color-stroke);
-        border-top: none;
-        z-index: 10001;
-        overflow: hidden;
-    }
-
-    .nav::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-color: var(--color-surface);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        z-index: -1;
-    }
-
-    .header.nav-open .nav {
-        display: flex;
-    }
-
-    .nav a,
-    .nav .theme-toggle {
-        display: flex;
-        align-items: center;
-        height: 50px;
-        min-height: 50px;
-        line-height: 50px;
-        padding: 0 15px;
-        box-sizing: border-box;
-        border-bottom: 1px solid var(--color-stroke);
-        width: 100%;
-        text-align: left;
-        color: var(--color-primary);
-        font-family: var(--font-button-family);
-        font-size: var(--font-button-size);
-        font-weight: var(--font-button-weight);
-        text-decoration: none;
-        transition: background-color 0.2s ease, color 0.2s ease;
-    }
-
-    .nav a:first-child {
-        border-top: 1px solid var(--color-stroke);
-    }
-
-    .nav a:last-of-type,
-    .nav .theme-toggle {
-        border-bottom: none;
-    }
-
-    .nav a.active {
-        color: var(--color-primary);
-    }
-
-    .nav a:hover:not(.active),
-    .nav .theme-toggle:hover {
-        background-color: rgba(0, 0, 255, 0.1);
-        color: var(--color-primary);
     }
 
     /* Typefaces (mobile): simple layout – equal boxes, 10px inset, left-aligned text */
@@ -2054,13 +2042,15 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         width: 100%;
         margin-left: 0;
         margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
         box-sizing: border-box;
     }
 
-    /* All boxes: text 10px from edge, left-aligned */
+    /* All boxes: only box text padding (on inner content), no stacked padding */
     .typeface-controls-row .control-box {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 0;
+        padding-right: 0;
         text-align: left;
         justify-content: flex-start;
     }
@@ -2070,6 +2060,19 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .typeface-controls-row .control-box .custom-dropdown .dropdown-trigger,
     .typeface-controls-row .control-box .more-btn {
         text-align: left;
+    }
+
+    .more-btn span:not(.play-icon) {
+        font-size: 0;
+        line-height: 0;
+        overflow: hidden;
+    }
+    .more-btn span:not(.play-icon)::after {
+        content: 'More';
+        font-size: var(--font-button-size);
+        font-family: var(--font-button-family);
+        font-weight: var(--font-button-weight);
+        line-height: 1;
     }
 
     /* Equal width for all boxes except all-caps (override desktop nth-child rules) */
@@ -2092,6 +2095,11 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         padding-left: 10px;
         padding-right: 10px;
         text-align: left;
+    }
+
+    /* Typeface detail page samples: half size on mobile (override inline font-size) */
+    .typeface-detail-container .typeface-sample {
+        font-size: 60px !important;
     }
 
     .typeface-controls-row .control-box:first-child {
@@ -2137,44 +2145,61 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .footer {
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
     }
 
-    /* Typeface details: stack all rows in one column */
+    /* Typeface details: 2×6 table on mobile (2 equal columns, 6 rows: category | content), rows 50px min */
     .typeface-details-content {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6, minmax(50px, auto));
         margin-left: 0;
         margin-right: 0;
         width: 100%;
+        border-top: 1px solid var(--color-stroke);
     }
 
     .typeface-details-content .details-column {
         display: contents;
     }
 
-    /* Reorder so each logical row stays together (label, value, label, value) */
+    /* Order: Designer, Styles, Glyphs, Unicode ranges, OT features, Formats (each label then value) */
     .typeface-details-content .details-column:nth-child(1) .detail-item:nth-child(1) { order: 1; }
     .typeface-details-content .details-column:nth-child(2) .detail-item:nth-child(1) { order: 2; }
-    .typeface-details-content .details-column:nth-child(3) .detail-item:nth-child(1) { order: 3; }
-    .typeface-details-content .details-column:nth-child(4) .detail-item:nth-child(1) { order: 4; }
-    .typeface-details-content .details-column:nth-child(1) .detail-item:nth-child(2) { order: 5; }
-    .typeface-details-content .details-column:nth-child(2) .detail-item:nth-child(2) { order: 6; }
-    .typeface-details-content .details-column:nth-child(3) .detail-item:nth-child(2) { order: 7; }
-    .typeface-details-content .details-column:nth-child(4) .detail-item:nth-child(2) { order: 8; }
-    .typeface-details-content .details-column:nth-child(1) .detail-item:nth-child(3) { order: 9; }
-    .typeface-details-content .details-column:nth-child(2) .detail-item:nth-child(3) { order: 10; }
+    .typeface-details-content .details-column:nth-child(1) .detail-item:nth-child(2) { order: 3; }
+    .typeface-details-content .details-column:nth-child(2) .detail-item:nth-child(2) { order: 4; }
+    .typeface-details-content .details-column:nth-child(1) .detail-item:nth-child(3) { order: 5; }
+    .typeface-details-content .details-column:nth-child(2) .detail-item:nth-child(3) { order: 6; }
+    .typeface-details-content .details-column:nth-child(3) .detail-item:nth-child(1) { order: 7; }
+    .typeface-details-content .details-column:nth-child(4) .detail-item:nth-child(1) { order: 8; }
+    .typeface-details-content .details-column:nth-child(3) .detail-item:nth-child(2) { order: 9; }
+    .typeface-details-content .details-column:nth-child(4) .detail-item:nth-child(2) { order: 10; }
     .typeface-details-content .details-column:nth-child(3) .detail-item:nth-child(3) { order: 11; }
     .typeface-details-content .details-column:nth-child(4) .detail-item:nth-child(3) { order: 12; }
 
-    .typeface-details-content .detail-item {
-        border-left: 1px solid var(--color-stroke);
-        border-right: 1px solid var(--color-stroke);
+    .typeface-details-content .detail-item,
+    .typeface-details-content .details-column:first-child .detail-item {
+        min-height: 50px;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        border-bottom: 1px solid var(--color-stroke);
         margin-right: 0;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
         text-align: left;
+    }
+
+    /* Override base .details-column .detail-item:first-child { border-top } so Unicode row has no double line */
+    .typeface-details-content .details-column .detail-item:first-child {
+        border-top: none;
+    }
+
+    /* Vertical divider between category and content columns */
+    .typeface-details-content .details-column:nth-child(1) .detail-item,
+    .typeface-details-content .details-column:nth-child(3) .detail-item {
+        border-right: 1px solid var(--color-stroke);
     }
 
     .typeface-details-content .detail-label,
@@ -2182,12 +2207,12 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         text-align: left;
     }
 
-    /* Typeface detail page: full-width boxes, layout inset, text left */
+    /* Typeface detail page: no layout margins; use text/box padding only; hero text half size; body text left-aligned */
     .typeface-hero {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
         text-align: left;
     }
 
@@ -2196,10 +2221,16 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         margin: 0;
     }
 
-    .typeface-title {
+    /* Typeface detail titles: half desktop size (200px → 100px) */
+    .typeface-hero .typeface-title {
+        font-size: 100px;
+        line-height: 90px;
+        letter-spacing: -5px;
+        padding-top: 25px;
+        padding-bottom: 25px;
         text-align: left;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .typeface-hero-buttons {
@@ -2207,8 +2238,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         margin-left: 0;
         margin-right: 0;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
     }
 
     .typeface-hero .test-btn:first-child {
@@ -2232,13 +2263,13 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .test-btn,
     .buy-btn {
         text-align: left;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--box-text-padding);
+        padding-right: var(--box-text-padding);
     }
 
     .typeface-description {
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .typeface-description p {
@@ -2257,24 +2288,19 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         padding-right: 0;
     }
 
+    /* Single padding level: section no padding, .detail-item / pricing content have padding */
     .typeface-details {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
-    }
-
-    .typeface-details-content {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .typeface-pricing {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .typeface-pricing-title {
@@ -2351,8 +2377,15 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .contact-section {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--layout-inset);
-        padding-right: var(--layout-inset);
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
+    }
+
+    /* Single padding level: section has padding, inner content none */
+    .contact-questions,
+    .contact-email {
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .contact-questions,
@@ -2382,8 +2415,6 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     padding: 250px var(--layout-content-padding) 0px;
     text-align: center;
     min-height: 100vh;
-    max-height: 100vh;
-    overflow-y: auto;
     border-bottom: none;
     box-sizing: border-box;
 }
@@ -2452,6 +2483,10 @@ body.typeface-sifora .typeface-title {
     font-family: 'INDG Sifora', sans-serif;
 }
 
+body.typeface-stycka .typeface-title {
+    font-family: 'INDG Stycka', sans-serif;
+}
+
 body.typeface-oequadrat .typeface-title {
     font-family: 'Old English Quadrat', sans-serif;
 }
@@ -2486,6 +2521,9 @@ body.typeface-oequadrat .typeface-title {
     flex-wrap: nowrap;
     padding-top: 0px;
     padding-bottom: 150px;
+    padding-left: var(--layout-content-padding);
+    padding-right: var(--layout-content-padding);
+    box-sizing: border-box;
 }
 
 .test-btn, .buy-btn {
@@ -2518,7 +2556,7 @@ body.typeface-oequadrat .typeface-title {
 }
 
 .test-btn:first-child {
-    margin-left: var(--layout-content-padding);
+    margin-left: 0;
     margin-right: 0;
     padding-left: 10px;
     border-left: 1px solid var(--color-stroke);
@@ -2547,7 +2585,7 @@ body.typeface-oequadrat .typeface-title {
 
 .buy-btn:last-child {
     border-right: none;
-    margin-right: var(--layout-content-padding);
+    margin-right: 0;
     padding-right: 10px;
     position: relative;
 }
@@ -2592,7 +2630,7 @@ body.typeface-oequadrat .typeface-title {
 
 .typeface-description p {
     position: relative;
-    left: 50%;
+    left: 0;
     color: var(--color-primary);
     font-family: var(--font-text-family);
     font-size: var(--font-text-size);
@@ -2602,7 +2640,7 @@ body.typeface-oequadrat .typeface-title {
     margin-bottom: 0;
     padding-left: var(--text-padding);
     padding-right: var(--text-padding);
-    max-width: calc(50vw - var(--layout-content-padding));
+    max-width: 100%;
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
@@ -2626,15 +2664,18 @@ body.typeface-oequadrat .typeface-title {
     margin-bottom: -1px; /* Overlap borders vertically */
 }
 
-.typeface-details-content {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    width: 100vw;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 0;
-    row-gap: 0;
+/* Desktop only: 4×3 grid; mobile uses 2×6 in @media (max-width: 768px) */
+@media (min-width: 769px) {
+    .typeface-details-content {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        width: 100vw;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 0;
+        row-gap: 0;
+    }
 }
 
 .details-column {
@@ -2657,7 +2698,7 @@ body.typeface-oequadrat .typeface-title {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
     border: none;
     border-left: 1px solid var(--color-stroke);
@@ -2702,6 +2743,12 @@ body.typeface-oequadrat .typeface-title {
     text-transform: lowercase;
 }
 
+/* Designer name and unicode ranges: proper capitalization (override lowercase) */
+.detail-value.detail-value-designer,
+.detail-value.unicode-ranges {
+    text-transform: capitalize;
+}
+
 .unicode-ranges {
     line-height: 1.25;
 }
@@ -2724,7 +2771,9 @@ body.typeface-oequadrat .typeface-title {
     font-size: var(--font-table-size);
     font-weight: var(--font-table-weight);
     color: var(--color-primary);
-    margin: 0 10px 10px 10px;
+    margin: 0 0 10px 0;
+    padding-left: var(--box-text-padding);
+    padding-right: var(--box-text-padding);
     max-width: var(--layout-max-width);
 }
 
@@ -2796,7 +2845,7 @@ body.typeface-oequadrat .typeface-title {
 }
 
 .typeface-pricing .typeface-controls-row:first-child .control-box {
-    border-top: none;
+    border-top: 1px solid var(--color-stroke);
 }
 
 .typeface-pricing .typeface-controls-row:last-child .control-box {
@@ -2867,4 +2916,13 @@ body.typeface-oequadrat .typeface-title {
 .opentype-menu .dropdown-option.selected {
     background-color: var(--color-primary);
     color: var(--color-on-primary);
+}
+
+/* OpenType dropdown when typeface has no OT features */
+.opentype-dropdown.no-ot-features .dropdown-trigger {
+    color: var(--color-text-light);
+    cursor: default;
+}
+.opentype-dropdown.no-ot-features .dropdown-trigger:disabled {
+    cursor: default;
 }

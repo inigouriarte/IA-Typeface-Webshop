@@ -18,6 +18,7 @@ var TYPEFACE_FONT_PATHS = {
     naora: 'fonts/Naora/INDG Naora.woff2',
     sifora: 'fonts/Sifora/INDGSifora-Regular.woff2',
     zigrid: 'fonts/Zigrid/INDG Zigrid.woff2',
+    stycka: 'fonts/Stycka/INDG-Stycka.woff2',
     oequadrat: 'fonts/Old English Quadrat/Old-English-Quadrat.woff2'
 };
 
@@ -276,7 +277,7 @@ function renderDetailsSection(details, openTypeFeatures) {
                 <!-- Column 2: Data input (values) -->
                 <div class="details-column">
                     <div class="detail-item">
-                        <div class="detail-value">${details.designer}</div>
+                        <div class="detail-value detail-value-designer">${details.designer}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-value">${details.styles}</div>

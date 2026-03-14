@@ -221,6 +221,16 @@ const typefacesConfig = [
         letterSpacing: 0
     },
     {
+        id: 'stycka',
+        name: 'INDG Stycka',
+        displayName: 'INDG Stycka',
+        hasLink: true,
+        linkUrl: 'stycka.html',
+        isOneStyle: true,
+        fontSize: 120,
+        letterSpacing: 0
+    },
+    {
         id: 'oequadrat',
         name: 'Old English Quadrat',
         displayName: 'Old English Quadrat',
