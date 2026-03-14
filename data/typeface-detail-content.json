@@ -702,6 +702,11 @@
     "hasOpenType": false,
     "openTypeFeatures": [],
     "samples": [],
-    "pricing": []
+    "pricing": [
+      {
+        "name": "INDG Dracma",
+        "price": "50"
+      }
+    ]
   }
 }
