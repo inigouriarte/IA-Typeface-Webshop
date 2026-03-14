@@ -710,6 +710,11 @@
         "sampleId": "regular"
       }
     ],
-    "pricing": []
+    "pricing": [
+      {
+        "name": "INDG Dracma",
+        "price": "30"
+      }
+    ]
   }
 }
