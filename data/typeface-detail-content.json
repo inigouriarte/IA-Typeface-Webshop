@@ -103,7 +103,7 @@
     "description": "Swiss-knife (you get it?), everyday use, highly versatile, all-in-one typographic family. INDG Alvica counters its sober appearance with a broad set of quirky alternates.",
     "details": {
       "designer": "Iñigo Uriarte",
-      "version": "2.0",
+      "version": "1.0",
       "formats": "OTF, TTF, WOFF, WOFF2",
       "styles": "6",
       "glyphs": "794",
@@ -121,6 +121,21 @@
         "Alphabetic Presentation Forms"
       ]
     },
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "liga",
+      "ss02",
+      "zero",
+      "ss03",
+      "dlig",
+      "ss04",
+      "smcp",
+      "ss05",
+      "salt",
+      "ss06",
+      "ss01",
+      "ss07"
+    ],
     "samples": [
       {
         "weight": 600,
@@ -188,21 +203,6 @@
         "name": "INDG Alvica Black",
         "price": "17€"
       }
-    ],
-    "hasOpenType": true,
-    "openTypeFeatures": [
-      "liga",
-      "ss02",
-      "zero",
-      "ss03",
-      "dlig",
-      "ss04",
-      "smcp",
-      "ss05",
-      "salt",
-      "ss06",
-      "ss01",
-      "ss07"
     ]
   },
   "dale": {

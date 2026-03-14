@@ -742,7 +742,8 @@ const fontFileMap = {
     'INDG Peqat': 'fonts/Peqat/INDGPeqat-Norma.woff2',
     'INDG Sifora': 'fonts/Sifora/INDGSifora-Regular.woff2',
     'INDG Stycka': 'fonts/Stycka/INDG-Stycka.woff2',
-    'Old English Quadrat': 'fonts/Old English Quadrat/Old-English-Quadrat.woff2'
+    'Old English Quadrat': 'fonts/Old English Quadrat/Old-English-Quadrat.woff2',
+    'INDIG Test': 'fonts/INDIG Test/INDGAlvica-Regular.woff2'
 };
 
 // Cache for detected features
@@ -857,7 +858,8 @@ function getFontFamilyFromSection(section) {
         'peqat': 'INDG Peqat',
         'sifora': 'INDG Sifora',
         'stycka': 'INDG Stycka',
-        'oequadrat': 'Old English Quadrat'
+        'oequadrat': 'Old English Quadrat',
+        'Test': 'INDIG Test'
     };
     
     return fontFamilyMap[fontAttr] || null;
@@ -1188,4 +1190,6 @@ if (document.readyState === 'loading') {
     }
     document.addEventListener('paste', onPaste, true);
 })();
+
+// Buy/Purchase button click handlers are now in purchase-modal.js
 

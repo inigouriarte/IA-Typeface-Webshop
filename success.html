@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>Purchase Complete - Indigo Alphabets®</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">Indigo Alphabets®</a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <button type="button" class="theme-toggle" aria-label="Toggle dark mode">Dark</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Success Section -->
+    <section class="about-section" id="success">
+        <div class="about-content">
+            <div class="about-text" id="success-content">
+                <p>Loading purchase details...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
+            <a href="licensing.html" class="footer-link">Licensing</a>
+            <h3 class="typeface-list-heading">Typefaces</h3>
+        </div>
+        <div class="footer-content">
+            <div class="typeface-columns">
+                <div class="typeface-column">
+                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
+                </div>
+                <div class="typeface-column">
+                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
+                </div>
+                <div class="typeface-column">
+                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>©2026 Indigo Alphabets</p>
+            </div>
+            <div class="footer-email">
+                <p>hi@indigoindigo.org</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://instagram.com/indigo______indigo" class="footer-link" target="_blank">Follow me on IG</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="bottom-bar-content">
+            <span class="bottom-bar-item" id="cursor-coords">X 0000 px Y 0000 px</span>
+            <span class="bottom-bar-item" id="current-date">01.01.2026</span>
+            <span class="bottom-bar-item" id="current-time">00.00.00</span>
+            <span class="bottom-bar-item">52.5034°N 13.4698°E</span>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+    (function () {
+        var container = document.getElementById('success-content');
+        var params = new URLSearchParams(window.location.search);
+        var sessionId = params.get('session_id');
+
+        if (!sessionId) {
+            container.innerHTML = '<p>No purchase session found.</p><p><a href="index.html">Back to home</a></p>';
+            return;
+        }
+
+        fetch('/api/checkout-session/' + encodeURIComponent(sessionId))
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.error) {
+                    container.innerHTML = '<p>Could not load purchase details.</p><p><a href="index.html">Back to home</a></p>';
+                    return;
+                }
+
+                var productName = data.metadata.productName || 'Font license';
+                var total = ((data.amountTotal || 0) / 100).toFixed(2);
+                var currency = (data.currency || 'eur').toUpperCase();
+                var license = data.metadata.licenseTier || '';
+
+                var html = '<p>Thank you for your purchase!</p>';
+                html += '<div class="success-details">';
+                html += '<div class="success-row"><span>Product</span><span>' + productName + '</span></div>';
+                if (license) {
+                    html += '<div class="success-row"><span>License</span><span>' + license + '</span></div>';
+                }
+                html += '<div class="success-row success-total"><span>Total paid</span><span>' + total + ' ' + currency + '</span></div>';
+                html += '</div>';
+
+                if (data.downloadToken) {
+                    html += '<p>Your download includes all font files and an invoice.</p>';
+                    html += '<a href="/api/download/' + encodeURIComponent(data.downloadToken) + '" class="success-download-btn">Download fonts + invoice</a>';
+                    html += '<p class="success-note">This download link expires in 48 hours. Revisit this page to generate a new one.<br>Questions? Contact us at <a href="mailto:hi@indigoindigo.org">hi@indigoindigo.org</a>.</p>';
+                } else {
+                    html += '<p class="success-note">Payment is still processing. Please refresh this page in a moment.<br>Questions? Contact us at <a href="mailto:hi@indigoindigo.org">hi@indigoindigo.org</a>.</p>';
+                }
+
+                html += '<p><a href="index.html">Back to home</a></p>';
+
+                container.innerHTML = html;
+            })
+            .catch(function () {
+                container.innerHTML = '<p>Could not load purchase details. Please try refreshing.</p><p><a href="index.html">Back to home</a></p>';
+            });
+    })();
+    </script>
+</body>
+</html>

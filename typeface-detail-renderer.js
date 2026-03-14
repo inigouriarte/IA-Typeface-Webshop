@@ -19,7 +19,8 @@ var TYPEFACE_FONT_PATHS = {
     sifora: 'fonts/Sifora/INDGSifora-Regular.woff2',
     zigrid: 'fonts/Zigrid/INDG Zigrid.woff2',
     stycka: 'fonts/Stycka/INDG-Stycka.woff2',
-    oequadrat: 'fonts/Old English Quadrat/Old-English-Quadrat.woff2'
+    oequadrat: 'fonts/Old English Quadrat/Old-English-Quadrat.woff2',
+    Test: 'fonts/INDIG Test/INDGAlvica-Regular.woff2'
 };
 
 /**
@@ -325,7 +326,12 @@ function renderDetailsSection(details, openTypeFeatures) {
  * @param {Object} details - Details object (to read styles count)
  * @returns {string} HTML string for pricing section
  */
-function renderPricingSection(pricing, details) {
+function parsePriceValue(priceStr) {
+    const match = priceStr.match(/(\d+(?:[.,]\d+)?)/);
+    return match ? parseFloat(match[1].replace(',', '.')) : 0;
+}
+
+function renderPricingSection(pricing, details, typefaceId) {
     if (!pricing || !pricing.length) {
         return '';
     }
@@ -345,11 +351,15 @@ function renderPricingSection(pricing, details) {
     const pricingRows = [
         {
             label: stylesLabel,
-            price: familyItem.price
+            price: familyItem.price,
+            productName: familyItem.name,
+            priceValue: parsePriceValue(familyItem.price)
         },
         {
             label: 'Style',
-            price: styleItem.price
+            price: styleItem.price,
+            productName: styleItem.name,
+            priceValue: parsePriceValue(styleItem.price)
         }
     ].map(item =>
         `                <div class="typeface-controls-row">
@@ -363,7 +373,7 @@ function renderPricingSection(pricing, details) {
     ).join('\n');
 
     return `        <!-- Available Styles and Pricing -->
-        <section class="typeface-pricing">
+        <section class="typeface-pricing" id="pricing">
             <h2 class="typeface-pricing-title">Pricing</h2>
             <div class="pricing-content">
 ${pricingRows}
@@ -390,7 +400,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
 
     // Render details and pricing
     const detailsSection = renderDetailsSection(detailConfig.details);
-    const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details);
+    const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details, typefaceId);
 
     // OpenType.js needed on all detail pages so dropdown can show/detect features
     const openTypeScript = `    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js" defer></script>
@@ -501,8 +511,15 @@ ${pricingSection}
         </div>
     </div>
 
-    <script>window.__TYPEFACE_FONT_PATHS__ = ${JSON.stringify(TYPEFACE_FONT_PATHS)};</script>
-${openTypeScript}    <script src="script.js" defer></script>
+    <script>
+    window.__TYPEFACE_FONT_PATHS__ = ${JSON.stringify(TYPEFACE_FONT_PATHS)};
+    window.__TYPEFACE_ID__ = ${JSON.stringify(typefaceId)};
+    window.__TYPEFACE_NAME__ = ${JSON.stringify(config.displayName)};
+    window.__TYPEFACE_PRICING__ = ${JSON.stringify(detailConfig.pricing)};
+    </script>
+${openTypeScript}    <script src="https://js.stripe.com/v3/" defer></script>
+    <script src="script.js" defer></script>
+    <script src="purchase-modal.js" defer></script>
 </body>
 </html>`;
 }
