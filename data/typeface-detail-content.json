@@ -691,11 +691,13 @@
     "description": "TTT",
     "details": {
       "designer": "Iñigo Uriarte",
-      "version": "",
-      "formats": "",
-      "styles": "",
-      "glyphs": "",
-      "unicodeRanges": []
+      "version": "º1",
+      "formats": "wr",
+      "styles": "r",
+      "glyphs": "gwV",
+      "unicodeRanges": [
+        "1ABETH"
+      ]
     },
     "hasOpenType": false,
     "openTypeFeatures": [],
