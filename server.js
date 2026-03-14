@@ -65,7 +65,7 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     ? new Stripe(process.env.STRIPE_SECRET_KEY)
     : null;
 
-  app.get('/api/stripe-key', (req, res) => {
+  app.get('/api/create-checkout-session', (req, res) => {
     res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || null });
   });
 
@@ -433,28 +433,7 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     await fs.writeFile(INDEX_CONTENT_PATH, JSON.stringify(data, null, 2) + '\n', 'utf8');
   }
 
-  app.get('/api/admin/index-content', requireAdmin, async (req, res) => {
-    try {
-      const data = await readIndexContent();
-      res.json(data);
-    } catch (e) {
-      res.status(500).json({ error: e.message });
-    }
-  });
-
-  app.put('/api/admin/index-content', requireAdmin, async (req, res) => {
-    try {
-      const body = req.body;
-      const data = Array.isArray(body) ? body : (body.data && Array.isArray(body.data) ? body.data : null);
-      if (!data) return res.status(400).json({ error: 'Expected JSON array of index content' });
-      await writeIndexContent(data);
-      res.json({ ok: true });
-    } catch (e) {
-      res.status(500).json({ error: e.message });
-    }
-  });
-
-  // --- Admin API: Typeface detail pages content (spreadsheet source for all detail pages) ---
+  // --- Admin API: Typeface detail pages content ---
   async function readTypefaceDetailContent() {
     const raw = await fs.readFile(TYPEFACE_DETAIL_CONTENT_PATH, 'utf8');
     const data = JSON.parse(raw);
@@ -466,21 +445,30 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     await fs.writeFile(TYPEFACE_DETAIL_CONTENT_PATH, JSON.stringify(data, null, 2) + '\n', 'utf8');
   }
 
-  app.get('/api/admin/typeface-detail-content', requireAdmin, async (req, res) => {
+  app.get('/api/admin/content', requireAdmin, async (req, res) => {
     try {
-      const data = await readTypefaceDetailContent();
-      res.json(data);
+      if (req.query.type === 'detail') {
+        res.json(await readTypefaceDetailContent());
+      } else {
+        res.json(await readIndexContent());
+      }
     } catch (e) {
       res.status(500).json({ error: e.message });
     }
   });
 
-  app.put('/api/admin/typeface-detail-content', requireAdmin, async (req, res) => {
+  app.put('/api/admin/content', requireAdmin, async (req, res) => {
     try {
       const body = req.body;
-      const data = body && typeof body === 'object' && !Array.isArray(body) ? body : (body.data && typeof body.data === 'object' && !Array.isArray(body.data) ? body.data : null);
-      if (!data) return res.status(400).json({ error: 'Expected JSON object (id -> detail config)' });
-      await writeTypefaceDetailContent(data);
+      if (req.query.type === 'detail') {
+        const data = body && typeof body === 'object' && !Array.isArray(body) ? body : (body.data && typeof body.data === 'object' && !Array.isArray(body.data) ? body.data : null);
+        if (!data) return res.status(400).json({ error: 'Expected JSON object (id -> detail config)' });
+        await writeTypefaceDetailContent(data);
+      } else {
+        const data = Array.isArray(body) ? body : (body.data && Array.isArray(body.data) ? body.data : null);
+        if (!data) return res.status(400).json({ error: 'Expected JSON array of index content' });
+        await writeIndexContent(data);
+      }
       res.json({ ok: true });
     } catch (e) {
       res.status(500).json({ error: e.message });
@@ -595,7 +583,7 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     }
   });
 
-  app.post('/api/admin/fonts/create', requireAdmin, upload.array('files', 50), async (req, res) => {
+  app.post('/api/admin/fonts', requireAdmin, upload.array('files', 50), async (req, res) => {
     try {
       const { fontId, name, dirName, description, designer, version } = req.body;
       const pricing = req.body.pricing ? JSON.parse(req.body.pricing) : [];

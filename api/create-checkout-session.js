@@ -2,6 +2,10 @@ const Stripe = require('stripe');
 const readBody = require('./read-body');
 
 module.exports = async function (req, res) {
+  // GET = return Stripe publishable key
+  if (req.method === 'GET') {
+    return res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || null });
+  }
   if (req.method !== 'POST') return res.status(405).end();
 
   const stripe = process.env.STRIPE_SECRET_KEY
