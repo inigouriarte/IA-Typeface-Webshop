@@ -3,14 +3,11 @@
  * Usage: node scripts/create-admin.mjs <email> <password>
  *
  * Requires BETTER_AUTH_SECRET (or SESSION_SECRET) in .env
+ * For production: set TURSO_DATABASE_URL and TURSO_AUTH_TOKEN
  */
 
 import 'dotenv/config';
-import Database from 'better-sqlite3';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { createClient } from '@libsql/client';
 
 const email = process.argv[2];
 const password = process.argv[3];
@@ -25,8 +22,11 @@ if (password.length < 8) {
   process.exit(1);
 }
 
-// Import auth to ensure DB tables are created
+// Import auth and run migrations to ensure DB tables exist
 const { auth } = await import('../lib/auth.mjs');
+const { getMigrations } = await import('better-auth/db/migration');
+const { runMigrations } = await getMigrations(auth.options);
+await runMigrations();
 
 // Sign up the user via Better Auth internal API
 const ctx = await auth.api.signUpEmail({
@@ -38,10 +38,14 @@ if (!ctx || !ctx.user) {
   process.exit(1);
 }
 
-// Set role to admin directly in DB
-const dbPath = path.join(__dirname, '..', 'data', 'auth.db');
-const db = new Database(dbPath);
-db.prepare('UPDATE user SET role = ? WHERE id = ?').run('admin', ctx.user.id);
-db.close();
+// Set role to admin directly in DB via libsql
+const client = createClient({
+  url: process.env.TURSO_DATABASE_URL || 'file:data/auth.db',
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
+await client.execute({
+  sql: 'UPDATE user SET role = ? WHERE id = ?',
+  args: ['admin', ctx.user.id],
+});
 
 console.log(`Admin user created: ${email} (id: ${ctx.user.id})`);
