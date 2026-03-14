@@ -1,7 +1,7 @@
 /**
  * Shared typeface ID → font directory mapping.
  * Used by api/download/[token].js and api/admin/stats.js.
- * When adding a new font via api/admin/fonts/create.js, this file
+ * When adding a new font via api/admin/fonts (POST), this file
  * is also committed to GitHub so the mapping stays in sync.
  */
 const TYPEFACE_FONT_DIRS = {

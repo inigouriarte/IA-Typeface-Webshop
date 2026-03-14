@@ -610,10 +610,10 @@
 
     /* ── API ── */
     const API = {
-      async getIndexContent(){let r=await fetch('data/index-content.json');if(!r.ok)r=await fetch('/api/admin/index-content');if(!r.ok)throw new Error('Failed');return parseJson(r);},
-      async saveIndexContent(d){const r=await fetch('/api/admin/index-content',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
-      async getDetailContent(){let r=await fetch('data/typeface-detail-content.json');if(!r.ok)r=await fetch('/api/admin/typeface-detail-content');if(!r.ok)throw new Error('Failed');return parseJson(r);},
-      async saveDetailContent(d){const r=await fetch('/api/admin/typeface-detail-content',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
+      async getIndexContent(){let r=await fetch('data/index-content.json');if(!r.ok)r=await fetch('/api/admin/content?type=index');if(!r.ok)throw new Error('Failed');return parseJson(r);},
+      async saveIndexContent(d){const r=await fetch('/api/admin/content?type=index',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
+      async getDetailContent(){let r=await fetch('data/typeface-detail-content.json');if(!r.ok)r=await fetch('/api/admin/content?type=detail');if(!r.ok)throw new Error('Failed');return parseJson(r);},
+      async saveDetailContent(d){const r=await fetch('/api/admin/content?type=detail',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
       async getStats(){const r=await fetch('/api/admin/stats');if(!r.ok)throw new Error('Failed');return r.json();},
       async getOrders(sa){let u='/api/admin/orders?limit=30';if(sa)u+='&starting_after='+sa;const r=await fetch(u);if(!r.ok)throw new Error('Failed');return r.json();},
     };
@@ -1095,7 +1095,7 @@
         uploadBtn.disabled = true;
         status.textContent = 'Uploading...';
         try {
-          const r = await fetch('/api/admin/fonts/update', { method: 'POST', body: fd });
+          const r = await fetch('/api/admin/fonts', { method: 'PUT', body: fd });
           const d = await r.json();
           if (!r.ok) throw new Error(d.error || 'Upload failed');
           status.textContent = d.message;
@@ -1153,7 +1153,7 @@
       const pricing=[];pc.querySelectorAll('.pricing-row').forEach(r=>{const i=r.querySelectorAll('input');if(i[0].value.trim()&&i[1].value.trim())pricing.push({name:i[0].value.trim(),price:i[1].value.trim()});});
       const fd=new FormData();fd.append('fontId',fontId);fd.append('name',name);fd.append('dirName',dirName);fd.append('description',document.getElementById('nf-description').value);fd.append('designer',document.getElementById('nf-designer').value);fd.append('version','1.0');fd.append('pricing',JSON.stringify(pricing));nfFiles.forEach(f=>fd.append('files',f.file));
       prog.classList.add('show');fill.style.width='30%';txt.textContent='Uploading files...';document.getElementById('nf-create').disabled=true;
-      try{fill.style.width='60%';txt.textContent='Creating font...';const r=await fetch('/api/admin/fonts/create',{method:'POST',body:fd}),d=await r.json();if(!r.ok)throw new Error(d.error||'Failed');fill.style.width='100%';txt.textContent='Done!';showMsg(msg,d.message+(d.warning?' ⚠ '+d.warning:''),'success');toast('Font created!');loadFonts();}catch(e){showMsg(msg,e.message,'error');toast(e.message,'error');}finally{document.getElementById('nf-create').disabled=false;setTimeout(()=>prog.classList.remove('show'),2000);}
+      try{fill.style.width='60%';txt.textContent='Creating font...';const r=await fetch('/api/admin/fonts',{method:'POST',body:fd}),d=await r.json();if(!r.ok)throw new Error(d.error||'Failed');fill.style.width='100%';txt.textContent='Done!';showMsg(msg,d.message+(d.warning?' ⚠ '+d.warning:''),'success');toast('Font created!');loadFonts();}catch(e){showMsg(msg,e.message,'error');toast(e.message,'error');}finally{document.getElementById('nf-create').disabled=false;setTimeout(()=>prog.classList.remove('show'),2000);}
     });
 
     /* ══════════════════════════════════════════════

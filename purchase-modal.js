@@ -253,7 +253,7 @@
 
         try {
             // Fetch publishable key
-            var keyRes = await fetch('/api/stripe-key');
+            var keyRes = await fetch('/api/create-checkout-session');
             var keyData = await keyRes.json();
             if (!keyData.publishableKey) {
                 container.innerHTML = '<p class="pm-error">Stripe is not configured.</p>';
