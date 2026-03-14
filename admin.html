@@ -847,6 +847,25 @@
           </div>
         </div>
 
+        <!-- Font Files Upload -->
+        <div class="editor-section">
+          <div class="editor-section-header">Font Files</div>
+          <div class="editor-section-body">
+            <div class="dropzone" id="editor-dropzone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p><strong>Drop font files here</strong> or click to browse</p>
+              <p>.woff2, .woff, .ttf, .otf</p>
+              <input type="file" id="editor-file-input" multiple accept=".woff2,.woff,.ttf,.otf" style="display:none">
+            </div>
+            <div class="file-list" id="editor-file-list" style="display:none"></div>
+            <div class="hint" style="margin-top:0.5rem">Upload new or replacement font files. Weights auto-detected from filenames.</div>
+            <div style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center">
+              <button type="button" class="btn btn-dark" id="editor-upload-btn" disabled>Upload files</button>
+              <span class="editor-upload-status" id="editor-upload-status" style="font-size:0.8125rem; color:var(--fg-muted)"></span>
+            </div>
+          </div>
+        </div>
+
         <div class="editor-actions">
           <button type="button" class="btn btn-dark" id="editor-save-btn">Save</button>
           <button type="button" class="btn btn-destructive" id="editor-delete-btn">Delete font</button>
@@ -862,6 +881,9 @@
       form.querySelectorAll('[data-remove-row]').forEach(btn => {
         btn.addEventListener('click', () => { btn.closest('.pricing-row').remove(); markDirty(); });
       });
+
+      // Wire up font file upload
+      initEditorFileUpload(fontId, indexEntry);
 
       // Autosave: listen to all fields
       _isDirty = false;
@@ -1014,12 +1036,87 @@
     }
 
     /* ══════════════════════════════════════════════
+       Editor Font File Upload
+    ══════════════════════════════════════════════ */
+    const WP = [[/thin/i,100,'Thin'],[/extralight|ultralight/i,200,'ExtraLight'],[/light/i,300,'Light'],[/medium/i,500,'Medium'],[/semibold|demibold/i,600,'SemiBold'],[/extrabold|ultrabold/i,800,'ExtraBold'],[/black|heavy/i,900,'Black']];
+    function dwShared(name){const l=name.toLowerCase();for(const[re,w,la]of WP)if(re.test(l))return{weight:w,label:la};if(/bold/i.test(l)&&!/semi|demi|extra|ultra/i.test(l))return{weight:700,label:'Bold'};return{weight:400,label:'Regular'};}
+    function dsShared(n){return/italic/i.test(n)?'italic':/oblique/i.test(n)?'oblique':'normal';}
+
+    let editorFiles = [];
+    function initEditorFileUpload(fontId, indexEntry) {
+      editorFiles = [];
+      const dz = document.getElementById('editor-dropzone');
+      const fi = document.getElementById('editor-file-input');
+      const uploadBtn = document.getElementById('editor-upload-btn');
+      const status = document.getElementById('editor-upload-status');
+
+      dz.addEventListener('click', () => fi.click());
+      dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+      dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+      dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); addEditorFiles(e.dataTransfer.files); });
+      fi.addEventListener('change', () => { addEditorFiles(fi.files); fi.value = ''; });
+
+      function addEditorFiles(fl) {
+        for (const f of fl) {
+          const ext = f.name.split('.').pop().toLowerCase();
+          if (!['woff2','woff','ttf','otf'].includes(ext) || editorFiles.some(x => x.name === f.name)) continue;
+          const { weight, label } = dwShared(f.name);
+          editorFiles.push({ file: f, name: f.name, weight, label, style: dsShared(f.name), format: ext });
+        }
+        renderEditorFiles();
+      }
+
+      function renderEditorFiles() {
+        const l = document.getElementById('editor-file-list');
+        if (!editorFiles.length) { l.style.display = 'none'; uploadBtn.disabled = true; return; }
+        uploadBtn.disabled = false;
+        l.style.display = '';
+        l.innerHTML = editorFiles.map((f, i) =>
+          `<div class="file-item"><span class="file-name">${escT(f.name)}</span><span class="file-weight">${f.weight} ${f.label}${f.style !== 'normal' ? ' ' + f.style : ''}</span><button class="file-remove" data-ei="${i}">Remove</button></div>`
+        ).join('');
+        l.querySelectorAll('.file-remove').forEach(b => b.addEventListener('click', () => {
+          editorFiles.splice(+b.dataset.ei, 1);
+          renderEditorFiles();
+        }));
+      }
+
+      uploadBtn.addEventListener('click', async () => {
+        if (!editorFiles.length) return;
+        // Determine dirName from the font's name: look it up from TYPEFACE_FONT_DIRS concept
+        // We'll derive it from the index entry name or send fontId
+        const name = indexEntry.name || '';
+        const dirName = name.replace(/^INDG\s+/i, '').trim() || fontId;
+        const fd = new FormData();
+        fd.append('fontId', fontId);
+        fd.append('dirName', dirName);
+        fd.append('name', name);
+        editorFiles.forEach(f => fd.append('files', f.file));
+
+        uploadBtn.disabled = true;
+        status.textContent = 'Uploading...';
+        try {
+          const r = await fetch('/api/admin/fonts/update', { method: 'POST', body: fd });
+          const d = await r.json();
+          if (!r.ok) throw new Error(d.error || 'Upload failed');
+          status.textContent = d.message;
+          toast('Font files uploaded!');
+          editorFiles = [];
+          renderEditorFiles();
+        } catch (e) {
+          status.textContent = 'Error: ' + e.message;
+          toast(e.message, 'error');
+        } finally {
+          uploadBtn.disabled = !editorFiles.length;
+        }
+      });
+    }
+
+    /* ══════════════════════════════════════════════
        New Font Wizard
     ══════════════════════════════════════════════ */
     let nfFiles = [];
-    const WP = [[/thin/i,100,'Thin'],[/extralight|ultralight/i,200,'ExtraLight'],[/light/i,300,'Light'],[/medium/i,500,'Medium'],[/semibold|demibold/i,600,'SemiBold'],[/extrabold|ultrabold/i,800,'ExtraBold'],[/black|heavy/i,900,'Black']];
-    function dw(name){const l=name.toLowerCase();for(const[re,w,la]of WP)if(re.test(l))return{weight:w,label:la};if(/bold/i.test(l)&&!/semi|demi|extra|ultra/i.test(l))return{weight:700,label:'Bold'};return{weight:400,label:'Regular'};}
-    function ds(n){return/italic/i.test(n)?'italic':/oblique/i.test(n)?'oblique':'normal';}
+    const dw = dwShared;
+    const ds = dsShared;
 
     document.getElementById('nf-name').addEventListener('input', e => {
       const dir=document.getElementById('nf-dir'),id=document.getElementById('nf-id');

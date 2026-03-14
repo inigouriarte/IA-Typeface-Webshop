@@ -389,7 +389,27 @@ ${pricingRows}
  * @param {Object} detailConfig - Detail config from typeface-detail-data.js
  * @returns {string} Complete HTML string for the page
  */
-function renderTypefaceDetailPage(typefaceId, config, detailConfig) {
+/**
+ * Generate footer typeface columns from the font list.
+ * Splits fonts into 3 roughly equal columns.
+ */
+function generateFooterColumns(allFonts, styleAttr) {
+    const style = styleAttr || 'text-decoration: none;';
+    // Filter out test fonts and fonts without links
+    const fonts = (allFonts || []).filter(f => f.hasLink !== false && f.id !== 'Test');
+    const colSize = Math.ceil(fonts.length / 3);
+    const cols = [fonts.slice(0, colSize), fonts.slice(colSize, colSize * 2), fonts.slice(colSize * 2)];
+    return cols.map(col => {
+        const items = col.map(f => {
+            const url = f.linkUrl || (f.id + '.html');
+            const label = (f.displayName || f.name || f.id).replace(/^INDG\s+/i, '');
+            return `                    <div><a href="${url}" style="${style}">${label}</a></div>`;
+        }).join('\n');
+        return `                <div class="typeface-column">\n${items}\n                </div>`;
+    }).join('\n');
+}
+
+function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
     const title = `${config.displayName} - Indigo Alphabets®`;
     const fontFile = TYPEFACE_FONT_PATHS[typefaceId] || null;
     const preloadLink = fontFile ? `    <link rel="preload" href="${fontFile}" as="font" type="font/woff2" crossorigin>\n` : '';
@@ -470,23 +490,7 @@ ${pricingSection}
         </div>
         <div class="footer-content">
             <div class="typeface-columns">
-                <div class="typeface-column">
-                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
-                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
-                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
-                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
-                </div>
-                <div class="typeface-column">
-                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
-                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
-                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
-                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
-                </div>
-                <div class="typeface-column">
-                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
-                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
-                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
-                </div>
+${generateFooterColumns(allFonts)}
             </div>
         </div>
         <div class="footer-bottom">
@@ -532,6 +536,7 @@ if (typeof module !== 'undefined' && module.exports) {
         renderPricingSection,
         renderTypefaceDetailPage,
         renderOpenTypeDropdown,
+        generateFooterColumns,
         renderWeightDropdown,
         renderWeightStretchDropdown,
         renderStyleDropdown
