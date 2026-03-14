@@ -692,14 +692,16 @@
     "details": {
       "designer": "Iñigo Uriarte",
       "version": "1.0",
-      "formats": "TTF, WOFF, WOFF2",
+      "formats": "ttf, otf, woff, woff2",
       "styles": "1",
-      "glyphs": "",
+      "glyphs": "30",
       "unicodeRanges": [
         "Basic Latin",
         "Latin 1-Supplement"
       ]
     },
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
         "weight": 400,
@@ -708,8 +710,6 @@
         "sampleId": "regular"
       }
     ],
-    "pricing": [],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    "pricing": []
   }
 }
