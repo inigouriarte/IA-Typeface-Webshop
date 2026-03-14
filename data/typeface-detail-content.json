@@ -686,5 +686,20 @@
     ],
     "hasOpenType": false,
     "openTypeFeatures": []
+  },
+  "dracma": {
+    "description": "TTT",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "",
+      "formats": "",
+      "styles": "",
+      "glyphs": "",
+      "unicodeRanges": []
+    },
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [],
+    "pricing": []
   }
 }
