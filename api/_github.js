@@ -89,11 +89,19 @@ async function commitFiles(files, message, branch = 'main') {
     }),
   });
 
-  // 5. Update the branch ref
-  await api(`/git/refs/heads/${branch}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ sha: newCommit.sha }),
-  });
+  // 5. Update the branch ref (force to handle concurrent pushes/deploys)
+  try {
+    await api(`/git/refs/heads/${branch}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ sha: newCommit.sha, force: true }),
+    });
+  } catch (e) {
+    // If ref update fails, it may be branch protection rules
+    throw new Error(
+      `Failed to update branch "${branch}": ${e.message}. ` +
+      'If the branch has protection rules, disable "Require a pull request before merging" for API commits.'
+    );
+  }
 
   return { sha: newCommit.sha, url: newCommit.html_url };
 }

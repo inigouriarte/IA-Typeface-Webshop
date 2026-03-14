@@ -1,5 +1,6 @@
 const Stripe = require('stripe');
 const requireAdmin = require('../_require-admin');
+const TYPEFACE_FONT_DIRS = require('../_font-dirs');
 
 module.exports = async function (req, res) {
   if (req.method !== 'GET') return res.status(405).end();
@@ -11,7 +12,7 @@ module.exports = async function (req, res) {
     : null;
 
   try {
-    const fontCount = 12; // approximate; server.js has the real map
+    const fontCount = Object.keys(TYPEFACE_FONT_DIRS).length;
     let orderCount = 0, revenue = 0;
     if (stripe) {
       const since = Math.floor((Date.now() - 30 * 86400000) / 1000);

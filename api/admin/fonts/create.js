@@ -144,13 +144,14 @@ module.exports = async function (req, res) {
     const isOneStyle = weights.length === 1;
 
     // Read current files from GitHub
-    const [cssData, indexData, detailData, rendererData, scriptData, serverData] = await Promise.all([
+    const [cssData, indexData, detailData, rendererData, scriptData, serverData, fontDirsData] = await Promise.all([
       readFile('styles.css'),
       readFile('data/index-content.json'),
       readFile('data/typeface-detail-content.json'),
       readFile('typeface-detail-renderer.js'),
       readFile('script.js'),
       readFile('server.js'),
+      readFile('api/_font-dirs.js'),
     ]);
 
     // 1. Update styles.css
@@ -233,6 +234,10 @@ module.exports = async function (req, res) {
     let serverSrc = serverData.content;
     serverSrc = addEntryToJSObject(serverSrc, 'const TYPEFACE_FONT_DIRS', `    ${fontId}: '${dirName}'`);
 
+    // 7. Update shared api/_font-dirs.js (used by download handler and stats)
+    let fontDirsSrc = fontDirsData.content;
+    fontDirsSrc = addEntryToJSObject(fontDirsSrc, 'const TYPEFACE_FONT_DIRS', `  ${fontId}: '${dirName}'`);
+
     // Commit all files to GitHub
     const filesToCommit = [
       ...fontFiles,
@@ -242,6 +247,7 @@ module.exports = async function (req, res) {
       { path: 'typeface-detail-renderer.js', content: renderer },
       { path: 'script.js', content: script },
       { path: 'server.js', content: serverSrc },
+      { path: 'api/_font-dirs.js', content: fontDirsSrc },
     ];
 
     const result = await commitFiles(filesToCommit, `Add font: ${name}`, 'main');

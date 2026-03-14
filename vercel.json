@@ -1,7 +1,14 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": ".",
+  "functions": {
+    "api/download/[token].js": {
+      "includeFiles": "fonts/**/*",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
-    { "source": "/api/auth/(.*)", "destination": "/api/auth/[...all]" }
+    { "source": "/api/auth/(.*)", "destination": "/api/auth/[...all]" },
+    { "source": "/api/download/:token", "destination": "/api/download/[token]" }
   ]
 }
