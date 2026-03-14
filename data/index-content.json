@@ -4,11 +4,11 @@
     "name": "INDG Alvica",
     "displayName": "INDG Alvica",
     "linkUrl": "alvica.html",
+    "hasLink": true,
     "dropdownType": "weight",
     "fontSize": 120,
     "letterSpacing": 0,
     "isOneStyle": false,
-    "hasLink": true,
     "weights": [
       100,
       300,
