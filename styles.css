@@ -321,6 +321,7 @@
     --color-surface: rgba(248, 248, 248, 0.7);
     --color-on-primary: #ffffff;
     --color-footer-muted: var(--color-stroke);
+    --color-footer-background: #EBEBEB; /* a tad darker than background */
     
     /* Font Styles */
     --font-logo-family: 'INDG Alvica', sans-serif;
@@ -353,6 +354,9 @@
     --layout-padding-desktop: var(--layout-content-padding);
     --layout-max-width: 3000px;
     --breakpoint-mobile: 768px;
+
+    /* Header height: padding 32+32 + border 1px + content. Use for bar below header. */
+    --header-height: 100px;
 }
 
 /* Dark mode */
@@ -361,6 +365,7 @@ html[data-theme="dark"] {
     --color-text: #e8e8e8;
     --color-text-light: #9d9998;
     --color-background: #161719;
+    --color-footer-background: #1E1F21; /* a tad lighter than background */
     --color-border: #2a2a2a;
     --color-select-border: #555555;
     --color-stroke: #3d3a38;
@@ -493,13 +498,15 @@ p:last-child {
     color: var(--color-background);
 }
 
-/* Header: always on top of dropdown */
+/* Header: always on top of dropdown. Height matches --header-height so bar can sit flush below. */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10002;
+    height: var(--header-height);
+    box-sizing: border-box;
     padding: 32px var(--layout-content-padding);
     border-bottom: 1px solid var(--color-stroke);
     background-color: var(--color-surface);
@@ -648,6 +655,7 @@ html[data-theme="dark"] .theme-toggle {
     display: block;
     height: 50px;
     min-height: 50px;
+    min-width: 0;
     line-height: 50px;
     padding: 0 15px;
     box-sizing: border-box;
@@ -660,6 +668,9 @@ html[data-theme="dark"] .theme-toggle {
     transition: background-color 0.2s ease, color 0.2s ease;
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
 }
 
 .nav-dropdown .dropdown-menu .dropdown-option:first-child {
@@ -1101,7 +1112,7 @@ main {
     min-width: 0;
     box-sizing: border-box;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
     white-space: nowrap;
     margin-left: 10px;
     margin-right: 0px;
@@ -1250,6 +1261,7 @@ main {
 .dropdown-option {
     height: 50px;
     min-height: 50px;
+    min-width: 0;
     line-height: 50px;
     padding: 0 15px;
     box-sizing: border-box;
@@ -1261,6 +1273,9 @@ main {
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--color-stroke);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
 }
 
 .dropdown-option:first-child {
@@ -1590,9 +1605,9 @@ main {
 
 /* Footer */
 .footer {
-    background-color: var(--color-background);
+    background-color: var(--color-footer-background);
     padding: 10px var(--layout-content-padding) 10px;
-    margin-top: 0;
+    margin-top: 250px;
     margin-bottom: 0;
     border-top: 1px solid var(--color-stroke);
     position: relative;
@@ -2006,6 +2021,11 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         padding: 16px 0;
     }
 
+    /* Mobile header height: 16+16 padding + 1px border + 44px (menu toggle / content row) */
+    :root {
+        --header-height: 77px;
+    }
+
     .header-content {
         grid-template-columns: 1fr auto;
         margin-left: 0;
@@ -2241,6 +2261,7 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         padding-left: var(--text-padding);
         padding-right: var(--text-padding);
     }
+
 
     .typeface-hero .test-btn:first-child {
         margin-left: 0;
@@ -2524,6 +2545,27 @@ body.typeface-oequadrat .typeface-title {
     padding-left: var(--layout-content-padding);
     padding-right: var(--layout-content-padding);
     box-sizing: border-box;
+}
+
+/* Test/Purchase below header on typeface detail pages: fixed flush under header, 1px up so borders stack */
+.typeface-hero-buttons-below-header {
+    position: fixed;
+    top: calc(var(--header-height) - 1px);
+    left: 0;
+    right: 0;
+    z-index: 10001;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: var(--color-surface);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Hero starts right after the bar: reserve space and remove extra padding */
+.typeface-hero-buttons-below-header + .typeface-hero {
+    margin-top: calc(var(--header-height) + 50px);
+    padding-top: 0;
 }
 
 .test-btn, .buy-btn {
@@ -2900,6 +2942,10 @@ body.typeface-oequadrat .typeface-title {
     color: var(--color-text);
     cursor: pointer;
     transition: background-color 0.2s ease;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
 }
 
 .opentype-menu .dropdown-option:nth-child(odd) {

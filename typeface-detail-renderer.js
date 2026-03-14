@@ -425,16 +425,18 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
         </div>
     </header>
 
+    <!-- Test and Purchase (below header) -->
+    <div class="typeface-hero-buttons typeface-hero-buttons-below-header">
+        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
+        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
+    </div>
+
     <!-- Typeface Hero Section -->
     <section class="typeface-hero">
         <div class="typeface-hero-content">
             <h1 class="typeface-title" contenteditable="true" spellcheck="false">${config.displayName}</h1>
             <div class="typeface-description">
                 <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
-            </div>
-            <div class="typeface-hero-buttons">
-                <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
-                <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
             </div>
         </div>
     </section>
@@ -447,12 +449,6 @@ ${detailsSection}
 
 ${pricingSection}
     </main>
-
-    <!-- Test and Buy Buttons -->
-    <div class="typeface-hero-buttons">
-        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
-        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
-    </div>
 
     <!-- Footer -->
     <footer class="footer">
