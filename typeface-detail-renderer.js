@@ -21,7 +21,8 @@ var TYPEFACE_FONT_PATHS = {
     stycka: 'fonts/Stycka/INDG-Stycka.woff2',
     oequadrat: 'fonts/Old English Quadrat/Old-English-Quadrat.woff2',
     Test: 'fonts/INDIG Test/INDGAlvica-Regular.woff2',
-    dajo: 'fonts/DAJO/INDGDracma-Naturalis.woff2'
+    dajo: 'fonts/DAJO/INDGDracma-Naturalis.woff2',
+    stycka: 'fonts/Stycka/INDG-Stycka.woff2'
 };
 
 /**

@@ -367,6 +367,17 @@
     font-display: swap;
 }
 
+/* INDG Stycka Font Faces */
+@font-face {
+    font-family: 'INDG Stycka';
+    src: url('fonts/Stycka/INDG-Stycka.woff2') format('woff2'),
+         url('fonts/Stycka/INDG-Stycka.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 
 
 /* CSS Variables */
@@ -1667,6 +1678,11 @@ main {
 .typeface-sample[data-font="dajo"] {
     font-family: 'INDG DAJO', sans-serif;
 }
+
+.typeface-sample[data-font="stycka"] {
+    font-family: 'INDG Stycka', sans-serif;
+}
+
 
 
 

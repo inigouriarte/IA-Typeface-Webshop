@@ -140,7 +140,8 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     stycka: 'Stycka',
     oequadrat: 'Old English Quadrat',
     Test: 'INDIG Test',
-    dajo: 'DAJO'
+    dajo: 'DAJO',
+    stycka: 'Stycka'
   };
 
   // --- Signed download tokens ---

@@ -708,5 +708,35 @@
         "price": "50"
       }
     ]
+  },
+  "stycka": {
+    "description": "Bitmap cursive based on an alphabet found in a stitching book.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 120,
+        "text": "The quick brown fox jumps over the lazy dog.",
+        "sampleId": "regular"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Stycka",
+        "price": "12"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
   }
 }
