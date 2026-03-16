@@ -724,14 +724,7 @@
     },
     "hasOpenType": false,
     "openTypeFeatures": [],
-    "samples": [
-      {
-        "weight": 400,
-        "fontSize": 120,
-        "text": "The quick brown fox jumps over the lazy dog.",
-        "sampleId": "regular"
-      }
-    ],
+    "samples": [],
     "pricing": [
       {
         "name": "INDG Stycka",
