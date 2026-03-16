@@ -745,7 +745,7 @@
       },
       {
         "weight": 400,
-        "fontSize": 55,
+        "fontSize": 72,
         "text": "0123456789",
         "sampleId": "numbers"
       }
