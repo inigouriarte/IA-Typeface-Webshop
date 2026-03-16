@@ -724,7 +724,32 @@
     },
     "hasOpenType": false,
     "openTypeFeatures": [],
-    "samples": [],
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 130,
+        "text": "ZIGRID",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "fontSize": 72,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 400,
+        "fontSize": 85,
+        "text": "Grid-based construction, geometric clarity.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 400,
+        "fontSize": 55,
+        "text": "0123456789",
+        "sampleId": "numbers"
+      }
+    ],
     "pricing": [
       {
         "name": "INDG Stycka",
