@@ -716,7 +716,7 @@
       "version": "1.0",
       "formats": "ttf, woff, woff",
       "styles": "1",
-      "glyphs": "",
+      "glyphs": "215",
       "unicodeRanges": [
         "Basic Latin",
         "Latin 1-Supplement"
