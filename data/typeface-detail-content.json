@@ -714,7 +714,7 @@
     "details": {
       "designer": "Iñigo Uriarte",
       "version": "1.0",
-      "formats": "TTF, WOFF, WOFF2",
+      "formats": "ttf, woff, woff",
       "styles": "1",
       "glyphs": "",
       "unicodeRanges": [
@@ -722,6 +722,8 @@
         "Latin 1-Supplement"
       ]
     },
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
         "weight": 400,
@@ -735,8 +737,6 @@
         "name": "INDG Stycka",
         "price": "12"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   }
 }
