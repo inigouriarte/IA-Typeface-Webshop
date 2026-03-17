@@ -9,9 +9,9 @@
  */
 function renderHeader(activePage = null) {
     const pages = [
-        { name: 'Home', href: 'index.html', key: 'home' },
-        { name: 'About', href: 'about.html', key: 'about' },
-        { name: 'Contact', href: 'contact.html', key: 'contact' }
+        { name: 'Typefaces', href: '/', key: 'home' },
+        { name: 'About', href: '/about', key: 'about' },
+        { name: 'Contact', href: '/contact', key: 'contact' }
     ];
 
     const navLinks = pages.map(page => {
@@ -40,14 +40,14 @@ function renderFooter(options = {}) {
     const { showAlvicaLink = false } = options;
     
     const alvicaLink = showAlvicaLink 
-        ? '<div><a href="alvica.html" style="text-decoration: none; color: inherit;">Alvica</a></div>'
+        ? '<div><a href="/alvica" style="text-decoration: none; color: inherit;">Alvica</a></div>'
         : '<div>Alvica</div>';
 
     return `    <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
             <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
-            <a href="licensing.html" class="footer-link">Licensing</a>
+            <a href="/licensing" class="footer-link">Licensing</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">

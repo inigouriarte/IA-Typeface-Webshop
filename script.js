@@ -421,6 +421,7 @@ document.addEventListener('click', function(e) {
     if (!section) return;
     section.classList.toggle('capitalize-active');
     btn.classList.toggle('active');
+    btn.textContent = btn.classList.contains('active') ? 'AA' : 'Aa';
 });
 
 // Bottom bar functionality: cursor coordinates, date, and time
@@ -572,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.className = 'header-menu-toggle';
         toggle.setAttribute('aria-label', 'Open menu');
         toggle.setAttribute('aria-expanded', 'false');
-        toggle.innerHTML = '<span></span><span></span><span></span>';
+        toggle.innerHTML = '<span></span><span></span>';
         headerContent.insertBefore(toggle, nav);
 
         function getPortal() {
@@ -1192,4 +1193,37 @@ if (document.readyState === 'loading') {
 })();
 
 // Buy/Purchase button click handlers are now in purchase-modal.js
+
+// Test button: download a trial ZIP with the currently selected style + license info
+(function () {
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.test-btn');
+        if (!btn) return;
+        e.preventDefault();
+
+        var typefaceId = window.__TYPEFACE_ID__ || '';
+        if (!typefaceId) return;
+
+        // Find the first typeface dropdown's selected style on detail pages
+        var style = '';
+        var section = document.querySelector('.typeface-detail-container .typeface-section');
+        if (section) {
+            var selected = section.querySelector('.custom-dropdown:not(.opentype-dropdown) .dropdown-option.selected');
+            if (selected) style = selected.textContent.trim();
+        }
+
+        // For homepage, try the section closest to the button
+        if (!style) {
+            var homeSection = btn.closest('.typeface-section');
+            if (homeSection) {
+                var sel = homeSection.querySelector('.custom-dropdown:not(.opentype-dropdown) .dropdown-option.selected');
+                if (sel) style = sel.textContent.trim();
+            }
+        }
+
+        var url = '/api/test-download?id=' + encodeURIComponent(typefaceId);
+        if (style) url += '&style=' + encodeURIComponent(style);
+        window.location.href = url;
+    });
+})();
 

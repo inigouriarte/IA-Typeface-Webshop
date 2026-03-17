@@ -86,9 +86,26 @@ function buildDetailPages() {
     }
 }
 
+function buildStaticPages() {
+    const staticPages = ['about.html', 'contact.html', 'licensing.html', 'success.html'];
+    const footerColumnsRegex = /<div class="typeface-columns">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*(<div class="footer-bottom">)/;
+    const columns = generateFooterColumns(typefacesConfig);
+    for (const page of staticPages) {
+        const pagePath = path.join(ROOT, page);
+        if (!fs.existsSync(pagePath)) continue;
+        let html = fs.readFileSync(pagePath, 'utf8');
+        if (footerColumnsRegex.test(html)) {
+            html = html.replace(footerColumnsRegex, '<div class="typeface-columns">\n' + columns + '\n            </div>\n        </div>\n        $1');
+            fs.writeFileSync(pagePath, html, 'utf8');
+            console.log('Built', page, '(footer updated)');
+        }
+    }
+}
+
 function main() {
     buildIndex();
     buildDetailPages();
+    buildStaticPages();
     console.log('Build complete.');
 }
 

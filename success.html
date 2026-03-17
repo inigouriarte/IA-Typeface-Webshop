@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <title>Purchase Complete - Indigo Alphabets®</title>
+    <meta name="description" content="Your typeface purchase from Indigo Alphabets® is complete. Download your font files and invoice.">
+    <meta property="og:title" content="Purchase Complete - Indigo Alphabets®">
+    <meta property="og:description" content="Your typeface purchase from Indigo Alphabets® is complete. Download your font files and invoice.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alphabets.indigoindigo.org/success">
+    <meta property="og:site_name" content="Indigo Alphabets">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Purchase Complete - Indigo Alphabets®">
+    <meta name="twitter:description" content="Your typeface purchase from Indigo Alphabets® is complete. Download your font files and invoice.">
+    <link rel="canonical" href="https://alphabets.indigoindigo.org/success">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,11 +26,11 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <a href="index.html" class="logo">Indigo Alphabets®</a>
+            <a href="/" class="logo">Indigo Alphabets®</a>
             <nav class="nav">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="/">Typefaces</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
                 <button type="button" class="theme-toggle" aria-label="Toggle dark mode">Dark</button>
             </nav>
         </div>
@@ -34,38 +44,38 @@
             </div>
         </div>
     </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
             <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
-            <a href="licensing.html" class="footer-link">Licensing</a>
+            <a href="/licensing" class="footer-link">Licensing</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">
             <div class="typeface-columns">
                 <div class="typeface-column">
-                    <div><a href="alvica.html" style="text-decoration: none;">Alvica</a></div>
-                    <div><a href="actio.html" style="text-decoration: none;">Actio</a></div>
-                    <div><a href="modus.html" style="text-decoration: none;">Modus</a></div>
-                    <div><a href="luara.html" style="text-decoration: none;">Luara</a></div>
+                    <div><a href="/alvica" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="/actio" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="/modus" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="/luara" style="text-decoration: none;">Luara</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="zigrid.html" style="text-decoration: none;">Zigrid</a></div>
-                    <div><a href="dale.html" style="text-decoration: none;">Dale</a></div>
-                    <div><a href="peqat.html" style="text-decoration: none;">Peqat</a></div>
-                    <div><a href="heron.html" style="text-decoration: none;">Heron</a></div>
+                    <div><a href="/zigrid" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="/dale" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="/peqat" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="/heron" style="text-decoration: none;">Heron</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="naora.html" style="text-decoration: none;">Naora</a></div>
-                    <div><a href="sifora.html" style="text-decoration: none;">Sifora</a></div>
-                    <div><a href="oequadrat.html" style="text-decoration: none;">OE Quadrat</a></div>
+                    <div><a href="/naora" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="/sifora" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="/oequadrat" style="text-decoration: none;">Old English Quadrat</a></div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="copyright">
                 <p>©2026 Indigo Alphabets</p>
+                <p class="footer-credits">Web design by Iñigo Uriarte, engineering by <a href="https://mikel.studio/" target="_blank" class="footer-credits-link">Mikel.Studio</a></p>
             </div>
             <div class="footer-email">
                 <p>hi@indigoindigo.org</p>
@@ -94,7 +104,7 @@
         var sessionId = params.get('session_id');
 
         if (!sessionId) {
-            container.innerHTML = '<p>No purchase session found.</p><p><a href="index.html">Back to home</a></p>';
+            container.innerHTML = '<p>No purchase session found.</p>';
             return;
         }
 
@@ -102,38 +112,23 @@
             .then(function (res) { return res.json(); })
             .then(function (data) {
                 if (data.error) {
-                    container.innerHTML = '<p>Could not load purchase details.</p><p><a href="index.html">Back to home</a></p>';
+                    container.innerHTML = '<p>Could not load purchase details.</p>';
                     return;
                 }
 
-                var productName = data.metadata.productName || 'Font license';
-                var total = ((data.amountTotal || 0) / 100).toFixed(2);
-                var currency = (data.currency || 'eur').toUpperCase();
-                var license = data.metadata.licenseTier || '';
-
                 var html = '<p>Thank you for your purchase!</p>';
-                html += '<div class="success-details">';
-                html += '<div class="success-row"><span>Product</span><span>' + productName + '</span></div>';
-                if (license) {
-                    html += '<div class="success-row"><span>License</span><span>' + license + '</span></div>';
-                }
-                html += '<div class="success-row success-total"><span>Total paid</span><span>' + total + ' ' + currency + '</span></div>';
-                html += '</div>';
 
                 if (data.downloadToken) {
-                    html += '<p>Your download includes all font files and an invoice.</p>';
-                    html += '<a href="/api/download/' + encodeURIComponent(data.downloadToken) + '" class="success-download-btn">Download fonts + invoice</a>';
                     html += '<p class="success-note">This download link expires in 48 hours. Revisit this page to generate a new one.<br>Questions? Contact us at <a href="mailto:hi@indigoindigo.org">hi@indigoindigo.org</a>.</p>';
+                    html += '<a href="/api/download/' + encodeURIComponent(data.downloadToken) + '" class="success-download-btn">Download fonts</a>';
                 } else {
                     html += '<p class="success-note">Payment is still processing. Please refresh this page in a moment.<br>Questions? Contact us at <a href="mailto:hi@indigoindigo.org">hi@indigoindigo.org</a>.</p>';
                 }
 
-                html += '<p><a href="index.html">Back to home</a></p>';
-
                 container.innerHTML = html;
             })
             .catch(function () {
-                container.innerHTML = '<p>Could not load purchase details. Please try refreshing.</p><p><a href="index.html">Back to home</a></p>';
+                container.innerHTML = '<p>Could not load purchase details. Please try refreshing.</p>';
             });
     })();
     </script>

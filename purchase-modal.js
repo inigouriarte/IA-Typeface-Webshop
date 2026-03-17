@@ -72,7 +72,17 @@
         if (idx >= 0) {
             state.selectedProducts.splice(idx, 1);
         } else {
-            state.selectedProducts.push({ name: name, basePrice: basePrice });
+            var isFamily = /family/i.test(name);
+            if (isFamily) {
+                // Selecting family: clear all individual style selections
+                state.selectedProducts = [{ name: name, basePrice: basePrice }];
+            } else {
+                // Selecting an individual style: remove family if selected
+                state.selectedProducts = state.selectedProducts.filter(function (p) {
+                    return !/family/i.test(p.name);
+                });
+                state.selectedProducts.push({ name: name, basePrice: basePrice });
+            }
         }
     }
 
@@ -205,9 +215,18 @@
 
     // ── Step 2: Style Selection (multi-select) ──────────────────────
 
+    function isFamilySelected() {
+        for (var i = 0; i < state.selectedProducts.length; i++) {
+            if (/family/i.test(state.selectedProducts[i].name)) return true;
+        }
+        return false;
+    }
+
     function renderStep2() {
         var pricing = state.pricing;
         if (!pricing || !pricing.length) return '<p>No pricing available.</p>';
+
+        var familySel = isFamilySelected();
 
         var html = '<p class="pm-question">Select styles</p>';
         html += '<div class="pm-options">';
@@ -217,8 +236,9 @@
             var adjusted = calcPrice(base);
             var sel = isSelected(p.name) ? ' pm-option-selected' : '';
             var isFamily = /family/i.test(p.name);
+            var disabled = (familySel && !isFamily) ? ' pm-option-disabled' : '';
             html +=
-                '<div class="pm-option' + sel + (isFamily ? ' pm-option-highlight' : '') + '" data-product-idx="' + i + '">' +
+                '<div class="pm-option' + sel + (isFamily ? ' pm-option-highlight' : '') + disabled + '" data-product-idx="' + i + '">' +
                     '<span class="pm-option-label">' + p.name + '</span>' +
                     '<span class="pm-option-value">' + fmt(adjusted) + '</span>' +
                 '</div>';

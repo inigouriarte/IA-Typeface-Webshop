@@ -243,7 +243,7 @@ ${dropdownHtml}
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
-                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">A</button>
+                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">Aa</button>
                 </div>
 ${openTypeHtml}
             </div>
@@ -400,7 +400,8 @@ function generateFooterColumns(allFonts, styleAttr) {
     const cols = [fonts.slice(0, colSize), fonts.slice(colSize, colSize * 2), fonts.slice(colSize * 2)];
     return cols.map(col => {
         const items = col.map(f => {
-            const url = f.linkUrl || (f.id + '.html');
+            var rawUrl = f.linkUrl || (f.id + '.html');
+            const url = '/' + rawUrl.replace(/\.html$/, '');
             const label = (f.displayName || f.name || f.id).replace(/^INDG\s+/i, '');
             return `                    <div><a href="${url}" style="${style}">${label}</a></div>`;
         }).join('\n');
@@ -410,6 +411,9 @@ function generateFooterColumns(allFonts, styleAttr) {
 
 function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
     const title = `${config.displayName} - Indigo Alphabets®`;
+    const metaDesc = detailConfig.description || `${config.displayName} typeface by Indigo Alphabets®. Designed by Iñigo Uriarte.`;
+    const pageSlug = typefaceId === 'heron2' ? 'heron' : typefaceId;
+    const canonicalUrl = `https://alphabets.indigoindigo.org/${pageSlug}`;
     const fontFile = TYPEFACE_FONT_PATHS[typefaceId] || null;
     const preloadLink = fontFile ? `    <link rel="preload" href="${fontFile}" as="font" type="font/woff2" crossorigin>\n` : '';
 
@@ -430,11 +434,21 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <title>${title}</title>
+    <meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}">
+    <meta property="og:title" content="${title.replace(/"/g, '&quot;')}">
+    <meta property="og:description" content="${metaDesc.replace(/"/g, '&quot;')}">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="${canonicalUrl}">
+    <meta property="og:site_name" content="Indigo Alphabets">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="${title.replace(/"/g, '&quot;')}">
+    <meta name="twitter:description" content="${metaDesc.replace(/"/g, '&quot;')}">
+    <link rel="canonical" href="${canonicalUrl}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -445,26 +459,20 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <a href="index.html" class="logo">Indigo Alphabets®</a>
+            <a href="/" class="logo">Indigo Alphabets®</a>
             <nav class="nav">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="/">Typefaces</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
                 <button type="button" class="theme-toggle" aria-label="Toggle dark mode">Dark</button>
             </nav>
         </div>
     </header>
 
-    <!-- Test and Purchase (below header) -->
-    <div class="typeface-hero-buttons typeface-hero-buttons-below-header">
-        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
-        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
-    </div>
-
     <!-- Typeface Hero Section -->
     <section class="typeface-hero">
         <div class="typeface-hero-content">
-            <h1 class="typeface-title" contenteditable="true" spellcheck="false">${config.displayName}</h1>
+            <h1 class="typeface-title" contenteditable="true" spellcheck="false"${detailConfig.heroFontSize ? ` style="font-size:${detailConfig.heroFontSize}px;${detailConfig.heroLetterSpacing ? ' letter-spacing:' + detailConfig.heroLetterSpacing + 'em;' : ''}"` : (detailConfig.heroLetterSpacing ? ` style="letter-spacing:${detailConfig.heroLetterSpacing}em;"` : '')}>${detailConfig.heroText || config.displayName}</h1>
             <div class="typeface-description">
                 <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
             </div>
@@ -478,13 +486,19 @@ ${sampleSections}
 ${detailsSection}
 
 ${pricingSection}
+
+    <!-- Test and Purchase (bottom of page) -->
+    <div class="typeface-hero-buttons typeface-hero-buttons-bottom">
+        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
+        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
+    </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
             <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
-            <a href="licensing.html" class="footer-link">Licensing</a>
+            <a href="/licensing" class="footer-link">Licensing</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">
@@ -495,6 +509,7 @@ ${generateFooterColumns(allFonts)}
         <div class="footer-bottom">
             <div class="copyright">
                 <p>©2026 Indigo Alphabets</p>
+                <p class="footer-credits">Web design by Iñigo Uriarte, engineering by <a href="https://mikel.studio/" target="_blank" class="footer-credits-link">Mikel.Studio</a></p>
             </div>
             <div class="footer-email">
                 <p>hi@indigoindigo.org</p>

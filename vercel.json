@@ -1,10 +1,15 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": ".",
+  "cleanUrls": true,
   "functions": {
     "api/download/[token].js": {
       "includeFiles": "fonts/**/*",
       "maxDuration": 30
+    },
+    "api/test-download.js": {
+      "includeFiles": "fonts/**/*",
+      "maxDuration": 15
     }
   },
   "rewrites": [
