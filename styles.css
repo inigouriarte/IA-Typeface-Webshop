@@ -624,6 +624,8 @@ p:last-child {
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
     transition: color 0.2s;
+    padding: 10px 5px;
+    margin: -10px 0;
 }
 
 .nav a.active {
@@ -1516,7 +1518,7 @@ main {
     gap: 8px;
     background: none;
     border: none;
-    color: var(--color-text-light);
+    color: var(--color-primary);
     font-size: var(--font-button-size);
     font-family: var(--font-button-family);
     font-weight: var(--font-button-weight);
@@ -1568,7 +1570,7 @@ main {
     opacity: 1;
 }
 
-/* Much more box: blue background, white text when hovering anywhere on the typeface section */
+/* Much more box: blue background, white text when hovering over text box or the button itself */
 .control-box:has(.more-btn) {
     transition: background-color 0.3s ease;
 }
@@ -1576,16 +1578,17 @@ main {
 .typeface-section .more-btn * {
     transition: color 0.3s ease, opacity 0.3s ease;
 }
-.typeface-section:hover .control-box:has(.more-btn) {
+/* Trigger on hover over the typeface-sample text or the more-btn box itself */
+.typeface-section .typeface-sample:hover ~ .typeface-controls-row .control-box:has(.more-btn),
+.typeface-section:has(.typeface-sample:hover) .control-box:has(.more-btn),
+.control-box:has(.more-btn):hover {
     background-color: var(--color-primary);
 }
-.typeface-section:hover .control-box:has(.more-btn) .more-btn,
-.typeface-section:hover .control-box:has(.more-btn) .more-btn * {
+.typeface-section:has(.typeface-sample:hover) .control-box:has(.more-btn) .more-btn,
+.typeface-section:has(.typeface-sample:hover) .control-box:has(.more-btn) .more-btn *,
+.control-box:has(.more-btn):hover .more-btn,
+.control-box:has(.more-btn):hover .more-btn * {
     color: #fff;
-}
-.typeface-section:hover .control-box:has(.more-btn) .more-btn:hover {
-    color: #fff;
-    opacity: 1;
 }
 
 .play-icon {
@@ -1706,7 +1709,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 0;
+    padding-top: 25px;
     padding-bottom: 0;
     margin-left: auto;
     margin-right: auto;
@@ -1762,6 +1765,7 @@ main {
 
 .typeface-column div a {
     color: inherit;
+    text-decoration: none;
     transition: color 0.2s;
 }
 
@@ -1771,33 +1775,33 @@ main {
 }
 
 /* Current page's typeface link: match footer email (greyed out) */
-body.typeface-alvica .typeface-column a[href="alvica.html"],
-body.typeface-actio .typeface-column a[href="actio.html"],
-body.typeface-modus .typeface-column a[href="modus.html"],
-body.typeface-luara .typeface-column a[href="luara.html"],
-body.typeface-zigrid .typeface-column a[href="zigrid.html"],
-body.typeface-dale .typeface-column a[href="dale.html"],
-body.typeface-peqat .typeface-column a[href="peqat.html"],
-body.typeface-heron .typeface-column a[href="heron.html"],
-body.typeface-naora .typeface-column a[href="naora.html"],
-body.typeface-sifora .typeface-column a[href="sifora.html"],
-body.typeface-stycka .typeface-column a[href="stycka.html"],
-body.typeface-oequadrat .typeface-column a[href="oequadrat.html"] {
+body.typeface-alvica .typeface-column a[href="/alvica"],
+body.typeface-actio .typeface-column a[href="/actio"],
+body.typeface-modus .typeface-column a[href="/modus"],
+body.typeface-luara .typeface-column a[href="/luara"],
+body.typeface-zigrid .typeface-column a[href="/zigrid"],
+body.typeface-dale .typeface-column a[href="/dale"],
+body.typeface-peqat .typeface-column a[href="/peqat"],
+body.typeface-heron .typeface-column a[href="/heron"],
+body.typeface-naora .typeface-column a[href="/naora"],
+body.typeface-sifora .typeface-column a[href="/sifora"],
+body.typeface-stycka .typeface-column a[href="/stycka"],
+body.typeface-oequadrat .typeface-column a[href="/oequadrat"] {
     color: var(--color-footer-muted);
 }
 
-body.typeface-alvica .typeface-column a[href="alvica.html"]:hover,
-body.typeface-actio .typeface-column a[href="actio.html"]:hover,
-body.typeface-modus .typeface-column a[href="modus.html"]:hover,
-body.typeface-luara .typeface-column a[href="luara.html"]:hover,
-body.typeface-zigrid .typeface-column a[href="zigrid.html"]:hover,
-body.typeface-dale .typeface-column a[href="dale.html"]:hover,
-body.typeface-peqat .typeface-column a[href="peqat.html"]:hover,
-body.typeface-heron .typeface-column a[href="heron.html"]:hover,
-body.typeface-naora .typeface-column a[href="naora.html"]:hover,
-body.typeface-sifora .typeface-column a[href="sifora.html"]:hover,
-body.typeface-stycka .typeface-column a[href="stycka.html"]:hover,
-body.typeface-oequadrat .typeface-column a[href="oequadrat.html"]:hover {
+body.typeface-alvica .typeface-column a[href="/alvica"]:hover,
+body.typeface-actio .typeface-column a[href="/actio"]:hover,
+body.typeface-modus .typeface-column a[href="/modus"]:hover,
+body.typeface-luara .typeface-column a[href="/luara"]:hover,
+body.typeface-zigrid .typeface-column a[href="/zigrid"]:hover,
+body.typeface-dale .typeface-column a[href="/dale"]:hover,
+body.typeface-peqat .typeface-column a[href="/peqat"]:hover,
+body.typeface-heron .typeface-column a[href="/heron"]:hover,
+body.typeface-naora .typeface-column a[href="/naora"]:hover,
+body.typeface-sifora .typeface-column a[href="/sifora"]:hover,
+body.typeface-stycka .typeface-column a[href="/stycka"]:hover,
+body.typeface-oequadrat .typeface-column a[href="/oequadrat"]:hover {
     color: var(--color-footer-muted);
 }
 
@@ -1860,7 +1864,7 @@ body.typeface-oequadrat .typeface-column a[href="oequadrat.html"]:hover {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
     justify-content: center;
-    align-items: center;
+    align-items: start;
     row-gap: 0;
     box-sizing: border-box;
     padding-top: 0px;
@@ -1887,6 +1891,24 @@ body.typeface-oequadrat .typeface-column a[href="oequadrat.html"]:hover {
     color: var(--color-footer-muted);
     margin-bottom: 0px;
     margin-left: 0px;
+}
+
+.footer-credits {
+    font-family: var(--font-button-family);
+    font-size: var(--font-button-size);
+    font-weight: var(--font-button-weight);
+    color: var(--color-footer-muted);
+    margin-top: 4px;
+}
+
+.footer-credits-link {
+    color: var(--color-footer-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-credits-link:hover {
+    color: var(--color-primary);
 }
 
 p {
@@ -2023,15 +2045,11 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 }
 
 .header.nav-open .header-menu-toggle span:nth-child(1) {
-    transform: translateY(6.5px) rotate(45deg);
+    transform: translateY(3.25px) rotate(45deg);
 }
 
 .header.nav-open .header-menu-toggle span:nth-child(2) {
-    opacity: 0;
-}
-
-.header.nav-open .header-menu-toggle span:nth-child(3) {
-    transform: translateY(-6.5px) rotate(-45deg);
+    transform: translateY(-3.25px) rotate(-45deg);
 }
 
 /* Mobile: no layout margin; use text/box padding only for spacing */
@@ -2204,8 +2222,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         text-align: left;
     }
 
-    /* Typeface detail page samples: half size on mobile (override inline font-size) */
-    .typeface-detail-container .typeface-sample {
+    /* Typeface detail page samples: default mobile size (overridden by data-font-size-mobile if set) */
+    .typeface-detail-container .typeface-sample:not([data-font-size-mobile]) {
         font-size: 60px !important;
     }
 
@@ -2369,7 +2387,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .test-btn,
-    .buy-btn {
+    .buy-btn,
+    .free-download-btn {
         text-align: left;
         padding-left: var(--box-text-padding);
         padding-right: var(--box-text-padding);
@@ -2536,18 +2555,23 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     font-family: var(--font-heading-family);
     font-size: 200px;
     font-weight: var(--font-heading-weight);
-    color: var(--color-primary);
+    color: var(--color-text);
     margin: 0 0 0px 0;
     letter-spacing: -10px;
     line-height: 180px;
     text-align: left;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 75px;
+    padding-bottom: 75px;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
     outline: none;
     animation: fadeIn 0.4s ease-in;
+    transition: color 0.2s ease;
+}
+
+.typeface-title:hover {
+    color: var(--color-primary);
 }
 
 /* Apply corresponding fonts to typeface titles */
@@ -2634,25 +2658,13 @@ body.typeface-oequadrat .typeface-title {
     box-sizing: border-box;
 }
 
-/* Test/Purchase below header on typeface detail pages: fixed flush under header, 1px up so borders stack */
-.typeface-hero-buttons-below-header {
-    position: fixed;
-    top: calc(var(--header-height) - 1px);
-    left: 0;
-    right: 0;
-    z-index: 10001;
+/* Test/Purchase at bottom of detail pages, just above footer */
+.typeface-hero-buttons-bottom {
+    position: relative;
+    z-index: 1;
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;
-    background-color: var(--color-surface);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-}
-
-/* Hero starts right after the bar: reserve space and remove extra padding */
-.typeface-hero-buttons-below-header + .typeface-hero {
-    margin-top: calc(var(--header-height) + 50px);
-    padding-top: 0;
 }
 
 .test-btn, .buy-btn {
@@ -2746,6 +2758,61 @@ body.typeface-oequadrat .typeface-title {
 .test-btn:hover, .buy-btn:hover {
     background-color: var(--color-primary);
     color: var(--color-background);
+    cursor: none;
+}
+
+.free-download-btn {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    border: 1px solid var(--color-stroke);
+    border-right: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    margin-right: -1px;
+    margin-left: -1px;
+    font-family: var(--font-button-family);
+    font-size: var(--font-button-size);
+    font-weight: var(--font-button-weight);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    cursor: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.free-download-btn::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: calc(-1 * var(--layout-content-padding));
+    width: calc(var(--layout-content-padding) + 50vw);
+    height: 1px;
+    background-color: var(--color-stroke);
+}
+
+.free-download-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: calc(-1 * var(--layout-content-padding));
+    width: calc(var(--layout-content-padding) + 50vw);
+    height: 1px;
+    background-color: var(--color-stroke);
+}
+
+.free-download-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    border-color: var(--color-primary);
+    cursor: none;
+}
+
+.free-download-btn * {
     cursor: none;
 }
 
@@ -2930,7 +2997,7 @@ body.typeface-oequadrat .typeface-title {
 }
 
 .pricing-name:hover {
-    color: var(--color-primary);
+    color: var(--color-text-light);
 }
 
 /* No bold in pricing boxes - use normal weight for all */
@@ -3084,20 +3151,21 @@ body.typeface-oequadrat .typeface-title {
 }
 .success-download-btn {
     display: inline-block;
-    font-family: var(--font-table-family);
-    font-size: var(--font-table-size);
-    font-weight: 500;
-    color: var(--color-background);
-    background-color: var(--color-primary);
+    font-family: var(--font-button-family);
+    font-size: var(--font-button-size);
+    font-weight: var(--font-button-weight);
+    color: var(--color-text);
+    background-color: var(--color-background);
     padding: 12px 32px;
     text-decoration: none;
-    border: 1px solid var(--color-primary);
-    transition: background-color 0.15s, color 0.15s;
+    border: 1px solid var(--color-stroke);
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     margin: 16px 0;
 }
 .success-download-btn:hover {
-    background-color: var(--color-background);
-    color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    border-color: var(--color-primary);
 }
 .success-note {
     font-family: var(--font-table-family);
@@ -3112,21 +3180,28 @@ body.typeface-oequadrat .typeface-title {
 /* ── Purchase Modal ─────────────────────────────────────────────── */
 
 .pm-overlay {
-    display: none;
+    display: flex;
     position: fixed;
     inset: 0;
     z-index: 10010;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
     justify-content: center;
     align-items: center;
     padding: var(--layout-content-padding);
     cursor: default;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
 }
 
 .pm-overlay.pm-open {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 /* Hide fixed UI elements when modal is open */
@@ -3173,7 +3248,7 @@ body:has(.pm-overlay.pm-open)::after {
 .pm-title {
     font-family: var(--font-table-family);
     font-size: var(--font-table-size);
-    font-weight: 500;
+    font-weight: 400;
     color: var(--color-text);
 }
 
@@ -3188,7 +3263,7 @@ body:has(.pm-overlay.pm-open)::after {
     line-height: 1;
 }
 .pm-close:hover {
-    color: var(--color-primary);
+    color: #FF0000;
 }
 
 /* Step bar */
@@ -3199,20 +3274,26 @@ body:has(.pm-overlay.pm-open)::after {
 
 .pm-step-item {
     flex: 1;
-    padding: 8px var(--box-text-padding);
+    height: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--box-text-padding);
     font-family: var(--font-table-family);
     font-size: var(--font-table-size);
     color: var(--color-text-light);
     border-right: 1px solid var(--color-stroke);
     text-align: center;
     white-space: nowrap;
+    box-sizing: border-box;
 }
 .pm-step-item:last-child {
     border-right: none;
 }
 .pm-step-active {
     color: var(--color-primary);
-    font-weight: 500;
+    font-weight: 400;
 }
 .pm-step-done {
     color: var(--color-text);
@@ -3243,7 +3324,9 @@ body:has(.pm-overlay.pm-open)::after {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px var(--box-text-padding);
+    height: 50px;
+    min-height: 50px;
+    padding: 0 var(--box-text-padding);
     border: 1px solid var(--color-stroke);
     border-bottom: none;
     cursor: pointer;
@@ -3252,6 +3335,8 @@ body:has(.pm-overlay.pm-open)::after {
     font-weight: 400;
     color: var(--color-text);
     transition: background-color 0.1s, color 0.1s;
+    box-sizing: border-box;
+    margin: 0;
 }
 .pm-option:last-child {
     border-bottom: 1px solid var(--color-stroke);
@@ -3305,7 +3390,13 @@ body:has(.pm-overlay.pm-open)::after {
 }
 
 .pm-option-highlight {
-    font-weight: 500;
+    font-weight: 400;
+}
+
+/* When family is selected, grey out non-family options */
+.pm-option.pm-option-disabled {
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .pm-contact-note {
@@ -3341,7 +3432,7 @@ body:has(.pm-overlay.pm-open)::after {
     text-align: center;
     font-family: var(--font-table-family);
     font-size: var(--font-table-size);
-    font-weight: 500;
+    font-weight: 400;
     color: var(--color-primary);
 }
 .pm-footer-right {
@@ -3394,7 +3485,7 @@ body:has(.pm-overlay.pm-open)::after {
     border-bottom: none;
 }
 .pm-summary-total {
-    font-weight: 500;
+    font-weight: 400;
     color: var(--color-primary);
     font-size: var(--font-table-size);
 }

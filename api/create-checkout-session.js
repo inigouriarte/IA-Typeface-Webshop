@@ -40,10 +40,10 @@ module.exports = async function (req, res) {
 
     if (isEmbedded) {
       sessionConfig.ui_mode = 'embedded';
-      sessionConfig.return_url = `${baseUrl}/success.html?session_id={CHECKOUT_SESSION_ID}`;
+      sessionConfig.return_url = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
     } else {
-      sessionConfig.success_url = `${baseUrl}/success.html?session_id={CHECKOUT_SESSION_ID}`;
-      sessionConfig.cancel_url = `${baseUrl}/${typefaceId || 'index'}.html`;
+      sessionConfig.success_url = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
+      sessionConfig.cancel_url = `${baseUrl}/${typefaceId || ''}`;
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig);

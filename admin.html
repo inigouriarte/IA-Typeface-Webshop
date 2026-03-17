@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Admin – Indigo Alphabets</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -321,7 +321,7 @@
           </button>
         </nav>
         <div class="sidebar-footer">
-          <a href="index.html" class="nav-item">
+          <a href="/" class="nav-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             Back to site
           </a>
@@ -770,6 +770,14 @@
           </div>
         </div>
 
+        <!-- Homepage Sample Text -->
+        <div class="editor-section">
+          <div class="editor-section-header">Homepage Sample Text</div>
+          <div class="editor-section-body">
+            <div class="field"><label>Sample Text</label><input class="input" data-f="sampleText" value="${esc(indexEntry.sampleText||'')}" placeholder="Leave empty to use display name"></div>
+          </div>
+        </div>
+
         <!-- Display Settings -->
         <div class="editor-section">
           <div class="editor-section-header">Display Settings</div>
@@ -779,6 +787,10 @@
               <div class="field"><label>Letter Spacing</label><input type="number" step="any" class="input" data-f="letterSpacing" value="${indexEntry.letterSpacing ?? 0}"></div>
               <div class="field"><label>Font Weight</label><input type="number" class="input" data-f="fontWeight" value="${indexEntry.fontWeight ?? ''}"></div>
             </div>
+            <div class="field-grid cols-2" style="margin-top:1rem">
+              <div class="field"><label>Font Size Mobile (px)</label><input type="number" class="input" data-f="fontSizeMobile" value="${indexEntry.fontSizeMobile ?? ''}" placeholder="Leave empty for default"></div>
+              <div class="field"><label>Letter Spacing Mobile (em)</label><input type="number" step="any" class="input" data-f="letterSpacingMobile" value="${indexEntry.letterSpacingMobile ?? ''}" placeholder="Leave empty for default"></div>
+            </div>
             <div class="field-grid" style="margin-top:1rem">
               <div class="field"><label>Dropdown Type</label><input class="input" data-f="dropdownType" value="${esc(indexEntry.dropdownType||'')}" placeholder="weight | custom | style | weight-stretch"></div>
               <div class="field" style="display:flex;align-items:flex-end;padding-bottom:0.25rem">
@@ -787,6 +799,22 @@
                   <label>Single style (no dropdown)</label>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Page Hero -->
+        <div class="editor-section">
+          <div class="editor-section-header">Detail Page Hero</div>
+          <div class="editor-section-body">
+            <div class="field"><label>Hero Text</label><input class="input" data-f="heroText" value="${esc(detail.heroText||'')}" placeholder="Leave empty to use display name"></div>
+            <div class="field-grid cols-2" style="margin-top:1rem">
+              <div class="field"><label>Hero Font Size (px)</label><input type="number" class="input" data-f="heroFontSize" value="${detail.heroFontSize ?? ''}"></div>
+              <div class="field"><label>Hero Letter Spacing (em)</label><input type="number" step="any" class="input" data-f="heroLetterSpacing" value="${detail.heroLetterSpacing ?? ''}"></div>
+            </div>
+            <div class="field-grid cols-2" style="margin-top:1rem">
+              <div class="field"><label>Hero Font Size Mobile (px)</label><input type="number" class="input" data-f="heroFontSizeMobile" value="${detail.heroFontSizeMobile ?? ''}" placeholder="Leave empty for default"></div>
+              <div class="field"><label>Hero Letter Spacing Mobile (em)</label><input type="number" step="any" class="input" data-f="heroLetterSpacingMobile" value="${detail.heroLetterSpacingMobile ?? ''}" placeholder="Leave empty for default"></div>
             </div>
           </div>
         </div>
@@ -802,6 +830,19 @@
               <div class="field"><label>Styles</label><input class="input" data-f="styles" value="${esc(det.styles||'')}"></div>
               <div class="field"><label>Glyphs</label><input class="input" data-f="glyphs" value="${esc(det.glyphs||'')}"></div>
               <div class="field"><label>Unicode Ranges</label><input class="input" data-f="unicodeRanges" value="${esc(Array.isArray(det.unicodeRanges)?det.unicodeRanges.join(', '):'')}"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Free Typeface -->
+        <div class="editor-section">
+          <div class="editor-section-header">Free Typeface</div>
+          <div class="editor-section-body">
+            <div class="field" style="display:flex;align-items:center;padding-top:0.25rem">
+              <div class="field-inline">
+                <input type="checkbox" data-f="isFree" ${detail.isFree?'checked':''}>
+                <label>Free typeface (no purchase required)</label>
+              </div>
             </div>
           </div>
         </div>
@@ -919,7 +960,13 @@
       idxEntry.dropdownType = val('dropdownType');
       idxEntry.fontSize = val('fontSize') === '' ? 120 : Number(val('fontSize'));
       idxEntry.letterSpacing = val('letterSpacing') === '' ? 0 : Number(val('letterSpacing'));
+      const fsm = val('fontSizeMobile');
+      if (fsm !== '') idxEntry.fontSizeMobile = Number(fsm);
+      const lsm = val('letterSpacingMobile');
+      if (lsm !== '') idxEntry.letterSpacingMobile = Number(lsm);
       idxEntry.isOneStyle = chk('isOneStyle');
+      const st = val('sampleText');
+      if (st) idxEntry.sampleText = st;
       const fw = val('fontWeight');
       if (fw !== '') idxEntry.fontWeight = Number(fw);
       // Merge extra JSON
@@ -936,6 +983,17 @@
         glyphs: val('glyphs'),
         unicodeRanges: val('unicodeRanges').split(',').map(s=>s.trim()).filter(Boolean),
       };
+      const ht = val('heroText');
+      if (ht) detEntry.heroText = ht;
+      const hfs = val('heroFontSize');
+      if (hfs !== '') detEntry.heroFontSize = Number(hfs);
+      const hls = val('heroLetterSpacing');
+      if (hls !== '') detEntry.heroLetterSpacing = Number(hls);
+      const hfsm = val('heroFontSizeMobile');
+      if (hfsm !== '') detEntry.heroFontSizeMobile = Number(hfsm);
+      const hlsm = val('heroLetterSpacingMobile');
+      if (hlsm !== '') detEntry.heroLetterSpacingMobile = Number(hlsm);
+      detEntry.isFree = chk('isFree');
       detEntry.hasOpenType = chk('hasOpenType');
       detEntry.openTypeFeatures = val('openTypeFeatures').split(',').map(s=>s.trim()).filter(Boolean);
       try { detEntry.samples = JSON.parse(val('samples') || '[]'); } catch(_) { detEntry.samples = []; }

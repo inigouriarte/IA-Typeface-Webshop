@@ -40,6 +40,47 @@ function verifyDownloadToken(token) {
   }
 }
 
+// --- Filter font files to only include purchased styles ---
+function filterFontFiles(allFiles, productName) {
+  if (!productName) return allFiles;
+
+  // If the product name contains "Family" (case-insensitive), include all files
+  if (/family/i.test(productName)) return allFiles;
+
+  // Split combined product names (e.g. "INDG Alvica Thin + INDG Alvica Regular")
+  var products = productName.split(/\s*\+\s*/);
+
+  // Extract style keywords from each product name
+  // e.g. "INDG Alvica Thin" → "Thin", "INDG Actio Thin Expanded" → "ThinExpanded"
+  var styleKeywords = [];
+  for (var i = 0; i < products.length; i++) {
+    var parts = products[i].trim().split(/\s+/);
+    if (parts.length >= 3) {
+      styleKeywords.push(parts.slice(2).join('').toLowerCase());
+    }
+  }
+
+  if (!styleKeywords.length) return allFiles;
+
+  // Filter files using exact style matching on the filename portion after the last hyphen
+  // e.g. "INDGAlvica-Thin.woff2" → style is "thin", matches keyword "thin" exactly
+  // This prevents "Thin" from matching "ThinItalic"
+  var filtered = allFiles.filter(function (file) {
+    var base = file.replace(/\.[^.]+$/, ''); // remove extension
+    var hyphenIdx = base.lastIndexOf('-');
+    if (hyphenIdx === -1) return false;
+    var fileStyle = base.substring(hyphenIdx + 1).toLowerCase();
+    for (var j = 0; j < styleKeywords.length; j++) {
+      if (fileStyle === styleKeywords[j]) return true;
+    }
+    return false;
+  });
+
+  // Fallback: if exact matching found nothing, return all files
+  // (better to over-deliver than under-deliver to a paying customer)
+  return filtered.length > 0 ? filtered : allFiles;
+}
+
 // --- Deterministic invoice number from session ID ---
 function generateInvoiceNumber(sessionId) {
   const year = new Date().getFullYear();
@@ -47,7 +88,7 @@ function generateInvoiceNumber(sessionId) {
   return `IA-${year}-${hash}`;
 }
 
-// --- Invoice PDF generation (German-compliant) ---
+// --- Invoice PDF generation (per design template) ---
 function generateInvoicePDF(session, invoiceNumber) {
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ size: 'A4', margin: 50 });
@@ -62,124 +103,120 @@ function generateInvoicePDF(session, invoiceNumber) {
     const customer = session.customer_details || {};
     const address = customer.address || {};
     const lineItems = session.line_items?.data || [];
-    const currency = (session.currency || 'eur').toUpperCase();
     const grossTotal = (session.amount_total || 0) / 100;
     const vatRate = 0.19;
     const netTotal = +(grossTotal / (1 + vatRate)).toFixed(2);
     const vatAmount = +(grossTotal - netTotal).toFixed(2);
 
     const left = 50;
-    const rightCol = 350;
+    const pageW = 595.28; // A4 width in points
+    const rightEdge = pageW - 50;
 
-    // Seller header
-    doc.fontSize(18).font('Helvetica-Bold').text(SELLER.name, left, 50);
-    doc.fontSize(8).font('Helvetica').fillColor('#555');
-    doc.text(`${SELLER.owner} · ${SELLER.street} · ${SELLER.city} · ${SELLER.country}`, left, doc.y + 2);
-    doc.text(`E-Mail: ${SELLER.email} · Steuernummer: ${SELLER.taxNumber}`);
+    // --- Header: "Indigo Alphabets®" in blue ---
+    doc.fontSize(28).font('Helvetica-Bold').fillColor('#0000FF');
+    doc.text('Indigo Alphabets\u00AE', left, 50);
     doc.fillColor('#000');
 
     doc.moveDown(2);
 
-    // Buyer address block
-    doc.fontSize(9).font('Helvetica-Bold').text('Rechnungsempfänger', left, doc.y);
-    doc.font('Helvetica').fontSize(10);
-    doc.text(customer.name || '—');
-    if (address.line1) doc.text(address.line1);
-    if (address.line2) doc.text(address.line2);
-    const cityLine = [address.postal_code, address.city].filter(Boolean).join(' ');
-    if (cityLine) doc.text(cityLine);
-    if (address.country) doc.text(address.country);
-    doc.text(customer.email || '');
+    // --- Invoice number & date ---
+    doc.fontSize(10).font('Courier');
+    doc.text(`Invoice no.: ${invoiceNumber}`, left, doc.y);
+    doc.text(`Date: ${dateStr}`);
 
-    // Invoice meta (right side)
-    const metaY = 160;
-    doc.fontSize(10).font('Helvetica');
-    doc.text('Rechnungsnummer:', rightCol, metaY);
-    doc.font('Helvetica-Bold').text(invoiceNumber, rightCol + 120, metaY);
-    doc.font('Helvetica');
-    doc.text('Rechnungsdatum:', rightCol, metaY + 16);
-    doc.text(dateStr, rightCol + 120, metaY + 16);
-    doc.text('Leistungsdatum:', rightCol, metaY + 32);
-    doc.text(dateStr, rightCol + 120, metaY + 32);
-
-    // Invoice title
-    const titleY = Math.max(doc.y + 20, metaY + 60);
-    doc.fontSize(14).font('Helvetica-Bold').text('RECHNUNG / INVOICE', left, titleY);
     doc.moveDown(1);
 
-    // Line items table
-    const tableX = left;
-    const colDesc = tableX;
+    // --- ISSUER block ---
+    doc.font('Courier').fontSize(10);
+    doc.text('ISSUER:', left, doc.y);
+    doc.text(SELLER.owner);
+    doc.text(SELLER.email);
+    doc.text(`${SELLER.street} ${SELLER.city}, ${SELLER.country}`);
+    doc.text(`Tax no.: ${SELLER.taxNumber}`);
+
+    doc.moveDown(1);
+
+    // --- RECEIVER block ---
+    doc.text('RECEIVER:', left, doc.y);
+    doc.text(customer.name || '\u2014');
+    doc.text(customer.email || '');
+    const addressParts = [];
+    if (address.line1) addressParts.push(address.line1);
+    if (address.line2) addressParts.push(address.line2);
+    const cityLine = [address.postal_code, address.city].filter(Boolean).join(' ');
+    if (cityLine) addressParts.push(cityLine);
+    if (address.country) addressParts.push(address.country);
+    doc.text(addressParts.join(', ') || '');
+
+    doc.moveDown(1.5);
+
+    // --- INVOICE title ---
+    doc.font('Courier').fontSize(10).text('INVOICE', left, doc.y);
+    doc.moveDown(1);
+
+    // --- Table header ---
+    const colDesc = left;
     const colQty = 340;
-    const colNet = 390;
-    const colVat = 450;
-    const colGross = 500;
-    const tableW = colGross + 50 - tableX;
+    const colNet = 395;
+    const colTax = 445;
+    const colGross = 495;
+    const colW = 50;
 
+    doc.font('Courier').fontSize(10);
     const thY = doc.y;
-    doc.fontSize(8).font('Helvetica-Bold').fillColor('#555');
-    doc.text('Beschreibung / Description', colDesc, thY);
-    doc.text('Anz.', colQty, thY, { width: 30, align: 'right' });
-    doc.text('Netto', colNet, thY, { width: 45, align: 'right' });
-    doc.text('USt.', colVat, thY, { width: 35, align: 'right' });
-    doc.text('Brutto', colGross, thY, { width: 50, align: 'right' });
-    doc.fillColor('#000');
-    doc.moveDown(0.4);
-    doc.moveTo(tableX, doc.y).lineTo(tableX + tableW, doc.y).lineWidth(0.5).stroke();
-    doc.moveDown(0.4);
+    doc.text('Description', colDesc, thY);
+    doc.text('Qty.', colQty, thY, { width: colW, align: 'left' });
+    doc.text('Net', colNet, thY, { width: colW, align: 'left' });
+    doc.text('Tax', colTax, thY, { width: colW, align: 'left' });
+    doc.text('Gross', colGross, thY, { width: colW, align: 'left' });
 
-    // Rows
-    doc.font('Helvetica').fontSize(9);
+    // --- Line items ---
+    doc.font('Courier').fontSize(10);
     for (const item of lineItems) {
       const itemGross = (item.amount_total || 0) / 100;
       const itemNet = +(itemGross / (1 + vatRate)).toFixed(2);
       const itemVat = +(itemGross - itemNet).toFixed(2);
-      const y = doc.y;
-      const desc = (item.description || meta.productName || '—') + '\nFont-Lizenz / Font license';
-      doc.text(desc, colDesc, y, { width: colQty - colDesc - 10 });
-      const rowBottom = doc.y;
-      doc.text(String(item.quantity || 1), colQty, y, { width: 30, align: 'right' });
-      doc.text(itemNet.toFixed(2) + ' €', colNet, y, { width: 45, align: 'right' });
-      doc.text(itemVat.toFixed(2) + ' €', colVat, y, { width: 35, align: 'right' });
-      doc.text(itemGross.toFixed(2) + ' €', colGross, y, { width: 50, align: 'right' });
-      doc.y = rowBottom;
-      doc.moveDown(0.3);
+      const desc = item.description || meta.productName || '\u2014';
+      doc.text(desc, colDesc, doc.y);
+
+      // License tier note
+      if (meta.licenseTier) {
+        doc.text(`License type: ${meta.licenseTier}`, colDesc, doc.y);
+      }
+
+      const rowY = doc.y;
+      // Empty line then values
+      doc.text(String(item.quantity || 1), colQty, rowY - (meta.licenseTier ? 14 : 0), { width: colW, align: 'left' });
+      doc.text(itemNet.toFixed(2) + '\u20AC', colNet, rowY - (meta.licenseTier ? 14 : 0), { width: colW, align: 'left' });
+      doc.text(itemVat.toFixed(2) + '\u20AC', colTax, rowY - (meta.licenseTier ? 14 : 0), { width: colW, align: 'left' });
+      doc.text(itemGross.toFixed(2) + '\u20AC', colGross, rowY - (meta.licenseTier ? 14 : 0), { width: colW, align: 'left' });
     }
 
-    // License tier note
-    if (meta.licenseTier) {
-      doc.fontSize(8).fillColor('#555').text(`Lizenztyp: ${meta.licenseTier}`, colDesc, doc.y);
-      doc.fillColor('#000');
-      doc.moveDown(0.3);
-    }
+    // --- Separator ---
+    doc.text('/', colDesc, doc.y);
+    doc.text('/', colGross, doc.y - 14, { width: colW, align: 'left' });
 
-    // Totals
-    doc.moveDown(0.3);
-    doc.moveTo(tableX, doc.y).lineTo(tableX + tableW, doc.y).lineWidth(0.5).stroke();
-    doc.moveDown(0.5);
+    // --- Totals ---
+    doc.text('Net total', colDesc, doc.y);
+    doc.text(netTotal.toFixed(2) + '\u20AC', colGross, doc.y - 14, { width: colW, align: 'left' });
 
-    doc.fontSize(9).font('Helvetica');
-    let totY = doc.y;
-    doc.text('Nettobetrag / Net total', colDesc, totY);
-    doc.text(netTotal.toFixed(2) + ' €', colGross, totY, { width: 50, align: 'right' });
-    totY += 15;
-    doc.text(`USt. / VAT (${(vatRate * 100).toFixed(0)}%)`, colDesc, totY);
-    doc.text(vatAmount.toFixed(2) + ' €', colGross, totY, { width: 50, align: 'right' });
-    totY += 15;
-    doc.moveTo(colNet, totY).lineTo(tableX + tableW, totY).lineWidth(0.5).stroke();
-    totY += 6;
-    doc.font('Helvetica-Bold').fontSize(11);
-    doc.text('Gesamtbetrag / Total', colDesc, totY);
-    doc.text(grossTotal.toFixed(2) + ' €', colGross, totY, { width: 50, align: 'right' });
+    doc.text(`VAT (${(vatRate * 100).toFixed(0)}%)`, colDesc, doc.y);
+    doc.text(vatAmount.toFixed(2) + '\u20AC', colGross, doc.y - 14, { width: colW, align: 'left' });
 
-    // Footer
-    doc.moveDown(4);
-    doc.fontSize(8).font('Helvetica').fillColor('#888');
-    doc.text('Vielen Dank für Ihren Einkauf. Diese Rechnung dient als Lizenznachweis.', left, doc.y);
-    doc.text('Thank you for your purchase. This invoice serves as your proof of license.');
     doc.moveDown(1);
-    doc.text(`${SELLER.name} · ${SELLER.owner} · ${SELLER.street} · ${SELLER.city}`);
-    doc.text(`${SELLER.email} · Steuernummer: ${SELLER.taxNumber}`);
+
+    // --- TOTAL ---
+    doc.font('Courier').fontSize(10);
+    const totalY = doc.y;
+    doc.text('TOTAL', colDesc, totalY);
+    doc.text(grossTotal.toFixed(2) + '\u20AC', colGross, totalY, { width: colW, align: 'left' });
+
+    doc.moveDown(1.5);
+
+    // --- Thank you ---
+    doc.font('Courier').fontSize(10);
+    doc.text('Thank you for your purchase.', left, doc.y);
+    doc.text('This invoice serves as your proof of license.');
 
     doc.end();
   });
@@ -219,6 +256,10 @@ module.exports = async function (req, res) {
     } catch (e) {
       return res.status(500).json({ error: 'Font files not found for: ' + fontDirName });
     }
+
+    // Filter to only include purchased styles (not the entire family)
+    const productName = session.metadata?.productName || '';
+    fontFiles = filterFontFiles(fontFiles, productName);
 
     // Generate invoice
     const invoiceNumber = generateInvoiceNumber(sessionId);

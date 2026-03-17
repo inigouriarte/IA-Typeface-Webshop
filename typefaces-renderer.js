@@ -64,8 +64,9 @@ function renderDropdownMenu(typeface) {
  * @returns {string} HTML string for typeface section
  */
 function renderTypefaceSection(typeface) {
+    const cleanUrl = typeface.linkUrl ? '/' + typeface.linkUrl.replace(/\.html$/, '') : '';
     const nameElement = typeface.hasLink
-        ? `<h2 class="typeface-name"><a href="${typeface.linkUrl}" style="text-decoration: none; color: inherit;">${typeface.displayName}</a></h2>`
+        ? `<h2 class="typeface-name"><a href="${cleanUrl}" style="text-decoration: none; color: inherit;">${typeface.displayName}</a></h2>`
         : `<h2 class="typeface-name">${typeface.displayName}</h2>`;
 
     const dropdownHtml = renderDropdownMenu(typeface);
@@ -85,7 +86,12 @@ function renderTypefaceSection(typeface) {
         styleAttr += ` font-weight: ${typeface.options[typeface.defaultOptionIndex].value};`;
     }
 
-    const sampleText = typeface.displayName.replace('INDG ', '').replace('Old English ', '');
+    const sampleText = typeface.sampleText || typeface.displayName.replace('INDG ', '').replace('Old English ', '');
+
+    // Mobile data attributes
+    let mobileDataAttrs = '';
+    if (typeface.fontSizeMobile) mobileDataAttrs += ` data-font-size-mobile="${typeface.fontSizeMobile}"`;
+    if (typeface.letterSpacingMobile != null && typeface.letterSpacingMobile !== '') mobileDataAttrs += ` data-letter-spacing-mobile="${typeface.letterSpacingMobile}"`;
 
     return `        <!-- ${typeface.name} -->
         <section class="typeface-section" data-font="${typeface.id}"${typeface.id === 'alvica' ? ' id="alvica"' : typeface.id === 'modus' ? ' id="modus"' : typeface.id === 'luara' ? ' id="luara"' : typeface.id === 'zigrid' ? ' id="zigrid"' : typeface.id === 'dale' ? ' id="dale"' : typeface.id === 'peqat' ? ' id="peqat"' : typeface.id === 'heron2' ? ' id="heron"' : typeface.id === 'naora' ? ' id="naora"' : typeface.id === 'sifora' ? ' id="sifora"' : typeface.id === 'stycka' ? ' id="stycka"' : typeface.id === 'oequadrat' ? ' id="oequadrat"' : ''}>
@@ -109,11 +115,11 @@ function renderTypefaceSection(typeface) {
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
-                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">A</button>
+                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">Aa</button>
                 </div>
                 <div class="control-box">
-                    ${typeface.hasLink 
-                        ? `<a href="${typeface.linkUrl}" class="more-btn" draggable="false">
+                    ${typeface.hasLink
+                        ? `<a href="${cleanUrl}" class="more-btn" draggable="false">
                         <span class="play-icon">▶</span>
                         <span>Much more</span>
                     </a>`
@@ -124,7 +130,7 @@ function renderTypefaceSection(typeface) {
                     }
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${typeface.id}" style="${styleAttr}">${sampleText}</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${typeface.id}"${mobileDataAttrs} style="${styleAttr}">${sampleText}</div>
         </section>`;
 }
 
