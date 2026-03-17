@@ -88,6 +88,11 @@ function renderTypefaceSection(typeface) {
 
     const sampleText = typeface.sampleText || typeface.displayName.replace('INDG ', '').replace('Old English ', '');
 
+    // Mobile data attributes
+    let mobileDataAttrs = '';
+    if (typeface.fontSizeMobile) mobileDataAttrs += ` data-font-size-mobile="${typeface.fontSizeMobile}"`;
+    if (typeface.letterSpacingMobile != null && typeface.letterSpacingMobile !== '') mobileDataAttrs += ` data-letter-spacing-mobile="${typeface.letterSpacingMobile}"`;
+
     return `        <!-- ${typeface.name} -->
         <section class="typeface-section" data-font="${typeface.id}"${typeface.id === 'alvica' ? ' id="alvica"' : typeface.id === 'modus' ? ' id="modus"' : typeface.id === 'luara' ? ' id="luara"' : typeface.id === 'zigrid' ? ' id="zigrid"' : typeface.id === 'dale' ? ' id="dale"' : typeface.id === 'peqat' ? ' id="peqat"' : typeface.id === 'heron2' ? ' id="heron"' : typeface.id === 'naora' ? ' id="naora"' : typeface.id === 'sifora' ? ' id="sifora"' : typeface.id === 'stycka' ? ' id="stycka"' : typeface.id === 'oequadrat' ? ' id="oequadrat"' : ''}>
             <div class="typeface-controls-row">
@@ -125,7 +130,7 @@ function renderTypefaceSection(typeface) {
                     }
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${typeface.id}" style="${styleAttr}">${sampleText}</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${typeface.id}"${mobileDataAttrs} style="${styleAttr}">${sampleText}</div>
         </section>`;
 }
 

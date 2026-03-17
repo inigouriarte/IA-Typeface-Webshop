@@ -3,7 +3,7 @@ const fs = require('fs');
 const archiver = require('archiver');
 const TYPEFACE_FONT_DIRS = require('./_font-dirs');
 
-const LICENSE_TEXT = `TRIAL LICENSE — FOR TESTING PURPOSES ONLY
+const TRIAL_LICENSE_TEXT = `TRIAL LICENSE — FOR TESTING PURPOSES ONLY
 
 This font file is provided by Indigo Alphabets\u00AE for evaluation purposes only.
 You may use this file to preview and test the typeface in your designs.
@@ -23,16 +23,46 @@ Purchase a license at: https://indigoalphabets.com
 Contact: hi@indigoindigo.org
 `;
 
+const FREE_LICENSE_TEXT = `FREE LICENSE
+
+This typeface is provided by Indigo Alphabets\u00AE free of charge.
+You may use this typeface in personal and commercial projects.
+
+CONDITIONS:
+\u2022 This typeface may NOT be sold or sublicensed.
+\u2022 This typeface may NOT be modified, decompiled, or reverse-engineered.
+\u2022 Attribution to Indigo Alphabets\u00AE is appreciated but not required.
+
+For more information: https://indigoalphabets.com
+
+\u00A9 Indigo Alphabets\u00AE — All rights reserved.
+Contact: hi@indigoindigo.org
+`;
+
 module.exports = async function (req, res) {
   if (req.method !== 'GET') return res.status(405).end();
 
   try {
     var typefaceId = req.query.id || '';
     var style = req.query.style || '';
+    var mode = req.query.mode || '';
 
     var fontDirName = TYPEFACE_FONT_DIRS[typefaceId];
     if (!fontDirName) {
       return res.status(404).json({ error: 'Unknown typeface' });
+    }
+
+    // Free download mode: verify typeface is actually free
+    if (mode === 'free') {
+      try {
+        var detailPath = path.join(process.cwd(), 'data', 'typeface-detail-content.json');
+        var detailData = JSON.parse(fs.readFileSync(detailPath, 'utf8'));
+        if (!detailData[typefaceId] || !detailData[typefaceId].isFree) {
+          return res.status(403).json({ error: 'This typeface is not available for free download' });
+        }
+      } catch (e) {
+        return res.status(500).json({ error: 'Could not verify typeface status' });
+      }
     }
 
     var fontDir = path.join(process.cwd(), 'fonts', fontDirName);
@@ -45,44 +75,57 @@ module.exports = async function (req, res) {
       return res.status(500).json({ error: 'Font files not found' });
     }
 
-    // Only include .ttf files for test downloads (most universal format)
-    var ttfFiles = allFiles.filter(function (f) {
-      return f.toLowerCase().endsWith('.ttf');
-    });
-    if (!ttfFiles.length) ttfFiles = allFiles;
+    if (mode === 'free') {
+      // Free download: include ALL font files
+      var zipName = 'INDG-' + fontDirName.replace(/\s+/g, '-') + '-Free.zip';
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', 'attachment; filename="' + zipName + '"');
 
-    // Find the file matching the requested style
-    var matchedFile = null;
-    if (style) {
-      // Normalize: "Bold Expanded" → "BoldExpanded", "Regular" → "Regular"
-      var normalizedStyle = style.replace(/\s+/g, '');
-      for (var i = 0; i < ttfFiles.length; i++) {
-        var lower = ttfFiles[i].toLowerCase();
-        if (lower.indexOf(normalizedStyle.toLowerCase()) !== -1) {
-          matchedFile = ttfFiles[i];
-          break;
+      var archive = archiver('zip', { zlib: { level: 9 } });
+      archive.pipe(res);
+
+      for (var i = 0; i < allFiles.length; i++) {
+        archive.file(path.join(fontDir, allFiles[i]), { name: 'fonts/' + allFiles[i] });
+      }
+      archive.append(FREE_LICENSE_TEXT, { name: 'LICENSE.txt' });
+
+      await archive.finalize();
+    } else {
+      // Trial download: single .ttf file
+      var ttfFiles = allFiles.filter(function (f) {
+        return f.toLowerCase().endsWith('.ttf');
+      });
+      if (!ttfFiles.length) ttfFiles = allFiles;
+
+      var matchedFile = null;
+      if (style) {
+        var normalizedStyle = style.replace(/\s+/g, '');
+        for (var j = 0; j < ttfFiles.length; j++) {
+          var lower = ttfFiles[j].toLowerCase();
+          if (lower.indexOf(normalizedStyle.toLowerCase()) !== -1) {
+            matchedFile = ttfFiles[j];
+            break;
+          }
         }
       }
+
+      if (!matchedFile) matchedFile = ttfFiles[0];
+      if (!matchedFile) {
+        return res.status(404).json({ error: 'No font file found' });
+      }
+
+      var zipName = 'INDG-' + fontDirName.replace(/\s+/g, '-') + '-Trial.zip';
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', 'attachment; filename="' + zipName + '"');
+
+      var archive = archiver('zip', { zlib: { level: 9 } });
+      archive.pipe(res);
+
+      archive.file(path.join(fontDir, matchedFile), { name: 'fonts/' + matchedFile });
+      archive.append(TRIAL_LICENSE_TEXT, { name: 'TRIAL-LICENSE.txt' });
+
+      await archive.finalize();
     }
-
-    // Fallback: use the first .ttf file
-    if (!matchedFile) matchedFile = ttfFiles[0];
-    if (!matchedFile) {
-      return res.status(404).json({ error: 'No font file found' });
-    }
-
-    // Build ZIP
-    var zipName = 'INDG-' + fontDirName.replace(/\s+/g, '-') + '-Trial.zip';
-    res.setHeader('Content-Type', 'application/zip');
-    res.setHeader('Content-Disposition', 'attachment; filename="' + zipName + '"');
-
-    var archive = archiver('zip', { zlib: { level: 9 } });
-    archive.pipe(res);
-
-    archive.file(path.join(fontDir, matchedFile), { name: 'fonts/' + matchedFile });
-    archive.append(LICENSE_TEXT, { name: 'TRIAL-LICENSE.txt' });
-
-    await archive.finalize();
   } catch (e) {
     console.error('Test download error:', e.message);
     if (!res.headersSent) {

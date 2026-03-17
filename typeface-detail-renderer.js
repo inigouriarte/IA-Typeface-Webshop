@@ -247,7 +247,7 @@ ${dropdownHtml}
                 </div>
 ${openTypeHtml}
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}" style="${styleAttr}">${sample.text}</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}"${sample.fontSizeMobile ? ` data-font-size-mobile="${sample.fontSizeMobile}"` : ''} style="${styleAttr}">${sample.text}</div>
         </section>`;
 }
 
@@ -472,7 +472,7 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
     <!-- Typeface Hero Section -->
     <section class="typeface-hero">
         <div class="typeface-hero-content">
-            <h1 class="typeface-title" contenteditable="true" spellcheck="false"${detailConfig.heroFontSize ? ` style="font-size:${detailConfig.heroFontSize}px;${detailConfig.heroLetterSpacing ? ' letter-spacing:' + detailConfig.heroLetterSpacing + 'em;' : ''}"` : (detailConfig.heroLetterSpacing ? ` style="letter-spacing:${detailConfig.heroLetterSpacing}em;"` : '')}>${detailConfig.heroText || config.displayName}</h1>
+            <h1 class="typeface-title" contenteditable="true" spellcheck="false"${detailConfig.heroFontSizeMobile ? ` data-font-size-mobile="${detailConfig.heroFontSizeMobile}"` : ''}${detailConfig.heroLetterSpacingMobile != null && detailConfig.heroLetterSpacingMobile !== '' ? ` data-letter-spacing-mobile="${detailConfig.heroLetterSpacingMobile}"` : ''}${detailConfig.heroFontSize ? ` style="font-size:${detailConfig.heroFontSize}px;${detailConfig.heroLetterSpacing ? ' letter-spacing:' + detailConfig.heroLetterSpacing + 'em;' : ''}"` : (detailConfig.heroLetterSpacing ? ` style="letter-spacing:${detailConfig.heroLetterSpacing}em;"` : '')}>${detailConfig.heroText || config.displayName}</h1>
             <div class="typeface-description">
                 <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
             </div>
@@ -489,8 +489,10 @@ ${pricingSection}
 
     <!-- Test and Purchase (bottom of page) -->
     <div class="typeface-hero-buttons typeface-hero-buttons-bottom">
-        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
-        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>
+${detailConfig.isFree
+    ? `        <button class="free-download-btn">Download for free</button>`
+    : `        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
+        <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>`}
     </div>
     </main>
 

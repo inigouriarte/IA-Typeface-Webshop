@@ -1227,3 +1227,38 @@ if (document.readyState === 'loading') {
     });
 })();
 
+// Free download button handler
+(function () {
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.free-download-btn');
+        if (!btn) return;
+        e.preventDefault();
+        var typefaceId = window.__TYPEFACE_ID__ || '';
+        if (!typefaceId) return;
+        window.location.href = '/api/test-download?id=' + encodeURIComponent(typefaceId) + '&mode=free';
+    });
+})();
+
+// Apply mobile-specific font sizes from data attributes
+(function () {
+    function applyMobileFontSizes() {
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        document.querySelectorAll('[data-font-size-mobile]').forEach(function (el) {
+            if (isMobile) {
+                el.style.fontSize = el.getAttribute('data-font-size-mobile') + 'px';
+            }
+        });
+        document.querySelectorAll('[data-letter-spacing-mobile]').forEach(function (el) {
+            if (isMobile) {
+                el.style.letterSpacing = el.getAttribute('data-letter-spacing-mobile') + 'em';
+            }
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyMobileFontSizes);
+    } else {
+        applyMobileFontSizes();
+    }
+    window.addEventListener('resize', applyMobileFontSizes);
+})();
+
