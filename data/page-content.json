@@ -1,0 +1,17 @@
+{
+  "homepage": {
+    "introLine1": "Hey, good to have you here.",
+    "introLine2": "Take your time and explore a selection of typefaces designed with care by Iñigo Uriarte."
+  },
+  "about": {
+    "paragraph1": "Indigo Alphabets® is an independent type foundry led by Iñigo Uriarte and based in Berlin.",
+    "paragraph2": "The project aspires to fill gaps in the typographic panorama, push the field forward and platform the explorative pulse of the designer.",
+    "paragraph3": "Especialized in futuristic, blackletter and bitmap faces, Indigo Alphabets is commited to the highest standard of quality in its work."
+  },
+  "contact": {
+    "line1": "Got questions?",
+    "line2": "Need a custom typeface?",
+    "line3": "Let's build something together.",
+    "email": "hi@indigoindigo.org"
+  }
+}

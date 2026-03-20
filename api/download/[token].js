@@ -97,6 +97,22 @@ function generateInvoicePDF(session, invoiceNumber) {
     doc.on('end', () => resolve(Buffer.concat(buffers)));
     doc.on('error', reject);
 
+    // Register custom fonts
+    const alvicaSemiboldPath = path.join(process.cwd(), 'fonts', 'Alvica', 'INDGAlvica-Semibold.ttf');
+    const dmMonoPath = path.join(process.cwd(), 'fonts', 'invoice', 'DMMono-Regular.ttf');
+    try {
+      doc.registerFont('AlvicaSemibold', alvicaSemiboldPath);
+    } catch (e) {
+      // Fallback to Helvetica-Bold if font not found
+    }
+    try {
+      doc.registerFont('DMMono', dmMonoPath);
+    } catch (e) {
+      // Fallback to Courier if font not found
+    }
+    const monoFont = fs.existsSync(dmMonoPath) ? 'DMMono' : 'Courier';
+    const logoFont = fs.existsSync(alvicaSemiboldPath) ? 'AlvicaSemibold' : 'Helvetica-Bold';
+
     const meta = session.metadata || {};
     const date = new Date(session.created * 1000);
     const dateStr = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -113,21 +129,21 @@ function generateInvoicePDF(session, invoiceNumber) {
     const rightEdge = pageW - 50;
 
     // --- Header: "Indigo Alphabets®" in blue ---
-    doc.fontSize(28).font('Helvetica-Bold').fillColor('#0000FF');
+    doc.fontSize(28).font(logoFont).fillColor('#0000FF');
     doc.text('Indigo Alphabets\u00AE', left, 50);
     doc.fillColor('#000');
 
     doc.moveDown(2);
 
     // --- Invoice number & date ---
-    doc.fontSize(10).font('Courier');
+    doc.fontSize(10).font(monoFont);
     doc.text(`Invoice no.: ${invoiceNumber}`, left, doc.y);
     doc.text(`Date: ${dateStr}`);
 
     doc.moveDown(1);
 
     // --- ISSUER block ---
-    doc.font('Courier').fontSize(10);
+    doc.font(monoFont).fontSize(10);
     doc.text('ISSUER:', left, doc.y);
     doc.text(SELLER.owner);
     doc.text(SELLER.email);
@@ -151,7 +167,7 @@ function generateInvoicePDF(session, invoiceNumber) {
     doc.moveDown(1.5);
 
     // --- INVOICE title ---
-    doc.font('Courier').fontSize(10).text('INVOICE', left, doc.y);
+    doc.font(monoFont).fontSize(10).text('INVOICE', left, doc.y);
     doc.moveDown(1);
 
     // --- Table header ---
@@ -162,7 +178,7 @@ function generateInvoicePDF(session, invoiceNumber) {
     const colGross = 495;
     const colW = 50;
 
-    doc.font('Courier').fontSize(10);
+    doc.font(monoFont).fontSize(10);
     const thY = doc.y;
     doc.text('Description', colDesc, thY);
     doc.text('Qty.', colQty, thY, { width: colW, align: 'left' });
@@ -171,7 +187,7 @@ function generateInvoicePDF(session, invoiceNumber) {
     doc.text('Gross', colGross, thY, { width: colW, align: 'left' });
 
     // --- Line items ---
-    doc.font('Courier').fontSize(10);
+    doc.font(monoFont).fontSize(10);
     for (const item of lineItems) {
       const itemGross = (item.amount_total || 0) / 100;
       const itemNet = +(itemGross / (1 + vatRate)).toFixed(2);
@@ -206,7 +222,7 @@ function generateInvoicePDF(session, invoiceNumber) {
     doc.moveDown(1);
 
     // --- TOTAL ---
-    doc.font('Courier').fontSize(10);
+    doc.font(monoFont).fontSize(10);
     const totalY = doc.y;
     doc.text('TOTAL', colDesc, totalY);
     doc.text(grossTotal.toFixed(2) + '\u20AC', colGross, totalY, { width: colW, align: 'left' });
@@ -214,7 +230,7 @@ function generateInvoicePDF(session, invoiceNumber) {
     doc.moveDown(1.5);
 
     // --- Thank you ---
-    doc.font('Courier').fontSize(10);
+    doc.font(monoFont).fontSize(10);
     doc.text('Thank you for your purchase.', left, doc.y);
     doc.text('This invoice serves as your proof of license.');
 
@@ -276,7 +292,7 @@ module.exports = async function (req, res) {
     for (const file of fontFiles) {
       archive.file(path.join(fontDir, file), { name: `fonts/${file}` });
     }
-    archive.append(invoiceBuf, { name: `Rechnung-${invoiceNumber}.pdf` });
+    archive.append(invoiceBuf, { name: `Invoice-${invoiceNumber}.pdf` });
 
     await archive.finalize();
   } catch (e) {

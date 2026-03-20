@@ -331,7 +331,7 @@ function parsePriceValue(priceStr) {
     return match ? parseFloat(match[1].replace(',', '.')) : 0;
 }
 
-function renderPricingSection(pricing, details, typefaceId) {
+function renderPricingSection(pricing, details, typefaceId, buttonsRowHTML) {
     if (!pricing || !pricing.length) {
         return '';
     }
@@ -377,6 +377,7 @@ function renderPricingSection(pricing, details, typefaceId) {
             <h2 class="typeface-pricing-title">Pricing</h2>
             <div class="pricing-content">
 ${pricingRows}
+${buttonsRowHTML || ''}
             </div>
         </section>`;
 }
@@ -424,7 +425,15 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
 
     // Render details and pricing
     const detailsSection = renderDetailsSection(detailConfig.details);
-    const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details, typefaceId);
+    const buttonsRowHTML = detailConfig.isFree
+        ? `                <div class="typeface-controls-row typeface-hero-buttons-row">
+                    <div class="control-box"><button class="free-download-btn">Download for free</button></div>
+                </div>`
+        : `                <div class="typeface-controls-row typeface-hero-buttons-row">
+                    <div class="control-box"><button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button></div>
+                    <div class="control-box"><button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button></div>
+                </div>`;
+    const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details, typefaceId, buttonsRowHTML);
 
     // OpenType.js needed on all detail pages so dropdown can show/detect features
     const openTypeScript = `    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js" defer></script>
@@ -487,14 +496,15 @@ ${detailsSection}
 
 ${pricingSection}
 
-    <!-- Test and Purchase (bottom of page) -->
-    <div class="typeface-hero-buttons typeface-hero-buttons-bottom">
+    </main>
+
+    <!-- Floating Test/Purchase buttons above bottom bar -->
+    <div class="typeface-hero-buttons typeface-hero-buttons-floating">
 ${detailConfig.isFree
     ? `        <button class="free-download-btn">Download for free</button>`
     : `        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
         <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>`}
     </div>
-    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -511,7 +521,6 @@ ${generateFooterColumns(allFonts)}
         <div class="footer-bottom">
             <div class="copyright">
                 <p>©2026 Indigo Alphabets</p>
-                <p class="footer-credits">Web design by Iñigo Uriarte, engineering by <a href="https://mikel.studio/" target="_blank" class="footer-credits-link">Mikel.Studio</a></p>
             </div>
             <div class="footer-email">
                 <p>hi@indigoindigo.org</p>
@@ -519,6 +528,7 @@ ${generateFooterColumns(allFonts)}
             <div class="footer-social">
                 <a href="https://instagram.com/indigo______indigo" class="footer-link" target="_blank">Follow me on IG</a>
             </div>
+            <p class="footer-credits">Web design by Iñigo Uriarte, engineering by <a href="https://mikel.studio/" target="_blank" class="footer-credits-link">Mikel.Studio</a></p>
         </div>
     </footer>
 

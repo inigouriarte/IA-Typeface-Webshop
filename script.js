@@ -86,9 +86,15 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         if (!el) return null;
         var box = el.closest && el.closest('.control-box');
         if (!box) return null;
-        if (box.querySelector('.font-size-slider')) return { text: 'Size control', box: box };
-        if (box.querySelector('.letter-spacing-slider')) return { text: 'Tracking control', box: box };
-        if (box.querySelector('.capitalize-btn')) return { text: 'All caps on/off', box: box };
+        var sizeSlider = box.querySelector('.font-size-slider');
+        if (sizeSlider) return { text: 'Text size: ' + Math.round(sizeSlider.value), box: box };
+        var trackingSlider = box.querySelector('.letter-spacing-slider');
+        if (trackingSlider) return { text: 'Tracking: ' + parseFloat(trackingSlider.value).toFixed(3), box: box };
+        var capsBtn = box.querySelector('.capitalize-btn');
+        if (capsBtn) {
+            var isActive = capsBtn.classList.contains('active');
+            return { text: 'All caps: ' + (isActive ? 'active' : 'off'), box: box };
+        }
         return null;
     }
 
@@ -106,6 +112,16 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var hint = getHintForElement(e.target);
         if (hint) {
             showHint(hint.text);
+        }
+    });
+
+    // Update tooltip in real-time while dragging sliders
+    document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('font-size-slider') || e.target.classList.contains('letter-spacing-slider')) {
+            var hint = getHintForElement(e.target);
+            if (hint && tooltip && tooltip.classList.contains('visible')) {
+                showHint(hint.text);
+            }
         }
     });
 
