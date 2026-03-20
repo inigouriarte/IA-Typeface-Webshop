@@ -386,6 +386,9 @@
         "Latin 1-Supplement"
       ]
     },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
         "weight": 400,
@@ -435,9 +438,7 @@
         "name": "INDG Modus White",
         "price": "20€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "naora": {
     "description": "A delicate single-weight typeface with refined proportions, perfect for elegant typography.",
