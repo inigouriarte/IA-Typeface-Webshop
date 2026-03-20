@@ -97,11 +97,12 @@
     "name": "INDG Modus",
     "displayName": "INDG Modus",
     "linkUrl": "modus.html",
+    "hasLink": true,
     "dropdownType": "custom",
     "fontSize": 120,
     "letterSpacing": 0,
     "isOneStyle": false,
-    "hasLink": true,
+    "sampleText": "MODUS",
     "options": [
       {
         "value": 400,
