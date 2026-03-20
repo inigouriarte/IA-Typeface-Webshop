@@ -374,7 +374,7 @@
     "openTypeFeatures": []
   },
   "modus": {
-    "description": "A distinctive typeface with Grey, Black, and White variants, perfect for experimental typography.",
+    "description": "Pure geometry, perfect for experimental typography.",
     "details": {
       "designer": "Iñigo Uriarte",
       "version": "1.0",
@@ -428,15 +428,15 @@
       },
       {
         "name": "INDG Modus Grey",
-        "price": "20€"
+        "price": "16€"
       },
       {
         "name": "INDG Modus Black",
-        "price": "20€"
+        "price": "16€"
       },
       {
         "name": "INDG Modus White",
-        "price": "20€"
+        "price": "16€"
       }
     ]
   },
