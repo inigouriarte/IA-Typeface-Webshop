@@ -2679,7 +2679,7 @@ body.typeface-oequadrat .typeface-title {
 
 /* On pages with floating buttons, add extra footer padding */
 body:has(.typeface-hero-buttons-floating) .footer {
-    padding-bottom: 50px;
+    padding-bottom: 0px;
 }
 
 .test-btn, .buy-btn {
