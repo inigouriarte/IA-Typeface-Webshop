@@ -133,15 +133,20 @@ function buildFontFaceCSS(weights, dirName, fontName) {
   return css;
 }
 
-// POST = create new font, PUT = update existing font files
+// GET = list font files, POST = create new font, PUT = update existing font files, DELETE = remove a file
 module.exports = async function (req, res) {
-  if (req.method !== 'POST' && req.method !== 'PUT') return res.status(405).end();
+  if (!['GET', 'POST', 'PUT', 'DELETE'].includes(req.method)) return res.status(405).end();
   const session = await requireAdmin(req, res);
   if (!session) return;
 
   try {
+    if (req.method === 'GET') {
+      return await handleListFiles(req, res);
+    }
+    if (req.method === 'DELETE') {
+      return await handleDeleteFile(req, res);
+    }
     const { fields, files: uploadedFiles } = await parseMultipart(req);
-
     if (req.method === 'PUT') {
       return await handleUpdate(fields, uploadedFiles, res);
     }
@@ -151,6 +156,85 @@ module.exports = async function (req, res) {
     res.status(500).json({ error: e.message });
   }
 };
+
+async function handleListFiles(req, res) {
+  const { fontId, dirName } = req.query;
+  if (!dirName) return res.status(400).json({ error: 'dirName is required' });
+  try {
+    const GITHUB_API = 'https://api.github.com';
+    const repo = process.env.GITHUB_REPO;
+    const token = process.env.GITHUB_TOKEN;
+    if (!repo || !token) return res.status(500).json({ error: 'GitHub not configured' });
+    const encodedDir = dirName.split('/').map(s => encodeURIComponent(s)).join('/');
+    const url = `${GITHUB_API}/repos/${repo}/contents/fonts/${encodedDir}?ref=main`;
+    const r = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    if (!r.ok) {
+      if (r.status === 404) return res.json({ files: [] });
+      throw new Error('GitHub API ' + r.status);
+    }
+    const items = await r.json();
+    const fontExts = ['.woff2', '.woff', '.ttf', '.otf'];
+    const files = (Array.isArray(items) ? items : [])
+      .filter(f => f.type === 'file' && fontExts.some(ext => f.name.toLowerCase().endsWith(ext)))
+      .map(f => ({ name: f.name, path: f.path, size: f.size, sha: f.sha }));
+    res.json({ files, dirName });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}
+
+async function handleDeleteFile(req, res) {
+  const filePath = req.query.path;
+  if (!filePath) return res.status(400).json({ error: 'path is required' });
+  try {
+    const GITHUB_API = 'https://api.github.com';
+    const repo = process.env.GITHUB_REPO;
+    const token = process.env.GITHUB_TOKEN;
+    if (!repo || !token) return res.status(500).json({ error: 'GitHub not configured' });
+    // Get file SHA first
+    const encodedPath = filePath.split('/').map(s => encodeURIComponent(s)).join('/');
+    const getUrl = `${GITHUB_API}/repos/${repo}/contents/${encodedPath}?ref=main`;
+    const getR = await fetch(getUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    });
+    if (!getR.ok) throw new Error('File not found');
+    const fileData = await getR.json();
+
+    // Delete via GitHub Contents API
+    const delUrl = `${GITHUB_API}/repos/${repo}/contents/${encodedPath}`;
+    const delR = await fetch(delUrl, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        message: `Remove font file: ${filePath.split('/').pop()}`,
+        sha: fileData.sha,
+        branch: 'main',
+      }),
+    });
+    if (!delR.ok) {
+      const text = await delR.text();
+      throw new Error('Delete failed: ' + text);
+    }
+    res.json({ ok: true, message: 'File removed' });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}
 
 async function handleCreate(fields, uploadedFiles, res) {
   const { fontId, name, dirName, description, designer, version } = fields;

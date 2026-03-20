@@ -27,6 +27,16 @@ const CONTENT_MAP = {
       return data && typeof data === 'object' && !Array.isArray(data) ? data : {};
     },
   },
+  pages: {
+    file: 'page-content.json',
+    commitMsg: 'Update page content via admin panel',
+    validate(data) {
+      return data && typeof data === 'object' && !Array.isArray(data) ? data : null;
+    },
+    sanitize(data) {
+      return data && typeof data === 'object' && !Array.isArray(data) ? data : {};
+    },
+  },
 };
 
 module.exports = async function (req, res) {

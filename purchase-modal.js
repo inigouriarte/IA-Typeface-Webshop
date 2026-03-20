@@ -17,7 +17,7 @@
         { id: 'tier-5', label: '51–100 employees', multiplier: 4 },
     ];
 
-    var STEP_LABELS = ['Licensing', 'Style selection', 'Payment'];
+    var STEP_LABELS = ['Licensing', 'Styles', 'Payment'];
 
     // ── State ───────────────────────────────────────────────────────
 

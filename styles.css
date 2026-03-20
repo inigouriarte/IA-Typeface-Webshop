@@ -389,7 +389,7 @@
     --color-background: #F8F8F8;
     --color-border: #e0e0e0;
     --color-select-border: #cccccc;
-    --color-stroke: #C3B9B5;
+    --color-stroke: #D1C9C5;
     --color-surface: rgba(248, 248, 248, 0.7);
     --color-on-primary: #ffffff;
     --color-footer-muted: var(--color-stroke);
@@ -466,7 +466,7 @@ body {
     background-color: var(--color-background);
     color: var(--color-text);
     line-height: 1.6;
-    padding-bottom: 40px;
+    padding-bottom: 0;
     padding-top: 80px;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -556,7 +556,7 @@ p {
 }
 
 p:last-child {
-    margin-bottom: 250px;
+    margin-bottom: 0;
 }
 
 /* Text selection styling */
@@ -1113,6 +1113,15 @@ main {
     width: 100%;
 }
 
+.control-box:has(.typeface-name) {
+    transition: color 0.2s ease;
+}
+
+.control-box:has(.typeface-name):hover .typeface-name,
+.control-box:has(.typeface-name):hover .typeface-name a {
+    color: var(--color-primary);
+}
+
 .one-style-text {
     color: var(--color-text-light);
     font-family: var(--font-button-family);
@@ -1484,28 +1493,29 @@ main {
 /* Static control hint tooltip (left, flush to layout margin and bottom bar, no gap, backdrop, fade in/out) */
 #control-hint-tooltip {
     position: fixed;
-    left: 0;
-    margin-left: var(--layout-content-padding);
-    bottom: 50px;
-    z-index: 9999;
+    left: var(--layout-content-padding);
+    right: 50%;
+    bottom: 100px;
+    z-index: 10001;
     pointer-events: none;
     height: 50px;
     padding: 0 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-family: var(--font-button-family);
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
     color: var(--color-primary);
     background: var(--color-surface);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid var(--color-stroke);
     border-radius: 0;
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.35s ease-in-out;
+    box-sizing: border-box;
 }
 
 #control-hint-tooltip.visible {
@@ -1696,8 +1706,8 @@ main {
 /* Footer */
 .footer {
     background-color: var(--color-footer-background);
-    padding: 10px var(--layout-content-padding) 10px;
-    margin-top: 250px;
+    padding: 10px var(--layout-content-padding) 30px;
+    margin-top: 40px;
     margin-bottom: 0;
     border-top: 1px solid var(--color-stroke);
     position: relative;
@@ -1898,7 +1908,9 @@ body.typeface-oequadrat .typeface-column a[href="/oequadrat"]:hover {
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
     color: var(--color-footer-muted);
-    margin-top: 4px;
+    margin-top: 15px;
+    grid-column: 1 / -1;
+    text-align: center;
 }
 
 .footer-credits-link {
@@ -2039,7 +2051,7 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 .header-menu-toggle span {
     display: block;
     width: 22px;
-    height: 1.5px;
+    height: 1px;
     background: currentColor;
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
@@ -2267,6 +2279,10 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 
     .bottom-bar {
         display: none;
+    }
+
+    #control-hint-tooltip {
+        bottom: 50px;
     }
 
     .footer {
@@ -2658,13 +2674,44 @@ body.typeface-oequadrat .typeface-title {
     box-sizing: border-box;
 }
 
-/* Test/Purchase at bottom of detail pages, just above footer */
-.typeface-hero-buttons-bottom {
-    position: relative;
-    z-index: 1;
+
+/* Floating Test/Purchase buttons above bottom bar */
+.typeface-hero-buttons-floating {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    z-index: 10001;
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;
+    background: var(--color-surface);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid var(--color-stroke);
+    border-bottom: 1px solid var(--color-stroke);
+}
+
+/* Move top/bottom borders to container to prevent doubling from backdrop-filter */
+.typeface-hero-buttons-floating .test-btn,
+.typeface-hero-buttons-floating .buy-btn {
+    border-top: none;
+    border-bottom: none;
+}
+
+/* Mobile: floating bar fixed to bottom of viewport */
+@media (max-width: 768px) {
+    .typeface-hero-buttons-floating {
+        bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+}
+
+/* On pages with floating buttons, add extra footer padding */
+body:has(.typeface-hero-buttons-floating) .footer {
+    padding-bottom: 0px;
 }
 
 .test-btn, .buy-btn {
@@ -2829,14 +2876,14 @@ body.typeface-oequadrat .typeface-title {
     left: 0;
     color: var(--color-primary);
     font-family: var(--font-text-family);
-    font-size: var(--font-text-size);
+    font-size: calc(1.15 * var(--font-text-size));
     font-weight: var(--font-text-weight);
     letter-spacing: var(--font-text-tracking);
     line-height: 1.25;
     margin-bottom: 0;
     padding-left: var(--text-padding);
     padding-right: var(--text-padding);
-    max-width: 100%;
+    max-width: calc(50vw - var(--layout-content-padding));
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
@@ -3048,6 +3095,19 @@ body.typeface-oequadrat .typeface-title {
     border-bottom: 1px solid var(--color-stroke);
 }
 
+/* Test/Purchase buttons inside pricing table grid */
+.typeface-pricing .typeface-hero-buttons-row .control-box {
+    padding: 0;
+}
+
+.typeface-pricing .typeface-hero-buttons-row .control-box .test-btn,
+.typeface-pricing .typeface-hero-buttons-row .control-box .buy-btn {
+    border: none;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
 /* Footer Hero Buttons */
 .footer-hero-buttons {
     display: flex;
@@ -3161,6 +3221,7 @@ body.typeface-oequadrat .typeface-title {
     border: 1px solid var(--color-stroke);
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     margin: 16px 0;
+    margin-left: calc(-1 * var(--text-padding) - 1px);
 }
 .success-download-btn:hover {
     background-color: var(--color-primary);
@@ -3199,14 +3260,15 @@ body.typeface-oequadrat .typeface-title {
 .pm-overlay.pm-open {
     opacity: 1;
     pointer-events: auto;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--color-surface);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 
 /* Hide fixed UI elements when modal is open */
 body:has(.pm-overlay.pm-open) .header,
 body:has(.pm-overlay.pm-open) .bottom-bar,
+body:has(.pm-overlay.pm-open) .typeface-hero-buttons-floating,
 body:has(.pm-overlay.pm-open) #custom-cursor {
     display: none !important;
 }
@@ -3220,6 +3282,7 @@ body:has(.pm-overlay.pm-open)::after {
     border: 1px solid var(--color-stroke);
     width: 100%;
     max-width: 600px;
+    height: 580px;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
@@ -3303,7 +3366,7 @@ body:has(.pm-overlay.pm-open)::after {
 .pm-body {
     flex: 1;
     overflow-y: auto;
-    padding: var(--text-padding) var(--box-text-padding);
+    padding: var(--text-padding) 0;
 }
 
 .pm-question {
@@ -3312,6 +3375,8 @@ body:has(.pm-overlay.pm-open)::after {
     font-weight: 400;
     color: var(--color-text);
     margin: 0 0 16px 0;
+    padding-left: var(--box-text-padding);
+    padding-right: var(--box-text-padding);
 }
 
 /* Options list */
@@ -3327,8 +3392,10 @@ body:has(.pm-overlay.pm-open)::after {
     height: 50px;
     min-height: 50px;
     padding: 0 var(--box-text-padding);
-    border: 1px solid var(--color-stroke);
+    border-top: 1px solid var(--color-stroke);
     border-bottom: none;
+    border-left: none;
+    border-right: none;
     cursor: pointer;
     font-family: var(--font-table-family);
     font-size: var(--font-table-size);
@@ -3343,16 +3410,19 @@ body:has(.pm-overlay.pm-open)::after {
 }
 
 .pm-option:hover {
-    background-color: var(--color-stroke);
+    background-color: rgba(0, 0, 255, 0.1);
 }
 
 .pm-option-selected {
     background-color: var(--color-primary);
     color: var(--color-on-primary);
-    border-color: var(--color-primary);
+    border-top-color: var(--color-primary);
 }
 .pm-option-selected + .pm-option {
     border-top-color: var(--color-primary);
+}
+.pm-option-selected:last-child {
+    border-bottom-color: var(--color-primary);
 }
 .pm-option-selected:hover {
     background-color: var(--color-primary);
@@ -3404,6 +3474,8 @@ body:has(.pm-overlay.pm-open)::after {
     font-size: var(--font-table-size);
     color: var(--color-text-light);
     margin: 12px 0 0 0;
+    padding-left: var(--box-text-padding);
+    padding-right: var(--box-text-padding);
 }
 .pm-contact-note a {
     color: var(--color-primary);

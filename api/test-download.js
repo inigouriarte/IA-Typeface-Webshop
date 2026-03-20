@@ -3,7 +3,7 @@ const fs = require('fs');
 const archiver = require('archiver');
 const TYPEFACE_FONT_DIRS = require('./_font-dirs');
 
-const TRIAL_LICENSE_TEXT = `TRIAL LICENSE — FOR TESTING PURPOSES ONLY
+const TRIAL_LICENSE_TEXT = `FOR TESTING PURPOSES ONLY
 
 This font file is provided by Indigo Alphabets\u00AE for evaluation purposes only.
 You may use this file to preview and test the typeface in your designs.
@@ -17,9 +17,8 @@ LIMITATIONS:
 This trial version is intended solely for personal evaluation.
 To use this typeface in any project, you must purchase a license.
 
-Purchase a license at: https://indigoalphabets.com
+Purchase a license at: https://alphabets.indigoindigo.org
 
-\u00A9 Indigo Alphabets\u00AE — All rights reserved.
 Contact: hi@indigoindigo.org
 `;
 
@@ -91,38 +90,27 @@ module.exports = async function (req, res) {
 
       await archive.finalize();
     } else {
-      // Trial download: single .ttf file
+      // Trial download: all .ttf files in the family
       var ttfFiles = allFiles.filter(function (f) {
         return f.toLowerCase().endsWith('.ttf');
       });
       if (!ttfFiles.length) ttfFiles = allFiles;
 
-      var matchedFile = null;
-      if (style) {
-        var normalizedStyle = style.replace(/\s+/g, '');
-        for (var j = 0; j < ttfFiles.length; j++) {
-          var lower = ttfFiles[j].toLowerCase();
-          if (lower.indexOf(normalizedStyle.toLowerCase()) !== -1) {
-            matchedFile = ttfFiles[j];
-            break;
-          }
-        }
-      }
-
-      if (!matchedFile) matchedFile = ttfFiles[0];
-      if (!matchedFile) {
+      if (!ttfFiles.length) {
         return res.status(404).json({ error: 'No font file found' });
       }
 
-      var zipName = 'INDG-' + fontDirName.replace(/\s+/g, '-') + '-Trial.zip';
+      var zipName = 'INDG-' + fontDirName.replace(/\s+/g, '-') + '-Test.zip';
       res.setHeader('Content-Type', 'application/zip');
       res.setHeader('Content-Disposition', 'attachment; filename="' + zipName + '"');
 
       var archive = archiver('zip', { zlib: { level: 9 } });
       archive.pipe(res);
 
-      archive.file(path.join(fontDir, matchedFile), { name: 'fonts/' + matchedFile });
-      archive.append(TRIAL_LICENSE_TEXT, { name: 'TRIAL-LICENSE.txt' });
+      for (var j = 0; j < ttfFiles.length; j++) {
+        archive.file(path.join(fontDir, ttfFiles[j]), { name: 'fonts/' + ttfFiles[j] });
+      }
+      archive.append(TRIAL_LICENSE_TEXT, { name: 'Test-License.txt' });
 
       await archive.finalize();
     }

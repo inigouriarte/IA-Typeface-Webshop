@@ -742,6 +742,17 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     }
   });
 
+  // Clean URLs: serve .html files for extensionless paths (matches Vercel cleanUrls)
+  app.use((req, res, next) => {
+    if (req.method !== 'GET') return next();
+    if (req.path.includes('.') || req.path.startsWith('/api/')) return next();
+    const filePath = path.join(__dirname, req.path + '.html');
+    if (fsSync.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    }
+    next();
+  });
+
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
     console.log(`Admin panel: http://localhost:${PORT}/admin.html`);
