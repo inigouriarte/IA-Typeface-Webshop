@@ -121,6 +121,7 @@
         "Alphabetic Presentation Forms"
       ]
     },
+    "isFree": false,
     "hasOpenType": true,
     "openTypeFeatures": [
       "liga",
@@ -138,40 +139,40 @@
     ],
     "samples": [
       {
+        "sampleId": "semibold",
         "weight": 600,
         "fontSize": 120,
-        "text": "Sphinx of black quartz, judge my vow.",
-        "sampleId": "semibold"
+        "text": "Sphinx of black quartz, judge my vow."
       },
       {
+        "sampleId": "regular",
         "weight": 400,
         "fontSize": 100,
-        "text": "AaBbCcDdEeFfGgHhliJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "regular"
+        "text": "AaBbCcDdEeFfGgHhliJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "bold",
         "weight": 700,
         "fontSize": 240,
-        "text": "\"Irreversible\"",
-        "sampleId": "bold"
+        "text": "\"Irreversible\""
       },
       {
+        "sampleId": "bold-de",
         "weight": 400,
         "fontSize": 30,
-        "text": "Das Wort Schwung bezieht sich im Sinne von eine schnelle, bogenförmige Bewegung auf eine dynamische, kraftvolle Aktivität oder eine elegante Geste, die sowohl körperliche als auch metaphorische Bedeutung haben kann.",
-        "sampleId": "bold-de"
+        "text": "Die Verwendung von Schwüngen bzw. Schnörkeln gilt zum einen als kunstvoll, zum andern ist sie aber auch negativ konnotiert – etwa weil darunter die Leserlichkeit leiden kann – und wird dann als „Schnörkelei“ oder „Geschnörkel“ bezeichnet. Das Adjektiv „verschnörkelt“ kann sich auf Schrift, aber auch auf kunsthandwerkliche Gegenstände wie etwa Kunstschmiede- oder Tischlerarbeiten beziehen sowie metaphorisch auf ganz anderes, beispielsweise auf Musik oder sprachliche Formulierungen. Das Adjektiv „schnörkellos“ bezeichnet die Beschränkung auf das Wesentliche.\n\nIm Englischen werden in der Kalligrafie geschwungene Zierlinien aller Arten allgemein flourish genannt. Bestimmte Arten von flourishes können mit Begriffen wie swirls, swoops und swashes näher bezeichnet werden. Im Bereich der Typografie bezieht sich der Begriff swash auf Zierlinien, die fest zu einer Glyphe gehören, sowie auf Zierformen einer Glyphe. Dekorative Zierlinien, die nicht mit Glyphen verbunden sind, werden hingegen nicht als swash bezeichnet, sondern nur als flourish."
       },
       {
+        "sampleId": "greek",
         "weight": 400,
         "fontSize": 70,
-        "text": "Τα Εξάρχεια είναι συνοικία της Αθήνας που βρίσκεται βόρεια της οδού Αχαρνών και ανατολικά της οδού Πατησίων. Η περιοχή είναι γνωστή για το πλούσιο πολιτιστικό και κοινωνικό της ιστορικό.",
-        "sampleId": "greek"
+        "text": "Τα Εξάρχεια είναι συνοικία της Αθήνας που βρίσκεται βόρεια της οδού Αχαρνών και ανατολικά της οδού Πατησίων. Η περιοχή είναι γνωστή για το πλούσιο πολιτιστικό και κοινωνικό της ιστορικό."
       },
       {
+        "sampleId": "cyrillic",
         "weight": 400,
         "fontSize": 70,
-        "text": "У 1964 році на Печерську відкрито музей історії України, який розповідає про багатовікову спадщину країни та її культуру. Це місце стало важливим центром для дослідження національної ідентичності.",
-        "sampleId": "cyrillic"
+        "text": "У 1964 році на Печерську відкрито музей історії України, який розповідає про багатовікову спадщину країни та її культуру. Це місце стало важливим центром для дослідження національної ідентичності."
       }
     ],
     "pricing": [
