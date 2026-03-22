@@ -104,7 +104,7 @@
     "details": {
       "designer": "Iñigo Uriarte",
       "version": "1.0",
-      "formats": "otf, ttf, WOFF, WOFF2",
+      "formats": "otf, ttf, woff, woff2",
       "styles": "6",
       "glyphs": "794",
       "unicodeRanges": [
