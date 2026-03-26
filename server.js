@@ -309,8 +309,12 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
       const rightCol = 350;
 
       // ── Seller header ──
-      doc.fontSize(18).font('Helvetica-Bold').text(SELLER.name, left, 50);
+      doc.fontSize(18).font('Helvetica-Bold');
+      doc.characterSpacing(-0.9); // -0.05em tracking at 18pt
+      doc.text(SELLER.name, left, 50);
+      doc.characterSpacing(0); // reset tracking
       doc.fontSize(8).font('Helvetica').fillColor('#555');
+      doc.lineGap(3); // slightly increased line spacing for body text
       doc.text(`${SELLER.owner} · ${SELLER.street} · ${SELLER.city} · ${SELLER.country}`, left, doc.y + 2);
       doc.text(`E-Mail: ${SELLER.email} · Steuernummer: ${SELLER.taxNumber}`);
       doc.fillColor('#000');
