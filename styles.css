@@ -1495,7 +1495,7 @@ main {
     position: fixed;
     left: var(--layout-content-padding);
     right: 50%;
-    bottom: 100px;
+    bottom: 51px;
     z-index: 10001;
     pointer-events: none;
     height: 50px;
@@ -1520,6 +1520,11 @@ main {
 
 #control-hint-tooltip.visible {
     opacity: 1;
+}
+
+/* On detail pages with floating buttons, position tooltip above them */
+body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
+    bottom: 101px;
 }
 
 .more-btn {
@@ -1706,7 +1711,7 @@ main {
 /* Footer */
 .footer {
     background-color: var(--color-footer-background);
-    padding: 10px var(--layout-content-padding) 30px;
+    padding: 10px var(--layout-content-padding) 55px;
     margin-top: 40px;
     margin-bottom: 0;
     border-top: 1px solid var(--color-stroke);
@@ -2449,6 +2454,97 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .typeface-pricing-title {
         text-align: left;
     }
+
+    /* Mobile: hero text margin fix */
+    .intro p,
+    .typeface-hero .typeface-title {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Mobile: disable zooming */
+    html {
+        touch-action: manipulation;
+    }
+
+    /* Mobile: typeface data boxes readjust to content */
+    .typeface-details-content .detail-item {
+        height: auto;
+        word-break: break-word;
+    }
+    .typeface-details-content .detail-label {
+        min-width: 80px;
+    }
+
+    /* Mobile: modal options extend to viewport limits */
+    .pm-body {
+        padding: 0;
+    }
+    .pm-question {
+        padding-left: var(--box-text-padding);
+        padding-right: var(--box-text-padding);
+    }
+    .pm-contact-note {
+        padding-left: var(--box-text-padding);
+        padding-right: var(--box-text-padding);
+    }
+    .pm-checkout-container {
+        padding: 0;
+    }
+
+    /* Mobile: footer restructure - 20px margin, two columns */
+    .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .footer-top {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .typeface-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 30px;
+    }
+
+    .typeface-column {
+        gap: 8px;
+    }
+
+    .footer-bottom {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .footer-email {
+        text-align: left;
+    }
+
+    .footer-email p {
+        text-align: left;
+    }
+
+    .footer-social {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .footer-credits {
+        grid-column: 1 / -1;
+        text-align: left;
+    }
+
+    /* Mobile: footer not covered by floating buttons */
+    body:has(.typeface-hero-buttons-floating) .footer {
+        padding-bottom: 80px;
+    }
+
+    /* Mobile: hamburger menu double outline fix */
+    #dropdown-portal .mobile-nav-panel .theme-toggle {
+        border-bottom: none;
+    }
 }
 
 /* Contact Page Styles */
@@ -2709,9 +2805,9 @@ body.typeface-oequadrat .typeface-title {
     }
 }
 
-/* On pages with floating buttons, add extra footer padding */
+/* On pages with floating buttons, add extra footer padding so content isn't covered */
 body:has(.typeface-hero-buttons-floating) .footer {
-    padding-bottom: 0px;
+    padding-bottom: 130px;
 }
 
 .test-btn, .buy-btn {
@@ -2941,13 +3037,14 @@ body:has(.typeface-hero-buttons-floating) .footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: 15px;
     border: none;
     border-left: 1px solid var(--color-stroke);
     border-bottom: 1px solid var(--color-stroke);
     border-right: none;
     padding: var(--box-text-padding);
+    padding-top: 14px;
     padding-right: 50px;
     box-sizing: border-box;
     min-height: 50px;
@@ -3078,9 +3175,10 @@ body:has(.typeface-hero-buttons-floating) .footer {
 .typeface-pricing .typeface-controls-row .control-box {
     border-bottom: none;
     padding: var(--box-text-padding);
+    padding-top: 14px;
     box-sizing: border-box;
     min-height: 50px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .typeface-pricing .typeface-controls-row:not(:first-child) .control-box {
@@ -3096,6 +3194,10 @@ body:has(.typeface-hero-buttons-floating) .footer {
 }
 
 /* Test/Purchase buttons inside pricing table grid */
+.typeface-pricing .typeface-hero-buttons-row {
+    margin-bottom: 80px;
+}
+
 .typeface-pricing .typeface-hero-buttons-row .control-box {
     padding: 0;
 }
@@ -3221,7 +3323,7 @@ body:has(.typeface-hero-buttons-floating) .footer {
     border: 1px solid var(--color-stroke);
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     margin: 16px 0;
-    margin-left: calc(-1 * var(--text-padding) - 1px);
+    margin-left: calc(-1 * var(--text-padding));
 }
 .success-download-btn:hover {
     background-color: var(--color-primary);
@@ -3265,16 +3367,18 @@ body:has(.typeface-hero-buttons-floating) .footer {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Hide fixed UI elements when modal is open */
-body:has(.pm-overlay.pm-open) .header,
-body:has(.pm-overlay.pm-open) .bottom-bar,
-body:has(.pm-overlay.pm-open) .typeface-hero-buttons-floating,
+/* Hide cursor when modal is open; keep header, bottom bar, and floating buttons visible */
 body:has(.pm-overlay.pm-open) #custom-cursor {
     display: none !important;
 }
+body:has(.pm-overlay.pm-open) .header,
+body:has(.pm-overlay.pm-open) .bottom-bar,
+body:has(.pm-overlay.pm-open) .typeface-hero-buttons-floating {
+    z-index: 10011;
+}
 body:has(.pm-overlay.pm-open)::before,
 body:has(.pm-overlay.pm-open)::after {
-    display: none !important;
+    z-index: 10011;
 }
 
 .pm-modal {
@@ -3341,13 +3445,13 @@ body:has(.pm-overlay.pm-open)::after {
     min-height: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0 var(--box-text-padding);
     font-family: var(--font-table-family);
     font-size: var(--font-table-size);
     color: var(--color-text-light);
     border-right: 1px solid var(--color-stroke);
-    text-align: center;
+    text-align: left;
     white-space: nowrap;
     box-sizing: border-box;
 }
@@ -3366,7 +3470,7 @@ body:has(.pm-overlay.pm-open)::after {
 .pm-body {
     flex: 1;
     overflow-y: auto;
-    padding: var(--text-padding) 0;
+    padding: 0;
 }
 
 .pm-question {
@@ -3374,9 +3478,14 @@ body:has(.pm-overlay.pm-open)::after {
     font-size: var(--font-table-size);
     font-weight: 400;
     color: var(--color-text);
-    margin: 0 0 16px 0;
-    padding-left: var(--box-text-padding);
-    padding-right: var(--box-text-padding);
+    margin: 0;
+    padding: 14px var(--box-text-padding);
+    height: 50px;
+    min-height: 50px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--color-stroke);
 }
 
 /* Options list */
@@ -3614,7 +3723,7 @@ body:has(.pm-overlay.pm-open)::after {
         text-overflow: ellipsis;
     }
     .pm-body {
-        padding: var(--text-padding) 16px;
+        padding: 0;
         flex: 1;
         min-height: 0;
         overflow-y: auto;

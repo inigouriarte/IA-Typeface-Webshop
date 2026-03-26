@@ -557,10 +557,6 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Export CSV
               </button>
-              <button class="btn btn-destructive" id="orders-clear-btn" style="border:1px solid var(--border)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                Clear History
-              </button>
               <button class="btn" id="orders-refresh">Refresh</button>
             </div>
           </div>
@@ -1763,22 +1759,6 @@
       a.click();
       URL.revokeObjectURL(url);
       toast(filtered.length + ' orders exported');
-    });
-
-    // Clear order history
-    document.getElementById('orders-clear-btn').addEventListener('click', async () => {
-      const confirmed = await showConfirmModal({
-        title: 'Clear order history?',
-        message: 'This will clear the locally displayed order list. Orders are not deleted from Stripe \u2014 they will reappear on next refresh. This only clears the current view.',
-        confirmLabel: 'Clear',
-        destructive: true,
-      });
-      if (!confirmed) return;
-      allOrders = [];
-      ordersLastId = null;
-      ordersHasMore = false;
-      renderOrders();
-      toast('Order history cleared from view');
     });
 
     /* ══════════════════════════════════════════════

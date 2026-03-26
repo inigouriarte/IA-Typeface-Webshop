@@ -392,43 +392,6 @@ document.querySelectorAll('.more-btn').forEach(button => {
     });
 });
 
-// Prevent font styling from being pasted into typeface samples
-document.querySelectorAll('.typeface-sample').forEach(sample => {
-    sample.addEventListener('paste', function(e) {
-        e.preventDefault();
-        
-        // Get plain text from clipboard
-        const text = (e.clipboardData || window.clipboardData).getData('text/plain');
-        
-        if (!text) return;
-        
-        // Get current selection
-        const selection = window.getSelection();
-        
-        // Create or get range
-        let range;
-        if (selection.rangeCount > 0) {
-            range = selection.getRangeAt(0);
-            range.deleteContents();
-        } else {
-            // No selection - create range at end of element
-            range = document.createRange();
-            range.selectNodeContents(this);
-            range.collapse(false); // Collapse to end
-        }
-        
-        // Insert plain text (will use the target element's styling)
-        const textNode = document.createTextNode(text);
-        range.insertNode(textNode);
-        
-        // Move cursor to end of inserted text
-        range.setStartAfter(textNode);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    });
-});
-
 // Toggle uppercase display (reversible) when capitalize button is clicked
 document.addEventListener('click', function(e) {
     if (!e.target.closest('.capitalize-btn')) return;
