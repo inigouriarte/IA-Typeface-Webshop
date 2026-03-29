@@ -124,22 +124,23 @@
     "name": "INDG Luara",
     "displayName": "INDG Luara",
     "linkUrl": "luara.html",
+    "hasLink": true,
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
-    "isOneStyle": true,
-    "hasLink": true
+    "isOneStyle": true
   },
   {
     "id": "zigrid",
     "name": "INDG Zigrid",
     "displayName": "INDG Zigrid",
     "linkUrl": "zigrid.html",
+    "hasLink": true,
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
-    "isOneStyle": true,
-    "hasLink": true
+    "letterSpacingMobile": 0,
+    "isOneStyle": true
   },
   {
     "id": "dale",
