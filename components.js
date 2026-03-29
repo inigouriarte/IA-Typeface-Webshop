@@ -48,6 +48,10 @@ function renderFooter(options = {}) {
         <div class="footer-top">
             <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
             <a href="/licensing" class="footer-link">Licensing</a>
+            <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+            <a href="/impressum" class="footer-link">Impressum</a>
+            <a href="/agb" class="footer-link">Terms</a>
+            <a href="/widerruf" class="footer-link">Withdrawal</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">

@@ -446,6 +446,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
@@ -513,6 +514,10 @@ ${detailConfig.isFree
         <div class="footer-top">
             <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
             <a href="/licensing" class="footer-link">Licensing</a>
+            <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+            <a href="/impressum" class="footer-link">Impressum</a>
+            <a href="/agb" class="footer-link">Terms</a>
+            <a href="/widerruf" class="footer-link">Withdrawal</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">

@@ -16,6 +16,7 @@ const ROOT = path.join(__dirname);
 const DATA_DIR = path.join(ROOT, 'data');
 const INDEX_JSON = path.join(DATA_DIR, 'index-content.json');
 const DETAIL_JSON = path.join(DATA_DIR, 'typeface-detail-content.json');
+const PAGES_JSON = path.join(DATA_DIR, 'page-content.json');
 
 function loadJson(filePath) {
     if (!fs.existsSync(filePath)) {
@@ -87,18 +88,45 @@ function buildDetailPages() {
 }
 
 function buildStaticPages() {
-    const staticPages = ['about.html', 'contact.html', 'licensing.html', 'success.html'];
+    const staticPages = ['about.html', 'contact.html', 'licensing.html', 'privacy-policy.html', 'impressum.html', 'agb.html', 'widerruf.html', 'success.html'];
     const footerColumnsRegex = /<div class="typeface-columns">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*(<div class="footer-bottom">)/;
     const columns = generateFooterColumns(typefacesConfig);
+
+    // Load page content for text injection
+    let pageContent = {};
+    if (fs.existsSync(PAGES_JSON)) {
+        try { pageContent = JSON.parse(fs.readFileSync(PAGES_JSON, 'utf8')); } catch (e) { /* ignore */ }
+    }
+
     for (const page of staticPages) {
         const pagePath = path.join(ROOT, page);
         if (!fs.existsSync(pagePath)) continue;
         let html = fs.readFileSync(pagePath, 'utf8');
         if (footerColumnsRegex.test(html)) {
             html = html.replace(footerColumnsRegex, '<div class="typeface-columns">\n' + columns + '\n            </div>\n        </div>\n        $1');
-            fs.writeFileSync(pagePath, html, 'utf8');
-            console.log('Built', page, '(footer updated)');
         }
+
+        // Inject page content from page-content.json
+        const aboutTextRegex = /<div class="about-text"[^>]*>[\s\S]*?<\/div>/;
+        const contentMap = {
+            'licensing.html': 'licensing',
+            'privacy-policy.html': 'privacyPolicy',
+            'impressum.html': 'impressum',
+            'agb.html': 'agb',
+            'widerruf.html': 'widerruf',
+        };
+        const contentKey = contentMap[page];
+        if (contentKey && pageContent[contentKey]) {
+            const section = pageContent[contentKey];
+            const paraKeys = Object.keys(section).filter(k => k.startsWith('paragraph')).sort();
+            const paras = paraKeys.map(k => section[k]).filter(Boolean).map(p => `                <p>${p}</p>`).join('\n');
+            if (paras) {
+                html = html.replace(aboutTextRegex, `<div class="about-text" contenteditable="true" spellcheck="false">\n${paras}\n            </div>`);
+            }
+        }
+
+        fs.writeFileSync(pagePath, html, 'utf8');
+        console.log('Built', page);
     }
 }
 

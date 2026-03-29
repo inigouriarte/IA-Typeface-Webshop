@@ -509,6 +509,7 @@ function initCustomCursor() {
 }
 
 // Typeface details: keep table rows aligned – row height = max content height in row, rounded up to 50px
+// On mobile, each box gets its own modular height independently (not synced across columns)
 function syncTypefaceDetailRowHeights() {
     var container = document.querySelector('.typeface-details-content');
     if (!container) return;
@@ -517,6 +518,19 @@ function syncTypefaceDetailRowHeights() {
     var rowCount = columns[0].querySelectorAll('.detail-item').length;
     if (rowCount === 0) return;
     container.querySelectorAll('.detail-item').forEach(function (el) { el.style.height = ''; });
+
+    var isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+        // Mobile: each item gets its own modular height (multiples of 50px)
+        container.querySelectorAll('.detail-item').forEach(function (el) {
+            var h = el.getBoundingClientRect().height;
+            var modularH = Math.ceil(h / 50) * 50;
+            el.style.height = modularH + 'px';
+        });
+        return;
+    }
+
     for (var r = 0; r < rowCount; r++) {
         var maxH = 0;
         var rowItems = [];
