@@ -44,9 +44,30 @@ module.exports = async function (req, res) {
   if (!session) return;
 
   const type = req.query.type || 'index';
+
+  // Batch mode: save multiple content types in a single commit
+  if (type === 'batch' && req.method === 'PUT') {
+    try {
+      const body = JSON.parse(await readBody(req));
+      const files = [];
+      for (const [key, value] of Object.entries(body)) {
+        const config = CONTENT_MAP[key];
+        if (!config) continue;
+        const data = config.validate(value);
+        if (!data) return res.status(400).json({ error: `Invalid data for type "${key}"` });
+        files.push({ path: `data/${config.file}`, content: JSON.stringify(data, null, 2) + '\n' });
+      }
+      if (!files.length) return res.status(400).json({ error: 'No valid content types in batch' });
+      await commitFiles(files, 'Update content via admin panel');
+      return res.json({ ok: true });
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
   const config = CONTENT_MAP[type];
   if (!config) {
-    return res.status(400).json({ error: 'Invalid type. Use ?type=index or ?type=detail' });
+    return res.status(400).json({ error: 'Invalid type. Use ?type=index, ?type=detail, ?type=pages, or ?type=batch' });
   }
 
   const filePath = path.join(process.cwd(), 'data', config.file);
