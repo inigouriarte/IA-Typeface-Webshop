@@ -151,16 +151,16 @@
                 '<div class="pm-body">' +
                     renderStepContent(step) +
                 '</div>' +
-                (isPayStep ? '' :
                 '<div class="pm-footer">' +
                     '<div class="pm-footer-left">' +
                         (canGoBack ? '<button class="pm-back" type="button">← Back</button>' : '') +
                     '</div>' +
+                    (isPayStep ? '' :
                     '<div class="pm-footer-center">' + totalHtml + '</div>' +
                     '<div class="pm-footer-right">' +
                         '<button class="pm-next" type="button"' + nextDisabled + '>' + nextLabel + '</button>' +
-                    '</div>' +
-                '</div>') +
+                    '</div>') +
+                '</div>' +
             '</div>';
 
         bindEvents();
@@ -255,7 +255,6 @@
                        '<div class="pm-summary-row pm-summary-total"><span>Total</span><span>' + fmt(calcTotal()) + '</span></div>' +
                    '</div>' +
                    '<div id="pm-stripe-embed"><div class="pm-loading">Loading payment form...</div></div>' +
-                   '<button class="pm-back pm-back-payment" type="button">← Back</button>' +
                '</div>';
     }
 

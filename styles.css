@@ -894,9 +894,9 @@ main {
     border-right: none;
     border-bottom: none;
     border-top: none;
-    max-height: 1000px;
+    max-height: 4000px;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -920,7 +920,10 @@ main {
     padding-right: var(--layout-content-padding);
     box-sizing: border-box;
     flex-wrap: wrap;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--color-background);
     flex-shrink: 0;
     flex-grow: 0;
 }
@@ -2074,6 +2077,7 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     :root {
         --layout-margin: 0;
         --layout-content-padding: 0;
+        --text-padding: 10px;
     }
 
     body,
@@ -2291,8 +2295,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .footer {
-        padding-left: var(--text-padding);
-        padding-right: var(--text-padding);
+        padding-left: 0;
+        padding-right: 0;
     }
 
     /* Typeface details: 2×6 table on mobile (2 equal columns, 6 rows: category | content), rows 50px min */
@@ -2467,13 +2471,19 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         touch-action: manipulation;
     }
 
-    /* Mobile: typeface data boxes readjust to content */
+    /* Mobile: typeface data boxes readjust to content independently (modular 50px heights set by JS) */
     .typeface-details-content .detail-item {
         height: auto;
         word-break: break-word;
     }
     .typeface-details-content .detail-label {
         min-width: 80px;
+    }
+
+    /* Mobile: hero text margin */
+    .typeface-hero .typeface-title {
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     /* Mobile: modal options extend to viewport limits */
@@ -2492,15 +2502,24 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         padding: 0;
     }
 
-    /* Mobile: footer restructure - 20px margin, two columns */
+    /* Mobile: footer restructure - 10px margin via --text-padding, single column layout */
     .footer {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .footer-top {
-        flex-wrap: wrap;
-        gap: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    /* Reset desktop order: show in source order (To top, Licensing, Privacy Policy, Typefaces) */
+    .footer-top .typeface-list-heading,
+    .footer-top .back-to-top,
+    .footer-top .footer-link {
+        order: unset;
+        text-align: left;
     }
 
     .typeface-columns {
@@ -2509,12 +2528,13 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         gap: 8px 30px;
     }
 
+    /* Flatten columns into grid items so typefaces flow into 2 equal columns */
     .typeface-column {
-        gap: 8px;
+        display: contents;
     }
 
     .footer-bottom {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 8px;
     }
 
@@ -2534,6 +2554,9 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .footer-credits {
         grid-column: 1 / -1;
         text-align: left;
+        font-family: var(--font-button-family);
+        font-size: var(--font-button-size);
+        font-weight: var(--font-button-weight);
     }
 
     /* Mobile: footer not covered by floating buttons */
@@ -3166,6 +3189,8 @@ body:has(.typeface-hero-buttons-floating) .footer {
 .typeface-pricing .typeface-controls-row {
     margin-bottom: 0;
     margin-top: 0;
+    position: relative;
+    z-index: auto;
 }
 
 .typeface-pricing .typeface-controls-row:not(:first-child) {
@@ -3367,18 +3392,9 @@ body:has(.typeface-hero-buttons-floating) .footer {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Hide cursor when modal is open; keep header, bottom bar, and floating buttons visible */
+/* Hide cursor when modal is open; header, bottom bar, and floating buttons go UNDER the backdrop */
 body:has(.pm-overlay.pm-open) #custom-cursor {
     display: none !important;
-}
-body:has(.pm-overlay.pm-open) .header,
-body:has(.pm-overlay.pm-open) .bottom-bar,
-body:has(.pm-overlay.pm-open) .typeface-hero-buttons-floating {
-    z-index: 10011;
-}
-body:has(.pm-overlay.pm-open)::before,
-body:has(.pm-overlay.pm-open)::after {
-    z-index: 10011;
 }
 
 .pm-modal {
@@ -3485,7 +3501,6 @@ body:has(.pm-overlay.pm-open)::after {
     box-sizing: border-box;
     display: flex;
     align-items: flex-start;
-    border-bottom: 1px solid var(--color-stroke);
 }
 
 /* Options list */
@@ -3689,10 +3704,6 @@ body:has(.pm-overlay.pm-open)::after {
     color: #c0392b;
     text-align: center;
     padding: 20px 0;
-}
-
-.pm-back-payment {
-    align-self: flex-start;
 }
 
 /* Drawer handle (hidden on desktop) */

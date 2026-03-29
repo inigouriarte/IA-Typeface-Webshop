@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <title>INDG Stycka - Indigo Alphabets®</title>
+    <meta name="description" content="Bitmap cursive based on an alphabet found in a stitching book.">
+    <meta property="og:title" content="INDG Stycka - Indigo Alphabets®">
+    <meta property="og:description" content="Bitmap cursive based on an alphabet found in a stitching book.">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://alphabets.indigoindigo.org/stycka">
+    <meta property="og:site_name" content="Indigo Alphabets">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="INDG Stycka - Indigo Alphabets®">
+    <meta name="twitter:description" content="Bitmap cursive based on an alphabet found in a stitching book.">
+    <link rel="canonical" href="https://alphabets.indigoindigo.org/stycka">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -33,18 +44,14 @@
         <div class="typeface-hero-content">
             <h1 class="typeface-title" contenteditable="true" spellcheck="false">INDG Stycka</h1>
             <div class="typeface-description">
-                <p contenteditable="true" spellcheck="false">A single-weight typeface with elegant simplicity, designed for refined typographic expression.</p>
-            </div>
-            <div class="typeface-hero-buttons">
-                <button class="test-btn">Test INDG Stycka</button>
-                <button class="buy-btn">Purchase INDG Stycka</button>
+                <p contenteditable="true" spellcheck="false">Bitmap cursive based on an alphabet found in a stitching book.</p>
             </div>
         </div>
     </section>
 
     <!-- Typeface Sections -->
     <main class="typeface-detail-container">
-        <!-- regular Section -->
+        <!-- pangram Section -->
         <section class="typeface-section" data-font="stycka">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -53,13 +60,13 @@
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="stycka-regular">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="120" data-target="stycka-pangram">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
-                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="stycka-regular">
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="stycka-pangram">
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
@@ -77,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="regular" data-target-match="stycka-regular" style="font-size: 120px; letter-spacing: 0em; font-weight: 400;">Sphinx of black quartz, judge my vow.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="pangram" data-target-match="stycka-pangram" style="font-size: 120px; letter-spacing: 0em; font-weight: 400;">The quick brown fox jumps over the lazy dog.</div>
         </section>
 
         <!-- alphabet Section -->
@@ -89,7 +96,7 @@
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="75" data-target="stycka-alphabet">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="72" data-target="stycka-alphabet">
                     </div>
                 </div>
                 <div class="control-box">
@@ -113,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="alphabet" data-target-match="stycka-alphabet" style="font-size: 75px; letter-spacing: 0em; font-weight: 400;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="alphabet" data-target-match="stycka-alphabet" style="font-size: 72px; letter-spacing: 0em; font-weight: 400;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</div>
         </section>
 
         <!-- phrase Section -->
@@ -125,7 +132,7 @@
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="90" data-target="stycka-phrase">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="48" data-target="stycka-phrase">
                     </div>
                 </div>
                 <div class="control-box">
@@ -149,10 +156,10 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="phrase" data-target-match="stycka-phrase" style="font-size: 90px; letter-spacing: 0em; font-weight: 400;">Elegant simplicity for refined typography.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="phrase" data-target-match="stycka-phrase" style="font-size: 48px; letter-spacing: 0em; font-weight: 400;">Wild Combination is director Matt Wolf’s visually absorbing portrait of the seminal avant-garde composer, singer-songwriter, cellist, and disco producer Arthur Russell. Before his untimely death from AIDS in 1992, Arthur prolifically created music that spanned both pop and the transcendent possibilities of abstract art. Now, over fifteen years since his passing, Arthur's work is finally finding its audience. Wolf incorporates rare archival footage and commentary from Arthur's family, friends, and closest collaborators—including Philip Glass and Allen Ginsberg—to tell this poignant and important story.</div>
         </section>
 
-        <!-- body Section -->
+        <!-- numbers Section -->
         <section class="typeface-section" data-font="stycka">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -161,13 +168,13 @@
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="28" data-target="stycka-body">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="72" data-target="stycka-numbers">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
-                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="stycka-body">
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="stycka-numbers">
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
@@ -185,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="body" data-target-match="stycka-body" style="font-size: 28px; letter-spacing: 0em; font-weight: 400;">Stycka’s single weight and clear proportions make it suitable for titles, captions, and short runs of text where a calm, refined tone is needed.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="stycka" data-sample="numbers" data-target-match="stycka-numbers" style="font-size: 72px; letter-spacing: 0em; font-weight: 400;">0123456789</div>
         </section>
 
         <!-- Typeface Details Section -->
@@ -213,10 +220,10 @@
                         <div class="detail-value">1</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-value">350</div>
+                        <div class="detail-value">215</div>
                     </div>
                 </div>
-                <!-- Column 3: Right-side labels (Unicode Ranges, OT features) -->
+                <!-- Column 3: Right-side labels (Unicode Ranges, OT features, Formats) -->
                 <div class="details-column">
                     <div class="detail-item">
                         <div class="detail-label">Unicode ranges</div>
@@ -240,22 +247,22 @@
                         <div class="detail-value detail-value-ot-features">—</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-value">otf, ttf, woff, woff2</div>
+                        <div class="detail-value">ttf, woff, woff</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Available Styles and Pricing -->
-        <section class="typeface-pricing">
+        <section class="typeface-pricing" id="pricing">
             <h2 class="typeface-pricing-title">Pricing</h2>
             <div class="pricing-content">
                 <div class="typeface-controls-row">
                     <div class="control-box">
-                        <div class="pricing-name">Complete family</div>
+                        <div class="pricing-name">Complete family (1 styles)</div>
                     </div>
                     <div class="control-box">
-                        <div class="price">25€</div>
+                        <div class="price">12</div>
                     </div>
                 </div>
                 <div class="typeface-controls-row">
@@ -263,7 +270,7 @@
                         <div class="pricing-name">Style</div>
                     </div>
                     <div class="control-box">
-                        <div class="price">25€</div>
+                        <div class="price">12</div>
                     </div>
                 </div>
                 <div class="typeface-controls-row typeface-hero-buttons-row">
@@ -272,6 +279,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- Floating Test/Purchase buttons above bottom bar -->
@@ -285,33 +293,37 @@
         <div class="footer-top">
             <a href="#top" class="back-to-top"><span class="back-to-top-arrow">▲</span> To top</a>
             <a href="/licensing" class="footer-link">Licensing</a>
+            <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+            <a href="/impressum" class="footer-link">Impressum</a>
+            <a href="/agb" class="footer-link">Terms</a>
+            <a href="/widerruf" class="footer-link">Withdrawal</a>
             <h3 class="typeface-list-heading">Typefaces</h3>
         </div>
         <div class="footer-content">
             <div class="typeface-columns">
                 <div class="typeface-column">
-                    <div><a href="/alvica">Alvica</a></div>
-                    <div><a href="/actio">Actio</a></div>
-                    <div><a href="/modus">Modus</a></div>
-                    <div><a href="/luara">Luara</a></div>
+                    <div><a href="/alvica" style="text-decoration: none;">Alvica</a></div>
+                    <div><a href="/actio" style="text-decoration: none;">Actio</a></div>
+                    <div><a href="/modus" style="text-decoration: none;">Modus</a></div>
+                    <div><a href="/luara" style="text-decoration: none;">Luara</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="/zigrid">Zigrid</a></div>
-                    <div><a href="/dale">Dale</a></div>
-                    <div><a href="/peqat">Peqat</a></div>
-                    <div><a href="/heron">Heron</a></div>
+                    <div><a href="/zigrid" style="text-decoration: none;">Zigrid</a></div>
+                    <div><a href="/dale" style="text-decoration: none;">Dale</a></div>
+                    <div><a href="/peqat" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="/heron" style="text-decoration: none;">Heron</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="/naora">Naora</a></div>
-                    <div><a href="/sifora">Sifora</a></div>
-                    <div><a href="/oequadrat">OE Quadrat</a></div>
+                    <div><a href="/naora" style="text-decoration: none;">Naora</a></div>
+                    <div><a href="/sifora" style="text-decoration: none;">Sifora</a></div>
+                    <div><a href="/oequadrat" style="text-decoration: none;">Old English Quadrat</a></div>
+                    <div><a href="/stycka" style="text-decoration: none;">Stycka</a></div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="copyright">
                 <p>©2026 Indigo Alphabets</p>
-            
             </div>
             <div class="footer-email">
                 <p>hi@indigoindigo.org</p>
@@ -333,9 +345,15 @@
         </div>
     </div>
 
-    <script>window.__TYPEFACE_FONT_PATHS__ = {"alvica":"fonts/Alvica/INDGAlvica-Semibold.woff2","actio":"fonts/Actio/INDGActio-RegularNormal.woff2","modus":"fonts/Modus/INDGModus-Grey.woff2","luara":"fonts/Luara/INDG Luara.woff2","dale":"fonts/Dale/INDGDale-Regular.woff2","peqat":"fonts/Peqat/INDGPeqat-Norma.woff2","heron2":"fonts/Heron/INDGHeron-ST.woff2","naora":"fonts/Naora/INDG Naora.woff2","sifora":"fonts/Sifora/INDGSifora-Regular.woff2","zigrid":"fonts/Zigrid/INDG Zigrid.woff2","stycka":"fonts/Stycka/INDG-Stycka.woff2","oequadrat":"fonts/Old English Quadrat/Old-English-Quadrat.woff2"};</script>
-    <!-- OpenType.js library for font feature detection -->
+    <script>
+    window.__TYPEFACE_FONT_PATHS__ = {"alvica":"fonts/Alvica/INDGAlvica-Semibold.woff2","actio":"fonts/Actio/INDGActio-RegularNormal.woff2","modus":"fonts/Modus/INDGModus-Grey.woff2","luara":"fonts/Luara/INDG Luara.woff2","dale":"fonts/Dale/INDGDale-Regular.woff2","peqat":"fonts/Peqat/INDGPeqat-Norma.woff2","heron2":"fonts/Heron/INDGHeron-ST.woff2","naora":"fonts/Naora/INDG Naora.woff2","sifora":"fonts/Sifora/INDGSifora-Regular.woff2","zigrid":"fonts/Zigrid/INDG Zigrid.woff2","stycka":"fonts/Stycka/INDG-Stycka.woff2","oequadrat":"fonts/Old English Quadrat/Old-English-Quadrat.woff2","Test":"fonts/INDIG Test/INDGAlvica-Regular.woff2","dajo":"fonts/DAJO/INDGDracma-Naturalis.woff2"};
+    window.__TYPEFACE_ID__ = "stycka";
+    window.__TYPEFACE_NAME__ = "INDG Stycka";
+    window.__TYPEFACE_PRICING__ = [{"name":"INDG Stycka","price":"12"}];
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js" defer></script>
+        <script src="https://js.stripe.com/v3/" defer></script>
     <script src="script.js" defer></script>
+    <script src="purchase-modal.js" defer></script>
 </body>
 </html>

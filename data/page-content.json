@@ -13,5 +13,43 @@
     "line2": "Need a custom typeface?",
     "line3": "Let's build something together.",
     "email": "hi@indigoindigo.org"
+  },
+  "licensing": {
+    "paragraph1": "Indigo Alphabets\u00ae fonts are sold under a commercial licence. Each purchase grants you the right to use the font in your projects according to the terms provided at the time of purchase.",
+    "paragraph2": "For custom licensing, extended use, or questions, get in touch at hi@indigoindigo.org."
+  },
+  "privacyPolicy": {
+    "paragraph1": "Data controller. The data controller responsible for data processing on this website is I\u00f1igo Uriarte, Indigo Alphabets, Markgrafendamm 28, 10245 Berlin, Germany. Contact: hi@indigoindigo.org.",
+    "paragraph2": "Data we collect. When you make a purchase, we collect your name, email address, and billing information. Payment is processed by Stripe (Stripe, Inc.), which handles your payment card details directly \u2014 we do not store your card information. When you visit our website, your browser automatically transmits certain technical data (IP address, browser type, access time) which our hosting provider Vercel processes for the purpose of delivering the website.",
+    "paragraph3": "Legal basis. We process your data on the following legal bases under Art. 6 GDPR: (a) performance of a contract (Art. 6(1)(b)) \u2014 to process your purchase and deliver font files; (b) legitimate interests (Art. 6(1)(f)) \u2014 to operate and secure our website; (c) legal obligation (Art. 6(1)(c)) \u2014 to comply with tax and accounting requirements.",
+    "paragraph4": "Third-party services. We use the following services: Stripe (payment processing, USA \u2014 EU Standard Contractual Clauses apply), Vercel (hosting, USA \u2014 EU Standard Contractual Clauses apply), and Google Fonts (typography, loaded from Google servers \u2014 your IP address is transmitted to Google). We do not use analytics or tracking tools.",
+    "paragraph5": "Data retention. Purchase records are retained for the statutory retention period required by German tax law (10 years). Technical server logs are deleted automatically after 30 days. Download links expire after 48 hours.",
+    "paragraph6": "Your rights. Under the GDPR you have the right to: access your personal data (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data portability (Art. 20), and objection to processing (Art. 21). To exercise these rights, contact hi@indigoindigo.org. You also have the right to lodge a complaint with the supervisory authority \u2014 Berliner Beauftragte f\u00fcr Datenschutz und Informationsfreiheit.",
+    "paragraph7": "Cookies. This website uses only technically necessary cookies (theme preference stored in localStorage). No tracking or marketing cookies are used. No consent is required for technically necessary cookies under \u00a7 25 TDDDG."
+  },
+  "impressum": {
+    "paragraph1": "Information pursuant to \u00a7 5 TMG (German Telemedia Act):",
+    "paragraph2": "I\u00f1igo Uriarte\nIndigo Alphabets\nMarkgrafendamm 28\n10245 Berlin\nGermany",
+    "paragraph3": "Contact: hi@indigoindigo.org",
+    "paragraph4": "VAT identification number pursuant to \u00a7 27a UStG: [VAT ID]",
+    "paragraph5": "Responsible for content pursuant to \u00a7 55 Abs. 2 RStV: I\u00f1igo Uriarte, address as above.",
+    "paragraph6": "EU Online Dispute Resolution: The European Commission provides an online dispute resolution platform at https://ec.europa.eu/consumers/odr. We are neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board."
+  },
+  "agb": {
+    "paragraph1": "\u00a7 1 Scope. These Terms and Conditions apply to all orders placed through the Indigo Alphabets online shop operated by I\u00f1igo Uriarte, Markgrafendamm 28, 10245 Berlin, Germany. By placing an order you agree to these terms.",
+    "paragraph2": "\u00a7 2 Contract formation. The presentation of products on this website does not constitute a binding offer. By completing the checkout process, you submit a binding order. The contract is formed when we confirm your order by email or deliver the purchased files.",
+    "paragraph3": "\u00a7 3 Prices and payment. All prices shown include the applicable statutory value-added tax (VAT). Payment is processed securely through Stripe. We accept the payment methods displayed during checkout.",
+    "paragraph4": "\u00a7 4 Delivery. Font files are digital products delivered electronically. After successful payment, you will receive a download link by email. The download link is valid for 48 hours.",
+    "paragraph5": "\u00a7 5 Licence scope. Each purchase grants you a non-exclusive, non-transferable licence to use the typeface according to the selected licence tier. The licence tier determines the number of employees in your organisation permitted to use the font. Redistribution, resale, or modification of the font files is prohibited. For extended or custom licensing, contact hi@indigoindigo.org.",
+    "paragraph6": "\u00a7 6 Liability. We are liable without limitation for damages caused by intent or gross negligence. For slight negligence, we are only liable for breaches of essential contractual obligations, limited to foreseeable, typically occurring damages. This does not affect liability for injury to life, body, or health, or under the Product Liability Act.",
+    "paragraph7": "\u00a7 7 Right of withdrawal. Please see our separate Withdrawal Policy (Widerrufsbelehrung).",
+    "paragraph8": "\u00a7 8 Applicable law and jurisdiction. The law of the Federal Republic of Germany applies, excluding the UN Convention on Contracts for the International Sale of Goods. For consumers within the EU, mandatory consumer protection provisions of their country of residence remain unaffected."
+  },
+  "widerruf": {
+    "paragraph1": "Right of withdrawal. You have the right to withdraw from this contract within fourteen days without giving any reason. The withdrawal period is fourteen days from the date of contract conclusion. To exercise your right of withdrawal, you must inform us \u2014 I\u00f1igo Uriarte, Indigo Alphabets, Markgrafendamm 28, 10245 Berlin, hi@indigoindigo.org \u2014 by means of a clear statement (e.g. an email) of your decision to withdraw from this contract.",
+    "paragraph2": "To meet the withdrawal deadline, it is sufficient for you to send your communication concerning the exercise of your right of withdrawal before the withdrawal period has expired.",
+    "paragraph3": "Effects of withdrawal. If you withdraw from this contract, we shall reimburse all payments received from you without undue delay and at the latest within fourteen days from the day on which we receive notice of your withdrawal. We will use the same means of payment as you used for the original transaction, unless you expressly agreed otherwise; in no event will you be charged any fees as a result of such reimbursement.",
+    "paragraph4": "Loss of the right of withdrawal for digital content. You expressly agree that we begin the delivery of digital content (font files) before the withdrawal period has expired. You acknowledge that by beginning the download or delivery of the digital content, you lose your right of withdrawal pursuant to \u00a7 356 Abs. 5 BGB.",
+    "paragraph5": "For questions about withdrawal, contact us at hi@indigoindigo.org."
   }
 }
