@@ -339,30 +339,35 @@
         "Latin 1-Supplement"
       ]
     },
+    "heroLetterSpacing": 0,
+    "heroLetterSpacingMobile": 0,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "regular",
         "weight": 400,
         "fontSize": 120,
-        "text": "Sphinx of black quartz, judge my vow.",
-        "sampleId": "regular"
+        "text": "Sphinx of black quartz, judge my vow."
       },
       {
+        "sampleId": "alphabet",
         "weight": 400,
         "fontSize": 75,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "phrase",
         "weight": 400,
         "fontSize": 90,
-        "text": "Elegant simplicity for refined typography.",
-        "sampleId": "phrase"
+        "text": "Elegant simplicity for refined typography."
       },
       {
+        "sampleId": "body",
         "weight": 400,
         "fontSize": 28,
-        "text": "Luara’s single weight and clear proportions make it suitable for titles, captions, and short runs of text where a calm, refined tone is needed.",
-        "sampleId": "body"
+        "text": "Luara’s single weight and clear proportions make it suitable for titles, captions, and short runs of text where a calm, refined tone is needed."
       }
     ],
     "pricing": [
@@ -370,9 +375,7 @@
         "name": "INDG Luara",
         "price": "25€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "modus": {
     "description": "Pure geometry, perfect for experimental typography.",
