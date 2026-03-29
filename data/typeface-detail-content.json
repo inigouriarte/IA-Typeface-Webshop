@@ -657,30 +657,33 @@
         "Latin 1-Supplement"
       ]
     },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "regular",
         "weight": 400,
         "fontSize": 130,
-        "text": "ZIGRID",
-        "sampleId": "regular"
+        "text": "ZIGRID"
       },
       {
+        "sampleId": "alphabet",
         "weight": 400,
         "fontSize": 72,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "phrase",
         "weight": 400,
         "fontSize": 85,
-        "text": "Grid-based construction, geometric clarity.",
-        "sampleId": "phrase"
+        "text": "Grid-based construction, geometric clarity."
       },
       {
+        "sampleId": "numbers",
         "weight": 400,
         "fontSize": 55,
-        "text": "0123456789",
-        "sampleId": "numbers"
+        "text": "0123456789"
       }
     ],
     "pricing": [
@@ -688,9 +691,7 @@
         "name": "INDG Zigrid",
         "price": "25€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "dracma": {
     "description": "TTT",
