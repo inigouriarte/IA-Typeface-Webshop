@@ -531,18 +531,12 @@ function syncTypefaceDetailRowHeights() {
         return;
     }
 
+    // Desktop: fixed 50px height, no expansion for multi-line text
     for (var r = 0; r < rowCount; r++) {
-        var maxH = 0;
-        var rowItems = [];
         for (var c = 0; c < columns.length; c++) {
             var item = columns[c].querySelectorAll('.detail-item')[r];
-            if (!item) continue;
-            rowItems.push(item);
-            var h = item.getBoundingClientRect().height;
-            if (h > maxH) maxH = h;
+            if (item) item.style.height = '50px';
         }
-        var rowHeight = Math.ceil(maxH / 50) * 50;
-        rowItems.forEach(function (el) { el.style.height = rowHeight + 'px'; });
     }
 }
 
