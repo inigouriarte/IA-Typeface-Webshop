@@ -331,7 +331,7 @@
     "details": {
       "designer": "Iñigo Uriarte",
       "version": "1.0",
-      "formats": "OTF, TTF, WOFF, WOFF2",
+      "formats": "TTF, WOFF, WOFF2",
       "styles": "1",
       "glyphs": "350",
       "unicodeRanges": [
