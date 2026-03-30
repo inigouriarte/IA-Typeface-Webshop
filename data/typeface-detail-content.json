@@ -457,6 +457,7 @@
         "Latin 1-Supplement"
       ]
     },
+    "heroFontSizeMobile": 70,
     "isFree": false,
     "hasOpenType": false,
     "openTypeFeatures": [],
