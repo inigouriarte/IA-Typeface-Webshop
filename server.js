@@ -310,7 +310,7 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
 
       // ── Seller header ──
       doc.fontSize(18).font('Helvetica-Bold');
-      doc.characterSpacing(-0.9); // -0.05em tracking at 18pt
+      doc.characterSpacing(-0.45); // -0.025em tracking at 18pt
       doc.text(SELLER.name, left, 50);
       doc.characterSpacing(0); // reset tracking
       doc.fontSize(8).font('Helvetica').fillColor('#555');
