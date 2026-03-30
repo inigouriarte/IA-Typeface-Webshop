@@ -139,6 +139,7 @@
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
+    "letterSpacingMobile": 0,
     "isOneStyle": true
   },
   {
