@@ -1514,6 +1514,7 @@ main {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border: 1px solid var(--color-stroke);
+    border-bottom: none;
     border-radius: 0;
     white-space: nowrap;
     opacity: 0;
@@ -1892,9 +1893,13 @@ body.typeface-oequadrat .typeface-column a[href="/oequadrat"]:hover {
     font-weight: var(--font-button-weight);
     color: var(--color-footer-muted);
     text-decoration: none;
-    text-align: left;
     transition: color 0.2s;
 }
+
+/* Align legal links: left / center / right per column */
+.footer-legal .footer-link:nth-child(3n+1) { text-align: left; }
+.footer-legal .footer-link:nth-child(3n+2) { text-align: center; }
+.footer-legal .footer-link:nth-child(3n+3) { text-align: right; }
 
 .footer-legal .footer-link:hover {
     color: var(--color-primary);
@@ -2323,6 +2328,66 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .footer {
         padding-left: 0;
         padding-right: 0;
+        padding-bottom: 0;
+    }
+
+    .footer-top {
+        flex-wrap: nowrap;
+        gap: 0;
+        margin-bottom: 30px;
+        justify-content: space-between;
+    }
+
+    .footer-top .typeface-list-heading {
+        width: auto;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .footer-top .back-to-top {
+        padding-left: 0;
+        margin-left: auto;
+    }
+
+    .typeface-columns {
+        flex-wrap: wrap;
+        gap: 8px 30px;
+        margin-bottom: 30px;
+    }
+
+    .typeface-column {
+        min-width: calc(50% - 15px);
+    }
+
+    .typeface-column div {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .footer-bottom {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 10px;
+        margin-top: 30px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .footer-email {
+        text-align: right;
+    }
+
+    .footer-email p {
+        text-align: right;
+    }
+
+    .footer-social {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .footer-credits {
+        grid-column: 1 / -1;
+        text-align: left;
     }
 
     /* Typeface details: 2×6 table on mobile (2 equal columns, 6 rows: category | content), rows 50px min */
@@ -2837,7 +2902,7 @@ body.typeface-oequadrat .typeface-title {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border-top: 1px solid var(--color-stroke);
-    border-bottom: 1px solid var(--color-stroke);
+    border-bottom: none;
 }
 
 /* Move top/bottom borders to container to prevent doubling from backdrop-filter */
@@ -2866,18 +2931,16 @@ body:has(.typeface-hero-buttons-floating) .footer {
     flex: 1;
     min-width: 0;
     height: 50px;
-    border-left: 1px solid var(--color-stroke);
+    border: none;
     border-bottom: 1px solid var(--color-stroke);
     border-top: 1px solid var(--color-stroke);
-    border-right: none;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     padding-left: 10px;
     padding-right: 10px;
     box-sizing: border-box;
-    margin-right: -1px;
-    margin-left: -1px;
+    margin: 0;
     font-family: var(--font-button-family);
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
@@ -2891,11 +2954,12 @@ body:has(.typeface-hero-buttons-floating) .footer {
     text-align: left;
 }
 
-.test-btn:first-child {
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 10px;
+.buy-btn {
     border-left: 1px solid var(--color-stroke);
+}
+
+.test-btn:first-child {
+    padding-left: 10px;
     position: relative;
 }
 
@@ -2920,8 +2984,6 @@ body:has(.typeface-hero-buttons-floating) .footer {
 }
 
 .buy-btn:last-child {
-    border-right: none;
-    margin-right: 0;
     padding-right: 10px;
     position: relative;
 }
@@ -3098,10 +3160,8 @@ body:has(.typeface-hero-buttons-floating) .footer {
     padding: 0 var(--box-text-padding);
     padding-right: 50px;
     box-sizing: border-box;
-    height: 50px;
     min-height: 50px;
     margin-right: -1px;
-    overflow: hidden;
 }
 
 .details-column:first-child .detail-item {
@@ -3409,7 +3469,7 @@ body:has(.typeface-hero-buttons-floating) .footer {
     justify-content: center;
     align-items: center;
     padding: var(--layout-content-padding);
-    cursor: default;
+    cursor: auto;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
@@ -3438,10 +3498,10 @@ body:has(.pm-overlay.pm-open) #custom-cursor {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    cursor: default;
+    cursor: auto;
 }
 .pm-modal * {
-    cursor: default;
+    cursor: auto;
 }
 .pm-modal .pm-option,
 .pm-modal button {

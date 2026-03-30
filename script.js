@@ -93,7 +93,7 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var capsBtn = box.querySelector('.capitalize-btn');
         if (capsBtn) {
             var isActive = capsBtn.classList.contains('active');
-            return { text: 'All caps: ' + (isActive ? 'active' : 'off'), box: box };
+            return { text: 'All caps: ' + (isActive ? 'on' : 'off'), box: box };
         }
         return null;
     }

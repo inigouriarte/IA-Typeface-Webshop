@@ -174,7 +174,7 @@
             var cls = 'pm-step-item';
             if (i + 1 === currentStep) cls += ' pm-step-active';
             if (i + 1 < currentStep) cls += ' pm-step-done';
-            html += '<div class="' + cls + '">' + (i + 1) + '. ' + STEP_LABELS[i] + '</div>';
+            html += '<div class="' + cls + '">' + STEP_LABELS[i] + '</div>';
         }
         return html;
     }
