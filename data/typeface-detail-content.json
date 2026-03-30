@@ -731,32 +731,35 @@
         "Latin 1-Supplement"
       ]
     },
+    "heroLetterSpacing": 0,
+    "heroLetterSpacingMobile": 0,
+    "isFree": false,
     "hasOpenType": false,
     "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "pangram",
         "weight": 400,
         "fontSize": 120,
-        "text": "The quick brown fox jumps over the lazy dog.",
-        "sampleId": "pangram"
+        "text": "The quick brown fox jumps over the lazy dog."
       },
       {
+        "sampleId": "alphabet",
         "weight": 400,
         "fontSize": 72,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "phrase",
         "weight": 400,
         "fontSize": 48,
-        "text": "Wild Combination is director Matt Wolf’s visually absorbing portrait of the seminal avant-garde composer, singer-songwriter, cellist, and disco producer Arthur Russell. Before his untimely death from AIDS in 1992, Arthur prolifically created music that spanned both pop and the transcendent possibilities of abstract art. Now, over fifteen years since his passing, Arthur's work is finally finding its audience. Wolf incorporates rare archival footage and commentary from Arthur's family, friends, and closest collaborators—including Philip Glass and Allen Ginsberg—to tell this poignant and important story.",
-        "sampleId": "phrase"
+        "text": "Wild Combination is director Matt Wolf’s visually absorbing portrait of the seminal avant-garde composer, singer-songwriter, cellist, and disco producer Arthur Russell. Before his untimely death from AIDS in 1992, Arthur prolifically created music that spanned both pop and the transcendent possibilities of abstract art. Now, over fifteen years since his passing, Arthur's work is finally finding its audience. Wolf incorporates rare archival footage and commentary from Arthur's family, friends, and closest collaborators—including Philip Glass and Allen Ginsberg—to tell this poignant and important story."
       },
       {
+        "sampleId": "numbers",
         "weight": 400,
         "fontSize": 72,
-        "text": "0123456789",
-        "sampleId": "numbers"
+        "text": "0123456789"
       }
     ],
     "pricing": [
