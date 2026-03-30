@@ -457,30 +457,33 @@
         "Latin 1-Supplement"
       ]
     },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "regular",
         "weight": 400,
         "fontSize": 110,
-        "text": "Naora",
-        "sampleId": "regular"
+        "text": "Naora"
       },
       {
+        "sampleId": "alphabet",
         "weight": 400,
         "fontSize": 65,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "phrase",
         "weight": 400,
         "fontSize": 75,
-        "text": "Delicate proportions, refined details.",
-        "sampleId": "phrase"
+        "text": "Delicate proportions, refined details."
       },
       {
+        "sampleId": "body",
         "weight": 400,
         "fontSize": 26,
-        "text": "A single weight with careful spacing makes Naora ideal for elegant headings, invitations, and short paragraphs.",
-        "sampleId": "body"
+        "text": "A single weight with careful spacing makes Naora ideal for elegant headings, invitations, and short paragraphs."
       }
     ],
     "pricing": [
@@ -488,9 +491,7 @@
         "name": "INDG Naora",
         "price": "25€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "oequadrat": {
     "description": "A blackletter typeface inspired by Old English typography, bringing historical character to modern design.",
