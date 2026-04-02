@@ -433,7 +433,7 @@
 
 /* Dark mode */
 html[data-theme="dark"] {
-    --color-primary: #3888FF;
+    --color-primary: #66A3FF;
     --color-text: #e8e8e8;
     --color-text-light: #9d9998;
     --color-background: #161719;
@@ -491,7 +491,8 @@ body {
     z-index: 10004;
     transform: translate(-50%, -50%);
     mix-blend-mode: difference;
-    transition: transform 1s ease;
+    transition: transform 1s ease, opacity 0.15s ease;
+    will-change: left, top;
 }
 
 #custom-cursor::before,
@@ -1463,10 +1464,16 @@ main {
     flex: 1 1 0%;
     min-width: 0;
     width: 0;
-    height: 1px;
-    background: var(--color-stroke);
+    height: 50px;
+    background: transparent;
+    background-image: linear-gradient(var(--color-stroke), var(--color-stroke));
+    background-size: 100% 1px;
+    background-position: center;
+    background-repeat: no-repeat;
     outline: none;
     cursor: none;
+    margin: 0;
+    padding: 0;
 }
 
 .font-size-slider::-webkit-slider-thumb,
@@ -1497,7 +1504,7 @@ main {
 #control-hint-tooltip {
     position: fixed;
     left: var(--layout-content-padding);
-    right: 50%;
+    right: var(--layout-content-padding);
     bottom: 50px;
     z-index: 10001;
     pointer-events: none;
@@ -1514,7 +1521,6 @@ main {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border: 1px solid var(--color-stroke);
-    border-bottom: none;
     border-radius: 0;
     white-space: nowrap;
     opacity: 0;
@@ -1560,6 +1566,13 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.more-btn .more-btn-short { display: none; }
+
+@media (max-width: 768px) {
+    .more-btn .more-btn-full { display: none; }
+    .more-btn .more-btn-short { display: inline; }
 }
 
 /* Whole "much more" control-box is clickable */
@@ -2279,6 +2292,11 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         font-size: 60px !important;
     }
 
+    /* Homepage samples: 70px on mobile (overridden by data-font-size-mobile if set) */
+    .typefaces-container .typeface-sample:not([data-font-size-mobile]) {
+        font-size: 70px !important;
+    }
+
     .typeface-controls-row .control-box:first-child {
         margin-left: 0;
     }
@@ -2326,8 +2344,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .footer {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
         padding-bottom: 0;
     }
 
@@ -2925,6 +2943,11 @@ body.typeface-oequadrat .typeface-title {
 /* On pages with floating buttons, add extra footer padding so content isn't covered */
 body:has(.typeface-hero-buttons-floating) .footer {
     padding-bottom: 130px;
+}
+
+/* Homepage only: add 25px bottom margin to footer (pages without floating buttons) */
+body:not(:has(.typeface-hero-buttons-floating)) .footer {
+    margin-bottom: 25px;
 }
 
 .test-btn, .buy-btn {

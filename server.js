@@ -308,10 +308,12 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
       const left = 50;
       const rightCol = 350;
 
-      // ── Seller header ──
-      doc.fontSize(18).font('Helvetica-Bold');
+      // ── Seller header (use INDG Alvica Semibold, same as website logo) ──
+      const alvicaFont = path.join(__dirname, 'fonts', 'Alvica', 'INDGAlvica-Semibold.ttf');
+      doc.registerFont('Alvica-Semibold', alvicaFont);
+      doc.fontSize(18).font('Alvica-Semibold');
       doc.characterSpacing(-0.45); // -0.025em tracking at 18pt
-      doc.text(SELLER.name, left, 50);
+      doc.text(SELLER.name + '\u00AE', left, 50);
       doc.characterSpacing(0); // reset tracking
       doc.fontSize(8).font('Helvetica').fillColor('#555');
       doc.lineGap(3); // slightly increased line spacing for body text

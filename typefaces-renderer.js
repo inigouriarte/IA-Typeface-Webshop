@@ -121,11 +121,11 @@ function renderTypefaceSection(typeface) {
                     ${typeface.hasLink
                         ? `<a href="${cleanUrl}" class="more-btn" draggable="false">
                         <span class="play-icon">▶</span>
-                        <span>Much more</span>
+                        <span class="more-btn-full">Explore ${typeface.displayName || typeface.name}</span><span class="more-btn-short">Explore</span>
                     </a>`
                         : `<button type="button" class="more-btn" draggable="false">
                         <span class="play-icon">▶</span>
-                        <span>Much more</span>
+                        <span class="more-btn-full">Explore ${typeface.displayName || typeface.name}</span><span class="more-btn-short">Explore</span>
                     </button>`
                     }
                 </div>
