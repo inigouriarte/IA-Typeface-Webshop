@@ -440,15 +440,16 @@ function initCustomCursor() {
     const cursor = document.createElement('div');
     cursor.id = 'custom-cursor';
     document.body.appendChild(cursor);
-    
+
     // State variables
     let mouseX = null;
     let mouseY = null;
     let cursorX = null;
     let cursorY = null;
     let cursorInitialized = false;
+    let cursorVisible = false;
     let currentRotation = 0;
-    
+
     // Mouse movement handler
     document.addEventListener('mousemove', function(e) {
         if (!cursorInitialized) {
@@ -457,36 +458,47 @@ function initCustomCursor() {
             cursorX = mouseX;
             cursorY = mouseY;
             cursorInitialized = true;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
         } else {
             mouseX = e.clientX;
             mouseY = e.clientY;
         }
+        if (!cursorVisible) {
+            cursor.style.opacity = '1';
+            cursorVisible = true;
+        }
     });
-    
+
+    // Hide cursor when mouse leaves the viewport
+    document.addEventListener('mouseleave', function() {
+        cursor.style.opacity = '0';
+        cursorVisible = false;
+    });
+    document.addEventListener('mouseenter', function() {
+        if (cursorInitialized) {
+            cursor.style.opacity = '1';
+            cursorVisible = true;
+        }
+    });
+
     // Click handler - random spin on click
     document.addEventListener('click', function(e) {
         if (!cursorInitialized) return;
-        
+
         const rotationAngles = [90, 180, 270, 360];
         const randomAngle = rotationAngles[Math.floor(Math.random() * rotationAngles.length)];
         currentRotation += randomAngle;
-        
-        cursor.style.transition = 'transform 1s ease';
+
         cursor.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`;
     });
-    
+
     // Preserve cursor position when tab becomes visible again
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden && cursorInitialized) {
-            // When tab becomes visible, keep current cursor position
-            // Don't reset to origin
             cursorX = mouseX;
             cursorY = mouseY;
         }
     });
-    
+
     // Also handle window focus to prevent reset
     window.addEventListener('focus', function() {
         if (cursorInitialized) {
@@ -494,17 +506,19 @@ function initCustomCursor() {
             cursorY = mouseY;
         }
     });
-    
+
     function animateCursor() {
         if (cursorInitialized && mouseX !== null && mouseY !== null) {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
             cursor.style.left = cursorX + 'px';
             cursor.style.top = cursorY + 'px';
         }
         requestAnimationFrame(animateCursor);
     }
-    
+
+    // Start hidden until first mousemove
+    cursor.style.opacity = '0';
     animateCursor();
 }
 

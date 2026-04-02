@@ -432,7 +432,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
                     <div class="control-box"><button class="free-download-btn">Download for free</button></div>
                 </div>`
         : `                <div class="typeface-controls-row typeface-hero-buttons-row">
-                    <div class="control-box"><button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button></div>
+                    <div class="control-box"><button class="test-btn">Download free trial</button></div>
                     <div class="control-box"><button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button></div>
                 </div>`;
     const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details, typefaceId, buttonsRowHTML);
@@ -505,7 +505,7 @@ ${pricingSection}
     <div class="typeface-hero-buttons typeface-hero-buttons-floating">
 ${detailConfig.isFree
     ? `        <button class="free-download-btn">Download for free</button>`
-    : `        <button class="test-btn">Test ${toTitleCaseKeepINDG(config.displayName)}</button>
+    : `        <button class="test-btn">Download free trial</button>
         <button class="buy-btn">Purchase ${toTitleCaseKeepINDG(config.displayName)}</button>`}
     </div>
 
