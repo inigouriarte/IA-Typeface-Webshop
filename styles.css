@@ -798,40 +798,41 @@ input[type="range"]:hover,
     display: none;
 }
 
-/* ASCII portrait in intro section */
+/* ASCII portrait in intro section — large, behind text, overlapping */
 .ascii-portrait {
     position: absolute;
-    left: var(--layout-content-padding);
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: calc(50% - var(--layout-content-padding) - 20px);
-    height: auto;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     font-family: 'DM Mono', monospace;
-    font-size: 6.5px;
-    line-height: 7px;
+    font-size: 10px;
+    line-height: 11px;
     letter-spacing: 0.5px;
     color: var(--color-stroke);
     white-space: pre;
-    overflow: hidden;
     pointer-events: none;
     user-select: none;
-    animation: asciiBreath 8s ease-in-out infinite;
-}
-
-@keyframes asciiBreath {
-    0%, 100% { opacity: 0.45; }
-    50% { opacity: 0.75; }
+    z-index: 0;
 }
 
 @media (max-width: 768px) {
     .ascii-portrait {
-        display: none;
+        width: 100%;
+        font-size: 7px;
+        line-height: 7.5px;
+        letter-spacing: 0.35px;
     }
 }
 
 .intro p {
     position: relative;
     left: 50%;
+    z-index: 1;
     color: var(--color-primary);
     font-family: var(--font-text-family);
     font-size: calc(3 * var(--font-text-size));
