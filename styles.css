@@ -798,6 +798,37 @@ input[type="range"]:hover,
     display: none;
 }
 
+/* ASCII portrait in intro section */
+.ascii-portrait {
+    position: absolute;
+    left: var(--layout-content-padding);
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(50% - var(--layout-content-padding) - 20px);
+    height: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 6.5px;
+    line-height: 7px;
+    letter-spacing: 0.5px;
+    color: var(--color-stroke);
+    white-space: pre;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    animation: asciiBreath 8s ease-in-out infinite;
+}
+
+@keyframes asciiBreath {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 0.75; }
+}
+
+@media (max-width: 768px) {
+    .ascii-portrait {
+        display: none;
+    }
+}
+
 .intro p {
     position: relative;
     left: 50%;
@@ -1346,10 +1377,10 @@ main {
 }
 
 .dropdown-option {
-    height: 50px;
+    height: auto;
     min-height: 50px;
     min-width: 0;
-    line-height: 50px;
+    line-height: 1.25;
     padding: 0 15px;
     box-sizing: border-box;
     font-family: var(--font-button-family);
@@ -1360,9 +1391,8 @@ main {
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--color-stroke);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .dropdown-option:first-child {
@@ -1735,6 +1765,11 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     position: relative;
 }
 
+/* Homepage only: extra bottom padding on footer */
+body:not([class]) .footer {
+    padding-bottom: 70px;
+}
+
 
 .footer-top {
     max-width: var(--layout-max-width);
@@ -1934,7 +1969,8 @@ body.typeface-oequadrat .typeface-column a[href="/oequadrat"]:hover {
     margin-left: 0;
     margin-right: 0;
     margin-top: 50px;
-    margin-bottom: 25px;
+    margin-bottom: 0;
+    padding-bottom: 25px;
     flex-wrap: wrap;
 }
 
@@ -1958,7 +1994,7 @@ body.typeface-oequadrat .typeface-column a[href="/oequadrat"]:hover {
     font-size: var(--font-button-size);
     font-weight: var(--font-button-weight);
     color: var(--color-footer-muted);
-    margin-top: 15px;
+    margin-top: 30px;
     margin-bottom: 0;
     text-align: center;
     padding-left: var(--text-padding);
@@ -2258,7 +2294,7 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         overflow: hidden;
     }
     .more-btn span:not(.play-icon)::after {
-        content: 'More';
+        content: 'Explore';
         font-size: var(--font-button-size);
         font-family: var(--font-button-family);
         font-weight: var(--font-button-weight);
@@ -2318,6 +2354,7 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 
     .typeface-controls-row .control-box:has(.custom-dropdown) {
         display: flex;
+        margin-left: 0;
     }
 
     .typeface-controls-row .slider-container {
@@ -2384,28 +2421,39 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 
     .footer-bottom {
         grid-template-columns: 1fr 1fr;
-        row-gap: 10px;
+        grid-template-rows: auto auto;
+        gap: 0 30px;
         margin-top: 30px;
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
+        align-items: start;
+    }
+
+    .copyright {
+        grid-row: 1 / 3;
+        grid-column: 1;
     }
 
     .footer-email {
-        text-align: right;
+        grid-column: 2;
+        grid-row: 1;
+        text-align: left;
     }
 
     .footer-email p {
-        text-align: right;
+        text-align: left;
     }
 
     .footer-social {
+        grid-column: 2;
+        grid-row: 2;
         justify-content: flex-start;
         text-align: left;
     }
 
     .footer-credits {
         grid-column: 1 / -1;
-        text-align: left;
+        text-align: center;
     }
 
     /* Typeface details: 2×6 table on mobile (2 equal columns, 6 rows: category | content), rows 50px min */
@@ -2618,9 +2666,12 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .footer-top {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
     }
 
     /* Reset desktop order: show in source order (Typefaces, To top) */
@@ -2633,12 +2684,21 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     .footer-legal {
         grid-template-columns: 1fr 1fr;
         gap: 8px 30px;
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
+    }
+
+    .footer-legal .footer-link,
+    .footer-legal .footer-link:nth-child(n) {
+        text-align: left;
     }
 
     .typeface-columns {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 8px 30px;
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
     }
 
     /* Flatten columns into grid items so typefaces flow into 2 equal columns */
@@ -2647,8 +2707,17 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .footer-bottom {
-        grid-template-columns: 1fr;
-        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 30px;
+        padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
+    }
+
+    .footer-social {
+        grid-column: 2;
+        grid-row: 2;
+        justify-content: flex-start;
+        text-align: left;
     }
 
     .footer-email {
@@ -2659,13 +2728,9 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         text-align: left;
     }
 
-    .footer-social {
-        justify-content: flex-start;
-        text-align: left;
-    }
-
     .footer-credits {
-        text-align: left;
+        grid-column: 1 / -1;
+        text-align: center;
         font-family: var(--font-button-family);
         font-size: var(--font-button-size);
         font-weight: var(--font-button-weight);
@@ -2679,6 +2744,54 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     /* Mobile: hamburger menu double outline fix */
     #dropdown-portal .mobile-nav-panel .theme-toggle {
         border-bottom: none;
+    }
+
+    /* Mobile nav panel: full-screen overlay with centered items */
+    #dropdown-portal .mobile-nav-panel {
+        border: none;
+        bottom: 0 !important;
+        height: calc(100vh - var(--header-height)) !important;
+        height: calc(100dvh - var(--header-height)) !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--color-background) !important;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* Prevent scroll behind open menu */
+    .header.nav-open ~ * {
+        overflow: hidden;
+    }
+
+    #dropdown-portal .mobile-nav-panel a,
+    #dropdown-portal .mobile-nav-panel .theme-toggle {
+        justify-content: center;
+        text-align: center;
+        font-size: calc(2 * var(--font-button-size));
+        height: auto;
+        min-height: 0;
+        padding: 15px 0;
+        border: none;
+        border-bottom: 1px solid var(--color-stroke);
+        width: 100%;
+    }
+
+    #dropdown-portal .mobile-nav-panel a:first-child {
+        border-top: 1px solid var(--color-stroke);
+    }
+
+    /* Hamburger X turns red when open */
+    .header.nav-open .header-menu-toggle {
+        color: #FF0000;
+    }
+
+    /* Light/Dark toggle: make entire box clickable */
+    #dropdown-portal .mobile-nav-panel .theme-toggle {
+        width: 100%;
+        cursor: pointer;
     }
 }
 
@@ -2923,6 +3036,11 @@ body.typeface-oequadrat .typeface-title {
     border-bottom: none;
 }
 
+.typeface-hero-buttons-floating.docked {
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* Move top/bottom borders to container to prevent doubling from backdrop-filter */
 .typeface-hero-buttons-floating .test-btn,
 .typeface-hero-buttons-floating .buy-btn {
@@ -2930,7 +3048,12 @@ body.typeface-oequadrat .typeface-title {
     border-bottom: none;
 }
 
-/* Mobile: floating bar fixed to bottom of viewport */
+.typeface-hero-buttons-floating .buy-btn {
+    border-left: 1px solid var(--color-stroke);
+    margin-left: -1px;
+}
+
+/* Mobile: floating bar at very bottom of viewport */
 @media (max-width: 768px) {
     .typeface-hero-buttons-floating {
         bottom: 0;
@@ -2945,9 +3068,9 @@ body:has(.typeface-hero-buttons-floating) .footer {
     padding-bottom: 130px;
 }
 
-/* Homepage only: add 25px bottom margin to footer (pages without floating buttons) */
+/* Homepage only: add 25px bottom padding to footer (pages without floating buttons) */
 body:not(:has(.typeface-hero-buttons-floating)) .footer {
-    margin-bottom: 25px;
+    padding-bottom: 70px;
 }
 
 .test-btn, .buy-btn {
@@ -3180,7 +3303,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     border-left: 1px solid var(--color-stroke);
     border-bottom: 1px solid var(--color-stroke);
     border-right: none;
-    padding: 0 var(--box-text-padding);
+    padding: var(--box-text-padding);
     padding-right: 50px;
     box-sizing: border-box;
     min-height: 50px;
@@ -3217,6 +3340,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     color: var(--color-primary);
     line-height: 1.25;
     text-align: left;
+    word-break: break-word;
     text-transform: lowercase;
 }
 
@@ -3311,13 +3435,19 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     margin-top: 0;
 }
 
+.typeface-pricing .typeface-controls-row {
+    align-items: stretch;
+}
+
 .typeface-pricing .typeface-controls-row .control-box {
     border-bottom: none;
     padding: var(--box-text-padding);
-    padding-top: 14px;
     box-sizing: border-box;
+    height: auto;
     min-height: 50px;
-    align-items: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .typeface-pricing .typeface-controls-row:not(:first-child) .control-box {
@@ -3332,13 +3462,21 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     border-bottom: 1px solid var(--color-stroke);
 }
 
+/* Bottom border on the row before the buttons row */
+.typeface-pricing .typeface-controls-row:has(+ .typeface-hero-buttons-row) .control-box {
+    border-bottom: 1px solid var(--color-stroke);
+}
+
 /* Test/Purchase buttons inside pricing table grid */
 .typeface-pricing .typeface-hero-buttons-row {
     margin-bottom: 80px;
+    margin-top: 0;
 }
 
-.typeface-pricing .typeface-hero-buttons-row .control-box {
+.typeface-pricing .typeface-hero-buttons-row .control-box,
+.typeface-pricing .typeface-controls-row.typeface-hero-buttons-row .control-box {
     padding: 0;
+    border-top: none;
 }
 
 .typeface-pricing .typeface-hero-buttons-row .control-box .test-btn,
@@ -3506,10 +3644,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Hide cursor when modal is open; header, bottom bar, and floating buttons go UNDER the backdrop */
-body:has(.pm-overlay.pm-open) #custom-cursor {
-    display: none !important;
-}
+/* Keep custom cursor visible when modal is open; header, bottom bar, and floating buttons go UNDER the backdrop */
 
 .pm-modal {
     background: var(--color-background);
