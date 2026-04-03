@@ -434,7 +434,7 @@
 /* Dark mode */
 html[data-theme="dark"] {
     --color-primary: #66A3FF;
-    --color-text: #ffffff;
+    --color-text: #FFFFFF;
     --color-text-light: #9d9998;
     --color-background: #161719;
     --color-footer-background: #1E1F21; /* a tad lighter than background */
@@ -442,7 +442,7 @@ html[data-theme="dark"] {
     --color-select-border: #555555;
     --color-stroke: #3d3a38;
     --color-surface: rgba(22, 23, 25, 0.92);
-    --color-on-primary: #ffffff;
+    --color-on-primary: #FFFFFF;
     --color-footer-muted: #5c5957;
 }
 
