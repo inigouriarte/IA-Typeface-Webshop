@@ -605,7 +605,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 panel.remove();
             }
             header.classList.remove('nav-open');
-            document.body.style.overflow = '';
             toggle.setAttribute('aria-label', 'Open menu');
             toggle.setAttribute('aria-expanded', 'false');
         }
@@ -624,7 +623,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             portal.appendChild(panel);
             header.classList.add('nav-open');
-            document.body.style.overflow = 'hidden';
             toggle.setAttribute('aria-label', 'Close menu');
             toggle.setAttribute('aria-expanded', 'true');
         }
