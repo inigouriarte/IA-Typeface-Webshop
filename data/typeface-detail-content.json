@@ -395,34 +395,34 @@
     "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "grey",
         "weight": 400,
         "fontSize": 120,
-        "text": "MODUS GREY",
-        "sampleId": "grey"
+        "text": "MODUS GREY"
       },
       {
+        "sampleId": "grey-alphabet",
         "weight": 400,
         "fontSize": 65,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "grey-alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "black",
         "weight": 900,
         "fontSize": 140,
-        "text": "MODUS BLACK",
-        "sampleId": "black"
+        "text": "MODUS BLACK"
       },
       {
+        "sampleId": "white",
         "weight": 100,
         "fontSize": 100,
-        "text": "MODUS WHITE",
-        "sampleId": "white"
+        "text": "MODUS WHITE"
       },
       {
+        "sampleId": "body",
         "weight": 400,
         "fontSize": 32,
-        "text": "Grey, Black, and White—three variants for experimental and editorial typography.",
-        "sampleId": "body"
+        "text": "Grey, Black, and White—three variants for experimental and editorial typography."
       }
     ],
     "pricing": [

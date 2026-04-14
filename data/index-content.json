@@ -105,12 +105,12 @@
     "sampleText": "MODUS",
     "options": [
       {
-        "value": 400,
-        "label": "Grey"
-      },
-      {
         "value": 900,
         "label": "Black"
+      },
+      {
+        "value": 400,
+        "label": "Grey"
       },
       {
         "value": 100,
