@@ -400,7 +400,7 @@
         "sampleId": "grey",
         "weight": 400,
         "fontSize": 120,
-        "text": "MODUS GREY"
+        "text": "It all began in Weimar"
       },
       {
         "sampleId": "grey-alphabet",
@@ -411,19 +411,19 @@
       {
         "sampleId": "black",
         "weight": 900,
-        "fontSize": 160,
-        "text": "DESIGN"
+        "fontSize": 200,
+        "text": "DESIGN UND..."
       },
       {
         "sampleId": "white",
         "weight": 100,
-        "fontSize": 160,
+        "fontSize": 200,
         "text": "ARCHITEKTUR"
       },
       {
         "sampleId": "body",
         "weight": 400,
-        "fontSize": 40,
+        "fontSize": 60,
         "text": "Gestalt bezeichnet ein geordnetes Ganzes, das mehr ist als die Summe seiner Teile. Es beschreibt die äußere Form, Struktur oder Erscheinung von Personen und Objekten. In der Psychologie (Gestalttherapie) ist es ein subjektives Erlebnis oder Bedürfnis, das als \"Figur\" vor dem Hintergrund des Erlebens hervortritt."
       }
     ],
