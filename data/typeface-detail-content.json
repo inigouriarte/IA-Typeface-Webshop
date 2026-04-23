@@ -291,30 +291,34 @@
         "Latin 1-Supplement"
       ]
     },
+    "heroLetterSpacing": 0,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "display",
         "weight": 700,
         "fontSize": 180,
-        "text": "HERON",
-        "sampleId": "display"
+        "text": "HERON"
       },
       {
+        "sampleId": "alphabet",
         "weight": 700,
         "fontSize": 90,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "regular",
         "weight": 700,
         "fontSize": 120,
-        "text": "Strong character for headlines and branding.",
-        "sampleId": "regular"
+        "text": "Strong character for headlines and branding."
       },
       {
+        "sampleId": "numbers",
         "weight": 700,
         "fontSize": 60,
-        "text": "0123456789",
-        "sampleId": "numbers"
+        "text": "0123456789"
       }
     ],
     "pricing": [
@@ -322,9 +326,7 @@
         "name": "INDG Heron",
         "price": "25€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "luara": {
     "description": "A single-weight typeface with elegant simplicity, designed for refined typographic expression.",
