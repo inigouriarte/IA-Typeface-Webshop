@@ -425,6 +425,12 @@
         "weight": 400,
         "fontSize": 60,
         "text": "Gestalt bezeichnet ein geordnetes Ganzes, das mehr ist als die Summe seiner Teile. Es beschreibt die äußere Form, Struktur oder Erscheinung von Personen und Objekten. In der Psychologie (Gestalttherapie) ist es ein subjektives Erlebnis oder Bedürfnis, das als \"Figur\" vor dem Hintergrund des Erlebens hervortritt."
+      },
+      {
+        "sampleId": "numbers",
+        "weight": 400,
+        "fontSize": 320,
+        "text": "012456789"
       }
     ],
     "pricing": [
