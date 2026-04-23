@@ -405,26 +405,26 @@
       {
         "sampleId": "grey-alphabet",
         "weight": 400,
-        "fontSize": 65,
+        "fontSize": 100,
         "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
         "sampleId": "black",
         "weight": 900,
-        "fontSize": 140,
-        "text": "MODUS BLACK"
+        "fontSize": 160,
+        "text": "DESIGN"
       },
       {
         "sampleId": "white",
         "weight": 100,
-        "fontSize": 100,
-        "text": "MODUS WHITE"
+        "fontSize": 160,
+        "text": "ARCHITEKTUR"
       },
       {
         "sampleId": "body",
         "weight": 400,
-        "fontSize": 32,
-        "text": "Grey, Black, and White—three variants for experimental and editorial typography."
+        "fontSize": 40,
+        "text": "Gestalt bezeichnet ein geordnetes Ganzes, das mehr ist als die Summe seiner Teile. Es beschreibt die äußere Form, Struktur oder Erscheinung von Personen und Objekten. In der Psychologie (Gestalttherapie) ist es ein subjektives Erlebnis oder Bedürfnis, das als \"Figur\" vor dem Hintergrund des Erlebens hervortritt."
       }
     ],
     "pricing": [

@@ -197,11 +197,11 @@
     "name": "INDG Heron",
     "displayName": "INDG Heron",
     "linkUrl": "heron.html",
-    "hasLink": true,
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
-    "isOneStyle": true
+    "isOneStyle": true,
+    "hasLink": true
   },
   {
     "id": "naora",
