@@ -300,24 +300,24 @@
         "sampleId": "display",
         "weight": 700,
         "fontSize": 180,
-        "text": "HERON"
+        "text": "PIECES OF A MAN (1971)"
       },
       {
         "sampleId": "alphabet",
         "weight": 700,
-        "fontSize": 90,
+        "fontSize": 120,
         "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
         "sampleId": "regular",
         "weight": 700,
         "fontSize": 120,
-        "text": "Strong character for headlines and branding."
+        "text": "\"We gotta do something to save the children.\""
       },
       {
         "sampleId": "numbers",
         "weight": 700,
-        "fontSize": 60,
+        "fontSize": 120,
         "text": "0123456789"
       }
     ],
