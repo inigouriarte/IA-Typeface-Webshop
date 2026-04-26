@@ -13,41 +13,42 @@
         "Latin Extended-A"
       ]
     },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "regular",
         "weight": 400,
-        "stretch": "normal",
-        "fontSize": 120,
-        "text": "Actio displays versatility through its expanded and normal variants.",
-        "sampleId": "regular"
+        "fontSize": 160,
+        "text": "The Empire Strikes Back (1980)",
+        "stretch": "expanded"
       },
       {
+        "sampleId": "alphabet",
         "weight": 400,
-        "stretch": "normal",
-        "fontSize": 70,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789",
-        "sampleId": "alphabet"
-      },
-      {
-        "weight": 700,
-        "stretch": "normal",
-        "fontSize": 140,
-        "text": "BOLD EXPRESSION",
-        "sampleId": "bold"
-      },
-      {
-        "weight": 400,
-        "stretch": "expanded",
         "fontSize": 100,
-        "text": "EXPANDED WIDTH",
-        "sampleId": "expanded"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "bold",
+        "weight": 700,
+        "fontSize": 180,
+        "text": "AUTECHRE",
+        "stretch": "expanded"
+      },
+      {
+        "sampleId": "expanded",
+        "weight": 200,
+        "fontSize": 100,
+        "text": "Abuse of power comes as no surprise.",
+        "stretch": "expanded"
+      },
+      {
+        "sampleId": "expanded-body",
         "weight": 400,
-        "stretch": "expanded",
-        "fontSize": 32,
-        "text": "The expanded width variant gives headlines a confident, open presence while the normal width works for running text.",
-        "sampleId": "expanded-body"
+        "fontSize": 40,
+        "text": "Som apotekerlærling i Grimstad fikk Ibsen øynene opp for teateret som karrierevei. I 1850 flyttet han til Christiania, samme år ga han ut sitt første skuespill Catilina og året etter ble han knyttet til Ole Bulls teater i Bergen, der han fikk praktisk erfaring som sceneinstruktør og teaterdikter. I årene som fulgte utga han en rekke skuespill. I 1863 fikk han et reisestipend og året etter reiste han via København og Venezia til Roma. Dette innledet et 27 år langt selvvalgt eksil i Italia og Tyskland, der han skrev sine viktigste verk. Han bodde i Roma, Dresden og i München, men oppholdt seg i perioder også andre steder. Han slo for alvor gjennom som internasjonalt anerkjent dramatiker med skuespillene Brand (1866) og Peer Gynt (1867), og fikk et andre gjennombrudd med Et dukkehjem (1879), som befestet hans posisjon som samtidens ledende dramatiker. Ibsen flyttet tilbake til Christiania i 1891."
       }
     ],
     "pricing": [
@@ -95,9 +96,7 @@
         "name": "INDG Actio Black Expanded",
         "price": "20€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "alvica": {
     "description": "Swiss-knife (you get it?), everyday use, highly versatile, all-in-one typographic family. INDG Alvica counters its sober appearance with a broad set of quirky alternates.",

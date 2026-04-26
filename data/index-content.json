@@ -33,11 +33,11 @@
     "name": "INDG Actio",
     "displayName": "INDG Actio",
     "linkUrl": "actio.html",
+    "hasLink": true,
     "dropdownType": "weight-stretch",
     "fontSize": 120,
     "letterSpacing": 0,
     "isOneStyle": false,
-    "hasLink": true,
     "weights": [
       {
         "weight": 100,
