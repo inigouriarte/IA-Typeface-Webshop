@@ -328,7 +328,7 @@
     ]
   },
   "luara": {
-    "description": "A single-weight typeface with elegant simplicity, designed for refined typographic expression.",
+    "description": "Victorian 80s.",
     "details": {
       "designer": "Iñigo Uriarte",
       "version": "1.0",
@@ -349,26 +349,32 @@
       {
         "sampleId": "regular",
         "weight": 400,
-        "fontSize": 120,
-        "text": "Sphinx of black quartz, judge my vow."
-      },
-      {
-        "sampleId": "alphabet",
-        "weight": 400,
-        "fontSize": 75,
-        "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy & Zz"
+        "fontSize": 140,
+        "text": "Sphinx of black quartz, judge my vow!"
       },
       {
         "sampleId": "phrase",
         "weight": 400,
-        "fontSize": 90,
-        "text": "Elegant simplicity for refined typography."
+        "fontSize": 320,
+        "text": "1234567890"
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 400,
+        "fontSize": 100,
+        "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy & Zz"
       },
       {
         "sampleId": "body",
         "weight": 400,
-        "fontSize": 28,
-        "text": "Luara’s single weight and clear proportions make it suitable for titles, captions, and short runs of text where a calm, refined tone is needed."
+        "fontSize": 80,
+        "text": "Dear Mario:\nPlease come to the castle. I've baked a cake for you.\nYours truly,\nPrincess Toadstool"
+      },
+      {
+        "sampleId": "quill",
+        "weight": 400,
+        "fontSize": 240,
+        "text": "Quintessential"
       }
     ],
     "pricing": [
