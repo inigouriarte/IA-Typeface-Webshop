@@ -2000,6 +2000,9 @@ body.typeface-oequadrat .typeface-column a[href="/oequadrat"]:hover {
     text-align: center;
     padding-left: var(--text-padding);
     padding-right: var(--text-padding);
+    /* Keep a fixed size: stop iOS Safari from auto-inflating this text in landscape */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 .footer-credits-link {
@@ -2133,8 +2136,13 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     border: none;
     background: none;
     cursor: pointer;
-    color: var(--color-text);
+    color: var(--color-text-light);
     -webkit-tap-highlight-color: transparent;
+}
+
+/* Inactive hamburger stays grey even on hover/tap (override the generic button:hover blue) */
+.header-menu-toggle:hover {
+    color: var(--color-text-light);
 }
 
 .header-menu-toggle span {
@@ -2535,7 +2543,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         line-height: 90px;
         letter-spacing: -5px;
         padding-top: 25px;
-        padding-bottom: 25px;
+        /* No bottom padding: keeps the gap above the description equal to the gap below it */
+        padding-bottom: 0;
         text-align: left;
         padding-left: 0;
         padding-right: 0;
@@ -2708,30 +2717,31 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     }
 
     .footer-bottom {
-        grid-template-columns: 1fr 1fr;
-        gap: 0 30px;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 4px 0;
         padding-left: var(--text-padding);
         padding-right: var(--text-padding);
     }
 
-    .footer-social {
-        grid-column: 2;
-        grid-row: 2;
+    /* Mobile: copyright, email and Instagram link stack in one left-justified column */
+    .footer-bottom .copyright,
+    .footer-bottom .footer-email,
+    .footer-bottom .footer-social {
+        grid-column: 1;
+        grid-row: auto;
         justify-content: flex-start;
         text-align: left;
     }
 
-    .footer-email {
-        text-align: left;
-    }
-
+    .copyright p,
     .footer-email p {
         text-align: left;
     }
 
     .footer-credits {
         grid-column: 1 / -1;
-        text-align: center;
+        text-align: left;
         font-family: var(--font-button-family);
         font-size: var(--font-button-size);
         font-weight: var(--font-button-weight);
@@ -2753,9 +2763,9 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         border-right: none;
     }
 
-    /* Hamburger X turns red when open */
+    /* Hamburger X turns blue when open/active */
     .header.nav-open .header-menu-toggle {
-        color: #FF0000;
+        color: var(--color-primary);
     }
 
     /* Light/Dark toggle: make entire box clickable */
@@ -2871,7 +2881,9 @@ html[data-theme="dark"] .footer-bottom .footer-link {
 .typeface-hero {
     padding: 250px var(--layout-content-padding) 0px;
     text-align: center;
-    min-height: 100vh;
+    /* Fit content height: avoids an uneven empty gap below the description that
+       a fixed 100vh hero leaves when the title + description are shorter than the viewport */
+    min-height: auto;
     border-bottom: none;
     box-sizing: border-box;
 }
@@ -2891,7 +2903,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     line-height: 180px;
     text-align: left;
     padding-top: 75px;
-    padding-bottom: 75px;
+    /* No bottom padding: the description's own 100px top padding then equals its bottom padding */
+    padding-bottom: 0;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
@@ -3041,6 +3054,14 @@ body:has(.typeface-hero-buttons-floating) .footer {
 /* Homepage only: add 25px bottom padding to footer (pages without floating buttons) */
 body:not(:has(.typeface-hero-buttons-floating)) .footer {
     padding-bottom: 70px;
+}
+
+/* Mobile: detail pages match the homepage footer bottom padding (the floating
+   buttons sit fixed above this, so 70px clears them just like on the homepage). */
+@media (max-width: 768px) {
+    body:has(.typeface-hero-buttons-floating) .footer {
+        padding-bottom: 70px;
+    }
 }
 
 .test-btn, .buy-btn {

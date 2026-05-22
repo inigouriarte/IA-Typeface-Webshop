@@ -17,6 +17,7 @@ const DATA_DIR = path.join(ROOT, 'data');
 const INDEX_JSON = path.join(DATA_DIR, 'index-content.json');
 const DETAIL_JSON = path.join(DATA_DIR, 'typeface-detail-content.json');
 const PAGES_JSON = path.join(DATA_DIR, 'page-content.json');
+const STYLES_JSON = path.join(DATA_DIR, 'styles.json');
 
 function loadJson(filePath) {
     if (!fs.existsSync(filePath)) {
@@ -118,7 +119,12 @@ function buildStaticPages() {
         const contentKey = contentMap[page];
         if (contentKey && pageContent[contentKey]) {
             const section = pageContent[contentKey];
-            const paraKeys = Object.keys(section).filter(k => k.startsWith('paragraph')).sort();
+            // Only the numbered string paragraphs (paragraph1, paragraph2, ...). The admin also
+            // stores a "paragraphs" array of objects for round-tripping; including it here would
+            // stringify the objects into "[object Object],[object Object],..." in the output.
+            const paraKeys = Object.keys(section)
+                .filter(k => /^paragraph\d+$/.test(k))
+                .sort((a, b) => parseInt(a.replace(/\D/g, ''), 10) - parseInt(b.replace(/\D/g, ''), 10));
             const paras = paraKeys.map(k => section[k]).filter(Boolean).map(p => `                <p>${p}</p>`).join('\n');
             if (paras) {
                 html = html.replace(aboutTextRegex, `<div class="about-text" contenteditable="true" spellcheck="false">\n${paras}\n            </div>`);
@@ -130,10 +136,66 @@ function buildStaticPages() {
     }
 }
 
+// Build a CSS string of variable overrides from data/styles.json (admin "Styles" editor).
+// Only colour values are applied (the explicit purpose of the colour editor); each is
+// validated as a #RRGGBB hex so a malformed value can never break the page.
+function buildThemeOverrideCss() {
+    if (!fs.existsSync(STYLES_JSON)) return '';
+    let styles;
+    try { styles = JSON.parse(fs.readFileSync(STYLES_JSON, 'utf8')); } catch (e) { return ''; }
+    if (!styles || typeof styles !== 'object' || Array.isArray(styles)) return '';
+
+    const isHex = v => typeof v === 'string' && /^#[0-9a-fA-F]{6}$/.test(v.trim());
+    const lightMap = {
+        colorPrimary: '--color-primary',
+        colorText: '--color-text',
+        colorBackground: '--color-background',
+        colorStroke: '--color-stroke',
+        colorFooter: '--color-footer-background',
+    };
+    const darkMap = {
+        darkPrimary: '--color-primary',
+        darkText: '--color-text',
+        darkBackground: '--color-background',
+        darkStroke: '--color-stroke',
+    };
+    const decls = map => Object.entries(map)
+        .filter(([key]) => isHex(styles[key]))
+        .map(([key, cssVar]) => `${cssVar}: ${styles[key].trim()};`)
+        .join('');
+
+    const light = decls(lightMap);
+    const dark = decls(darkMap);
+    let css = '';
+    if (light) css += `:root{${light}}`;
+    if (dark) css += `html[data-theme="dark"]{${dark}}`;
+    return css;
+}
+
+// Inject (or refresh/clear) the theme override <style> in every built HTML page so the
+// colours saved from the admin "Styles" editor actually take effect on the deployed site.
+function applyThemeOverrides() {
+    const css = buildThemeOverrideCss();
+    const existingRe = /\n?\s*<style id="theme-overrides">[\s\S]*?<\/style>/;
+    const block = css ? `\n    <style id="theme-overrides">${css}</style>` : '';
+
+    const htmlFiles = fs.readdirSync(ROOT).filter(f => f.endsWith('.html') && f !== 'admin.html');
+    let count = 0;
+    for (const file of htmlFiles) {
+        const p = path.join(ROOT, file);
+        let html = fs.readFileSync(p, 'utf8');
+        if (!/<\/head>/.test(html)) continue;
+        const next = html.replace(existingRe, '').replace('</head>', `${block}\n</head>`);
+        if (next !== html) { fs.writeFileSync(p, next, 'utf8'); count++; }
+    }
+    console.log(css ? `Applied theme overrides to ${count} page(s)` : `Cleared theme overrides (no styles.json colours)`);
+}
+
 function main() {
     buildIndex();
     buildDetailPages();
     buildStaticPages();
+    applyThemeOverrides();
     console.log('Build complete.');
 }
 

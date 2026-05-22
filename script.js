@@ -1354,3 +1354,54 @@ if (document.readyState === 'loading') {
     window.addEventListener('resize', applyMobileFontSizes);
 })();
 
+// Preload every font variant the page offers so switching styles within a family is
+// instant. Without this, non-default weights/widths are fetched on first selection and
+// the browser briefly shows a fallback font (the FOUT seen on desktop but not mobile).
+(function () {
+    function warmFontVariants() {
+        if (!('fonts' in document)) return;
+        var sections = document.querySelectorAll('.typeface-section');
+        if (!sections.length) return;
+        var holder = document.createElement('div');
+        holder.setAttribute('aria-hidden', 'true');
+        holder.style.cssText = 'position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none;';
+        var seen = {};
+        sections.forEach(function (section) {
+            var sample = section.querySelector('.typeface-sample');
+            if (!sample) return;
+            var family = getComputedStyle(sample).fontFamily;
+            section.querySelectorAll('.dropdown-option').forEach(function (opt) {
+                if (opt.hasAttribute('data-feature')) return; // OpenType feature toggles, not font variants
+                var weight = opt.getAttribute('data-weight') || opt.getAttribute('data-value') || '400';
+                var stretch = opt.getAttribute('data-stretch') || 'normal';
+                var style = opt.getAttribute('data-style') || 'normal';
+                var key = family + '|' + weight + '|' + stretch + '|' + style;
+                if (seen[key]) return;
+                seen[key] = true;
+                var span = document.createElement('span');
+                span.textContent = 'AaBbGg0123';
+                span.style.fontFamily = family;
+                span.style.fontWeight = weight;
+                span.style.fontStretch = stretch;
+                span.style.fontStyle = style;
+                span.style.fontSize = '40px';
+                holder.appendChild(span);
+            });
+        });
+        if (!holder.childNodes.length) return;
+        document.body.appendChild(holder);
+        // Offscreen rendering forces each variant to download; clean up once fonts settle.
+        var cleanup = function () { setTimeout(function () { if (holder.parentNode) holder.parentNode.removeChild(holder); }, 200); };
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(cleanup);
+        } else {
+            setTimeout(cleanup, 3000);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', warmFontVariants);
+    } else {
+        warmFontVariants();
+    }
+})();
+

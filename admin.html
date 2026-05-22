@@ -1044,6 +1044,8 @@
           <div class="field"><label>Sample ID</label><input class="input input-sm" data-sf="sampleId" value="${esc(s.sampleId||'')}"></div>
           <div class="field"><label>Weight</label><input type="number" class="input input-sm" data-sf="weight" value="${s.weight ?? 400}"></div>
           <div class="field"><label>Font Size</label><input type="number" class="input input-sm" data-sf="fontSize" value="${s.fontSize ?? 120}"></div>
+          <div class="field"><label>Font Size (mobile)</label><input type="number" class="input input-sm" data-sf="fontSizeMobile" value="${s.fontSizeMobile ?? ''}" placeholder="auto"></div>
+          <div class="field"><label>Letter Spacing (em)</label><input type="number" step="0.005" class="input input-sm" data-sf="letterSpacing" value="${s.letterSpacing ?? ''}" placeholder="0"></div>
           <div class="field field-full"><label>Text</label><textarea class="input input-sm" data-sf="text" rows="2">${escT(s.text||'')}</textarea></div>
           <div class="field"><label>Stretch</label><input class="input input-sm" data-sf="stretch" value="${esc(s.stretch||'')}" placeholder="normal"></div>
           <div class="field"><label>Style</label><input class="input input-sm" data-sf="style" value="${esc(s.style||'')}" placeholder="normal"></div>
@@ -1102,6 +1104,8 @@
         const obj = { sampleId: g('sampleId'), weight: Number(g('weight')) || 400, fontSize: Number(g('fontSize')) || 120, text: g('text') };
         const stretch = g('stretch'); if (stretch && stretch !== 'normal') obj.stretch = stretch;
         const style = g('style'); if (style && style !== 'normal') obj.style = style;
+        const fontSizeMobile = Number(g('fontSizeMobile')); if (fontSizeMobile > 0) obj.fontSizeMobile = fontSizeMobile;
+        const letterSpacing = g('letterSpacing'); if (letterSpacing !== '' && !isNaN(Number(letterSpacing)) && Number(letterSpacing) !== 0) obj.letterSpacing = Number(letterSpacing);
         return obj;
       });
     }

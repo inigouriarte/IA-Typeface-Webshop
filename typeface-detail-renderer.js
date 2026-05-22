@@ -220,7 +220,8 @@ function renderSampleSection(config, detailConfig, sample, sampleIndex) {
     }
 
     // Build style attribute
-    let styleAttr = `font-size: ${sample.fontSize}px; letter-spacing: 0em;`;
+    const letterSpacing = (sample.letterSpacing != null && sample.letterSpacing !== '') ? sample.letterSpacing : 0;
+    let styleAttr = `font-size: ${sample.fontSize}px; letter-spacing: ${letterSpacing}em;`;
     if (sample.weight) styleAttr += ` font-weight: ${sample.weight};`;
     if (sample.stretch) styleAttr += ` font-stretch: ${sample.stretch};`;
     if (sample.style) styleAttr += ` font-style: ${sample.style};`;
@@ -241,7 +242,7 @@ ${dropdownHtml}
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
-                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="${targetId}">
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="${letterSpacing}" data-target="${targetId}">
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
