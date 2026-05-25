@@ -37,6 +37,16 @@ const CONTENT_MAP = {
       return data && typeof data === 'object' && !Array.isArray(data) ? data : {};
     },
   },
+  styles: {
+    file: 'styles.json',
+    commitMsg: 'Update styles via admin panel',
+    validate(data) {
+      return data && typeof data === 'object' && !Array.isArray(data) ? data : null;
+    },
+    sanitize(data) {
+      return data && typeof data === 'object' && !Array.isArray(data) ? data : {};
+    },
+  },
 };
 
 module.exports = async function (req, res) {
