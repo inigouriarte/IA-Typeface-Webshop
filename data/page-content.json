@@ -82,7 +82,7 @@
     ]
   },
   "privacyPolicy": {
-    "paragraph1": "Data controller. The data controller responsible for data processing on this website is Iñigo Uriarte, Indigo Alphabets, Markgrafendamm 28, 10245 Berlin, Germany. Contact: hi@indigoindigo.org.",
+    "paragraph1": "Data controller. The data controller responsible for data processing on this website is Iñigo Uriarte, Indigo Alphabets, Am Comeniusplatz 3, 10243 Berlin, Germany. Contact: hi@indigoindigo.org.",
     "paragraph2": "Data we collect. When you make a purchase, we collect your name, email address, and billing information. Payment is processed by Stripe (Stripe, Inc.), which handles your payment card details directly — we do not store your card information. When you visit our website, your browser automatically transmits certain technical data (IP address, browser type, access time) which our hosting provider Vercel processes for the purpose of delivering the website.",
     "paragraph3": "Legal basis. We process your data on the following legal bases under Art. 6 GDPR: (a) performance of a contract (Art. 6(1)(b)) — to process your purchase and deliver font files; (b) legitimate interests (Art. 6(1)(f)) — to operate and secure our website; (c) legal obligation (Art. 6(1)(c)) — to comply with tax and accounting requirements.",
     "paragraph4": "Third-party services. We use the following services: Stripe (payment processing, USA — EU Standard Contractual Clauses apply), Vercel (hosting, USA — EU Standard Contractual Clauses apply), and Google Fonts (typography, loaded from Google servers — your IP address is transmitted to Google). We do not use analytics or tracking tools.",
@@ -92,7 +92,7 @@
     "paragraphs": [
       {
         "name": "Paragraph 1",
-        "text": "Data controller. The data controller responsible for data processing on this website is Iñigo Uriarte, Indigo Alphabets, Markgrafendamm 28, 10245 Berlin, Germany. Contact: hi@indigoindigo.org.",
+        "text": "Data controller. The data controller responsible for data processing on this website is Iñigo Uriarte, Indigo Alphabets, Am Comeniusplatz 3, 10243 Berlin, Germany. Contact: hi@indigoindigo.org.",
         "style": ""
       },
       {
