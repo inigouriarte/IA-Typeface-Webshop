@@ -5,6 +5,32 @@
 })();
 
 /**
+ * Cap a sample's height at a whole number of lines within SAMPLE_MAX_HEIGHT,
+ * instead of clipping mid-line. With line-height:1, each line's box is exactly
+ * one font-size tall, so max-height is snapped down to the nearest multiple of
+ * the current font-size — clipping (if the text is long enough to need it)
+ * always lands flush on a line boundary rather than mid-line, which otherwise
+ * leaves a stray gap of empty leading space before the hard cut.
+ * @param {Element} sample - the .typeface-sample element
+ * @param {number} [fontSizePx] - exact target font-size in px. Pass this when
+ *   called from a slider handler: .typeface-sample has `transition: all`, so
+ *   reading getComputedStyle() right after setting fontSize returns a stale,
+ *   still-animating value rather than the target. Omit only at page load,
+ *   when nothing is mid-transition and the computed value is already correct.
+ */
+var SAMPLE_MAX_HEIGHT = 750;
+function updateSampleClipHeight(sample, fontSizePx) {
+    if (!sample) return;
+    var fontSize = typeof fontSizePx === 'number' ? fontSizePx : (parseFloat(getComputedStyle(sample).fontSize) || 0);
+    if (fontSize <= 0) return;
+    var lines = Math.max(1, Math.floor(SAMPLE_MAX_HEIGHT / fontSize));
+    sample.style.maxHeight = (lines * fontSize) + 'px';
+}
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.typeface-sample').forEach(function (s) { updateSampleClipHeight(s); });
+});
+
+/**
  * Initialize slider functionality
  * @param {string} selector - CSS selector for sliders
  * @param {string} styleProperty - CSS style property to update (e.g., 'fontSize', 'letterSpacing')
@@ -33,6 +59,7 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
             const sample = findSample();
             if (sample) {
                 sample.style[styleProperty] = this.value + u;
+                if (styleProperty === 'fontSize') updateSampleClipHeight(sample, parseFloat(this.value));
             }
         });
         
@@ -55,6 +82,7 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
                 if (sample) {
                     this.value = defaultValue;
                     sample.style[styleProperty] = defaultValue + u;
+                    if (styleProperty === 'fontSize') updateSampleClipHeight(sample, parseFloat(defaultValue));
                 }
             }
             mouseDownTime = 0;
