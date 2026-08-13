@@ -3630,7 +3630,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     justify-content: center;
     align-items: center;
     padding: var(--layout-content-padding);
-    cursor: auto;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
@@ -3644,7 +3643,8 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Keep custom cursor visible when modal is open; header, bottom bar, and floating buttons go UNDER the backdrop */
+/* Keep custom cursor visible when modal is open (matches rest of the site); header,
+   bottom bar, and floating buttons go UNDER the backdrop */
 
 .pm-modal {
     background: var(--color-background);
@@ -3656,10 +3656,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    cursor: auto;
-}
-.pm-modal * {
-    cursor: auto;
 }
 .pm-modal .pm-option,
 .pm-modal button {
