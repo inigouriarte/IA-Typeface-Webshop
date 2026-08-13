@@ -439,7 +439,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
     const pricingSection = renderPricingSection(detailConfig.pricing, detailConfig.details, typefaceId, buttonsRowHTML);
 
     // OpenType.js needed on all detail pages so dropdown can show/detect features
-    const openTypeScript = `    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js" defer></script>
+    const openTypeScript = `    <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js" defer></script>
     `;
 
     return `<!DOCTYPE html>
