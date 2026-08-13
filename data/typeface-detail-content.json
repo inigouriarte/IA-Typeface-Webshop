@@ -142,7 +142,8 @@
         "sampleId": "semibold",
         "weight": 600,
         "fontSize": 120,
-        "text": "Sphinx of black quartz, judge my vow."
+        "text": "Sphinx of black quartz, judge my vow.",
+        "letterSpacing": -0.025
       },
       {
         "sampleId": "regular",
@@ -154,7 +155,8 @@
         "sampleId": "bold",
         "weight": 700,
         "fontSize": 240,
-        "text": "\"IRREVERSIBLE\""
+        "text": "\"IRREVERSIBLE\"",
+        "letterSpacing": -0.06
       },
       {
         "sampleId": "text-german",
