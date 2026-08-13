@@ -303,6 +303,20 @@
             container.innerHTML = '';
             embeddedCheckout.mount('#pm-stripe-embed');
 
+            // The embedded checkout is a cross-origin Stripe iframe: the page never
+            // receives mousemove while the pointer is over it, so our custom cursor
+            // (driven by document mousemove) freezes there instead of hiding, and the
+            // OS cursor shows through underneath. Hide ours on entry, restore on exit.
+            var customCursor = document.getElementById('custom-cursor');
+            if (customCursor) {
+                container.addEventListener('mouseenter', function () {
+                    customCursor.style.opacity = '0';
+                });
+                container.addEventListener('mouseleave', function () {
+                    customCursor.style.opacity = '1';
+                });
+            }
+
         } catch (err) {
             container.innerHTML = '<p class="pm-error">Could not load payment form. Please try again.</p>';
         }
