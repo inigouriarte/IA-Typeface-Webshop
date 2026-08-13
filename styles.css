@@ -1675,13 +1675,14 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     outline: none;
     height: auto;
     min-height: 0;
+    max-height: 2000px;
+    overflow: hidden;
     padding-left: 10px;
     padding-right: 10px;
     text-rendering: optimizeLegibility;
     font-kerning: normal;
     font-variant-ligatures: normal;
     flex: 0 1 auto;
-    overflow: visible;
 }
 
 .typeface-sample:hover {
