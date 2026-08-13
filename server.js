@@ -580,17 +580,6 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     return src;
   }
 
-  // ── Publish (rebuild site pages) ──
-  app.post('/api/admin/publish', requireAdmin, async (req, res) => {
-    try {
-      execSync('npm run build', { cwd: __dirname, timeout: 30000, stdio: 'pipe' });
-      res.json({ ok: true, message: 'Site pages regenerated.' });
-    } catch (e) {
-      const stderr = e.stderr ? e.stderr.toString().slice(-500) : e.message;
-      res.status(500).json({ error: 'Build failed: ' + stderr });
-    }
-  });
-
   app.post('/api/admin/fonts', requireAdmin, upload.array('files', 50), async (req, res) => {
     try {
       const { fontId, name, dirName, description, designer, version } = req.body;

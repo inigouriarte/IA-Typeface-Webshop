@@ -450,7 +450,6 @@
               <h1 id="editor-title">Edit Font</h1>
               <div class="main-header-actions">
                 <span class="autosave-status status-idle" id="autosave-status">Draft</span>
-                <button class="btn" id="editor-publish" title="Rebuild site pages">Publish</button>
                 <button class="btn btn-dark" id="editor-save">Save</button>
               </div>
             </div>
@@ -784,23 +783,15 @@
               <div class="editor-section-header">Styles</div>
               <div class="editor-section-body" style="line-height:1.7">
                 <p>Control the visual tokens used across the website: colours (light and dark mode), typography (font families and sizes) and layout (margins, box dimensions).</p>
-                <p style="margin-top:0.75rem">Colour pickers sync with hex inputs. Changes are applied after saving and publishing.</p>
+                <p style="margin-top:0.75rem">Colour pickers sync with hex inputs. Changes are applied after saving.</p>
               </div>
             </div>
 
             <div class="editor-section">
-              <div class="editor-section-header">Publishing &amp; Vercel</div>
+              <div class="editor-section-header">Deploying changes</div>
               <div class="editor-section-body" style="line-height:1.7">
-                <p>After saving content, click <strong>Publish</strong> (in the font editor header) to regenerate all static HTML pages from the current data.</p>
-                <p style="margin-top:0.75rem"><strong>How it works:</strong></p>
-                <ol style="margin-top:0.5rem; padding-left:1.25rem">
-                  <li>You edit content &amp; styles in this admin panel and click Save.</li>
-                  <li>Data is written to JSON files and committed to the Git repository.</li>
-                  <li>Click Publish to run the build script, which regenerates HTML from JSON.</li>
-                  <li>Vercel detects the new commit and automatically deploys the updated site.</li>
-                </ol>
-                <p style="margin-top:0.75rem"><strong>Deployment typically takes 30&ndash;60 seconds.</strong> You can check the Vercel dashboard for build status. If a build fails, your previous version stays live.</p>
-                <p style="margin-top:0.75rem"><strong>Tip:</strong> Always preview your changes on the site before publishing. Use <code>npm run dev</code> locally or check the Vercel preview URL.</p>
+                <p>Saving here writes your content to the data store, but the live site is static HTML generated from that data at build time \u2014 saving alone does not update indigoindigo.org.</p>
+                <p style="margin-top:0.75rem"><strong>To publish a change:</strong> the site's build script needs to run and the result needs to be pushed to the <code>main</code> branch. Vercel then deploys automatically, typically within 30\u201360 seconds.</p>
               </div>
             </div>
 
@@ -1418,7 +1409,7 @@
         <div class="editor-actions">
           <button type="button" class="btn btn-dark" id="editor-save-btn">Save</button>
           <button type="button" class="btn btn-destructive" id="editor-delete-btn">Delete font</button>
-          <span class="toolbar-hint"><code>⌘S</code> to save · Use <strong>Publish</strong> to regenerate pages</span>
+          <span class="toolbar-hint"><code>⌘S</code> to save</span>
         </div>
       `;
 
@@ -1609,15 +1600,6 @@
     }
     document.getElementById('editor-back').addEventListener('click', closeEditor);
     document.getElementById('editor-save').addEventListener('click', saveEditor);
-    document.getElementById('editor-publish').addEventListener('click', async () => {
-      toast('Publishing\u2026');
-      try {
-        const r = await fetch('/api/admin/publish', { method: 'POST' });
-        const d = await r.json();
-        if (!r.ok) throw new Error(d.error || 'Build failed');
-        toast('Published! Pages regenerated.');
-      } catch(e) { toast(e.message, 'error'); }
-    });
 
     /* Load fonts */
     async function loadFonts() {
