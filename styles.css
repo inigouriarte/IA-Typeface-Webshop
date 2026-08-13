@@ -3058,11 +3058,12 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     padding-bottom: 70px;
 }
 
-/* Mobile: detail pages match the homepage footer bottom padding (the floating
-   buttons sit fixed above this, so 70px clears them just like on the homepage). */
+/* Mobile: the bottom-bar is hidden entirely (display:none) and the floating
+   buttons bar is docked (opacity:0) by the time the footer is in view, so
+   nothing needs clearing here — just match the gap above the credits line. */
 @media (max-width: 768px) {
     body:has(.typeface-hero-buttons-floating) .footer {
-        padding-bottom: 70px;
+        padding-bottom: 30px;
     }
 }
 
