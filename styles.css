@@ -488,7 +488,7 @@ body {
     width: 50px;
     height: 50px;
     pointer-events: none;
-    z-index: 10004;
+    z-index: 10020;
     transform: translate(-50%, -50%);
     mix-blend-mode: difference;
     transition: transform 1s ease, opacity 0.15s ease;
@@ -1287,7 +1287,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, header+bottom-bar=10002, body lines=10003, cursor=10004, dropdown portal=10010 */
+/* Z-index scale: main=0, header+bottom-bar=10002, body lines=10003, dropdown portal=10010, cursor=10020 (always on top) */
 #dropdown-portal {
     position: fixed;
     left: 0;
