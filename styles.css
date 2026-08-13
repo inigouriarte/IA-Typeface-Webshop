@@ -3046,9 +3046,11 @@ body.typeface-oequadrat .typeface-title {
     }
 }
 
-/* On pages with floating buttons, add extra footer padding so content isn't covered */
+/* On pages with floating buttons, add extra footer padding so content isn't covered.
+   130px was oversized; the fixed bottom-bar is ~50px tall, so 81px leaves a ~30px
+   gap below the credits line, matching the gap above it (footer-legal → credits). */
 body:has(.typeface-hero-buttons-floating) .footer {
-    padding-bottom: 130px;
+    padding-bottom: 81px;
 }
 
 /* Homepage only: add 25px bottom padding to footer (pages without floating buttons) */
