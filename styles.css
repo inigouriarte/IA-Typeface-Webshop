@@ -1675,7 +1675,7 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     outline: none;
     height: auto;
     min-height: 0;
-    max-height: 750px; /* JS snaps this to a whole-line multiple per font size, see updateSampleClipHeight() */
+    max-height: 750px; /* Hard clip — partial line intentionally shows cut mid-glyph */
     overflow: hidden;
     padding-left: 10px;
     padding-right: 10px;
