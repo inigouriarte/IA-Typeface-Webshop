@@ -3275,6 +3275,15 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     align-items: stretch;
 }
 
+/* Column 3 sits at the 50% grid line, same spot as the pricing/buttons divider below.
+   That divider is rendered 1px further left (border + margin-left: -1px), so nudge
+   this one to match instead of sitting 1px off. Desktop 4-column grid only. */
+@media (min-width: 769px) {
+    .typeface-details-content .details-column:nth-child(3) .detail-item {
+        margin-left: -1px;
+    }
+}
+
 .details-column .detail-item:first-child {
     border-top: 1px solid var(--color-stroke);
 }
