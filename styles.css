@@ -3657,10 +3657,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     flex-direction: column;
     overflow: hidden;
 }
-.pm-modal .pm-option,
-.pm-modal button {
-    cursor: pointer;
-}
 
 /* Header */
 .pm-header {
@@ -3686,7 +3682,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     background: none;
     border: none;
     color: var(--color-text-light);
-    cursor: pointer;
     padding: 0 4px;
     line-height: 1;
 }
@@ -3770,7 +3765,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     border-bottom: none;
     border-left: none;
     border-right: none;
-    cursor: pointer;
     font-family: var(--font-table-family);
     font-size: var(--font-table-size);
     font-weight: 400;
@@ -3893,7 +3887,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     background: none;
     border: none;
     color: var(--color-text);
-    cursor: pointer;
     padding: 4px 0;
 }
 .pm-back:hover,
@@ -3904,7 +3897,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 .pm-next:disabled {
     color: var(--color-text-light);
     opacity: 0.4;
-    cursor: default;
 }
 
 /* Step 3: Checkout container */
