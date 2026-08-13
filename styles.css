@@ -945,7 +945,10 @@ main {
     display: flex;
     align-items: center;
     gap: 0;
-    margin-bottom: 25px;
+    /* No margin-bottom: .typeface-sample already has margin-top: 25px below.
+       Since this row is position:sticky, its margin doesn't collapse with the
+       sample's, so having both here would double the gap above the sample
+       versus below it. */
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     width: 100vw;
