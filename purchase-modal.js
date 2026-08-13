@@ -306,15 +306,28 @@
             // The embedded checkout is a cross-origin Stripe iframe: the page never
             // receives mousemove while the pointer is over it, so our custom cursor
             // (driven by document mousemove) freezes there instead of hiding, and the
-            // OS cursor shows through underneath. Hide ours on entry, restore on exit.
+            // OS cursor shows through underneath. There is no fully reliable single
+            // event for "pointer entered a cross-origin iframe" in any browser, so we
+            // combine two signals: (1) the document-level mouseout Chrome fires with
+            // no relatedTarget the moment the pointer leaves the page into the iframe,
+            // and (2) window blur while the iframe holds focus, which reliably catches
+            // it once the person actually clicks into a payment field. Resuming
+            // mousemove or window focus restores it.
             var customCursor = document.getElementById('custom-cursor');
             if (customCursor) {
-                container.addEventListener('mouseenter', function () {
-                    customCursor.style.opacity = '0';
+                var hideCursor = function () { customCursor.style.opacity = '0'; };
+                var showCursor = function () { customCursor.style.opacity = '1'; };
+                document.addEventListener('mouseout', function (e) {
+                    if (!e.relatedTarget && e.target && container.contains(e.target)) hideCursor();
                 });
-                container.addEventListener('mouseleave', function () {
-                    customCursor.style.opacity = '1';
+                window.addEventListener('blur', function () {
+                    setTimeout(function () {
+                        var iframe = container.querySelector('iframe');
+                        if (iframe && document.activeElement === iframe) hideCursor();
+                    }, 0);
                 });
+                window.addEventListener('focus', showCursor);
+                document.addEventListener('mousemove', showCursor);
             }
 
         } catch (err) {
