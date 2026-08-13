@@ -2903,8 +2903,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     line-height: 180px;
     text-align: left;
     padding-top: 75px;
-    /* No bottom padding: the description's own 100px top padding then equals its bottom padding */
-    padding-bottom: 0;
+    /* Bottom padding clears descenders (p, g, y, j, q) so they don't cross the divider line below */
+    padding-bottom: 24px;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
