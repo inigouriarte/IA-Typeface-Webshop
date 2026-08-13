@@ -1287,7 +1287,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, dropdown portal=1000, header+bottom-bar=10002, body lines=10003, cursor=10004 */
+/* Z-index scale: main=0, header+bottom-bar=10002, body lines=10003, cursor=10004, dropdown portal=10010 */
 #dropdown-portal {
     position: fixed;
     left: 0;
@@ -1295,7 +1295,7 @@ main {
     width: 0;
     height: 0;
     overflow: visible;
-    z-index: 1000;
+    z-index: 10010;
     pointer-events: none;
 }
 #dropdown-portal > * {
