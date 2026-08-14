@@ -29,10 +29,11 @@ window.addEventListener('resize', function () {
     clearTimeout(window.__clipResizeTimer);
     window.__clipResizeTimer = setTimeout(updateAllSampleClipStates, 150);
 });
-// Belt-and-braces: letter-spacing, all-caps, and OpenType feature toggles can
-// all reflow a sample's height too, and enumerating every trigger is fragile
-// (already missed several). A cheap periodic check catches all of them.
-setInterval(updateAllSampleClipStates, 250);
+// Web fonts often swap in after first paint (FOUT), changing line metrics —
+// re-check once whatever fonts are loading finish.
+if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(updateAllSampleClipStates);
+}
 
 /**
  * Initialize slider functionality
@@ -63,7 +64,7 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
             const sample = findSample();
             if (sample) {
                 sample.style[styleProperty] = this.value + u;
-                if (styleProperty === 'fontSize') updateSampleClipState(sample);
+                updateSampleClipState(sample);
             }
         });
         
@@ -86,7 +87,7 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
                 if (sample) {
                     this.value = defaultValue;
                     sample.style[styleProperty] = defaultValue + u;
-                    if (styleProperty === 'fontSize') updateSampleClipState(sample);
+                    updateSampleClipState(sample);
                 }
             }
             mouseDownTime = 0;
@@ -433,6 +434,8 @@ document.addEventListener('click', function(e) {
     section.classList.toggle('capitalize-active');
     btn.classList.toggle('active');
     btn.textContent = btn.classList.contains('active') ? 'AA' : 'Aa';
+    var sample = section.querySelector('.typeface-sample');
+    if (sample) updateSampleClipState(sample);
 });
 
 // Bottom bar functionality: cursor coordinates, date, and time
@@ -1163,6 +1166,7 @@ function toggleOpenTypeFeature(sample, feature, enabled) {
             updateOpenTypeSelectedText(dropdown, sample);
         }
     }
+    updateSampleClipState(sample);
 }
 
 /**
