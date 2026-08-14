@@ -20,9 +20,19 @@ function updateAllSampleClipStates() {
     document.querySelectorAll('.typeface-sample').forEach(updateSampleClipState);
 }
 document.addEventListener('DOMContentLoaded', updateAllSampleClipStates);
+// Debounced via rAF: reading scrollHeight forces a synchronous layout, so
+// checking on every single keystroke was noticeably laggy in a large
+// contenteditable box. Batching to once per animation frame keeps it feeling
+// instant while typing without doing that work on every keystroke.
+var clipCheckRAF = null;
 document.addEventListener('input', function (e) {
     if (e.target.classList && e.target.classList.contains('typeface-sample')) {
-        updateSampleClipState(e.target);
+        var sample = e.target;
+        if (clipCheckRAF) cancelAnimationFrame(clipCheckRAF);
+        clipCheckRAF = requestAnimationFrame(function () {
+            updateSampleClipState(sample);
+            clipCheckRAF = null;
+        });
     }
 });
 window.addEventListener('resize', function () {

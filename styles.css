@@ -1671,7 +1671,11 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     margin-bottom: 25px;
     margin-left: var(--layout-content-padding);
     margin-right: var(--layout-content-padding);
-    transition: all 0.3s ease, color 0.2s ease;
+    /* Only font-size/letter-spacing animate smoothly on slider drag.
+       margin-bottom is intentionally excluded: it's toggled instantly by
+       .is-clipped (see script.js updateSampleClipState) and animating it
+       left a stale gap visible for 300ms after the clip state changed. */
+    transition: font-size 0.3s ease, letter-spacing 0.3s ease, font-weight 0.3s ease, color 0.2s ease;
     outline: none;
     height: auto;
     min-height: 0;
