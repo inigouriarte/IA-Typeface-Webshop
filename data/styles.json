@@ -1,0 +1,19 @@
+{
+  "colorPrimary": "#0000FF",
+  "colorText": "#000000",
+  "colorBackground": "#F8F8F8",
+  "colorStroke": "#D1C9C5",
+  "colorFooter": "#EBEBEB",
+  "darkPrimary": "#3888FF",
+  "darkText": "#FFFFFF",
+  "darkBackground": "#131416",
+  "darkStroke": "#3d3a38",
+  "fontFamily": "'INDG Alvica', sans-serif",
+  "fontSize": "16px",
+  "uiFont": "'DM Mono', monospace",
+  "uiFontSize": "13px",
+  "layoutMargin": "25px",
+  "boxHeight": "50px",
+  "boxPadding": "10px",
+  "maxWidth": "3000px"
+}
