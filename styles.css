@@ -1671,10 +1671,6 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     margin-bottom: 25px;
     margin-left: var(--layout-content-padding);
     margin-right: var(--layout-content-padding);
-    /* Only font-size/letter-spacing animate smoothly on slider drag.
-       margin-bottom is intentionally excluded: it's toggled instantly by
-       .is-clipped (see script.js updateSampleClipState) and animating it
-       left a stale gap visible for 300ms after the clip state changed. */
     transition: font-size 0.3s ease, letter-spacing 0.3s ease, font-weight 0.3s ease, color 0.2s ease;
     outline: none;
     height: auto;
@@ -1691,14 +1687,6 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
 
 .typeface-sample:hover {
     color: var(--color-primary);
-}
-
-/* When content actually overflows the clip limit, the cut edge should sit
-   flush against the divider below instead of leaving the normal row gap
-   after an already-abrupt mid-glyph cut. See updateSampleClipState() in
-   script.js, which toggles this class based on scrollHeight vs clientHeight. */
-.typeface-sample.is-clipped {
-    margin-bottom: 0;
 }
 
 .typeface-sample[data-font="alvica"] {

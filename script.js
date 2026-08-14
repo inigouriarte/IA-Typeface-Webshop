@@ -5,47 +5,6 @@
 })();
 
 /**
- * When a sample's content actually overflows its clipped max-height, drop its
- * margin-bottom. Without this, a hard mid-glyph cut (intentional — see
- * styles.css) is followed by the normal row gap anyway, which reads as dead
- * empty space after the slice rather than the box abruptly ending. When the
- * content fits (not clipped), the normal margin is kept for row spacing.
- */
-function updateSampleClipState(sample) {
-    if (!sample) return;
-    var isClipped = sample.scrollHeight > sample.clientHeight + 1;
-    sample.classList.toggle('is-clipped', isClipped);
-}
-function updateAllSampleClipStates() {
-    document.querySelectorAll('.typeface-sample').forEach(updateSampleClipState);
-}
-document.addEventListener('DOMContentLoaded', updateAllSampleClipStates);
-// Debounced via rAF: reading scrollHeight forces a synchronous layout, so
-// checking on every single keystroke was noticeably laggy in a large
-// contenteditable box. Batching to once per animation frame keeps it feeling
-// instant while typing without doing that work on every keystroke.
-var clipCheckRAF = null;
-document.addEventListener('input', function (e) {
-    if (e.target.classList && e.target.classList.contains('typeface-sample')) {
-        var sample = e.target;
-        if (clipCheckRAF) cancelAnimationFrame(clipCheckRAF);
-        clipCheckRAF = requestAnimationFrame(function () {
-            updateSampleClipState(sample);
-            clipCheckRAF = null;
-        });
-    }
-});
-window.addEventListener('resize', function () {
-    clearTimeout(window.__clipResizeTimer);
-    window.__clipResizeTimer = setTimeout(updateAllSampleClipStates, 150);
-});
-// Web fonts often swap in after first paint (FOUT), changing line metrics —
-// re-check once whatever fonts are loading finish.
-if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(updateAllSampleClipStates);
-}
-
-/**
  * Initialize slider functionality
  * @param {string} selector - CSS selector for sliders
  * @param {string} styleProperty - CSS style property to update (e.g., 'fontSize', 'letterSpacing')
@@ -74,7 +33,6 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
             const sample = findSample();
             if (sample) {
                 sample.style[styleProperty] = this.value + u;
-                updateSampleClipState(sample);
             }
         });
         
@@ -97,7 +55,6 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
                 if (sample) {
                     this.value = defaultValue;
                     sample.style[styleProperty] = defaultValue + u;
-                    updateSampleClipState(sample);
                 }
             }
             mouseDownTime = 0;
@@ -444,8 +401,6 @@ document.addEventListener('click', function(e) {
     section.classList.toggle('capitalize-active');
     btn.classList.toggle('active');
     btn.textContent = btn.classList.contains('active') ? 'AA' : 'Aa';
-    var sample = section.querySelector('.typeface-sample');
-    if (sample) updateSampleClipState(sample);
 });
 
 // Bottom bar functionality: cursor coordinates, date, and time
@@ -1176,7 +1131,6 @@ function toggleOpenTypeFeature(sample, feature, enabled) {
             updateOpenTypeSelectedText(dropdown, sample);
         }
     }
-    updateSampleClipState(sample);
 }
 
 /**
