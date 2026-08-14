@@ -5,6 +5,32 @@
 })();
 
 /**
+ * When a sample's content actually overflows its clipped max-height, drop its
+ * margin-bottom. Without this, a hard mid-glyph cut (intentional — see
+ * styles.css) is followed by the normal row gap anyway, which reads as dead
+ * empty space after the slice rather than the box abruptly ending. When the
+ * content fits (not clipped), the normal margin is kept for row spacing.
+ */
+function updateSampleClipState(sample) {
+    if (!sample) return;
+    var isClipped = sample.scrollHeight > sample.clientHeight + 1;
+    sample.classList.toggle('is-clipped', isClipped);
+}
+function updateAllSampleClipStates() {
+    document.querySelectorAll('.typeface-sample').forEach(updateSampleClipState);
+}
+document.addEventListener('DOMContentLoaded', updateAllSampleClipStates);
+document.addEventListener('input', function (e) {
+    if (e.target.classList && e.target.classList.contains('typeface-sample')) {
+        updateSampleClipState(e.target);
+    }
+});
+window.addEventListener('resize', function () {
+    clearTimeout(window.__clipResizeTimer);
+    window.__clipResizeTimer = setTimeout(updateAllSampleClipStates, 150);
+});
+
+/**
  * Initialize slider functionality
  * @param {string} selector - CSS selector for sliders
  * @param {string} styleProperty - CSS style property to update (e.g., 'fontSize', 'letterSpacing')
@@ -33,6 +59,7 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
             const sample = findSample();
             if (sample) {
                 sample.style[styleProperty] = this.value + u;
+                if (styleProperty === 'fontSize') updateSampleClipState(sample);
             }
         });
         
@@ -55,6 +82,7 @@ function initializeSliders(selector, styleProperty, defaultDefaultValue, unit) {
                 if (sample) {
                     this.value = defaultValue;
                     sample.style[styleProperty] = defaultValue + u;
+                    if (styleProperty === 'fontSize') updateSampleClipState(sample);
                 }
             }
             mouseDownTime = 0;

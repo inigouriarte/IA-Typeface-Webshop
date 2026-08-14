@@ -1689,6 +1689,14 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     color: var(--color-primary);
 }
 
+/* When content actually overflows the clip limit, the cut edge should sit
+   flush against the divider below instead of leaving the normal row gap
+   after an already-abrupt mid-glyph cut. See updateSampleClipState() in
+   script.js, which toggles this class based on scrollHeight vs clientHeight. */
+.typeface-sample.is-clipped {
+    margin-bottom: 0;
+}
+
 .typeface-sample[data-font="alvica"] {
     font-family: 'INDG Alvica', sans-serif;
 }
