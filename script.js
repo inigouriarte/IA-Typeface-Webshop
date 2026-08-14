@@ -29,6 +29,10 @@ window.addEventListener('resize', function () {
     clearTimeout(window.__clipResizeTimer);
     window.__clipResizeTimer = setTimeout(updateAllSampleClipStates, 150);
 });
+// Belt-and-braces: letter-spacing, all-caps, and OpenType feature toggles can
+// all reflow a sample's height too, and enumerating every trigger is fragile
+// (already missed several). A cheap periodic check catches all of them.
+setInterval(updateAllSampleClipStates, 250);
 
 /**
  * Initialize slider functionality
