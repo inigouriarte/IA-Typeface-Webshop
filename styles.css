@@ -577,7 +577,7 @@ p:last-child {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10002;
+    z-index: 10012;
     height: var(--header-height);
     box-sizing: border-box;
     padding: 32px var(--layout-content-padding);
@@ -1290,7 +1290,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, header+bottom-bar=10002, body lines=10003, dropdown portal=10010, cursor=10020 (always on top) */
+/* Z-index scale: main=0, bottom-bar=10002, body lines=10003, dropdown portal=10010, header=10012 (always above dropdown), cursor=10020 (always on top) */
 #dropdown-portal {
     position: fixed;
     left: 0;
@@ -1352,6 +1352,10 @@ main {
 }
 
 /* Mobile nav panel (rendered in portal) – options look like .dropdown-option */
+#dropdown-portal .mobile-nav-panel {
+    border-left: none;
+    border-right: none;
+}
 #dropdown-portal .mobile-nav-panel a,
 #dropdown-portal .mobile-nav-panel .theme-toggle {
     display: flex;
@@ -2056,6 +2060,14 @@ html[data-theme="dark"] .footer-bottom .footer-link {
     color: var(--color-footer-muted);
 }
 
+/* The dark-mode muted-color rule above has one extra element-level specificity
+   point (from the `html` selector) than .footer-social .footer-link:hover, so
+   it was winning even on hover, silently killing the hover animation in dark
+   mode. This restores it, scoped to just the conflict. */
+html[data-theme="dark"] .footer-bottom .footer-link:hover {
+    color: var(--color-primary);
+}
+
 .footer-tech {
     max-width: var(--layout-max-width);
     margin: 0 auto;
@@ -2547,8 +2559,8 @@ html[data-theme="dark"] .footer-bottom .footer-link {
         line-height: 90px;
         letter-spacing: -5px;
         padding-top: 25px;
-        /* No bottom padding: keeps the gap above the description equal to the gap below it */
-        padding-bottom: 0;
+        /* Clears descenders (p, g, y, j, q) so they don't cross the divider line below */
+        padding-bottom: 12px;
         text-align: left;
         padding-left: 0;
         padding-right: 0;
@@ -3064,9 +3076,13 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 
 /* Mobile: the bottom-bar is hidden entirely (display:none) and the floating
    buttons bar is docked (opacity:0) by the time the footer is in view, so
-   nothing needs clearing here — just match the gap above the credits line. */
+   nothing needs clearing here — just match the gap above the credits line.
+   Applies to both page types (typeface detail pages and the homepage). */
 @media (max-width: 768px) {
     body:has(.typeface-hero-buttons-floating) .footer {
+        padding-bottom: 30px;
+    }
+    body:not(:has(.typeface-hero-buttons-floating)) .footer {
         padding-bottom: 30px;
     }
 }
