@@ -526,7 +526,7 @@ body::after {
     bottom: 0;
     width: 1px;
     background-color: var(--color-stroke);
-    z-index: 10003;
+    z-index: 10014;
     pointer-events: none;
 }
 
@@ -1290,7 +1290,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, bottom-bar=10002, body lines=10003, dropdown portal=10010, header=10012 (always above dropdown), cursor=10020 (always on top) */
+/* Z-index scale: main=0, bottom-bar=10002, dropdown portal=10010, header=10012 (always above dropdown), body lines=10014 (always above header), cursor=10020 (always on top) */
 #dropdown-portal {
     position: fixed;
     left: 0;
@@ -1355,6 +1355,9 @@ main {
 #dropdown-portal .mobile-nav-panel {
     border-left: none;
     border-right: none;
+    /* Extend to the bottom of the viewport so page content doesn't show
+       through below the (short) list of links while the menu is open. */
+    min-height: calc(100vh - var(--header-height) + 1px);
 }
 #dropdown-portal .mobile-nav-panel a,
 #dropdown-portal .mobile-nav-panel .theme-toggle {
