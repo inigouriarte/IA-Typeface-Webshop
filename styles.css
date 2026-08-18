@@ -1355,9 +1355,6 @@ main {
 #dropdown-portal .mobile-nav-panel {
     border-left: none;
     border-right: none;
-    /* Extend to the bottom of the viewport so page content doesn't show
-       through below the (short) list of links while the menu is open. */
-    min-height: calc(100vh - var(--header-height) + 1px);
 }
 #dropdown-portal .mobile-nav-panel a,
 #dropdown-portal .mobile-nav-panel .theme-toggle {
