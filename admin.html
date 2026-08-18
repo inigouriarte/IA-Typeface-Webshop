@@ -34,6 +34,25 @@
       --font: 'DM Mono', ui-monospace, 'Cascadia Mono', 'SF Mono', Monaco, Consolas, monospace;
     }
 
+    /* Dark mode: reuses the same dark palette saved for the live site
+       (data/styles.json darkBackground/darkText/darkStroke), so the two
+       stay visually consistent rather than inventing a separate scheme. */
+    html[data-admin-theme="dark"] {
+      --bg: #131416;
+      --bg-muted: #131416;
+      --bg-subtle: #1c1e21;
+      --border: #3d3a38;
+      --border-subtle: #3d3a38;
+      --fg: #FFFFFF;
+      --fg-muted: #9a9694;
+      --fg-subtle: #7a7674;
+      --primary-fg: #131416;
+      --accent: #1c1e21;
+      --accent-fg: #FFFFFF;
+      --success-bg: hsl(142 40% 15%);
+      --success-fg: hsl(142 71% 65%);
+    }
+
     body { font-family: var(--font); font-size: 16px; color: var(--fg); background: var(--bg); line-height: 1.5; -webkit-font-smoothing: antialiased; cursor: auto; font-weight: 400; }
     body *, body *::before, body *::after { cursor: auto; font-weight: 400; }
     a, button, [role="button"], input[type="submit"], input[type="button"], .nav-item, .font-card, .drag-handle, .btn, .btn-primary, label[for], select { cursor: pointer; }
@@ -72,7 +91,7 @@
     .sidebar-logo { font-size: 16px; display: flex; align-items: center; gap: 0.5rem; }
     .sidebar-logo .logo-dot { width: 8px; height: 8px; background: var(--fg); }
     .sidebar-nav { flex: 1; padding: 0; display: flex; flex-direction: column; gap: 0; }
-    .sidebar-section-label { font-size: 16px; color: var(--fg-subtle); text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 10px 5px; }
+    .sidebar-section-label { font-size: 12px; color: var(--fg-subtle); text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 10px 5px; }
     .nav-item { display: flex; align-items: center; gap: 0.625rem; padding: 0 10px; font-size: 16px; color: var(--fg-muted); cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: var(--font); transition: background 0.1s, color 0.1s; text-decoration: none; min-height: 50px; box-sizing: border-box; border-bottom: 1px solid var(--border); }
     .nav-item:hover { background: var(--accent); color: var(--fg); }
     .nav-item.active { background: var(--accent); color: var(--primary); }
@@ -83,7 +102,7 @@
     /* ── Main ── */
     .main { flex: 1; margin-left: var(--sidebar-w); min-height: 100vh; }
     .main-header { padding: 0 10px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 40; min-height: 50px; }
-    .main-header h1 { font-size: 16px; }
+    .main-header h1 { font-size: 20px; }
     .main-header-actions { display: flex; gap: 0; align-items: center; }
     .main-body { padding: 0; }
     .view-panel { display: none; }
@@ -186,6 +205,11 @@
     .font-card-info { flex: 1; min-width: 0; }
     .font-card-name { font-size: 16px; }
     .font-card-meta { font-size: 16px; color: var(--fg-muted); margin-top: 0; }
+    .font-card-preview {
+      color: var(--fg-subtle); flex-shrink: 0; text-decoration: none;
+      font-size: 16px; padding: 0.25rem; transition: color 0.15s;
+    }
+    .font-card-preview:hover { color: var(--primary); }
     .font-card-arrow { color: var(--fg-subtle); flex-shrink: 0; }
 
     /* Font editor */
@@ -210,11 +234,11 @@
       display: flex; align-items: center; justify-content: space-between;
       min-height: 50px;
     }
-    .editor-section-body { padding: 10px; }
+    .editor-section-body { padding: 16px; }
     .field-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 16px;
     }
     .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
     .field-full { grid-column: 1 / -1; }
@@ -227,6 +251,7 @@
     }
     .field .input { font-size: 16px; }
     .field .hint { font-size: 14px; color: var(--fg-subtle); margin-top: 0.25rem; }
+    .deploy-note { font-size: 14px; color: var(--fg-subtle); padding: 10px; border-bottom: 1px solid var(--border); }
     .field-inline { display: flex; align-items: center; gap: 0.5rem; }
     .field-inline label { margin-bottom: 0; text-transform: none; font-size: 16px; }
     .field-inline input[type="checkbox"] { accent-color: var(--primary); }
@@ -345,6 +370,14 @@
   </style>
 </head>
 <body>
+  <script>
+    /* Apply saved theme before paint, to avoid a flash of the wrong theme. */
+    (function () {
+      if (localStorage.getItem('admin-dark-mode') === '1') {
+        document.documentElement.setAttribute('data-admin-theme', 'dark');
+      }
+    })();
+  </script>
   <!-- Login gate -->
   <div id="auth-gate">
     <div class="login-card">
@@ -396,6 +429,9 @@
           </button>
         </nav>
         <div class="sidebar-footer">
+          <button class="nav-item" id="admin-theme-toggle">
+            Dark mode
+          </button>
           <button class="nav-item" data-view="tutorial">
             Tutorial
           </button>
@@ -449,7 +485,8 @@
             <div class="main-header">
               <h1 id="editor-title">Edit Font</h1>
               <div class="main-header-actions">
-                <span class="autosave-status status-idle" id="autosave-status">Draft</span>
+                <a class="btn btn-ghost" id="editor-preview-link" href="#" target="_blank" rel="noopener">Preview ↗</a>
+                <span class="autosave-status status-idle" id="autosave-status">No changes</span>
                 <button class="btn btn-dark" id="editor-save">Save</button>
               </div>
             </div>
@@ -458,6 +495,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 Back to font list
               </button>
+              <div class="deploy-note">Saving here updates the content data. It won't appear on the live site until the site is rebuilt and deployed.</div>
               <div id="editor-msg" class="msg"></div>
               <div class="font-editor" id="font-editor-form"></div>
             </div>
@@ -516,6 +554,7 @@
             </div>
           </div>
           <div class="main-body" style="max-width:720px">
+            <div class="deploy-note">Saving here updates the content data. It won't appear on the live site until the site is rebuilt and deployed.</div>
             <div id="pages-msg" class="msg"></div>
             <div class="page-content-tabs">
               <button class="page-tab active" data-page="homepage">Homepage</button>
@@ -617,6 +656,7 @@
             </div>
           </div>
           <div class="main-body" style="max-width:720px">
+            <div class="deploy-note">Saving here updates the content data. It won't appear on the live site until the site is rebuilt and deployed.</div>
             <div id="styles-msg" class="msg"></div>
 
             <div class="editor-section">
@@ -907,7 +947,7 @@
       const el = document.getElementById('autosave-status');
       if (!el) return;
       const map = {
-        idle:    ['Draft', 'status-idle'],
+        idle:    ['No changes', 'status-idle'],
         unsaved: ['Unsaved changes', 'status-unsaved'],
         saving:  ['Saving\u2026', 'status-saving'],
         saved:   ['Saved', 'status-saved'],
@@ -934,6 +974,7 @@
         renderFontList();
       } catch(e) {
         updateAutosaveStatus('error');
+        toast(e.message, 'error');
       }
     }
 
@@ -953,9 +994,16 @@
     let ordersLoaded = false;
     let pagesLoaded = false;
     document.querySelectorAll('.nav-item[data-view]').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        // Flush autosave if leaving editor
-        if (editingFontId && btn.dataset.view !== 'fonts') { manualSave(); closeEditor(); }
+      btn.addEventListener('click', async ()=>{
+        // Flush pending changes before leaving the editor, and wait for it —
+        // otherwise a failed save (e.g. invalid JSON) goes unnoticed once the
+        // view has already switched away and the status pill is hidden.
+        if (editingFontId && btn.dataset.view !== 'fonts') {
+          const wasDirty = _isDirty;
+          await manualSave();
+          if (wasDirty && _isDirty) return; // save failed — stay put, error toast already shown
+          closeEditor();
+        }
         document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.classList.remove('active'));
         document.querySelectorAll('.view-panel').forEach(p=>p.classList.remove('active'));
         btn.classList.add('active');
@@ -1034,7 +1082,7 @@
         <div class="sample-item-fields">
           <div class="field"><label>Sample ID</label><input class="input input-sm" data-sf="sampleId" value="${esc(s.sampleId||'')}"></div>
           <div class="field"><label>Weight</label><input type="number" class="input input-sm" data-sf="weight" value="${s.weight ?? 400}"></div>
-          <div class="field"><label>Font Size</label><input type="number" class="input input-sm" data-sf="fontSize" value="${s.fontSize ?? 120}"></div>
+          <div class="field"><label>Font Size (px)</label><input type="number" class="input input-sm" data-sf="fontSize" value="${s.fontSize ?? 120}"></div>
           <div class="field"><label>Font Size (mobile)</label><input type="number" class="input input-sm" data-sf="fontSizeMobile" value="${s.fontSizeMobile ?? ''}" placeholder="auto"></div>
           <div class="field"><label>Letter Spacing (em)</label><input type="number" step="0.005" class="input input-sm" data-sf="letterSpacing" value="${s.letterSpacing ?? ''}" placeholder="0"></div>
           <div class="field field-full"><label>Text</label><textarea class="input input-sm" data-sf="text" rows="2">${escT(s.text||'')}</textarea></div>
@@ -1161,6 +1209,7 @@
             <div class="font-card-name">${escT(f.name || f.id)}</div>
             <div class="font-card-meta">${escT(f.id)} · ${styles} style${styles==='1'?'':'s'}${designer?' · '+escT(designer):''}</div>
           </div>
+          <a class="font-card-preview" href="/${esc((f.linkUrl || f.id).replace(/\.html$/, ''))}" target="_blank" rel="noopener" title="Preview live page">↗</a>
           <span class="font-card-arrow">→</span>
         </div>`;
       }).join('');
@@ -1168,7 +1217,7 @@
       // Click to edit
       container.querySelectorAll('.font-card').forEach(card => {
         card.addEventListener('click', e => {
-          if (e.target.closest('.drag-handle')) return;
+          if (e.target.closest('.drag-handle') || e.target.closest('.font-card-preview')) return;
           openEditor(card.dataset.id);
         });
       });
@@ -1225,6 +1274,7 @@
       document.getElementById('fonts-list-view').style.display = 'none';
       document.getElementById('fonts-editor-view').style.display = '';
       document.getElementById('editor-title').textContent = indexEntry.name || fontId;
+      document.getElementById('editor-preview-link').href = '/' + (indexEntry.linkUrl || fontId).replace(/\.html$/, '');
 
       const form = document.getElementById('font-editor-form');
       const samplesStr = JSON.stringify(detail.samples || [], null, 2);
@@ -1266,8 +1316,8 @@
           <div class="editor-section-header">Display Settings</div>
           <div class="editor-section-body">
             <div class="field-grid cols-3">
-              <div class="field"><label>Font Size</label><input type="number" class="input" data-f="fontSize" value="${indexEntry.fontSize ?? 120}"></div>
-              <div class="field"><label>Letter Spacing</label><input type="number" step="any" class="input" data-f="letterSpacing" value="${indexEntry.letterSpacing ?? 0}"></div>
+              <div class="field"><label>Font Size (px)</label><input type="number" class="input" data-f="fontSize" value="${indexEntry.fontSize ?? 120}"></div>
+              <div class="field"><label>Letter Spacing (em)</label><input type="number" step="any" class="input" data-f="letterSpacing" value="${indexEntry.letterSpacing ?? 0}"></div>
               <div class="field"><label>Font Weight</label><input type="number" class="input" data-f="fontWeight" value="${indexEntry.fontWeight ?? ''}"></div>
             </div>
             <div class="field-grid cols-2" style="margin-top:1rem">
@@ -1275,7 +1325,7 @@
               <div class="field"><label>Letter Spacing Mobile (em)</label><input type="number" step="any" class="input" data-f="letterSpacingMobile" value="${indexEntry.letterSpacingMobile ?? ''}" placeholder="Leave empty for default"></div>
             </div>
             <div class="field-grid" style="margin-top:1rem">
-              <div class="field"><label>Dropdown Type</label><input class="input" data-f="dropdownType" value="${esc(indexEntry.dropdownType||'')}" placeholder="weight | custom | style | weight-stretch"></div>
+              <div class="field"><label>Dropdown Type</label><select class="input" data-f="dropdownType"><option value="" ${!indexEntry.dropdownType?'selected':''}>None</option><option value="weight" ${indexEntry.dropdownType==='weight'?'selected':''}>weight</option><option value="weight-stretch" ${indexEntry.dropdownType==='weight-stretch'?'selected':''}>weight-stretch</option><option value="style" ${indexEntry.dropdownType==='style'?'selected':''}>style</option><option value="custom" ${indexEntry.dropdownType==='custom'?'selected':''}>custom</option></select><div class="hint">Controls which selector renders on the detail page</div></div>
               <div class="field" style="display:flex;align-items:flex-end;padding-bottom:0.25rem">
                 <div class="field-inline">
                   <input type="checkbox" data-f="isOneStyle" ${indexEntry.isOneStyle?'checked':''}>
@@ -1496,7 +1546,12 @@
       const fw = val('fontWeight');
       if (fw !== '') idxEntry.fontWeight = Number(fw);
       // Merge extra JSON
-      try { const ex = JSON.parse(val('extra') || '{}'); Object.assign(idxEntry, ex); } catch(_){}
+      try {
+        const ex = JSON.parse(val('extra') || '{}');
+        Object.assign(idxEntry, ex);
+      } catch (err) {
+        throw new Error('Advanced/Dropdown Config has invalid JSON — fix it before saving. (' + err.message + ')');
+      }
 
       // Detail entry
       const detEntry = {};
@@ -1535,11 +1590,20 @@
     }
 
     async function saveEditor() {
-      updateAutosaveStatus('saving');
       try {
         const { idxEntry, detEntry } = collectEditorData();
         const oldId = editingFontId;
         const newId = idxEntry.id || oldId;
+        if (newId !== oldId) {
+          const confirmed = await showConfirmModal({
+            title: 'Change font ID?',
+            message: `Renaming the ID from "${oldId}" to "${newId}" will break any existing links or bookmarks to this typeface's page (e.g. indigoindigo.org/${oldId}). Continue?`,
+            confirmLabel: 'Rename and save',
+            destructive: true,
+          });
+          if (!confirmed) { updateAutosaveStatus('unsaved'); return; }
+        }
+        updateAutosaveStatus('saving');
         const idx = indexData.findIndex(f => f.id === oldId);
         if (idx >= 0) indexData[idx] = idxEntry;
         if (oldId !== newId) delete detailData[oldId];
@@ -1550,6 +1614,7 @@
         updateAutosaveStatus('saved');
         toast('Font saved');
         document.getElementById('editor-title').textContent = idxEntry.name || newId;
+        document.getElementById('editor-preview-link').href = '/' + newId;
         renderFontList();
       } catch(e) { updateAutosaveStatus('error'); toast(e.message, 'error'); }
     }
@@ -2201,6 +2266,7 @@
         s.className = 'autosave-status status-saved';
         toast('Styles saved');
         stylesData = data;
+        syncAdminAccentColor();
       } catch(e) {
         s.textContent = 'Save failed';
         s.className = 'autosave-status status-error';
@@ -2211,7 +2277,42 @@
     /* ══════════════════════════════════════════════
        Init
     ══════════════════════════════════════════════ */
-    window._initAdmin = function() { loadDashboard(); loadFonts(); };
+    // Sync the admin UI's own accent colour with the site's saved brand colour
+    // (data/styles.json → colorPrimary / darkPrimary), so editing it here
+    // doesn't leave the admin panel showing a stale/different blue than the
+    // live site — and switches with the admin's own light/dark toggle too.
+    async function syncAdminAccentColor() {
+      try {
+        const r = await fetch('data/styles.json');
+        if (!r.ok) return;
+        const d = await r.json();
+        const isDark = document.documentElement.getAttribute('data-admin-theme') === 'dark';
+        const hex = isDark ? d.darkPrimary : d.colorPrimary;
+        if (/^#[0-9a-fA-F]{6}$/.test(hex || '')) {
+          document.documentElement.style.setProperty('--primary', hex);
+          document.documentElement.style.setProperty('--ring', hex);
+        }
+      } catch (_) {}
+    }
+
+    /* Dark mode toggle (admin panel only — independent of the live site's
+       own light/dark preference). */
+    function setAdminTheme(dark) {
+      document.documentElement.setAttribute('data-admin-theme', dark ? 'dark' : 'light');
+      localStorage.setItem('admin-dark-mode', dark ? '1' : '0');
+      const btn = document.getElementById('admin-theme-toggle');
+      if (btn) btn.textContent = dark ? 'Light mode' : 'Dark mode';
+      syncAdminAccentColor();
+    }
+    document.getElementById('admin-theme-toggle').addEventListener('click', () => {
+      setAdminTheme(document.documentElement.getAttribute('data-admin-theme') !== 'dark');
+    });
+
+    window._initAdmin = function() {
+      setAdminTheme(document.documentElement.getAttribute('data-admin-theme') === 'dark');
+      loadDashboard();
+      loadFonts();
+    };
   </script>
 </body>
 </html>
