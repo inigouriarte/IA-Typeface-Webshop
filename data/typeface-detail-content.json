@@ -797,5 +797,35 @@
         "price": "12"
       }
     ]
+  },
+  "wovo": {
+    "description": "Inspired by Wim Crouwel's New Alphabet, Wovo proposed a radical reduction on the alphabet's forms, adjusted to a strict grid of diagonals and vertical stems.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "TTF, WOFF, WOFF2",
+      "styles": "3",
+      "glyphs": "",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 120,
+        "text": "The quick brown fox jumps over the lazy dog.",
+        "sampleId": "regular"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Wovo",
+        "price": "11"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
   }
 }

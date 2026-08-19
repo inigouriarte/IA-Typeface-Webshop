@@ -377,6 +377,32 @@
     font-display: swap;
 }
 
+/* INDG Wovo Font Faces */
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 
 
 
@@ -1756,6 +1782,11 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
 .typeface-sample[data-font="stycka"] {
     font-family: 'INDG Stycka', sans-serif;
 }
+
+.typeface-sample[data-font="wovo"] {
+    font-family: 'INDG Wovo', sans-serif;
+}
+
 
 
 

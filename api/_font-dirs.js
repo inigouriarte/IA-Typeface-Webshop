@@ -18,7 +18,8 @@ const TYPEFACE_FONT_DIRS = {
   stycka: 'Stycka',
   oequadrat: 'Old English Quadrat',
   Test: 'INDIG Test',
-  stycka: 'Stycka'
+  stycka: 'Stycka',
+  wovo: 'Wovo'
 };
 
 module.exports = TYPEFACE_FONT_DIRS;

@@ -834,7 +834,8 @@ const fontFileMap = {
     'Old English Quadrat': 'fonts/Old English Quadrat/Old-English-Quadrat.woff2',
     'INDIG Test': 'fonts/INDIG Test/INDGAlvica-Regular.woff2',
     'INDG DAJO': 'fonts/DAJO/INDGDracma-Naturalis.woff2',
-    'INDG Stycka': 'fonts/Stycka/INDG-Stycka.woff2'
+    'INDG Stycka': 'fonts/Stycka/INDG-Stycka.woff2',
+    'INDG Wovo': 'fonts/Wovo/INDGWovo-Regular.woff2'
 };
 
 // Cache for detected features
@@ -952,7 +953,8 @@ function getFontFamilyFromSection(section) {
         'oequadrat': 'Old English Quadrat',
         'Test': 'INDIG Test',
         'dajo': 'INDG DAJO',
-        'stycka': 'INDG Stycka'
+        'stycka': 'INDG Stycka',
+        'wovo': 'INDG Wovo'
     };
     
     return fontFamilyMap[fontAttr] || null;
