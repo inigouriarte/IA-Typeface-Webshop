@@ -1290,7 +1290,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, bottom-bar=10002, dropdown portal=10010, header=10012 (always above dropdown), body lines=10014 (always above header), cursor=10020 (always on top) */
+/* Z-index scale: main=0, dropdown portal=10010, header=10012 & bottom-bar=10013 (always above dropdown), body lines=10014 (always above header/bottom-bar), cursor=10020 (always on top) */
 #dropdown-portal {
     position: fixed;
     left: 0;
@@ -2100,7 +2100,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     font-family: var(--font-button-family);
     font-size: var(--font-button-size);
     color: var(--color-text-light);
-    z-index: 10002;
+    z-index: 10013; /* Above dropdown portal (10010), below body lines (10014) — same tier as header (10012) */
     min-height: 50px;
     box-sizing: border-box;
 }
