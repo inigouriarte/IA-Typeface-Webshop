@@ -1714,7 +1714,7 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     margin-bottom: 25px;
     margin-left: var(--layout-content-padding);
     margin-right: var(--layout-content-padding);
-    transition: font-size 0.3s ease, letter-spacing 0.3s ease, font-weight 0.3s ease, color 0.2s ease;
+    transition: font-size 0.3s ease, letter-spacing 0.3s ease, font-weight 0.3s ease, color 0.2s ease, opacity 0.5s ease;
     outline: none;
     height: auto;
     min-height: 0;
@@ -1730,6 +1730,15 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
 
 .typeface-sample:hover {
     color: var(--color-primary);
+}
+
+/* Weight/style/stretch changes swap to an entirely different static font
+   file per variant (not a true variable font), so the browser can't
+   interpolate glyph shapes between them the way it can for e.g. font-size.
+   Crossfade instead: fade out, swap while invisible, fade back in — see
+   applyFontVariantWithCrossfade() in script.js. */
+.typeface-sample.style-switching {
+    opacity: 0;
 }
 
 .typeface-sample[data-font="alvica"] {

@@ -326,9 +326,7 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
             const section = dropdown.closest('.typeface-section');
             const sample = section ? section.querySelector('.typeface-sample') : null;
             if (sample) {
-                if (weight) sample.style.fontWeight = weight;
-                sample.style.fontStretch = stretch || 'normal';
-                sample.style.fontStyle = style || 'normal';
+                applyFontVariantWithCrossfade(sample, weight, stretch, style);
             }
             
             if (isTypeface()) window.TypefaceDropdownPortal.close();
@@ -336,6 +334,27 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
         });
     });
 });
+
+/**
+ * Apply a weight/stretch/style change with a crossfade instead of an abrupt
+ * jump. Each weight is a separate static font file (not a variable font), so
+ * the browser can't interpolate glyph shapes between them — only a fade can
+ * make the switch feel smooth. ~1s total: fade out, swap while invisible,
+ * fade back in (matches the opacity transition duration in styles.css).
+ */
+function applyFontVariantWithCrossfade(sample, weight, stretch, style) {
+    if (!sample) return;
+    sample.classList.add('style-switching');
+    setTimeout(function () {
+        if (weight) sample.style.fontWeight = weight;
+        sample.style.fontStretch = stretch || 'normal';
+        sample.style.fontStyle = style || 'normal';
+        // Force layout so the browser registers the swap before we remove
+        // the class, otherwise the fade-in transition can get skipped.
+        void sample.offsetHeight;
+        sample.classList.remove('style-switching');
+    }, 500);
+}
 
 document.addEventListener('click', function(e) {
     if (!e.target.closest('.custom-dropdown') && !e.target.closest('#dropdown-portal')) {
@@ -351,7 +370,7 @@ document.querySelectorAll('.font-weight-select').forEach(select => {
         const target = section.getAttribute('data-font');
         const sample = document.querySelector(`.typeface-sample[data-font="${target}"]`);
         const weight = this.value;
-        sample.style.fontWeight = weight;
+        applyFontVariantWithCrossfade(sample, weight, null, null);
     });
 });
 
