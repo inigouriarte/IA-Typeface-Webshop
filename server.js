@@ -540,7 +540,8 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
   function detectWeightInfo(filename) {
     const lower = filename.toLowerCase();
     let weight = 400, label = 'Regular', style = 'normal', stretch = 'normal';
-    if (/thin/i.test(lower)) { weight = 100; label = 'Thin'; }
+    if (/fine/i.test(lower)) { weight = 100; label = 'Fine'; }
+    else if (/thin/i.test(lower)) { weight = 100; label = 'Thin'; }
     else if (/extralight|ultralight/i.test(lower)) { weight = 200; label = 'ExtraLight'; }
     else if (/light/i.test(lower)) { weight = 300; label = 'Light'; }
     else if (/medium/i.test(lower)) { weight = 500; label = 'Medium'; }
@@ -548,6 +549,7 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     else if (/extrabold|ultrabold/i.test(lower)) { weight = 800; label = 'ExtraBold'; }
     else if (/(?<![a-z])bold/i.test(lower) && !/semi|demi|extra|ultra/i.test(lower)) { weight = 700; label = 'Bold'; }
     else if (/black|heavy/i.test(lower)) { weight = 900; label = 'Black'; }
+    else if (/ultra/i.test(lower)) { weight = 900; label = 'Ultra'; }
     if (/italic/i.test(lower)) style = 'italic';
     else if (/oblique/i.test(lower)) style = 'oblique';
     if (/condensed/i.test(lower)) stretch = 'condensed';
@@ -649,6 +651,19 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
         const lastMatch = sampleMatches[sampleMatches.length - 1];
         const insertAt = lastMatch.index + lastMatch[0].length;
         css = css.slice(0, insertAt) + '\n' + sampleRule + css.slice(insertAt);
+      }
+
+      // The hero <h1> title on the typeface's own page has no per-typeface font
+      // hook of its own — it falls back to whatever font the *last* typeface in
+      // this list happens to use unless a matching rule is added here too.
+      const titleRule = `body.typeface-${fontId} .typeface-title {\n    font-family: '${name}', sans-serif;\n}\n\n`;
+      const titleMatches = [...css.matchAll(/body\.typeface-[^\s]+\s+\.typeface-title\s*\{[^}]+\}\n/g)];
+      if (titleMatches.length) {
+        const lastTitleMatch = titleMatches[titleMatches.length - 1];
+        const insertAt = lastTitleMatch.index + lastTitleMatch[0].length;
+        css = css.slice(0, insertAt) + '\n' + titleRule + css.slice(insertAt);
+      } else {
+        css += '\n' + titleRule;
       }
       await fs.writeFile(cssPath, css, 'utf8');
 

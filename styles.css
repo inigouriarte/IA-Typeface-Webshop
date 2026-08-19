@@ -377,6 +377,15 @@
     font-display: swap;
 }
 
+/* INDG Wovo Font Faces */
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Fine.woff') format('woff');
+    font-weight: 150;
+    font-style: normal;
+    font-display: swap;
+}
+
 @font-face {
     font-family: 'INDG Wovo';
     src: url('fonts/Wovo/INDGWovo-Bold.woff') format('woff');
@@ -387,8 +396,8 @@
 
 @font-face {
     font-family: 'INDG Wovo';
-    src: url('fonts/Wovo/INDGWovo-Fine.woff') format('woff');
-    font-weight: 400;
+    src: url('fonts/Wovo/INDGWovo-Regular.woff') format('woff');
+    font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
@@ -401,8 +410,15 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Ultra.woff') format('woff');
+    font-weight: 950;
+    font-style: normal;
+    font-display: swap;
+}
 
-/* INDG Wovo Font Faces */
+
 /* CSS Variables */
 :root {
     /* Colors */
@@ -3008,6 +3024,10 @@ body.typeface-stycka .typeface-title {
 
 body.typeface-oequadrat .typeface-title {
     font-family: 'Old English Quadrat', sans-serif;
+}
+
+body.typeface-wovo .typeface-title {
+    font-family: 'INDG Wovo', sans-serif;
 }
 
 .typeface-title:focus {

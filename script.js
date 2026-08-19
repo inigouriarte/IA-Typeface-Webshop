@@ -895,12 +895,13 @@ function extractFeaturesFromFont(font) {
         if (tables && tables.gsub) collectFeatureTagsFromTable(tables.gsub).forEach(function (t) { if (!features.includes(t)) features.push(t); });
         if (tables && tables.gpos) collectFeatureTagsFromTable(tables.gpos).forEach(function (t) { if (!features.includes(t)) features.push(t); });
     }
-    return features.filter(function (f) { return f !== 'kern'; });
+    return features;
 }
 
 /**
- * Detect OpenType features from a font file. opentype.js does not support WOFF2,
- * so we try .woff when the path is .woff2.
+ * Detect OpenType features from a font file. opentype.js can't parse WOFF2,
+ * so when given one, also try the same base filename as .woff/.ttf/.otf in
+ * turn — whichever format actually exists alongside it — until one parses.
  * @param {string} fontPath - Path to the font file (e.g. .woff2 or .woff)
  * @returns {Promise<Array>} Array of feature tags
  */
@@ -912,30 +913,23 @@ async function detectOpenTypeFeatures(fontPath) {
         return [];
     }
 
-    var pathToTry = fontPath;
+    var candidates = [fontPath];
     if (/\.woff2$/i.test(fontPath)) {
-        pathToTry = fontPath.replace(/\.woff2$/i, '.woff');
+        var base = fontPath.replace(/\.woff2$/i, '');
+        candidates.push(base + '.woff', base + '.ttf', base + '.otf');
     }
 
-    try {
-        var font = await loadFontForDetection(pathToTry);
-        if (!font) return [];
-        var list = extractFeaturesFromFont(font);
-        fontFeaturesCache[fontPath] = list;
-        return list;
-    } catch (e) {
-        if (pathToTry !== fontPath) {
-            try {
-                font = await loadFontForDetection(fontPath);
-                if (font) {
-                    var list2 = extractFeaturesFromFont(font);
-                    fontFeaturesCache[fontPath] = list2;
-                    return list2;
-                }
-            } catch (e2) {}
-        }
-        return [];
+    for (var i = 0; i < candidates.length; i++) {
+        try {
+            var font = await loadFontForDetection(candidates[i]);
+            if (font) {
+                var list = extractFeaturesFromFont(font);
+                fontFeaturesCache[fontPath] = list;
+                return list;
+            }
+        } catch (e) {}
     }
+    return [];
 }
 
 /**
@@ -1185,7 +1179,17 @@ async function initializeOpenTypeDropdowns() {
             continue;
         }
 
-        const features = await detectOpenTypeFeatures(fontPath);
+        let features = await detectOpenTypeFeatures(fontPath);
+        if (features.length === 0) {
+            // Live detection failed (e.g. font uploaded without a .woff/.ttf/
+            // .otf fallback for opentype.js to parse) — fall back to the
+            // admin panel's manually-entered feature list for this typeface,
+            // if one was set.
+            const manualSample = section.querySelector('.typeface-sample[data-manual-ot-features]');
+            if (manualSample) {
+                features = manualSample.dataset.manualOtFeatures.split(',').map(f => f.trim()).filter(Boolean);
+            }
+        }
         populateOpenTypeDropdown(dropdown, features, features.length === 0);
         applyDefaultOpenTypeFeatures(dropdown, section, features);
     }
@@ -1228,7 +1232,13 @@ async function updateDetailsOTFeaturesRow(fontPathsByTypefaceId) {
     if (!typefaceId || !fontPathsByTypefaceId[typefaceId]) return;
     const fontPath = fontPathsByTypefaceId[typefaceId];
     try {
-        const features = await detectOpenTypeFeatures(fontPath);
+        let features = await detectOpenTypeFeatures(fontPath);
+        if (features.length === 0) {
+            const manualSample = document.querySelector('.typeface-sample[data-manual-ot-features]');
+            if (manualSample) {
+                features = manualSample.dataset.manualOtFeatures.split(',').map(f => f.trim()).filter(Boolean);
+            }
+        }
         el.textContent = features.length ? sortOpenTypeFeaturesList(features).join(', ') : '—';
     } catch (e) {
         el.textContent = '—';

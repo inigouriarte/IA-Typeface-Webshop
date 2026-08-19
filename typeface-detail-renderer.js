@@ -230,6 +230,12 @@ function renderSampleSection(config, detailConfig, sample, sampleIndex) {
     // OpenType dropdown (always empty here; script.js detects from font so only this typeface's features appear)
     const openTypeHtml = renderOpenTypeDropdown([]);
 
+    // Admin-entered fallback features, used by script.js only if live font-file
+    // detection comes back empty (e.g. no .woff for opentype.js to parse).
+    const manualOt = (detailConfig.hasOpenType && Array.isArray(detailConfig.openTypeFeatures) && detailConfig.openTypeFeatures.length)
+        ? detailConfig.openTypeFeatures.join(',')
+        : '';
+
     return `        <!-- ${sample.sampleId || 'Sample'} Section -->
         <section class="typeface-section" data-font="${config.id}">
             <div class="typeface-controls-row">
@@ -251,7 +257,7 @@ ${dropdownHtml}
                 </div>
 ${openTypeHtml}
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}"${sample.fontSizeMobile ? ` data-font-size-mobile="${sample.fontSizeMobile}"` : ''}${sample.defaultOtFeatures ? ` data-default-ot="${sample.defaultOtFeatures}"` : ''} style="${styleAttr}">${sample.text}</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}"${sample.fontSizeMobile ? ` data-font-size-mobile="${sample.fontSizeMobile}"` : ''}${sample.defaultOtFeatures ? ` data-default-ot="${sample.defaultOtFeatures}"` : ''}${manualOt ? ` data-manual-ot-features="${manualOt}"` : ''} style="${styleAttr}">${sample.text}</div>
         </section>`;
 }
 
@@ -260,8 +266,13 @@ ${openTypeHtml}
  * @param {Object} details - Details object
  * @returns {string} HTML string for details section
  */
-function renderDetailsSection(details, openTypeFeatures) {
+function renderDetailsSection(details, manualOtFeatures) {
     const unicodeRanges = details.unicodeRanges.map(range => range).join('<br>\n                            ');
+    // Shown until script.js's live font-detection overwrites it (or as a
+    // fallback if detection fails, e.g. a font uploaded without a .woff
+    // fallback for opentype.js to parse). Sourced from the admin panel's
+    // "Features" field.
+    const otFeaturesInitial = (manualOtFeatures && manualOtFeatures.length) ? manualOtFeatures.join(', ') : '—';
 
     return `        <!-- Typeface Details Section -->
         <section class="typeface-details">
@@ -311,7 +322,7 @@ function renderDetailsSection(details, openTypeFeatures) {
                         </div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-value detail-value-ot-features">—</div>
+                        <div class="detail-value detail-value-ot-features">${otFeaturesInitial}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-value">${details.formats}</div>
@@ -428,7 +439,8 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
     ).join('\n\n');
 
     // Render details and pricing
-    const detailsSection = renderDetailsSection(detailConfig.details);
+    const manualOtForDetails = (detailConfig.hasOpenType && Array.isArray(detailConfig.openTypeFeatures)) ? detailConfig.openTypeFeatures : null;
+    const detailsSection = renderDetailsSection(detailConfig.details, manualOtForDetails);
     const buttonsRowHTML = detailConfig.isFree
         ? `                <div class="typeface-controls-row typeface-hero-buttons-row">
                     <div class="control-box"><button class="free-download-btn">Download for free</button></div>
