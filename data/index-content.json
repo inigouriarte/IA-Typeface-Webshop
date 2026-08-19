@@ -120,6 +120,29 @@
     "defaultOptionIndex": 0
   },
   {
+    "id": "wovo",
+    "name": "INDG Wovo",
+    "displayName": "Wovo",
+    "linkUrl": "wovo.html",
+    "hasLink": true,
+    "dropdownType": "weight",
+    "fontSize": 120,
+    "letterSpacing": 0,
+    "isOneStyle": false,
+    "weights": [
+      300,
+      400,
+      700
+    ],
+    "weightLabels": [
+      "Light",
+      "Regular",
+      "Bold"
+    ],
+    "defaultWeight": 400,
+    "defaultWeightIndex": 1
+  },
+  {
     "id": "luara",
     "name": "INDG Luara",
     "displayName": "INDG Luara",
@@ -250,28 +273,5 @@
     "fontSizeMobile": 50,
     "letterSpacingMobile": 0,
     "isOneStyle": true
-  },
-  {
-    "id": "wovo",
-    "name": "INDG Wovo",
-    "displayName": "Wovo",
-    "linkUrl": "wovo.html",
-    "hasLink": true,
-    "dropdownType": "weight",
-    "fontSize": 120,
-    "letterSpacing": 0,
-    "isOneStyle": false,
-    "weights": [
-      300,
-      400,
-      700
-    ],
-    "weightLabels": [
-      "Light",
-      "Regular",
-      "Bold"
-    ],
-    "defaultWeight": 400,
-    "defaultWeightIndex": 1
   }
 ]

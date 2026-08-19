@@ -804,28 +804,45 @@
       "designer": "Iñigo Uriarte",
       "version": "1.0",
       "formats": "TTF, WOFF, WOFF2",
-      "styles": "3",
-      "glyphs": "",
+      "styles": "5",
+      "glyphs": "192",
       "unicodeRanges": [
         "Basic Latin",
         "Latin 1-Supplement"
       ]
     },
+    "heroText": "INDG Wovo",
+    "isFree": false,
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "ss01",
+      "kern"
+    ],
     "samples": [
       {
+        "sampleId": "regular",
         "weight": 400,
         "fontSize": 120,
-        "text": "The quick brown fox jumps over the lazy dog.",
-        "sampleId": "regular"
+        "text": "The quick brown fox jumps over the lazy dog."
       }
     ],
     "pricing": [
       {
-        "name": "INDG Wovo",
-        "price": "11"
+        "name": "INDG Wovo Family",
+        "price": "15"
+      },
+      {
+        "name": "INDG Wovo Light",
+        "price": "5"
+      },
+      {
+        "name": "INDG Wovo Regular",
+        "price": "5"
+      },
+      {
+        "name": "INDG Wovo Bold",
+        "price": "5"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   }
 }
