@@ -130,16 +130,20 @@
     "letterSpacing": 0,
     "isOneStyle": false,
     "weights": [
+      150,
       300,
-      400,
-      700
+      500,
+      700,
+      950
     ],
     "weightLabels": [
+      "Fine",
       "Light",
       "Regular",
-      "Bold"
+      "Bold",
+      "Ultra"
     ],
-    "defaultWeight": 400,
+    "defaultWeight": 500,
     "defaultWeightIndex": 1
   },
   {
