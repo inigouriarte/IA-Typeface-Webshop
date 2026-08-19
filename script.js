@@ -336,24 +336,64 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
 });
 
 /**
- * Apply a weight/stretch/style change with a crossfade instead of an abrupt
- * jump. Each weight is a separate static font file (not a variable font), so
- * the browser can't interpolate glyph shapes between them — only a fade can
- * make the switch feel smooth. ~1s total: fade out, swap while invisible,
- * fade back in (matches the opacity transition duration in styles.css).
+ * Apply a weight/stretch/style change as a true crossfade instead of an
+ * abrupt jump. Each weight is a separate static font file (not a variable
+ * font), so the browser can't interpolate glyph shapes between them — a
+ * fade+blur is the closest achievable substitute. A snapshot of the current
+ * appearance (a ghost clone) overlays the live sample and fades+blurs out
+ * while the live sample — already switched to the new weight — simultaneously
+ * fades+blurs in, both over the same 1s, so the two overlap rather than
+ * playing one after the other.
  */
 function applyFontVariantWithCrossfade(sample, weight, stretch, style) {
     if (!sample) return;
-    sample.classList.add('style-switching');
-    setTimeout(function () {
+    var parent = sample.parentElement;
+    if (!parent) {
         if (weight) sample.style.fontWeight = weight;
         sample.style.fontStretch = stretch || 'normal';
         sample.style.fontStyle = style || 'normal';
-        // Force layout so the browser registers the swap before we remove
-        // the class, otherwise the fade-in transition can get skipped.
-        void sample.offsetHeight;
-        sample.classList.remove('style-switching');
-    }, 500);
+        return;
+    }
+
+    // Snapshot the current appearance to overlay and fade out.
+    var ghost = sample.cloneNode(true);
+    ghost.removeAttribute('contenteditable');
+    ghost.removeAttribute('id');
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.classList.add('typeface-sample-ghost');
+    ghost.style.top = sample.offsetTop + 'px';
+    ghost.style.left = sample.offsetLeft + 'px';
+    ghost.style.width = sample.offsetWidth + 'px';
+    ghost.style.opacity = '1';
+    ghost.style.filter = 'blur(0px)';
+    parent.insertBefore(ghost, sample.nextSibling);
+
+    // Jump the live sample straight to its new appearance, but starting
+    // invisible/blurred — transition suppressed for this one frame so it
+    // doesn't animate FROM the old look TO invisible first.
+    sample.style.transition = 'none';
+    sample.style.opacity = '0';
+    sample.style.filter = 'blur(8px)';
+    if (weight) sample.style.fontWeight = weight;
+    sample.style.fontStretch = stretch || 'normal';
+    sample.style.fontStyle = style || 'normal';
+    void sample.offsetHeight; // flush the above before re-enabling transitions
+
+    requestAnimationFrame(function () {
+        sample.style.transition = '';
+        sample.style.opacity = '1';
+        sample.style.filter = 'blur(0px)';
+        // Start the ghost's fade-out on the same frame as the sample's
+        // fade-in, so both genuinely overlap for the full 1s.
+        ghost.style.opacity = '0';
+        ghost.style.filter = 'blur(8px)';
+    });
+
+    setTimeout(function () {
+        ghost.remove();
+        sample.style.opacity = '';
+        sample.style.filter = '';
+    }, 1050);
 }
 
 document.addEventListener('click', function(e) {
