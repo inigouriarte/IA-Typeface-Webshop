@@ -766,19 +766,20 @@
       {
         "sampleId": "alphabet",
         "weight": 400,
-        "fontSize": 72,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+        "fontSize": 100,
+        "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
       },
       {
         "sampleId": "phrase",
         "weight": 400,
         "fontSize": 48,
-        "text": "Wild Combination is director Matt Wolf’s visually absorbing portrait of the seminal avant-garde composer, singer-songwriter, cellist, and disco producer Arthur Russell. Before his untimely death from AIDS in 1992, Arthur prolifically created music that spanned both pop and the transcendent possibilities of abstract art. Now, over fifteen years since his passing, Arthur's work is finally finding its audience. Wolf incorporates rare archival footage and commentary from Arthur's family, friends, and closest collaborators—including Philip Glass and Allen Ginsberg—to tell this poignant and important story."
+        "text": "Wild Combination is director Matt Wolf’s visually absorbing portrait of the seminal avant-garde composer, singer-songwriter, cellist, and disco producer Arthur Russell. Before his untimely death from AIDS in 1992, Arthur prolifically created music that spanned both pop and the transcendent possibilities of abstract art. Now, over fifteen years since his passing, Arthur's work is finally finding its audience. Wolf incorporates rare archival footage and commentary from Arthur's family, friends, and closest collaborators—including Philip Glass and Allen Ginsberg—to tell this poignant and important story.",
+        "fontSizeMobile": 24
       },
       {
         "sampleId": "numbers",
         "weight": 400,
-        "fontSize": 72,
+        "fontSize": 120,
         "text": "0123456789"
       }
     ],
