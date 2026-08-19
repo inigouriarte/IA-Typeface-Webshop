@@ -1316,7 +1316,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, dropdown portal=10010, header=10012 & bottom-bar=10013 (always above dropdown), body lines=10014 (always above header/bottom-bar), cursor=10020 (always on top) */
+/* Z-index scale: main=0, dropdown portal=10010, header=10012 & bottom-bar=10013 & floating buttons bar=10013 (always above dropdown), body lines=10014 (always above header/bottom-bar), cursor=10020 (always on top) */
 #dropdown-portal {
     position: fixed;
     left: 0;
@@ -3055,7 +3055,7 @@ body.typeface-oequadrat .typeface-title {
     bottom: 50px;
     left: 0;
     right: 0;
-    z-index: 10001;
+    z-index: 10013; /* Above dropdown portal (10010), same tier as header/bottom-bar */
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;

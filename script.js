@@ -245,7 +245,18 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
     }
 
     function repositionPortalMenu() {
-        if (currentOpen) positionMenuInPortal(currentOpen.menu, currentOpen.trigger, currentOpen.dropdown);
+        if (!currentOpen) return;
+        var triggerRect = currentOpen.trigger.getBoundingClientRect();
+        // If the trigger has scrolled entirely out of the viewport, the menu
+        // has nothing left to stay visually anchored to. Rather than leave a
+        // tall menu's tail end floating with no visible connection to
+        // anything (looks "detached" — the actual reported bug), close it.
+        if (triggerRect.bottom < 0 || triggerRect.top > window.innerHeight) {
+            currentOpen.dropdown.classList.remove('open');
+            closeTypefacePortal(true);
+            return;
+        }
+        positionMenuInPortal(currentOpen.menu, currentOpen.trigger, currentOpen.dropdown);
     }
 
     window.TypefaceDropdownPortal = {
