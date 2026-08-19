@@ -1174,9 +1174,34 @@ async function initializeOpenTypeDropdowns() {
 
         const features = await detectOpenTypeFeatures(fontPath);
         populateOpenTypeDropdown(dropdown, features, features.length === 0);
+        applyDefaultOpenTypeFeatures(dropdown, section, features);
     }
 
     updateDetailsOTFeaturesRow(fontPathsByTypefaceId);
+}
+
+/**
+ * Pre-select and enable any OpenType features the admin marked as "on by
+ * default" for this sample (data-default-ot="liga,smcp" set from the Samples
+ * editor in the admin panel), so visitors immediately see the typeface's
+ * alternates/ligatures/etc. rather than always starting from plain text.
+ * Only applies tags the font actually has (from `features`), so a stale or
+ * mistyped default in the admin panel can't silently no-op or error.
+ */
+function applyDefaultOpenTypeFeatures(dropdown, section, features) {
+    const sample = section ? section.querySelector('.typeface-sample') : null;
+    if (!sample || !sample.dataset.defaultOt) return;
+    const available = new Set((features || []).map(f => f.toLowerCase()));
+    const menu = dropdown.querySelector('.opentype-menu');
+    sample.dataset.defaultOt.split(',')
+        .map(f => f.trim().toLowerCase())
+        .filter(f => f && available.has(f))
+        .forEach(feature => {
+            toggleOpenTypeFeature(sample, feature, true);
+            const option = menu && menu.querySelector(`.opentype-option[data-feature="${feature}"]`);
+            if (option) option.classList.add('selected');
+        });
+    updateOpenTypeSelectedText(dropdown, sample);
 }
 
 /**

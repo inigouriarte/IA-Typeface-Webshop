@@ -1088,6 +1088,7 @@
           <div class="field field-full"><label>Text</label><textarea class="input input-sm" data-sf="text" rows="2">${escT(s.text||'')}</textarea></div>
           <div class="field"><label>Stretch</label><input class="input input-sm" data-sf="stretch" value="${esc(s.stretch||'')}" placeholder="normal"></div>
           <div class="field"><label>Style</label><input class="input input-sm" data-sf="style" value="${esc(s.style||'')}" placeholder="normal"></div>
+          <div class="field field-full"><label>Default OT Features</label><input class="input input-sm" data-sf="defaultOtFeatures" value="${esc(s.defaultOtFeatures||'')}" placeholder="e.g. liga, smcp, ss01"><div class="hint">Comma-separated feature tags, on by default for this sample. Only tags the font actually supports will apply — see the OT features list on this typeface's live page.</div></div>
         </div>
         <div class="sample-item-actions"><button type="button" class="btn btn-sm btn-destructive" data-remove-sample="${i}" title="Remove sample">×</button></div>
       </div>`;
@@ -1145,6 +1146,7 @@
         const style = g('style'); if (style && style !== 'normal') obj.style = style;
         const fontSizeMobile = Number(g('fontSizeMobile')); if (fontSizeMobile > 0) obj.fontSizeMobile = fontSizeMobile;
         const letterSpacing = g('letterSpacing'); if (letterSpacing !== '' && !isNaN(Number(letterSpacing)) && Number(letterSpacing) !== 0) obj.letterSpacing = Number(letterSpacing);
+        const defaultOtFeatures = g('defaultOtFeatures').trim(); if (defaultOtFeatures) obj.defaultOtFeatures = defaultOtFeatures;
         return obj;
       });
     }

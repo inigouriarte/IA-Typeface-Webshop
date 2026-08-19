@@ -250,7 +250,7 @@ ${dropdownHtml}
                 </div>
 ${openTypeHtml}
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}"${sample.fontSizeMobile ? ` data-font-size-mobile="${sample.fontSizeMobile}"` : ''} style="${styleAttr}">${sample.text}</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="${config.id}" data-sample="${sample.sampleId || sampleIndex}" data-target-match="${targetId}"${sample.fontSizeMobile ? ` data-font-size-mobile="${sample.fontSizeMobile}"` : ''}${sample.defaultOtFeatures ? ` data-default-ot="${sample.defaultOtFeatures}"` : ''} style="${styleAttr}">${sample.text}</div>
         </section>`;
 }
 
