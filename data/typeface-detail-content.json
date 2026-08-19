@@ -821,9 +821,16 @@
     "samples": [
       {
         "sampleId": "regular",
-        "weight": 400,
+        "weight": 500,
         "fontSize": 120,
         "text": "The quick brown fox jumps over the lazy dog."
+      },
+      {
+        "sampleId": "crouwel",
+        "weight": 300,
+        "fontSize": 60,
+        "text": "Crouwel began his career in 1955 creating exhibition, graphic, and product designs along with Kho Liang Ie. In 1963, he was one of the founders of the design studio Total Design (currently named Total Identity). From 1964 onwards, Crouwel was responsible for the design of the posters, catalogues and exhibitions of the Stedelijk Museum in Amsterdam. In 1967 he designed the typeface New Alphabet, a design that embraces the limitations of the cathode-ray tube technology used by early data display screens and phototypesetting equipment, thus only containing horizontal and vertical strokes. Other typefaces from his hand are Fodor and Gridnik. In 1970 he designed the Dutch pavilion for Expo '70 (Osaka, Japan). Later, Crouwel designed the Number Postage Stamps for the Dutch PTT, well known in the Netherlands during its circulation from 1976 to 2002.",
+        "fontSizeMobile": 32
       }
     ],
     "pricing": [
