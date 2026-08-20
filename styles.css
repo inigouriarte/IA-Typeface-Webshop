@@ -289,15 +289,6 @@
 }
 
 /* INDG Stycka Font Face */
-@font-face {
-    font-family: 'INDG Stycka';
-    src: url('fonts/Stycka/INDG-Stycka.woff2') format('woff2'),
-         url('fonts/Stycka/INDG-Stycka.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* Old English Quadrat Font Face */
 @font-face {
     font-family: 'Old English Quadrat';
@@ -368,15 +359,6 @@
 }
 
 /* INDG Stycka Font Faces */
-@font-face {
-    font-family: 'INDG Stycka';
-    src: url('fonts/Stycka/INDG-Stycka.woff2') format('woff2'),
-         url('fonts/Stycka/INDG-Stycka.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* INDG Wovo Font Faces */
 @font-face {
     font-family: 'INDG Wovo';
@@ -417,6 +399,16 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'INDG Stycka';
+    src: url('fonts/Stycka/INDG-Stycka.woff2') format('woff2'),
+         url('fonts/Stycka/INDG-Stycka.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 
 /* CSS Variables */
