@@ -835,8 +835,14 @@
       {
         "sampleId": "lowercase",
         "weight": 700,
-        "fontSize": 100,
+        "fontSize": 160,
         "text": "abcdefghijklmnopqrstuvwxy & z"
+      },
+      {
+        "sampleId": "ultra",
+        "weight": 950,
+        "fontSize": 240,
+        "text": "ULTIMATE!"
       }
     ],
     "pricing": [
