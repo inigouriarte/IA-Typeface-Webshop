@@ -1329,7 +1329,7 @@ main {
     -webkit-backdrop-filter: blur(6px);
 }
 
-/* Z-index scale: main=0, dropdown portal=10010, header=10012 & bottom-bar=10013 & floating buttons bar=10013 (always above dropdown), body lines=10014 (always above header/bottom-bar), cursor=10020 (always on top) */
+/* Z-index scale: main=0, dropdown portal=10010, header=10012 & bottom-bar=10013 & floating buttons bar=10013 (always above dropdown), body lines=10014 (always above header/bottom-bar), purchase modal=10016 (always above all page chrome), cursor=10020 (always on top) */
 #dropdown-portal {
     position: fixed;
     left: 0;
@@ -3709,7 +3709,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     display: flex;
     position: fixed;
     inset: 0;
-    z-index: 10010;
+    z-index: 10016; /* Above header/bottom-bar/floating-buttons (10012–10013) and body lines (10014) — a modal should sit above all persistent chrome */
     background: rgba(0, 0, 0, 0);
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
