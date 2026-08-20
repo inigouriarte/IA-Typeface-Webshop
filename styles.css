@@ -1731,7 +1731,7 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
     font-size: 150px;
     font-weight: 400;
     color: var(--color-text);
-    line-height: 1;
+    line-height: normal; /* Derived from each font's own metrics, so per-font/per-weight corrections (e.g. Wovo, Stycka) actually take effect */
     margin-top: 25px;
     margin-bottom: 25px;
     margin-left: var(--layout-content-padding);
