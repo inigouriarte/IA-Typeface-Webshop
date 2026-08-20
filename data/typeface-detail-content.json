@@ -841,8 +841,9 @@
       {
         "sampleId": "ultra",
         "weight": 950,
-        "fontSize": 240,
-        "text": "ULTIMATE!"
+        "fontSize": 220,
+        "text": "ULTIMATE!",
+        "letterSpacing": -0.08
       }
     ],
     "pricing": [
