@@ -831,6 +831,12 @@
         "fontSize": 50,
         "text": "Crouwel began his career in 1955 creating exhibition, graphic, and product designs along with Kho Liang Ie. In 1963, he was one of the founders of the design studio Total Design (currently named Total Identity). From 1964 onwards, Crouwel was responsible for the design of the posters, catalogues and exhibitions of the Stedelijk Museum in Amsterdam.",
         "fontSizeMobile": 24
+      },
+      {
+        "sampleId": "lowercase",
+        "weight": 700,
+        "fontSize": 100,
+        "text": "abcdefghijklmnopqrstuvwxy & z"
       }
     ],
     "pricing": [
