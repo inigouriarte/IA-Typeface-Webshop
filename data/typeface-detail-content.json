@@ -233,63 +233,61 @@
         "Latin Extended-A"
       ]
     },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
     "samples": [
       {
+        "sampleId": "regular",
         "weight": 500,
-        "style": "normal",
         "fontSize": 140,
-        "text": "Sphinx of black quartz, judge my vow.",
-        "sampleId": "regular"
+        "text": "Sphinx of black quartz, judge my vow."
       },
       {
+        "sampleId": "alphabet",
         "weight": 500,
-        "style": "normal",
         "fontSize": 70,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
       },
       {
+        "sampleId": "italic",
         "weight": 500,
-        "style": "italic",
         "fontSize": 100,
         "text": "Italic adds emphasis and rhythm to editorial layouts.",
-        "sampleId": "italic"
+        "style": "italic"
       },
       {
+        "sampleId": "oblique",
         "weight": 500,
-        "style": "oblique",
         "fontSize": 100,
         "text": "Oblique offers a subtle slant with a different flavour.",
-        "sampleId": "oblique"
+        "style": "oblique"
       },
       {
+        "sampleId": "body",
         "weight": 500,
-        "style": "normal",
         "fontSize": 28,
-        "text": "Dale’s three styles—Regular, Italic, and Oblique—give editors flexibility for captions, pull quotes, and body text.",
-        "sampleId": "body"
+        "text": "Dale’s three styles—Regular, Italic, and Oblique—give editors flexibility for captions, pull quotes, and body text."
       }
     ],
     "pricing": [
       {
         "name": "INDG Dale Family",
-        "price": "60€"
+        "price": "20€"
       },
       {
         "name": "INDG Dale Regular",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Dale Italic",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Dale Oblique",
-        "price": "20€"
+        "price": "10€"
       }
-    ],
-    "hasOpenType": false,
-    "openTypeFeatures": []
+    ]
   },
   "heron2": {
     "description": "A single-weight display typeface with strong character, ideal for headlines and branding.",
