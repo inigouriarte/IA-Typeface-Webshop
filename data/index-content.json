@@ -147,15 +147,25 @@
     "defaultWeightIndex": 2
   },
   {
-    "id": "stycka",
-    "name": "INDG Stycka",
-    "displayName": "INDG Stycka",
-    "linkUrl": "stycka.html",
+    "id": "luara",
+    "name": "INDG Luara",
+    "displayName": "INDG Luara",
+    "linkUrl": "luara.html",
     "hasLink": true,
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
-    "fontSizeMobile": 50,
+    "isOneStyle": true
+  },
+  {
+    "id": "zigrid",
+    "name": "INDG Zigrid",
+    "displayName": "INDG Zigrid",
+    "linkUrl": "zigrid.html",
+    "hasLink": true,
+    "dropdownType": "",
+    "fontSize": 120,
+    "letterSpacing": 0,
     "letterSpacingMobile": 0,
     "isOneStyle": true
   },
@@ -164,11 +174,11 @@
     "name": "INDG Dale",
     "displayName": "INDG Dale",
     "linkUrl": "dale.html",
-    "hasLink": true,
     "dropdownType": "style",
     "fontSize": 140,
     "letterSpacing": 0,
     "isOneStyle": false,
+    "hasLink": true,
     "styles": [
       {
         "weight": 500,
@@ -208,17 +218,6 @@
     ],
     "defaultWeight": 400,
     "defaultWeightIndex": 0
-  },
-  {
-    "id": "luara",
-    "name": "INDG Luara",
-    "displayName": "INDG Luara",
-    "linkUrl": "luara.html",
-    "hasLink": true,
-    "dropdownType": "",
-    "fontSize": 120,
-    "letterSpacing": 0,
-    "isOneStyle": true
   },
   {
     "id": "heron2",
@@ -267,14 +266,15 @@
     "hasLink": true
   },
   {
-    "id": "zigrid",
-    "name": "INDG Zigrid",
-    "displayName": "INDG Zigrid",
-    "linkUrl": "zigrid.html",
+    "id": "stycka",
+    "name": "INDG Stycka",
+    "displayName": "INDG Stycka",
+    "linkUrl": "stycka.html",
     "hasLink": true,
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
+    "fontSizeMobile": 50,
     "letterSpacingMobile": 0,
     "isOneStyle": true
   }
