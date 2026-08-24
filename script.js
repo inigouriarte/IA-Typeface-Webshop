@@ -377,6 +377,19 @@ function applyFontVariantWithCrossfade(sample, weight, stretch, style) {
     if (weight) sample.style.fontWeight = weight;
     sample.style.fontStretch = stretch || 'normal';
     sample.style.fontStyle = style || 'normal';
+
+    // Chromium can fail to re-shape glyphs for a contenteditable element when
+    // only a font-style/font-weight property changes on it — confirmed via
+    // testing (including a completely independent Canvas 2D render of the
+    // same font, which was always correct) that the font itself loads fine;
+    // the DOM/CSS text-layout path just doesn't always pick it up. This
+    // happened even with the font pre-warmed, so it isn't only a loading-
+    // timing issue. A full remove+reinsert forces a genuinely fresh layout —
+    // done here, while still invisible, so there's no visible flash.
+    var nextSibling = sample.nextSibling;
+    parent.removeChild(sample);
+    void parent.offsetHeight;
+    parent.insertBefore(sample, nextSibling);
     void sample.offsetHeight; // flush the above before re-enabling transitions
 
     requestAnimationFrame(function () {
@@ -1464,14 +1477,23 @@ if (document.readyState === 'loading') {
 // Preload every font variant the page offers so switching styles within a family is
 // instant. Without this, non-default weights/widths are fetched on first selection and
 // the browser briefly shows a fallback font (the FOUT seen on desktop but not mobile).
+//
+// Previously this rendered hidden <span> elements to trigger the browser's own font
+// loading, then waited on document.fonts.ready to know when to clean them up. That's
+// fragile: if any font on the page had already finished loading before this ran (always
+// true — the default-weight fonts load immediately), .ready can already be a resolved
+// promise, so .then() fires within milliseconds rather than waiting for these NEW loads.
+// The cleanup then removed the triggering spans while their fetches were still in
+// flight, and the browser abandoned them — leaving that variant stuck "unloaded"
+// indefinitely (confirmed via document.fonts: status stayed "unloaded" even seconds
+// later, for styles like italic that aren't anyone's default). Using the Font Loading
+// API's own load() directly avoids all of this: no DOM tricks, and its promise only
+// resolves once that specific font has actually finished loading.
 (function () {
     function warmFontVariants() {
         if (!('fonts' in document)) return;
         var sections = document.querySelectorAll('.typeface-section');
         if (!sections.length) return;
-        var holder = document.createElement('div');
-        holder.setAttribute('aria-hidden', 'true');
-        holder.style.cssText = 'position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none;';
         var seen = {};
         sections.forEach(function (section) {
             var sample = section.querySelector('.typeface-sample');
@@ -1485,25 +1507,12 @@ if (document.readyState === 'loading') {
                 var key = family + '|' + weight + '|' + stretch + '|' + style;
                 if (seen[key]) return;
                 seen[key] = true;
-                var span = document.createElement('span');
-                span.textContent = 'AaBbGg0123';
-                span.style.fontFamily = family;
-                span.style.fontWeight = weight;
-                span.style.fontStretch = stretch;
-                span.style.fontStyle = style;
-                span.style.fontSize = '40px';
-                holder.appendChild(span);
+                var styleKeyword = (style === 'italic' || style === 'oblique') ? style : 'normal';
+                try {
+                    document.fonts.load(styleKeyword + ' ' + weight + ' 40px ' + family).catch(function () {});
+                } catch (e) {}
             });
         });
-        if (!holder.childNodes.length) return;
-        document.body.appendChild(holder);
-        // Offscreen rendering forces each variant to download; clean up once fonts settle.
-        var cleanup = function () { setTimeout(function () { if (holder.parentNode) holder.parentNode.removeChild(holder); }, 200); };
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(cleanup);
-        } else {
-            setTimeout(cleanup, 3000);
-        }
     }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', warmFontVariants);
