@@ -177,7 +177,7 @@
     src: url('fonts/Dale/INDGDale-Italic.woff2') format('woff2'),
          url('fonts/Dale/INDGDale-Italic.woff') format('woff');
     font-weight: 500;
-    font-style: oblique;
+    font-style: italic;
     font-display: swap;
 }
 
@@ -186,7 +186,7 @@
     src: url('fonts/Dale/INDGDale-Oblique.woff2') format('woff2'),
          url('fonts/Dale/INDGDale-Oblique.woff') format('woff');
     font-weight: 500;
-    font-style: italic;
+    font-style: oblique;
     font-display: swap;
 }
 
