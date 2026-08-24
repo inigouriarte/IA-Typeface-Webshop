@@ -56,102 +56,7 @@
 
 /* Monospace UI font: DM Mono from Google Fonts (loaded via link in each HTML), fallback to system mono */
 /* INDG Actio Font Faces */
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-RegularNormal.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-RegularNormal.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-BoldNormal.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-BoldNormal.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-LightNormal.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-LightNormal.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-ThinNormal.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-ThinNormal.woff') format('woff');
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-BlackNormal.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-BlackNormal.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* INDG Actio Expanded Font Faces */
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-RegularExpanded.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-RegularExpanded.woff') format('woff');
-    font-weight: 400;
-    font-stretch: expanded;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-BoldExpanded.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-BoldExpanded.woff') format('woff');
-    font-weight: 700;
-    font-stretch: expanded;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-LightExpanded.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-LightExpanded.woff') format('woff');
-    font-weight: 300;
-    font-stretch: expanded;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-ThinExpanded.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-ThinExpanded.woff') format('woff');
-    font-weight: 100;
-    font-stretch: expanded;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-BlackExpanded.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-BlackExpanded.woff') format('woff');
-    font-weight: 900;
-    font-stretch: expanded;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* INDG Luara Font Faces */
 @font-face {
     font-family: 'INDG Luara';
@@ -219,16 +124,6 @@
 }
 
 /* INDG Actio Condensed Font Face */
-@font-face {
-    font-family: 'INDG Actio';
-    src: url('fonts/Actio/INDGActio-RegularCondensed.woff2') format('woff2'),
-         url('fonts/Actio/INDGActio-RegularCondensed.woff') format('woff');
-    font-weight: 400;
-    font-stretch: condensed;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* INDG Heron Font Face */
 @font-face {
     font-family: 'INDG Heron';
@@ -464,6 +359,97 @@
     font-style: italic;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-LightExpanded.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-LightExpanded.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-LightNormal.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-LightNormal.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-RegularExpanded.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-RegularExpanded.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-RegularNormal.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-RegularNormal.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-ThinExpanded.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-ThinExpanded.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-ThinNormal.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-ThinNormal.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-BlackExpanded.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-BlackExpanded.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-BlackNormal.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-BlackNormal.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-BoldExpanded.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-BoldExpanded.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Actio';
+    src: url('fonts/Actio/INDGActio-BoldNormal.woff2') format('woff2'),
+         url('fonts/Actio/INDGActio-BoldNormal.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 
 
