@@ -246,22 +246,24 @@
       {
         "sampleId": "alphabet",
         "weight": 500,
-        "fontSize": 70,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+        "fontSize": 140,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "fontSizeMobile": 60
       },
       {
         "sampleId": "italic",
         "weight": 500,
-        "fontSize": 100,
-        "text": "Italic adds emphasis and rhythm to editorial layouts.",
-        "style": "italic"
+        "fontSize": 45,
+        "text": "La tenzone poetica rappresenta il culmine della rivalità tra Dante e Forese, politici avversi all'interno dei guelfi fiorentini, ma privatamente amici intimi. I due, quindi, nella finzione poetica, procedono a lanciarsi una serie di invettive e accuse infamanti di natura giocosa. Ad aprire la tenzone è Dante, mentre Forese la prosegue e la chiude. Forese è per Dante goloso, degenerato e criminale, mentre Dante è per Forese miserabile, povero e disonorato. Dai commentatori Dante è generalmente ritenuto il vincitore della contesa, soprattutto per la maggior qualità e ricercatezza dei suoi versi, ricchi di rimandi ed allusioni.",
+        "fontSizeMobile": 20
       },
       {
         "sampleId": "oblique",
         "weight": 500,
-        "fontSize": 100,
-        "text": "Oblique offers a subtle slant with a different flavour.",
-        "style": "oblique"
+        "fontSize": 230,
+        "text": "Animali Fantastici",
+        "style": "oblique",
+        "fontSizeMobile": 100
       },
       {
         "sampleId": "body",

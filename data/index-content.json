@@ -174,11 +174,11 @@
     "name": "INDG Dale",
     "displayName": "INDG Dale",
     "linkUrl": "dale.html",
+    "hasLink": true,
     "dropdownType": "style",
     "fontSize": 140,
     "letterSpacing": 0,
     "isOneStyle": false,
-    "hasLink": true,
     "styles": [
       {
         "weight": 500,
