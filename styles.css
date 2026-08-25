@@ -361,6 +361,7 @@
     src: url('fonts/Actio/INDGActio-LightExpanded.woff2') format('woff2'),
          url('fonts/Actio/INDGActio-LightExpanded.woff') format('woff');
     font-weight: 300;
+    font-stretch: expanded;
     font-style: normal;
     font-display: swap;
 }
@@ -379,6 +380,7 @@
     src: url('fonts/Actio/INDGActio-RegularExpanded.woff2') format('woff2'),
          url('fonts/Actio/INDGActio-RegularExpanded.woff') format('woff');
     font-weight: 400;
+    font-stretch: expanded;
     font-style: normal;
     font-display: swap;
 }
@@ -397,6 +399,7 @@
     src: url('fonts/Actio/INDGActio-ThinExpanded.woff2') format('woff2'),
          url('fonts/Actio/INDGActio-ThinExpanded.woff') format('woff');
     font-weight: 100;
+    font-stretch: expanded;
     font-style: normal;
     font-display: swap;
 }
@@ -415,6 +418,7 @@
     src: url('fonts/Actio/INDGActio-BlackExpanded.woff2') format('woff2'),
          url('fonts/Actio/INDGActio-BlackExpanded.woff') format('woff');
     font-weight: 900;
+    font-stretch: expanded;
     font-style: normal;
     font-display: swap;
 }
@@ -433,6 +437,7 @@
     src: url('fonts/Actio/INDGActio-BoldExpanded.woff2') format('woff2'),
          url('fonts/Actio/INDGActio-BoldExpanded.woff') format('woff');
     font-weight: 700;
+    font-stretch: expanded;
     font-style: normal;
     font-display: swap;
 }
