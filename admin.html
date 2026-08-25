@@ -1063,7 +1063,7 @@
     /* ══════════════════════════════════════════════
        Fonts – List & Editor
     ══════════════════════════════════════════════ */
-    const INDEX_MAIN_KEYS = ['id','name','displayName','linkUrl','dropdownType','fontSize','letterSpacing','isOneStyle','fontWeight','hasLink'];
+    const INDEX_MAIN_KEYS = ['id','name','displayName','linkUrl','dropdownType','fontSize','letterSpacing','isOneStyle','fontWeight','hasLink','styles'];
     let indexData = [], detailData = {};
     let editingFontId = null;
 
@@ -1156,6 +1156,96 @@
       const container = document.getElementById('editor-samples');
       container.innerHTML = buildSamplesHTML(samples);
       wireSamplesDragReorder();
+    }
+
+    /* ── Style Variants builder (structured items with drag-reorder) ──
+       Used when Dropdown Type = "style" (e.g. Regular/Italic/Oblique). This
+       is a first-class field (see INDEX_MAIN_KEYS), not routed through the
+       generic Advanced Config editor — that editor showed arrays as a single
+       long JSON string in a one-line input, which is exactly the kind of
+       thing a careless edit (or even just re-saving without touching it)
+       could silently corrupt, and it happened: a Font Family Override on two
+       style entries got dropped this way. This editor makes each field,
+       including the family override, an explicit, first-class input. */
+    function buildStyleVariantsHTML(styles) {
+      if (!styles || !styles.length) return '<p style="font-size:0.8125rem;color:var(--fg-muted)">No style variants yet. Click "+ Add style" to create one.</p>';
+      return styles.map((s, i) => styleVariantItemHTML(s, i)).join('');
+    }
+    function styleVariantItemHTML(s, i) {
+      const style = s.style || 'normal';
+      return `<div class="sample-item" draggable="true" data-sti="${i}">
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+        <div class="sample-item-fields">
+          <div class="field"><label>Label</label><input class="input input-sm" data-stf="label" value="${esc(s.label||'')}" placeholder="Regular"></div>
+          <div class="field"><label>Weight</label><input type="number" class="input input-sm" data-stf="weight" value="${s.weight ?? 400}"></div>
+          <div class="field"><label>Style</label><select class="input input-sm" data-stf="style">
+            <option value="normal" ${style==='normal'?'selected':''}>normal</option>
+            <option value="italic" ${style==='italic'?'selected':''}>italic</option>
+            <option value="oblique" ${style==='oblique'?'selected':''}>oblique</option>
+          </select></div>
+          <div class="field field-full"><label>Font Family Override</label><input class="input input-sm" data-stf="family" value="${esc(s.family||'')}" placeholder="Leave blank to use this typeface's own font"><div class="hint">Only set this when the variant is a genuinely different design (e.g. a serif companion) rather than a weight/slant of the same font. Must exactly match a font-family already declared in styles.css.</div></div>
+        </div>
+        <div class="sample-item-actions"><button type="button" class="btn btn-sm btn-destructive" data-remove-style-variant="${i}" title="Remove style">×</button></div>
+      </div>`;
+    }
+    function wireStyleVariantsDragReorder() {
+      const container = document.getElementById('editor-style-variants');
+      if (!container) return;
+      let dragIdx = null;
+      container.querySelectorAll('.sample-item').forEach(item => {
+        item.addEventListener('dragstart', e => {
+          if (!e.target.closest('.drag-handle') && e.target !== item) { e.preventDefault(); return; }
+          dragIdx = parseInt(item.dataset.sti);
+          item.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+        });
+        item.addEventListener('dragend', () => {
+          item.classList.remove('dragging');
+          container.querySelectorAll('.sample-item').forEach(c => c.classList.remove('drag-over'));
+        });
+        item.addEventListener('dragover', e => {
+          e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+          container.querySelectorAll('.sample-item').forEach(c => c.classList.remove('drag-over'));
+          item.classList.add('drag-over');
+        });
+        item.addEventListener('drop', e => {
+          e.preventDefault();
+          const dropIdx = parseInt(item.dataset.sti);
+          if (dragIdx === null || dragIdx === dropIdx) return;
+          const styles = collectStyleVariantsFromDOM();
+          const [moved] = styles.splice(dragIdx, 1);
+          styles.splice(dropIdx, 0, moved);
+          renderStyleVariantsUI(styles);
+          markDirty();
+        });
+      });
+      container.querySelectorAll('[data-remove-style-variant]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const styles = collectStyleVariantsFromDOM();
+          styles.splice(parseInt(btn.dataset.removeStyleVariant), 1);
+          renderStyleVariantsUI(styles);
+          markDirty();
+        });
+      });
+      container.querySelectorAll('input, select').forEach(el => {
+        el.addEventListener('input', markDirty);
+        el.addEventListener('change', markDirty);
+      });
+    }
+    function collectStyleVariantsFromDOM() {
+      const items = document.querySelectorAll('#editor-style-variants .sample-item');
+      return Array.from(items).map(item => {
+        const g = key => item.querySelector(`[data-stf="${key}"]`)?.value ?? '';
+        const obj = { weight: Number(g('weight')) || 400, style: g('style') || 'normal', label: g('label') || 'Style' };
+        const family = g('family').trim();
+        if (family) obj.family = family;
+        return obj;
+      });
+    }
+    function renderStyleVariantsUI(styles) {
+      const container = document.getElementById('editor-style-variants');
+      container.innerHTML = buildStyleVariantsHTML(styles);
+      wireStyleVariantsDragReorder();
     }
 
     /* ── Advanced Config fields builder ── */
@@ -1340,6 +1430,18 @@
           </div>
         </div>
 
+        <!-- Style Variants (for Dropdown Type = "style") -->
+        <div class="editor-section">
+          <div class="editor-section-header">
+            Style Variants
+            <button type="button" class="btn btn-sm" id="editor-add-style-variant">+ Add style</button>
+          </div>
+          <div class="editor-section-body">
+            <div class="sample-items" id="editor-style-variants">${buildStyleVariantsHTML(indexEntry.styles || [])}</div>
+            <div class="hint" style="margin-top:0.5rem">Used when Dropdown Type above is "style" (e.g. Regular/Italic/Oblique). Drag to reorder.</div>
+          </div>
+        </div>
+
         <!-- Detail Page Hero -->
         <div class="editor-section">
           <div class="editor-section-header">Detail Page Hero</div>
@@ -1485,6 +1587,15 @@
         markDirty();
       });
 
+      // Wire up style variants drag-reorder
+      wireStyleVariantsDragReorder();
+      document.getElementById('editor-add-style-variant').addEventListener('click', () => {
+        const styles = collectStyleVariantsFromDOM();
+        styles.push({ weight: 400, style: 'normal', label: '' });
+        renderStyleVariantsUI(styles);
+        markDirty();
+      });
+
       // Wire up config fields
       wireConfigFields();
       document.getElementById('editor-add-config-field').addEventListener('click', () => {
@@ -1556,6 +1667,11 @@
       } catch (err) {
         throw new Error('Advanced/Dropdown Config has invalid JSON — fix it before saving. (' + err.message + ')');
       }
+      // Style variants are a first-class field (not routed through the extra
+      // JSON above), collected fresh from their own structured editor so a
+      // stale "extra" value can never silently override it.
+      const styleVariants = collectStyleVariantsFromDOM();
+      if (styleVariants.length) idxEntry.styles = styleVariants; else delete idxEntry.styles;
 
       // Detail entry
       const detEntry = {};
