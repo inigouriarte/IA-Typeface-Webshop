@@ -334,33 +334,6 @@
 }
 
 @font-face {
-    font-family: 'INDG Dale';
-    src: url('fonts/Dale/INDGDale-Oblique.woff2') format('woff2'),
-         url('fonts/Dale/INDGDale-Oblique.woff') format('woff');
-    font-weight: 400;
-    font-style: oblique;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Dale';
-    src: url('fonts/Dale/INDGDale-Serif.woff2') format('woff2'),
-         url('fonts/Dale/INDGDale-Serif.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Dale';
-    src: url('fonts/Dale/INDGDale-Superitalic.woff2') format('woff2'),
-         url('fonts/Dale/INDGDale-Italic.woff') format('woff');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
     font-family: 'INDG Actio';
     src: url('fonts/Actio/INDGActio-LightExpanded.woff2') format('woff2'),
          url('fonts/Actio/INDGActio-LightExpanded.woff') format('woff');
