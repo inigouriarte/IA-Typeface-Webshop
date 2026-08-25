@@ -145,7 +145,8 @@ ${options}
 function renderStyleDropdown(styles, selectedIndex = 0) {
     const options = styles.map((item, index) => {
         const selected = index === selectedIndex ? ' selected' : '';
-        return `                            <div class="dropdown-option${selected}" data-weight="${item.weight}" data-style="${item.style}">${item.label}</div>`;
+        const familyAttr = item.family ? ` data-family="${item.family}"` : '';
+        return `                            <div class="dropdown-option${selected}" data-weight="${item.weight}" data-style="${item.style}"${familyAttr}>${item.label}</div>`;
     }).join('\n');
 
     return `                <div class="control-box">

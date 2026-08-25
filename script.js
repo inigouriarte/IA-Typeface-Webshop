@@ -323,10 +323,11 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
             const weight = this.getAttribute('data-weight') || this.getAttribute('data-value');
             const stretch = this.getAttribute('data-stretch');
             const style = this.getAttribute('data-style');
+            const family = this.getAttribute('data-family');
             const section = dropdown.closest('.typeface-section');
             const sample = section ? section.querySelector('.typeface-sample') : null;
             if (sample) {
-                applyFontVariantWithCrossfade(sample, weight, stretch, style);
+                applyFontVariantWithCrossfade(sample, weight, stretch, style, family);
             }
             
             if (isTypeface()) window.TypefaceDropdownPortal.close();
@@ -345,13 +346,14 @@ document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
  * fades+blurs in, both over the same 1s, so the two overlap rather than
  * playing one after the other.
  */
-function applyFontVariantWithCrossfade(sample, weight, stretch, style) {
+function applyFontVariantWithCrossfade(sample, weight, stretch, style, family) {
     if (!sample) return;
     var parent = sample.parentElement;
     if (!parent) {
         if (weight) sample.style.fontWeight = weight;
         sample.style.fontStretch = stretch || 'normal';
         sample.style.fontStyle = style || 'normal';
+        sample.style.fontFamily = family ? `'${family}', sans-serif` : '';
         return;
     }
 
@@ -377,6 +379,12 @@ function applyFontVariantWithCrossfade(sample, weight, stretch, style) {
     if (weight) sample.style.fontWeight = weight;
     sample.style.fontStretch = stretch || 'normal';
     sample.style.fontStyle = style || 'normal';
+    // A style option can point at a different font-family entirely (e.g. a
+    // serif design that isn't a weight/slant variant of the base font at
+    // all — see data-family on style dropdown options). Clearing back to ''
+    // when absent falls through to the CSS default (the typeface's own
+    // family) rather than getting stuck on whatever was last set.
+    sample.style.fontFamily = family ? `'${family}', sans-serif` : '';
 
     // Chromium can fail to re-shape glyphs for a contenteditable element when
     // only a font-style/font-weight property changes on it — confirmed via
@@ -1504,12 +1512,15 @@ if (document.readyState === 'loading') {
                 var weight = opt.getAttribute('data-weight') || opt.getAttribute('data-value') || '400';
                 var stretch = opt.getAttribute('data-stretch') || 'normal';
                 var style = opt.getAttribute('data-style') || 'normal';
-                var key = family + '|' + weight + '|' + stretch + '|' + style;
+                // A style option can override the family entirely (e.g. a serif
+                // design that isn't a slant/weight variant of the base font).
+                var optFamily = opt.getAttribute('data-family') ? `'${opt.getAttribute('data-family')}'` : family;
+                var key = optFamily + '|' + weight + '|' + stretch + '|' + style;
                 if (seen[key]) return;
                 seen[key] = true;
                 var styleKeyword = (style === 'italic' || style === 'oblique') ? style : 'normal';
                 try {
-                    document.fonts.load(styleKeyword + ' ' + weight + ' 40px ' + family).catch(function () {});
+                    document.fonts.load(styleKeyword + ' ' + weight + ' 40px ' + optFamily).catch(function () {});
                 } catch (e) {}
             });
         });

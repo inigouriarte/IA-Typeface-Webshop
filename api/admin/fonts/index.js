@@ -129,7 +129,8 @@ function buildFontFaceCSS(weights, dirName, fontName) {
     if (!srcParts.length && w.files.ttf) srcParts.push(`url('fonts/${dirName}/${w.files.ttf}') format('truetype')`);
     if (!srcParts.length && w.files.otf) srcParts.push(`url('fonts/${dirName}/${w.files.otf}') format('opentype')`);
     if (srcParts.length) {
-      css += `@font-face {\n    font-family: '${fontName}';\n    src: ${srcParts.join(',\n         ')};\n    font-weight: ${w.weight};\n    font-style: ${w.style};\n    font-display: swap;\n}\n\n`;
+      const stretchLine = (w.stretch && w.stretch !== 'normal') ? `\n    font-stretch: ${w.stretch};` : '';
+      css += `@font-face {\n    font-family: '${fontName}';\n    src: ${srcParts.join(',\n         ')};\n    font-weight: ${w.weight};${stretchLine}\n    font-style: ${w.style};\n    font-display: swap;\n}\n\n`;
     }
   }
   return css;
@@ -400,13 +401,21 @@ async function handleUpdate(fields, uploadedFiles, res) {
   // Build new @font-face rules for uploaded weights
   const newFontFaces = buildFontFaceCSS(weights, dirName, name || fontId);
 
-  // Remove existing @font-face blocks for weights we're replacing
+  // Remove existing @font-face blocks that reference any of the exact filenames
+  // being uploaded (matching on weight alone was too broad — it deleted every
+  // rule at that weight regardless of style/stretch, so re-uploading just one
+  // variant could silently wipe out unrelated sibling variants sharing the
+  // same weight, e.g. re-uploading "Thin" could delete "Thin Expanded" too).
+  const dirNameEsc = dirName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   for (const w of weights) {
-    const weightPattern = new RegExp(
-      `@font-face\\s*\\{[^}]*fonts/${dirName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/[^}]*font-weight:\\s*${w.weight};[^}]*\\}\\s*`,
-      'g'
-    );
-    css = css.replace(weightPattern, '');
+    for (const filename of Object.values(w.files)) {
+      const filenameEsc = filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const filePattern = new RegExp(
+        `@font-face\\s*\\{[^}]*fonts/${dirNameEsc}/${filenameEsc}[^}]*\\}\\s*`,
+        'g'
+      );
+      css = css.replace(filePattern, '');
+    }
   }
 
   // Insert new @font-face blocks
