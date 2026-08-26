@@ -251,10 +251,17 @@
         "fontSizeMobile": 60
       },
       {
-        "sampleId": "italic",
+        "sampleId": "italian",
         "weight": 500,
         "fontSize": 45,
         "text": "La tenzone poetica rappresenta il culmine della rivalità tra Dante e Forese, politici avversi all'interno dei guelfi fiorentini, ma privatamente amici intimi. I due, quindi, nella finzione poetica, procedono a lanciarsi una serie di invettive e accuse infamanti di natura giocosa. Ad aprire la tenzone è Dante, mentre Forese la prosegue e la chiude. Forese è per Dante goloso, degenerato e criminale, mentre Dante è per Forese miserabile, povero e disonorato. Dai commentatori Dante è generalmente ritenuto il vincitore della contesa, soprattutto per la maggior qualità e ricercatezza dei suoi versi, ricchi di rimandi ed allusioni.",
+        "fontSizeMobile": 20
+      },
+      {
+        "sampleId": "svenska",
+        "weight": 500,
+        "fontSize": 45,
+        "text": "Vid tolv års ålder trolovades han med Gemma Donati, och gifte sig senare med henne. De fick troligen tre söner och två döttrar. Två söner, Jacopo och Pietro, skulle senare gå till eftervärlden för sina kommentarer till faderns verk. Dante fick dessutom åtminstone en dotter, Antonia, som blev nunna i Ravenna och då antog namnet syster Beatrice. 1289 deltog han som kavallerist i striden vid Campaldino mellan Florens och Arezzo 11 juni samt i fälttåget mot Pisa. I Florens var det en ständig maktkamp mellan partier, i vilken lantadeln, borgarskapet och proletärerna stred.",
         "fontSizeMobile": 20
       },
       {
