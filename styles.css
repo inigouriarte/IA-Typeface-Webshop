@@ -68,15 +68,6 @@
 }
 
 /* INDG Dale Font Faces */
-@font-face {
-    font-family: 'INDG Dale';
-    src: url('fonts/Dale/INDGDale-Regular.woff2') format('woff2'),
-         url('fonts/Dale/INDGDale-Regular.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* font-weight is a real, distinct value per style below (not just normal's
    500) even though this font has no genuine weight axis — confirmed via
    direct pixel-diff testing that Chromium fails to disambiguate two
@@ -86,24 +77,6 @@
    it purely for semantic accuracy (these are still slant variants of one
    family, unlike Serif/Superitalic below, which are genuinely different
    designs and get their own font-family instead). */
-@font-face {
-    font-family: 'INDG Dale';
-    src: url('fonts/Dale/INDGDale-Italic.woff2') format('woff2'),
-         url('fonts/Dale/INDGDale-Italic.woff') format('woff');
-    font-weight: 501;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Dale';
-    src: url('fonts/Dale/INDGDale-Oblique.woff2') format('woff2'),
-         url('fonts/Dale/INDGDale-Oblique.woff') format('woff');
-    font-weight: 502;
-    font-style: oblique;
-    font-display: swap;
-}
-
 /* Serif and Superitalic are different letterform designs, not slant/weight
    variants — they can't be expressed via font-style (only normal/italic/
    oblique exist) or reused weight values without colliding with Regular/
@@ -459,6 +432,34 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'INDG Dale';
+    src: url('fonts/Dale/INDGDale-Italic.woff2') format('woff2'),
+         url('fonts/Dale/INDGDale-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Dale';
+    src: url('fonts/Dale/INDGDale-Regular.woff2') format('woff2'),
+         url('fonts/Dale/INDGDale-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'INDG Dale';
+    src: url('fonts/Dale/INDGDale-Oblique.woff2') format('woff2'),
+         url('fonts/Dale/INDGDale-Oblique.woff') format('woff');
+    font-weight: 400;
+    font-style: oblique;
+    font-display: swap;
+}
+
 
 
 
