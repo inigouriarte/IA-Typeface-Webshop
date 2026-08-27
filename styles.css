@@ -77,11 +77,20 @@
     font-display: swap;
 }
 
+/* font-weight is a real, distinct value per style below (not just normal's
+   500) even though this font has no genuine weight axis — confirmed via
+   direct pixel-diff testing that Chromium fails to disambiguate two
+   non-normal font-style values (italic vs oblique) sharing the exact same
+   family+weight, silently rendering one as the other. Giving each variant
+   its own weight sidesteps the bug entirely; font-style is kept alongside
+   it purely for semantic accuracy (these are still slant variants of one
+   family, unlike Serif/Superitalic below, which are genuinely different
+   designs and get their own font-family instead). */
 @font-face {
     font-family: 'INDG Dale';
     src: url('fonts/Dale/INDGDale-Italic.woff2') format('woff2'),
          url('fonts/Dale/INDGDale-Italic.woff') format('woff');
-    font-weight: 500;
+    font-weight: 501;
     font-style: italic;
     font-display: swap;
 }
@@ -90,7 +99,7 @@
     font-family: 'INDG Dale';
     src: url('fonts/Dale/INDGDale-Oblique.woff2') format('woff2'),
          url('fonts/Dale/INDGDale-Oblique.woff') format('woff');
-    font-weight: 500;
+    font-weight: 502;
     font-style: oblique;
     font-display: swap;
 }

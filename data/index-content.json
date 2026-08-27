@@ -186,14 +186,26 @@
         "label": "Regular"
       },
       {
-        "weight": 500,
+        "weight": 501,
         "style": "italic",
         "label": "Italic"
       },
       {
-        "weight": 500,
+        "weight": 502,
         "style": "oblique",
         "label": "Oblique"
+      },
+      {
+        "weight": 500,
+        "style": "normal",
+        "label": "Serif",
+        "family": "INDG Dale Serif"
+      },
+      {
+        "weight": 500,
+        "style": "italic",
+        "label": "Superitalic",
+        "family": "INDG Dale Superitalic"
       }
     ],
     "defaultStyleIndex": 0
