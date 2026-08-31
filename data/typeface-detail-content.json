@@ -836,15 +836,16 @@
       {
         "sampleId": "crouwel",
         "weight": 300,
-        "fontSize": 50,
-        "text": "Crouwel began his career in 1955 creating exhibition, graphic, and product designs along with Kho Liang Ie. In 1963, he was one of the founders of the design studio Total Design (currently named Total Identity). From 1964 onwards, Crouwel was responsible for the design of the posters, catalogues and exhibitions of the Stedelijk Museum in Amsterdam.",
-        "fontSizeMobile": 24
+        "fontSize": 36,
+        "text": "Crouwel began his career in 1955 creating exhibition, graphic, and product designs along with Kho Liang Ie. In 1963, he was one of the founders of the design studio Total Design (currently named Total Identity). From 1964 onwards, Crouwel was responsible for the design of the posters, catalogues and exhibitions of the Stedelijk Museum in Amsterdam. In 1967 he designed the typeface New Alphabet, a design that embraces the limitations of the cathode-ray tube technology used by early data display screens and phototypesetting equipment, thus only containing horizontal and vertical strokes.",
+        "fontSizeMobile": 18
       },
       {
         "sampleId": "lowercase",
         "weight": 700,
-        "fontSize": 160,
-        "text": "abcdefghijklmnopqrstuvwxy & z"
+        "fontSize": 120,
+        "text": "abcdefghijklmnopqrstuvwxy & z",
+        "fontSizeMobile": 40
       },
       {
         "sampleId": "ultra",
