@@ -36,7 +36,8 @@ function renderDropdownMenu(typeface) {
     } else if (typeface.dropdownType === 'style') {
         typeface.styles.forEach((item, index) => {
             const selected = index === typeface.defaultStyleIndex ? ' selected' : '';
-            options += `<div class="dropdown-option${selected}" data-weight="${item.weight}" data-style="${item.style}">${item.label}</div>\n                            `;
+            const familyAttr = item.family ? ` data-family="${item.family}"` : '';
+            options += `<div class="dropdown-option${selected}" data-weight="${item.weight}" data-style="${item.style}"${familyAttr}>${item.label}</div>\n                            `;
             if (selected) defaultLabel = item.label;
         });
     } else if (typeface.dropdownType === 'custom') {
