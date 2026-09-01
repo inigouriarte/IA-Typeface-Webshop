@@ -393,24 +393,6 @@
 
 @font-face {
     font-family: 'INDG Wovo';
-    src: url('fonts/Wovo/INDGWovo-Bold.woff2') format('woff2'),
-         url('fonts/Wovo/INDGWovo-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Wovo';
-    src: url('fonts/Wovo/INDGWovo-Ultra.woff2') format('woff2'),
-         url('fonts/Wovo/INDGWovo-Ultra.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDG Wovo';
     src: url('fonts/Wovo/INDGWovo-Regular.woff2') format('woff2'),
          url('fonts/Wovo/INDGWovo-Regular.woff') format('woff');
     font-weight: 400;
@@ -436,10 +418,23 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Bold.woff2') format('woff2'),
+         url('fonts/Wovo/INDGWovo-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
 
-
-
-
+@font-face {
+    font-family: 'INDG Wovo';
+    src: url('fonts/Wovo/INDGWovo-Ultra.woff2') format('woff2'),
+         url('fonts/Wovo/INDGWovo-Ultra.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
 
 
 /* CSS Variables */
