@@ -532,6 +532,7 @@ body {
     padding-top: 80px;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    overflow-x: hidden; /* See html rule below for why this is needed on both */
     position: relative;
     cursor: none;
     -webkit-font-smoothing: antialiased;
@@ -607,6 +608,12 @@ body::-webkit-scrollbar {
 html {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    overflow-x: hidden; /* Defense-in-depth: the scrollbar is hidden above but that alone
+        doesn't stop horizontal scroll gestures from revealing overflow — confirmed via
+        real-device video that Wovo's page is swipeable right on iOS Safari despite no
+        overflow being detectable via desktop Chrome (scrollWidth, computed styles, or
+        any DOM-level check), a known category of WebKit-specific layout quirks. This
+        directly prevents the symptom at the outermost level regardless of cause. */
 }
 
 html::-webkit-scrollbar {
