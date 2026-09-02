@@ -444,7 +444,7 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
     const detailsSection = renderDetailsSection(detailConfig.details, manualOtForDetails);
     const descriptionSection = `        <!-- Typeface Description Section -->
         <section class="typeface-description-section">
-            <h2 class="typeface-pricing-title">Typeface description</h2>
+            <h2 class="typeface-pricing-title">Typeface Description</h2>
             <div class="typeface-description">
                 <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
             </div>
