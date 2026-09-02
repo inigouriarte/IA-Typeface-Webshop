@@ -1088,6 +1088,16 @@ main {
     background-color: var(--color-stroke);
 }
 
+/* No divider between the title and the first sample — removes just the
+   line; the space below it (control row height + sample's own margin-top)
+   is untouched, so the gap down to the actual sample text stays the same. */
+.typeface-section:first-of-type .typeface-controls-row:first-child .control-box {
+    border-top: none;
+}
+.typeface-section:first-of-type .control-box:first-child::before {
+    content: none;
+}
+
 .control-box:last-child {
     border-right: none;
     margin-right: 0;
@@ -3381,6 +3391,14 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     border-bottom: 1px solid var(--color-stroke);
     margin-bottom: -1px; /* Overlap borders vertically with Typeface Data below,
         same convention used between every other pair of these sections */
+}
+
+/* Divider between the "Typeface Description" heading and the text below it —
+   scoped here rather than on .typeface-pricing-title itself, since that
+   class is shared with the Typeface Data and Pricing headings. */
+.typeface-description-section .typeface-pricing-title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-stroke);
 }
 
 /* Matches the exact spacing rhythm between Typeface Data and Pricing (purely
