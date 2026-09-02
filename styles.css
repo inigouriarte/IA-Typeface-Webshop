@@ -2718,6 +2718,13 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         padding-right: 0;
     }
 
+    .typeface-description-section {
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     .typeface-pricing {
         width: 100%;
         box-sizing: border-box;
@@ -3328,8 +3335,8 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     margin-top: 0;
     margin-bottom: 0;
     position: relative;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 0;
+    padding-bottom: 50px;
 }
 
 .typeface-description p {
@@ -3356,6 +3363,18 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 .typeface-detail-container {
     max-width: var(--layout-max-width);
     margin: 0 auto;
+}
+
+/* Typeface Description Section (moved here from the hero, after samples) —
+   same border/padding pattern as .typeface-details below it, sharing the
+   .typeface-pricing-title heading style used across all these sections. */
+.typeface-description-section {
+    padding-top: 150px;
+    padding-right: var(--layout-content-padding);
+    padding-bottom: 0;
+    padding-left: var(--layout-content-padding);
+    border-top: 1px solid var(--color-stroke);
+    margin-bottom: -1px; /* Overlap borders vertically */
 }
 
 /* Typeface Details Section */

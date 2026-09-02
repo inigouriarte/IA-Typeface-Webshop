@@ -442,6 +442,13 @@ function renderTypefaceDetailPage(typefaceId, config, detailConfig, allFonts) {
     // Render details and pricing
     const manualOtForDetails = (detailConfig.hasOpenType && Array.isArray(detailConfig.openTypeFeatures)) ? detailConfig.openTypeFeatures : null;
     const detailsSection = renderDetailsSection(detailConfig.details, manualOtForDetails);
+    const descriptionSection = `        <!-- Typeface Description Section -->
+        <section class="typeface-description-section">
+            <h2 class="typeface-pricing-title">Typeface description</h2>
+            <div class="typeface-description">
+                <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
+            </div>
+        </section>`;
     const buttonsRowHTML = detailConfig.isFree
         ? `                <div class="typeface-controls-row typeface-hero-buttons-row">
                     <div class="control-box"><button class="free-download-btn">Download for free</button></div>
@@ -500,15 +507,14 @@ ${preloadLink}    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:w
     <section class="typeface-hero">
         <div class="typeface-hero-content">
             <h1 class="typeface-title" contenteditable="true" spellcheck="false"${detailConfig.heroFontSizeMobile != null && detailConfig.heroFontSizeMobile !== '' ? ` data-font-size-mobile="${detailConfig.heroFontSizeMobile}"` : ''}${detailConfig.heroLetterSpacingMobile != null && detailConfig.heroLetterSpacingMobile !== '' ? ` data-letter-spacing-mobile="${detailConfig.heroLetterSpacingMobile}"` : ''}${(function(){ var s=''; if(detailConfig.heroFontSize != null && detailConfig.heroFontSize !== '') s+='font-size:'+detailConfig.heroFontSize+'px;'; if(detailConfig.heroLetterSpacing != null && detailConfig.heroLetterSpacing !== '') s+='letter-spacing:'+detailConfig.heroLetterSpacing+'em;'; return s ? ' style="'+s+'"' : ''; })()}>${detailConfig.heroText || config.displayName}</h1>
-            <div class="typeface-description">
-                <p contenteditable="true" spellcheck="false">${detailConfig.description}</p>
-            </div>
         </div>
     </section>
 
     <!-- Typeface Sections -->
     <main class="typeface-detail-container">
 ${sampleSections}
+
+${descriptionSection}
 
 ${detailsSection}
 
