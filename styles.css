@@ -2989,7 +2989,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
 
 /* Typeface Hero Section */
 .typeface-hero {
-    padding: 250px var(--layout-content-padding) 0px;
+    padding: 250px var(--layout-content-padding) 80px;
     text-align: center;
     /* Fit content height: avoids an uneven empty gap below the description that
        a fixed 100vh hero leaves when the title + description are shorter than the viewport */
@@ -3013,12 +3013,15 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     line-height: 180px;
     text-align: left;
     padding-top: 75px;
-    /* Bottom padding clears descenders (p, g, y, j, q) so they don't cross the divider line below */
+    /* Bottom padding clears descenders (p, g, y, j, q) so they don't cross the divider
+       line below; .typeface-hero's own bottom padding (above) adds further breathing
+       room beyond that, since with zero gap the descenders sat right against the
+       divider and read as a doubled/stacked line. */
     padding-bottom: 24px;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
-    outline: none;
+    outline: none; /* No focus ring on this contenteditable heading, at rest or focused */
     animation: fadeIn 0.4s ease-in;
     transition: color 0.2s ease;
 }
@@ -3366,15 +3369,26 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 }
 
 /* Typeface Description Section (moved here from the hero, after samples) —
-   same border/padding pattern as .typeface-details below it, sharing the
-   .typeface-pricing-title heading style used across all these sections. */
+   boxed with its own top AND bottom border (unlike Typeface Data/Pricing,
+   which only get a top border and rely on collapsing with the next
+   section's top border) so it reads as a distinct, self-contained unit. */
 .typeface-description-section {
     padding-top: 150px;
     padding-right: var(--layout-content-padding);
     padding-bottom: 0;
     padding-left: var(--layout-content-padding);
     border-top: 1px solid var(--color-stroke);
-    margin-bottom: -1px; /* Overlap borders vertically */
+    border-bottom: 1px solid var(--color-stroke);
+    margin-bottom: -1px; /* Overlap borders vertically with Typeface Data below,
+        same convention used between every other pair of these sections */
+}
+
+/* Matches the exact spacing rhythm between Typeface Data and Pricing (purely
+   Pricing's own 50px top-padding, since their borders already collapse) —
+   applied here only when Typeface Data directly follows the description,
+   instead of the larger 150px meant for following the samples section. */
+.typeface-description-section + .typeface-details {
+    padding-top: 50px;
 }
 
 /* Typeface Details Section */
