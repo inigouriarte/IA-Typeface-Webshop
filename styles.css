@@ -1088,16 +1088,6 @@ main {
     background-color: var(--color-stroke);
 }
 
-/* No divider between the title and the first sample — removes just the
-   line; the space below it (control row height + sample's own margin-top)
-   is untouched, so the gap down to the actual sample text stays the same. */
-.typeface-section:first-of-type .typeface-controls-row:first-child .control-box {
-    border-top: none;
-}
-.typeface-section:first-of-type .control-box:first-child::before {
-    content: none;
-}
-
 .control-box:last-child {
     border-right: none;
     margin-right: 0;
@@ -2999,7 +2989,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
 
 /* Typeface Hero Section */
 .typeface-hero {
-    padding: 250px var(--layout-content-padding) 80px;
+    padding: 250px var(--layout-content-padding) 0px;
     text-align: center;
     /* Fit content height: avoids an uneven empty gap below the description that
        a fixed 100vh hero leaves when the title + description are shorter than the viewport */
@@ -3023,11 +3013,12 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     line-height: 180px;
     text-align: left;
     padding-top: 75px;
-    /* Bottom padding clears descenders (p, g, y, j, q) so they don't cross the divider
-       line below; .typeface-hero's own bottom padding (above) adds further breathing
-       room beyond that, since with zero gap the descenders sat right against the
-       divider and read as a doubled/stacked line. */
-    padding-bottom: 24px;
+    /* Bottom padding clears descenders (p, g, y, j, q) so they don't cross the
+       divider line below, plus the breathing room that used to live on
+       .typeface-hero's own bottom padding — moved here so all the space
+       below the title belongs to the title's own box (e.g. for :hover)
+       rather than a separate wrapper. */
+    padding-bottom: 104px;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
@@ -3348,7 +3339,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     margin-top: 0;
     margin-bottom: 0;
     position: relative;
-    padding-top: 25px;
+    padding-top: 0;
     padding-bottom: 25px;
 }
 
@@ -3395,8 +3386,19 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 
 /* Divider between the "Typeface Description" heading and the text below it —
    scoped here rather than on .typeface-pricing-title itself, since that
-   class is shared with the Typeface Data and Pricing headings. */
+   class is shared with the Typeface Data and Pricing headings. Uses negative
+   margins to cancel the section's own side padding (25px) so the line spans
+   the full section width edge-to-edge, matching every other divider on the
+   page, then adds that same amount back as padding so the heading text
+   itself doesn't shift. The gap after the line matches Typeface Data's own
+   heading-to-content spacing exactly (10px, from the shared margin-bottom
+   on .typeface-pricing-title) rather than the extra padding this used to
+   have on top of it. */
 .typeface-description-section .typeface-pricing-title {
+    margin-left: calc(-1 * var(--layout-content-padding));
+    margin-right: calc(-1 * var(--layout-content-padding));
+    padding-left: calc(var(--box-text-padding) + var(--layout-content-padding));
+    padding-right: calc(var(--box-text-padding) + var(--layout-content-padding));
     padding-bottom: 20px;
     border-bottom: 1px solid var(--color-stroke);
 }
