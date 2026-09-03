@@ -2993,7 +2993,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
 
 /* Typeface Hero Section */
 .typeface-hero {
-    padding: 250px var(--layout-content-padding) 0px;
+    padding: 250px var(--layout-content-padding) 80px;
     text-align: center;
     /* Fit content height: avoids an uneven empty gap below the description that
        a fixed 100vh hero leaves when the title + description are shorter than the viewport */
@@ -3017,12 +3017,12 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     line-height: 180px;
     text-align: left;
     padding-top: 75px;
-    /* Bottom padding clears descenders (p, g, y, j, q) so they don't cross the
-       divider line below, plus the breathing room that used to live on
-       .typeface-hero's own bottom padding — moved here so all the space
-       below the title belongs to the title's own box (e.g. for :hover)
-       rather than a separate wrapper. */
-    padding-bottom: 104px;
+    /* Bottom padding clears descenders (p, g, y, j, q) only — kept small and
+       deliberate. The extra breathing room before the divider lives on
+       .typeface-hero's own padding instead of here: ballooning the title's
+       own contenteditable box to carry that space read as a second, larger
+       boundary stacked against the divider line right below it. */
+    padding-bottom: 24px;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
@@ -3343,7 +3343,13 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     margin-top: 0;
     margin-bottom: 0;
     position: relative;
-    padding-top: 25px;
+    /* Padding alone isn't the whole visual gap on either side: the heading
+       above contributes its own 10px margin-bottom, and the section below
+       contributes its 1px border-bottom. These two values are chosen so the
+       actual rendered gap (padding + that extra bit) comes out equal on
+       both sides — 16+10=26px above, 25+1=26px below — not just the
+       padding numbers themselves. */
+    padding-top: 16px;
     padding-bottom: 25px;
 }
 
@@ -3376,9 +3382,13 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 /* Typeface Description Section (moved here from the hero, after samples) —
    boxed with its own top AND bottom border (unlike Typeface Data/Pricing,
    which only get a top border and rely on collapsing with the next
-   section's top border) so it reads as a distinct, self-contained unit. */
+   section's top border) so it reads as a distinct, self-contained unit.
+   Top padding matches the same 50px rhythm Typeface Data uses after this
+   section, and Pricing uses after Typeface Data — kept consistent across
+   all three transitions rather than the larger 150px meant for coming
+   straight after the (much taller) samples section. */
 .typeface-description-section {
-    padding-top: 150px;
+    padding-top: 50px;
     padding-right: var(--layout-content-padding);
     padding-bottom: 0;
     padding-left: var(--layout-content-padding);
