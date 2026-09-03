@@ -2646,8 +2646,12 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         line-height: 90px;
         letter-spacing: -5px;
         padding-top: 25px;
-        /* Clears descenders (p, g, y, j, q) so they don't cross the divider line below */
-        padding-bottom: 12px;
+        /* Clears descenders (p, g, y, j, q) so they don't cross the divider line
+           below, plus the breathing room that used to live on .typeface-hero's
+           own bottom padding (same restructuring as the desktop rule — see
+           .typeface-title above — kept at the same 1:2 mobile:desktop ratio
+           this property already had before, 12px:24px, now 52px:104px) */
+        padding-bottom: 52px;
         text-align: left;
         padding-left: 0;
         padding-right: 0;
@@ -3339,7 +3343,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     margin-top: 0;
     margin-bottom: 0;
     position: relative;
-    padding-top: 0;
+    padding-top: 25px;
     padding-bottom: 25px;
 }
 
