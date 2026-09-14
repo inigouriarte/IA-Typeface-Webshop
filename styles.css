@@ -2389,13 +2389,34 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
     }
 
-    /* All boxes: only box text padding (on inner content), no stacked padding */
-    .typeface-controls-row .control-box {
-        height: 40px; /* Down from 50px desktop, matching the smaller mobile DM Mono size above */
+    /* All boxes: only box text padding (on inner content), no stacked padding.
+       Dropdown control-boxes are excluded — they keep their own 50px
+       (the dropdown trigger must match the full control-row height to look right).
+       The Aa capitalize button is adjusted separately below to stay square. */
+    .typeface-controls-row .control-box:not(:has(.custom-dropdown)) {
+        height: 40px;
         padding-left: 0;
         padding-right: 0;
         text-align: left;
         justify-content: flex-start;
+    }
+    .typeface-controls-row .control-box:has(.custom-dropdown) {
+        padding-left: 0;
+        padding-right: 0;
+        text-align: left;
+        justify-content: flex-start;
+    }
+
+    /* Aa capitalize button: stays square at the new 40px row height
+       (was 49×48px at desktop for 50px rows; now 39×38px) */
+    .capitalize-btn {
+        width: 39px;
+        height: 38px;
+    }
+
+    /* Pricing rows: apply the same 40px height */
+    .typeface-pricing .typeface-controls-row .control-box {
+        min-height: 40px;
     }
 
     .typeface-controls-row .control-box .typeface-name,
