@@ -3093,7 +3093,12 @@ body.typeface-wovo .typeface-title {
 }
 
 .typeface-title::after {
-    content: '';
+    content: none; /* Divider removed per explicit request — title (with its
+        own padding) goes straight into the first sample below, no line
+        directly under the title itself. This was a completely separate
+        full-bleed pseudo-element from the first sample's own control-box
+        border-top (which stays, further down, as the control row's own
+        top edge). */
     position: absolute;
     bottom: 0;
     left: calc(50% - 50vw);
