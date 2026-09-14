@@ -2453,8 +2453,11 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         margin: 0;
     }
 
-    /* Pricing rows: 40px, same padding as Typeface Data rows */
-    .typeface-pricing .typeface-controls-row .control-box {
+    /* Pricing rows: 40px, same padding as Typeface Data rows.
+       Must use :first-child variant too — the base rule .control-box:first-child
+       sets padding-left:0 which wins over the generic selector below. */
+    .typeface-pricing .typeface-controls-row .control-box,
+    .typeface-pricing .typeface-controls-row .control-box:first-child {
         min-height: 40px;
         height: auto;
         padding: var(--box-text-padding);
@@ -2799,6 +2802,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
         padding-left: 0;
         padding-right: 0;
+        margin-top: 0; /* No extra space above on mobile */
     }
 
     .typeface-pricing {
@@ -3466,6 +3470,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
    all three transitions rather than the larger 150px meant for coming
    straight after the (much taller) samples section. */
 .typeface-description-section {
+    margin-top: 50px; /* Extra breathing room above the section on desktop */
     padding-top: 50px;
     padding-right: var(--layout-content-padding);
     padding-bottom: 0;
@@ -3492,6 +3497,16 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
     right: calc(-1 * var(--layout-content-padding) - var(--box-text-padding));
     height: 1px;
     background-color: var(--color-stroke);
+}
+@media (max-width: 768px) {
+    /* On mobile the section has 0 side padding and the title has 10px padding-left,
+       so the ::after must reach 10px left of the title's own left edge and
+       span the full 100vw */
+    .typeface-description-section .typeface-pricing-title::after {
+        left: calc(-1 * var(--text-padding));
+        width: 100vw;
+        right: auto;
+    }
 }
 
 /* Matches the exact spacing rhythm between Typeface Data and Pricing (purely
