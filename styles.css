@@ -848,13 +848,13 @@ input[type="range"]:hover,
     text-align: left;
     padding-top: 150px;
     padding-right: var(--layout-content-padding);
-    padding-bottom: 75px; /* Halved from 150px */
+    padding-bottom: 150px;
     padding-left: var(--layout-content-padding);
     width: 100%;
     margin: 0;
     position: relative;
-    min-height: 100vh;
-    max-height: 100vh;
+    min-height: 75vh;
+    max-height: 75vh;
     overflow-y: auto;
     box-sizing: border-box;
     scrollbar-width: none;
@@ -2389,33 +2389,45 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
     }
 
-    /* All boxes: only box text padding (on inner content), no stacked padding.
-       Dropdown control-boxes are excluded — they keep their own 50px
-       (the dropdown trigger must match the full control-row height to look right).
-       The Aa capitalize button is adjusted separately below to stay square. */
-    .typeface-controls-row .control-box:not(:has(.custom-dropdown)) {
+    /* All control boxes except dropdown and Aa: shrink to 40px */
+    .typeface-controls-row .control-box:not(.capitalize-btn-box):not(:has(.custom-dropdown)) {
         height: 40px;
         padding-left: 0;
         padding-right: 0;
         text-align: left;
         justify-content: flex-start;
     }
+    /* Dropdown boxes: also shrink to 40px, and the inner dropdown too */
     .typeface-controls-row .control-box:has(.custom-dropdown) {
+        height: 40px;
         padding-left: 0;
         padding-right: 0;
         text-align: left;
         justify-content: flex-start;
     }
+    .custom-dropdown {
+        height: 40px;
+    }
 
-    /* Aa capitalize button: stays square at the new 40px row height
-       (was 49×48px at desktop for 50px rows; now 39×38px) */
+    /* Aa capitalize button and its box: stay square at 40px */
+    .typeface-controls-row .control-box.capitalize-btn-box {
+        flex: 0 0 40px !important;
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+    }
     .capitalize-btn {
-        width: 39px;
+        width: 38px;
         height: 38px;
+        margin: 1px 0 1px 0;
     }
 
     /* Pricing rows: apply the same 40px height */
     .typeface-pricing .typeface-controls-row .control-box {
+        min-height: 40px;
+    }
+    /* Typeface Data rows: apply 40px min-height (uses auto by default on mobile) */
+    .typeface-details-content .detail-item {
         min-height: 40px;
     }
 
