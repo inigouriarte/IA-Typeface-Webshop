@@ -846,9 +846,9 @@ input[type="range"]:hover,
 /* Intro Section */
 .intro {
     text-align: left;
-    padding-top: 250px;
+    padding-top: 150px;
     padding-right: var(--layout-content-padding);
-    padding-bottom: 250px;
+    padding-bottom: 150px;
     padding-left: var(--layout-content-padding);
     width: 100%;
     margin: 0;
@@ -2341,11 +2341,13 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
 
     .header {
         padding: 16px 0;
+        /* Extend header background into the iOS status bar area */
+        padding-top: calc(16px + env(safe-area-inset-top, 0px));
     }
 
     /* Mobile header height: 16+16 padding + 1px border + 44px (menu toggle / content row) */
     :root {
-        --header-height: 77px;
+        --header-height: calc(77px + env(safe-area-inset-top, 0px));
     }
 
     .header-content {
@@ -2408,6 +2410,11 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     .custom-dropdown {
         height: 40px;
     }
+    /* Dropdown trigger: match the 40px box so text centers correctly
+       (was hardcoded 50px — taller than the box, which pushed text out of alignment) */
+    .typeface-controls-row .custom-dropdown .dropdown-trigger {
+        height: 40px;
+    }
     /* Dropdown options when open: 40px min-height, vertically centered */
     #dropdown-portal .dropdown-option {
         min-height: 40px;
@@ -2434,14 +2441,17 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         justify-content: center;
     }
     .capitalize-btn {
-        width: 38px;
-        height: 38px;
-        margin: 1px 0 1px 0;
+        /* width = height = box size: guarantees the button itself
+           is a perfect square, matching the blue active-state highlight */
+        width: 40px;
+        height: 40px;
+        margin: 0;
     }
 
     /* Pricing rows: 40px */
     .typeface-pricing .typeface-controls-row .control-box {
         min-height: 40px;
+        height: auto;
     }
     /* Typeface Data rows: 40px min-height */
     .typeface-details-content .detail-item {

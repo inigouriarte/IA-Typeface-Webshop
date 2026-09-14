@@ -1095,7 +1095,7 @@ function populateOpenTypeDropdown(dropdown, features, showEmptyPlaceholder = fal
 
     if (hasNoFeatures) {
         dropdown.classList.add('no-ot-features');
-        if (selectedSpan) selectedSpan.textContent = 'No OT features';
+        if (selectedSpan) selectedSpan.textContent = 'No Features';
         if (arrowSpan) arrowSpan.style.display = 'none';
         if (trigger) trigger.setAttribute('disabled', 'disabled');
         const placeholder = document.createElement('div');
@@ -1106,7 +1106,7 @@ function populateOpenTypeDropdown(dropdown, features, showEmptyPlaceholder = fal
         menu.appendChild(placeholder);
     } else {
         dropdown.classList.remove('no-ot-features');
-        if (selectedSpan) selectedSpan.textContent = 'OT features';
+        if (selectedSpan) selectedSpan.textContent = 'Features';
         if (arrowSpan) arrowSpan.style.display = '';
         if (trigger) trigger.removeAttribute('disabled');
         list.forEach(feature => {
@@ -1302,7 +1302,7 @@ function applyDefaultOpenTypeFeatures(dropdown, section, features) {
 }
 
 /**
- * On typeface detail pages, fill the "OT features" row in the details section with features detected from the font.
+ * On typeface detail pages, fill the "Features" row in the details section with features detected from the font.
  */
 async function updateDetailsOTFeaturesRow(fontPathsByTypefaceId) {
     const el = document.querySelector('.detail-value-ot-features');

@@ -76,7 +76,7 @@ function renderOpenTypeDropdown(features = []) {
                     <div class="custom-dropdown opentype-dropdown">
                         <button class="dropdown-trigger" type="button">
                             <span class="dropdown-arrow">▼</span>
-                            <span class="dropdown-selected">OT features</span>
+                            <span class="dropdown-selected">Features</span>
                         </button>
                         <div class="dropdown-menu opentype-menu">
 ${options}
@@ -303,13 +303,13 @@ function renderDetailsSection(details, manualOtFeatures) {
                         <div class="detail-value">${details.glyphs}</div>
                     </div>
                 </div>
-                <!-- Column 3: Right-side labels (Unicode Ranges, OT features, Formats) -->
+                <!-- Column 3: Right-side labels (Unicode Ranges, Features, Formats) -->
                 <div class="details-column">
                     <div class="detail-item">
                         <div class="detail-label">Unicode ranges</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">OT features</div>
+                        <div class="detail-label">Features</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Formats</div>
