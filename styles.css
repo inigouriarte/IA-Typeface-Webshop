@@ -846,15 +846,15 @@ input[type="range"]:hover,
 /* Intro Section */
 .intro {
     text-align: left;
-    padding-top: 150px;
+    padding-top: 250px;
     padding-right: var(--layout-content-padding);
-    padding-bottom: 150px;
+    padding-bottom: 250px;
     padding-left: var(--layout-content-padding);
     width: 100%;
     margin: 0;
     position: relative;
-    min-height: 75vh;
-    max-height: 75vh;
+    min-height: auto;
+    max-height: none;
     overflow-y: auto;
     box-sizing: border-box;
     scrollbar-width: none;
@@ -2389,7 +2389,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
     }
 
-    /* All control boxes except dropdown and Aa: shrink to 40px */
+    /* All control boxes except Aa: 40px height */
     .typeface-controls-row .control-box:not(.capitalize-btn-box):not(:has(.custom-dropdown)) {
         height: 40px;
         padding-left: 0;
@@ -2397,7 +2397,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         text-align: left;
         justify-content: flex-start;
     }
-    /* Dropdown boxes: also shrink to 40px, and the inner dropdown too */
+    /* Dropdown control-boxes: 40px, inner .custom-dropdown too */
     .typeface-controls-row .control-box:has(.custom-dropdown) {
         height: 40px;
         padding-left: 0;
@@ -2408,13 +2408,30 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     .custom-dropdown {
         height: 40px;
     }
+    /* Dropdown options when open: 40px min-height, vertically centered */
+    #dropdown-portal .dropdown-option {
+        min-height: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 0;
+        padding-bottom: 0;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        justify-content: flex-start;
+    }
 
-    /* Aa capitalize button and its box: stay square at 40px */
+    /* Aa capitalize button box: 40×40 square.
+       The blue active highlight is already square — the box borders
+       just need to match by setting the box to exactly the same size. */
     .typeface-controls-row .control-box.capitalize-btn-box {
         flex: 0 0 40px !important;
         width: 40px;
         min-width: 40px;
         height: 40px;
+        padding-left: 0;
+        padding-right: 0;
+        justify-content: center;
     }
     .capitalize-btn {
         width: 38px;
@@ -2422,11 +2439,11 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         margin: 1px 0 1px 0;
     }
 
-    /* Pricing rows: apply the same 40px height */
+    /* Pricing rows: 40px */
     .typeface-pricing .typeface-controls-row .control-box {
         min-height: 40px;
     }
-    /* Typeface Data rows: apply 40px min-height (uses auto by default on mobile) */
+    /* Typeface Data rows: 40px min-height */
     .typeface-details-content .detail-item {
         min-height: 40px;
     }
@@ -2457,11 +2474,11 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         min-width: 0 !important;
     }
 
-    /* All-caps stays a 50×50 square */
+    /* All-caps: now 40×40 to match the reduced control bar height */
     .typeface-controls-row .control-box.capitalize-btn-box {
-        flex: 0 0 50px !important;
-        width: 50px;
-        min-width: 50px;
+        flex: 0 0 40px !important;
+        width: 40px;
+        min-width: 40px;
         padding-left: 0;
         padding-right: 0;
         justify-content: center;
@@ -3207,6 +3224,7 @@ body.typeface-wovo .typeface-title {
         bottom: 0;
         padding-left: 0;
         padding-right: 0;
+        padding-bottom: env(safe-area-inset-bottom, 0px); /* iOS: clear the home indicator / URL bar area */
         width: 100%;
     }
 }
