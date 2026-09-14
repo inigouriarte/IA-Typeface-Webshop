@@ -2458,7 +2458,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         min-height: 40px;
         height: auto;
         padding: var(--box-text-padding);
-        padding-left: calc(var(--text-padding) + var(--box-text-padding));
+        padding-left: var(--text-padding);
     }
     /* Typeface Data rows: 40px min-height */
     .typeface-details-content .detail-item {
@@ -3700,7 +3700,6 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 .typeface-pricing .typeface-controls-row .control-box {
     border-bottom: none;
     padding: var(--box-text-padding);
-    padding-left: calc(var(--layout-content-padding) + var(--box-text-padding));
     box-sizing: border-box;
     height: auto;
     min-height: 50px;
