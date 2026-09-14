@@ -1088,16 +1088,6 @@ main {
     background-color: var(--color-stroke);
 }
 
-/* No divider between the title and the first sample — per explicit request:
-   title (with its own top/bottom padding) goes straight into the first
-   sample, no line in between. */
-.typeface-section:first-of-type .typeface-controls-row:first-child .control-box {
-    border-top: none;
-}
-.typeface-section:first-of-type .control-box:first-child::before {
-    content: none;
-}
-
 .control-box:last-child {
     border-right: none;
     margin-right: 0;
