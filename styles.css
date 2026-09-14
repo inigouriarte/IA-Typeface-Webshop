@@ -2448,10 +2448,12 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         margin: 0;
     }
 
-    /* Pricing rows: 40px */
+    /* Pricing rows: 40px, same padding as Typeface Data rows */
     .typeface-pricing .typeface-controls-row .control-box {
         min-height: 40px;
         height: auto;
+        padding: var(--box-text-padding);
+        padding-left: calc(var(--text-padding) + var(--box-text-padding));
     }
     /* Typeface Data rows: 40px min-height */
     .typeface-details-content .detail-item {
@@ -3469,23 +3471,22 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
         same convention used between every other pair of these sections */
 }
 
-/* Divider between the "Typeface Description" heading and the text below it —
-   scoped here rather than on .typeface-pricing-title itself, since that
-   class is shared with the Typeface Data and Pricing headings. Uses negative
-   margins to cancel the section's own side padding (25px) so the line spans
-   the full section width edge-to-edge, matching every other divider on the
-   page, then adds that same amount back as padding so the heading text
-   itself doesn't shift. The gap after the line matches Typeface Data's own
-   heading-to-content spacing exactly (10px, from the shared margin-bottom
-   on .typeface-pricing-title) rather than the extra padding this used to
-   have on top of it. */
+/* Divider between the "Typeface Description" heading and the text below it.
+   Uses the same heading style as Typeface Data/Pricing (no extra padding,
+   no margin tricks) but adds a full-bleed bottom border that extends to
+   viewport edges to match the style of all other section dividers. */
 .typeface-description-section .typeface-pricing-title {
-    margin-left: calc(-1 * var(--layout-content-padding));
-    margin-right: calc(-1 * var(--layout-content-padding));
-    padding-left: calc(var(--box-text-padding) + var(--layout-content-padding));
-    padding-right: calc(var(--box-text-padding) + var(--layout-content-padding));
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--color-stroke);
+    padding-bottom: 10px;
+    position: relative;
+}
+.typeface-description-section .typeface-pricing-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: calc(-1 * var(--layout-content-padding) - var(--box-text-padding));
+    right: calc(-1 * var(--layout-content-padding) - var(--box-text-padding));
+    height: 1px;
+    background-color: var(--color-stroke);
 }
 
 /* Matches the exact spacing rhythm between Typeface Data and Pricing (purely
