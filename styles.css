@@ -609,6 +609,11 @@ html {
         overflow being detectable via desktop Chrome (scrollWidth, computed styles, or
         any DOM-level check), a known category of WebKit-specific layout quirks. This
         directly prevents the symptom at the outermost level regardless of cause. */
+    /* Prevent iOS Safari from auto-inflating text size when rotating to landscape —
+       without this, monospaced elements (DM Mono: section headings, footer text,
+       control labels) visibly grow in landscape even though font-size is fixed. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 html::-webkit-scrollbar {
@@ -3695,6 +3700,7 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
 .typeface-pricing .typeface-controls-row .control-box {
     border-bottom: none;
     padding: var(--box-text-padding);
+    padding-left: calc(var(--layout-content-padding) + var(--box-text-padding));
     box-sizing: border-box;
     height: auto;
     min-height: 50px;
