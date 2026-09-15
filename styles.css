@@ -851,9 +851,9 @@ input[type="range"]:hover,
 /* Intro Section */
 .intro {
     text-align: left;
-    padding-top: 150px;
+    padding-top: 200px;
     padding-right: var(--layout-content-padding);
-    padding-bottom: 150px;
+    padding-bottom: 200px;
     padding-left: var(--layout-content-padding);
     width: 100%;
     margin: 0;
@@ -3077,7 +3077,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
 
 /* Typeface Hero Section */
 .typeface-hero {
-    padding: 250px var(--layout-content-padding) 80px;
+    padding: 100px var(--layout-content-padding) 80px;
     text-align: center;
     /* Fit content height: avoids an uneven empty gap below the description that
        a fixed 100vh hero leaves when the title + description are shorter than the viewport */
