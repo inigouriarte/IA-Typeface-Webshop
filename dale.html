@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <title>INDG Dale - Indigo Alphabets®</title>
-    <meta name="description" content="A typeface with Regular, Italic, and Oblique variants, offering flexibility for editorial design.">
+    <meta name="description" content="INDG Dale is a light bitmap typeface built on a soft, rounded pixel grid — a contemporary take on early screen and dot-matrix lettering. Its low-resolution charm is offset by a surprisingly broad system of five styles: Regular, Italic, Oblique, a serif companion, and an exaggerated Superitalic. That range makes Dale unusually flexible for a pixel font, suited to retro-tech branding, digital-native editorial design, music and poster work, and any project that wants a warm, nostalgic 8-bit personality with real typographic versatility.">
     <meta property="og:title" content="INDG Dale - Indigo Alphabets®">
-    <meta property="og:description" content="A typeface with Regular, Italic, and Oblique variants, offering flexibility for editorial design.">
+    <meta property="og:description" content="INDG Dale is a light bitmap typeface built on a soft, rounded pixel grid — a contemporary take on early screen and dot-matrix lettering. Its low-resolution charm is offset by a surprisingly broad system of five styles: Regular, Italic, Oblique, a serif companion, and an exaggerated Superitalic. That range makes Dale unusually flexible for a pixel font, suited to retro-tech branding, digital-native editorial design, music and poster work, and any project that wants a warm, nostalgic 8-bit personality with real typographic versatility.">
     <meta property="og:type" content="product">
     <meta property="og:url" content="https://alphabets.indigoindigo.org/dale">
     <meta property="og:site_name" content="Indigo Alphabets">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="INDG Dale - Indigo Alphabets®">
-    <meta name="twitter:description" content="A typeface with Regular, Italic, and Oblique variants, offering flexibility for editorial design.">
+    <meta name="twitter:description" content="INDG Dale is a light bitmap typeface built on a soft, rounded pixel grid — a contemporary take on early screen and dot-matrix lettering. Its low-resolution charm is offset by a surprisingly broad system of five styles: Regular, Italic, Oblique, a serif companion, and an exaggerated Superitalic. That range makes Dale unusually flexible for a pixel font, suited to retro-tech branding, digital-native editorial design, music and poster work, and any project that wants a warm, nostalgic 8-bit personality with real typographic versatility.">
     <link rel="canonical" href="https://alphabets.indigoindigo.org/dale">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +24,8 @@
     <link rel="preload" href="fonts/Dale/INDGDale-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <style id="theme-overrides">:root{--color-primary: #0000FF;--color-text: #000000;--color-background: #F8F8F8;--color-stroke: #dbd3cf;--color-footer-background: #EBEBEB;}html[data-theme="dark"]{--color-primary: #3888FF;--color-text: #FFFFFF;--color-background: #131416;--color-stroke: #33302e;}</style>
 </head>
 <body class="typeface-dale">
     <!-- Header -->
@@ -43,9 +45,6 @@
     <section class="typeface-hero">
         <div class="typeface-hero-content">
             <h1 class="typeface-title" contenteditable="true" spellcheck="false">INDG Dale</h1>
-            <div class="typeface-description">
-                <p contenteditable="true" spellcheck="false">A typeface with Regular, Italic, and Oblique variants, offering flexibility for editorial design.</p>
-            </div>
         </div>
     </section>
 
@@ -62,8 +61,10 @@
                         </button>
                         <div class="dropdown-menu">
                             <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
-                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
-                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="501" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="502" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="500" data-style="normal" data-family="INDG Dale Serif">Serif</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic" data-family="INDG Dale Superitalic">Superitalic</div>
                         </div>
                     </div>
                 </div>
@@ -94,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="regular" data-target-match="dale-regular" style="font-size: 140px; letter-spacing: 0em; font-weight: 500; font-style: normal;">Sphinx of black quartz, judge my vow.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="regular" data-target-match="dale-regular" style="font-size: 140px; letter-spacing: 0em; font-weight: 500;">Sphinx of black quartz, judge my vow.</div>
         </section>
 
         <!-- alphabet Section -->
@@ -108,15 +109,17 @@
                         </button>
                         <div class="dropdown-menu">
                             <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
-                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
-                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="501" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="502" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="500" data-style="normal" data-family="INDG Dale Serif">Serif</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic" data-family="INDG Dale Superitalic">Superitalic</div>
                         </div>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="70" data-target="dale-alphabet">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="140" data-target="dale-alphabet">
                     </div>
                 </div>
                 <div class="control-box">
@@ -140,35 +143,37 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="alphabet" data-target-match="dale-alphabet" style="font-size: 70px; letter-spacing: 0em; font-weight: 500; font-style: normal;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="alphabet" data-target-match="dale-alphabet" data-font-size-mobile="60" style="font-size: 140px; letter-spacing: 0em; font-weight: 500;">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</div>
         </section>
 
-        <!-- italic Section -->
+        <!-- italian Section -->
         <section class="typeface-section" data-font="dale">
             <div class="typeface-controls-row">
                 <div class="control-box">
                     <div class="custom-dropdown">
                         <button class="dropdown-trigger" type="button">
                             <span class="dropdown-arrow">▼</span>
-                            <span class="dropdown-selected">Italic</span>
+                            <span class="dropdown-selected">Regular</span>
                         </button>
                         <div class="dropdown-menu">
-                            <div class="dropdown-option" data-weight="500" data-style="normal">Regular</div>
-                            <div class="dropdown-option selected" data-weight="500" data-style="italic">Italic</div>
-                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
+                            <div class="dropdown-option" data-weight="501" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="502" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="500" data-style="normal" data-family="INDG Dale Serif">Serif</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic" data-family="INDG Dale Superitalic">Superitalic</div>
                         </div>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="100" data-target="dale-italic">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="45" data-target="dale-italian">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
-                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-italic">
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-italian">
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
@@ -186,7 +191,55 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="italic" data-target-match="dale-italic" style="font-size: 100px; letter-spacing: 0em; font-weight: 500; font-style: italic;">Italic adds emphasis and rhythm to editorial layouts.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="italian" data-target-match="dale-italian" data-font-size-mobile="20" style="font-size: 45px; letter-spacing: 0em; font-weight: 500;">La tenzone poetica rappresenta il culmine della rivalità tra Dante e Forese, politici avversi all'interno dei guelfi fiorentini, ma privatamente amici intimi. I due, quindi, nella finzione poetica, procedono a lanciarsi una serie di invettive e accuse infamanti di natura giocosa. Ad aprire la tenzone è Dante, mentre Forese la prosegue e la chiude. Forese è per Dante goloso, degenerato e criminale, mentre Dante è per Forese miserabile, povero e disonorato. Dai commentatori Dante è generalmente ritenuto il vincitore della contesa, soprattutto per la maggior qualità e ricercatezza dei suoi versi, ricchi di rimandi ed allusioni.</div>
+        </section>
+
+        <!-- svenska Section -->
+        <section class="typeface-section" data-font="dale">
+            <div class="typeface-controls-row">
+                <div class="control-box">
+                    <div class="custom-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Regular</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
+                            <div class="dropdown-option" data-weight="501" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="502" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="500" data-style="normal" data-family="INDG Dale Serif">Serif</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic" data-family="INDG Dale Superitalic">Superitalic</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
+                        <input type="range" class="font-size-slider" min="10" max="400" value="45" data-target="dale-svenska">
+                    </div>
+                </div>
+                <div class="control-box">
+                    <div class="slider-container">
+                        <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-svenska">
+                    </div>
+                </div>
+                <div class="control-box capitalize-btn-box">
+                    <button type="button" class="capitalize-btn" aria-label="Capitalize text">Aa</button>
+                </div>
+                <div class="control-box">
+                    <div class="custom-dropdown opentype-dropdown">
+                        <button class="dropdown-trigger" type="button">
+                            <span class="dropdown-arrow">▼</span>
+                            <span class="dropdown-selected">Features</span>
+                        </button>
+                        <div class="dropdown-menu opentype-menu">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="svenska" data-target-match="dale-svenska" data-font-size-mobile="20" style="font-size: 45px; letter-spacing: 0em; font-weight: 500;">Vid tolv års ålder trolovades han med Gemma Donati, och gifte sig senare med henne. De fick troligen tre söner och två döttrar. Två söner, Jacopo och Pietro, skulle senare gå till eftervärlden för sina kommentarer till faderns verk. Dante fick dessutom åtminstone en dotter, Antonia, som blev nunna i Ravenna och då antog namnet syster Beatrice. 1289 deltog han som kavallerist i striden vid Campaldino mellan Florens och Arezzo 11 juni samt i fälttåget mot Pisa. I Florens var det en ständig maktkamp mellan partier, i vilken lantadeln, borgarskapet och proletärerna stred.</div>
         </section>
 
         <!-- oblique Section -->
@@ -200,15 +253,17 @@
                         </button>
                         <div class="dropdown-menu">
                             <div class="dropdown-option" data-weight="500" data-style="normal">Regular</div>
-                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
-                            <div class="dropdown-option selected" data-weight="500" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="501" data-style="italic">Italic</div>
+                            <div class="dropdown-option selected" data-weight="502" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="500" data-style="normal" data-family="INDG Dale Serif">Serif</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic" data-family="INDG Dale Superitalic">Superitalic</div>
                         </div>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="100" data-target="dale-oblique">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="230" data-target="dale-oblique">
                     </div>
                 </div>
                 <div class="control-box">
@@ -232,10 +287,10 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="oblique" data-target-match="dale-oblique" style="font-size: 100px; letter-spacing: 0em; font-weight: 500; font-style: oblique;">Oblique offers a subtle slant with a different flavour.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="oblique" data-target-match="dale-oblique" data-font-size-mobile="90" style="font-size: 230px; letter-spacing: 0em; font-weight: 502; font-style: oblique;">ANIMALI FANTASTICI</div>
         </section>
 
-        <!-- body Section -->
+        <!-- pixels Section -->
         <section class="typeface-section" data-font="dale">
             <div class="typeface-controls-row">
                 <div class="control-box">
@@ -246,21 +301,23 @@
                         </button>
                         <div class="dropdown-menu">
                             <div class="dropdown-option selected" data-weight="500" data-style="normal">Regular</div>
-                            <div class="dropdown-option" data-weight="500" data-style="italic">Italic</div>
-                            <div class="dropdown-option" data-weight="500" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="501" data-style="italic">Italic</div>
+                            <div class="dropdown-option" data-weight="502" data-style="oblique">Oblique</div>
+                            <div class="dropdown-option" data-weight="500" data-style="normal" data-family="INDG Dale Serif">Serif</div>
+                            <div class="dropdown-option" data-weight="500" data-style="italic" data-family="INDG Dale Superitalic">Superitalic</div>
                         </div>
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-size" aria-label="font size">Aa</span>
-                        <input type="range" class="font-size-slider" min="10" max="400" value="28" data-target="dale-body">
+                        <input type="range" class="font-size-slider" min="10" max="400" value="180" data-target="dale-pixels">
                     </div>
                 </div>
                 <div class="control-box">
                     <div class="slider-container">
                         <span class="control-label control-icon control-icon-tracking" aria-label="tracking">T</span>
-                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-body">
+                        <input type="range" class="letter-spacing-slider" min="-0.1" max="0.1" step="0.005" value="0" data-target="dale-pixels">
                     </div>
                 </div>
                 <div class="control-box capitalize-btn-box">
@@ -278,7 +335,15 @@
                     </div>
                 </div>
             </div>
-            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="body" data-target-match="dale-body" style="font-size: 28px; letter-spacing: 0em; font-weight: 500; font-style: normal;">Dale’s three styles—Regular, Italic, and Oblique—give editors flexibility for captions, pull quotes, and body text.</div>
+            <div class="typeface-sample" contenteditable="true" spellcheck="false" data-font="dale" data-sample="pixels" data-target-match="dale-pixels" data-font-size-mobile="40" style="font-size: 180px; letter-spacing: 0em; font-weight: 500;">8,417,299 pixels</div>
+        </section>
+
+        <!-- Typeface Description Section -->
+        <section class="typeface-description-section">
+            <h2 class="typeface-pricing-title">Typeface Description</h2>
+            <div class="typeface-description">
+                <p contenteditable="true" spellcheck="false">INDG Dale is a light bitmap typeface built on a soft, rounded pixel grid — a contemporary take on early screen and dot-matrix lettering. Its low-resolution charm is offset by a surprisingly broad system of five styles: Regular, Italic, Oblique, a serif companion, and an exaggerated Superitalic. That range makes Dale unusually flexible for a pixel font, suited to retro-tech branding, digital-native editorial design, music and poster work, and any project that wants a warm, nostalgic 8-bit personality with real typographic versatility.</p>
+            </div>
         </section>
 
         <!-- Typeface Details Section -->
@@ -349,7 +414,7 @@
                         <div class="pricing-name">Complete family (3 styles)</div>
                     </div>
                     <div class="control-box">
-                        <div class="price">60€</div>
+                        <div class="price">20€</div>
                     </div>
                 </div>
                 <div class="typeface-controls-row">
@@ -357,7 +422,7 @@
                         <div class="pricing-name">Style</div>
                     </div>
                     <div class="control-box">
-                        <div class="price">20€</div>
+                        <div class="price">10€</div>
                     </div>
                 </div>
                 <div class="typeface-controls-row typeface-hero-buttons-row">
@@ -387,19 +452,20 @@
                     <div><a href="/alvica" style="text-decoration: none;">Alvica</a></div>
                     <div><a href="/actio" style="text-decoration: none;">Actio</a></div>
                     <div><a href="/modus" style="text-decoration: none;">Modus</a></div>
-                    <div><a href="/luara" style="text-decoration: none;">Luara</a></div>
+                    <div><a href="/wovo" style="text-decoration: none;">Wovo</a></div>
+                    <div><a href="/stycka" style="text-decoration: none;">Stycka</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="/zigrid" style="text-decoration: none;">Zigrid</a></div>
                     <div><a href="/dale" style="text-decoration: none;">Dale</a></div>
-                    <div><a href="/peqat" style="text-decoration: none;">Peqat</a></div>
                     <div><a href="/heron" style="text-decoration: none;">Heron</a></div>
+                    <div><a href="/peqat" style="text-decoration: none;">Peqat</a></div>
+                    <div><a href="/luara" style="text-decoration: none;">Luara</a></div>
+                    <div><a href="/naora" style="text-decoration: none;">Naora</a></div>
                 </div>
                 <div class="typeface-column">
-                    <div><a href="/naora" style="text-decoration: none;">Naora</a></div>
                     <div><a href="/sifora" style="text-decoration: none;">Sifora</a></div>
                     <div><a href="/oequadrat" style="text-decoration: none;">Old English Quadrat</a></div>
-                    <div><a href="/stycka" style="text-decoration: none;">Stycka</a></div>
+                    <div><a href="/zigrid" style="text-decoration: none;">Zigrid</a></div>
                 </div>
             </div>
         </div>
@@ -435,10 +501,10 @@
     </div>
 
     <script>
-    window.__TYPEFACE_FONT_PATHS__ = {"alvica":"fonts/Alvica/INDGAlvica-Semibold.woff2","actio":"fonts/Actio/INDGActio-RegularNormal.woff2","modus":"fonts/Modus/INDGModus-Grey.woff2","luara":"fonts/Luara/INDG Luara.woff2","dale":"fonts/Dale/INDGDale-Regular.woff2","peqat":"fonts/Peqat/INDGPeqat-Norma.woff2","heron2":"fonts/Heron/INDGHeron-ST.woff2","naora":"fonts/Naora/INDG Naora.woff2","sifora":"fonts/Sifora/INDGSifora-Regular.woff2","zigrid":"fonts/Zigrid/INDG Zigrid.woff2","stycka":"fonts/Stycka/INDG-Stycka.woff2","oequadrat":"fonts/Old English Quadrat/Old-English-Quadrat.woff2","Test":"fonts/INDIG Test/INDGAlvica-Regular.woff2","dajo":"fonts/DAJO/INDGDracma-Naturalis.woff2"};
+    window.__TYPEFACE_FONT_PATHS__ = {"alvica":"fonts/Alvica/INDGAlvica-Semibold.woff2","actio":"fonts/Actio/INDGActio-RegularNormal.woff2","modus":"fonts/Modus/INDGModus-Grey.woff2","luara":"fonts/Luara/INDG Luara.woff2","dale":"fonts/Dale/INDGDale-Regular.woff2","peqat":"fonts/Peqat/INDGPeqat-Norma.woff2","heron2":"fonts/Heron/INDGHeron-ST.woff2","naora":"fonts/Naora/INDG Naora.woff2","sifora":"fonts/Sifora/INDGSifora-Regular.woff2","zigrid":"fonts/Zigrid/INDG Zigrid.woff2","stycka":"fonts/Stycka/INDG-Stycka.woff2","oequadrat":"fonts/Old English Quadrat/Old-English-Quadrat.woff2","Test":"fonts/INDIG Test/INDGAlvica-Regular.woff2","dajo":"fonts/DAJO/INDGDracma-Naturalis.woff2","wovo":"fonts/Wovo/INDGWovo-Regular.woff2"};
     window.__TYPEFACE_ID__ = "dale";
     window.__TYPEFACE_NAME__ = "INDG Dale";
-    window.__TYPEFACE_PRICING__ = [{"name":"INDG Dale Family","price":"60€"},{"name":"INDG Dale Regular","price":"20€"},{"name":"INDG Dale Italic","price":"20€"},{"name":"INDG Dale Oblique","price":"20€"}];
+    window.__TYPEFACE_PRICING__ = [{"name":"INDG Dale Family","price":"20€"},{"name":"INDG Dale Regular","price":"10€"},{"name":"INDG Dale Italic","price":"10€"},{"name":"INDG Dale Oblique","price":"10€"}];
     </script>
     <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js" defer></script>
         <script src="https://js.stripe.com/v3/" defer></script>
