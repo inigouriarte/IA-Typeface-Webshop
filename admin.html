@@ -919,21 +919,23 @@
     }
 
     /* ── Confirmation Modal ── */
-    function showConfirmModal({ title, message, confirmLabel = 'Delete', destructive = true } = {}) {
+    function showConfirmModal({ title, message, confirmLabel = 'Delete', cancelLabel = 'Cancel', destructive = true } = {}) {
       return new Promise(resolve => {
         const overlay = document.getElementById('modal-overlay');
         document.getElementById('modal-title').textContent = title || 'Are you sure?';
         document.getElementById('modal-message').textContent = message || 'This action cannot be undone.';
         const confirmBtn = document.getElementById('modal-confirm');
+        const cancelBtn = document.getElementById('modal-cancel');
         confirmBtn.textContent = confirmLabel;
+        cancelBtn.textContent = cancelLabel;
         confirmBtn.style.background = destructive ? 'var(--destructive)' : '';
         confirmBtn.style.borderColor = destructive ? 'var(--destructive)' : '';
         overlay.classList.add('show');
-        function cleanup(result) { overlay.classList.remove('show'); off(); resolve(result); }
+        function cleanup(result) { overlay.classList.remove('show'); off(); cancelBtn.textContent = 'Cancel'; resolve(result); }
         function onKey(e) { if (e.key === 'Escape') cleanup(false); }
         function off() { document.removeEventListener('keydown', onKey); }
         document.addEventListener('keydown', onKey);
-        document.getElementById('modal-cancel').onclick = () => cleanup(false);
+        cancelBtn.onclick = () => cleanup(false);
         confirmBtn.onclick = () => cleanup(true);
         overlay.onclick = e => { if (e.target === overlay) cleanup(false); };
       });
@@ -1025,6 +1027,7 @@
       async getStats(){const r=await fetch('/api/admin/stats');if(!r.ok)throw new Error('Failed');return r.json();},
       async getOrders(sa){let u='/api/admin/orders?limit=30';if(sa)u+='&starting_after='+sa;const r=await fetch(u);if(!r.ok)throw new Error('Failed');return r.json();},
       async saveBatch(data){const r=await fetch('/api/admin/content?type=batch',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
+      async deleteTypeface(id, deleteFiles){const u=`/api/admin/fonts?typeface=${encodeURIComponent(id)}${deleteFiles?'&deleteFiles=true':''}`;const r=await fetch(u,{method:'DELETE'});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Delete failed');}return parseJson(r);},
     };
 
     /* ══════════════════════════════════════════════
@@ -1740,20 +1743,31 @@
     }
 
     async function deleteFont() {
+      const deletedId = editingFontId;
+
+      // First confirm the deletion itself. This now performs a COMPLETE
+      // removal server-side (content data, styles.css @font-face/sample/title
+      // rules, and the font-path maps in the renderer/script/server files) in
+      // a single commit — no leftovers. It cannot be undone with one click, so
+      // the copy is explicit.
       const confirmed = await showConfirmModal({
-        title: 'Delete font?',
-        message: `This will remove "${editingFontId}" from your content data. Font files on disk are not affected. You can undo this for a few seconds after deletion.`,
-        confirmLabel: 'Delete font',
+        title: 'Delete typeface?',
+        message: `This permanently removes "${deletedId}" from the site: its content entry, the CSS font rules, and every internal reference. This can't be undone with one click.`,
+        confirmLabel: 'Delete typeface',
         destructive: true,
       });
       if (!confirmed) return;
 
-      // Snapshot for undo
-      const deletedId = editingFontId;
-      const snapshotIndex = JSON.parse(JSON.stringify(indexData));
-      const snapshotDetail = JSON.parse(JSON.stringify(detailData));
+      // Then ask, separately, whether to also delete the font files from the repo.
+      const alsoDeleteFiles = await showConfirmModal({
+        title: 'Also delete the font files?',
+        message: `Do you also want to delete the uploaded font files (the fonts/ folder for "${deletedId}") from the repository? Choose "Keep files" if you might re-add this typeface later.`,
+        confirmLabel: 'Delete files too',
+        cancelLabel: 'Keep files',
+        destructive: true,
+      });
 
-      // Remove optimistically
+      // Remove from the in-memory data optimistically and close the editor.
       const idx = indexData.findIndex(f => f.id === deletedId);
       if (idx >= 0) indexData.splice(idx, 1);
       delete detailData[deletedId];
@@ -1762,18 +1776,20 @@
       renderFontList();
 
       try {
-        await API.saveBatch({ index: indexData, detail: detailData });
-        toast('Font deleted', { action: {
-          label: 'Undo',
-          fn: async () => {
-            indexData = snapshotIndex;
-            Object.keys(snapshotDetail).forEach(k => detailData[k] = snapshotDetail[k]);
-            renderFontList();
-            await API.saveBatch({ index: indexData, detail: detailData });
-            toast('Font restored');
-          }
-        }});
-      } catch(e) { toast(e.message, 'error'); }
+        const result = await API.deleteTypeface(deletedId, alsoDeleteFiles);
+        const filesMsg = (result && result.filesDeleted && result.filesDeleted.length)
+          ? ` (${result.filesDeleted.length} font files deleted)`
+          : '';
+        toast(`Typeface removed${filesMsg}`);
+      } catch (e) {
+        toast(e.message, 'error');
+        // Re-sync from server on failure so the UI reflects reality.
+        try {
+          indexData = await API.getIndexContent();
+          detailData = await API.getDetailContent();
+          renderFontList();
+        } catch (_) {}
+      }
     }
 
     function closeEditor() {

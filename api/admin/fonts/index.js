@@ -1,5 +1,5 @@
 const requireAdmin = require('../../_require-admin');
-const { commitFiles, readFile } = require('../../_github');
+const { commitFiles, readFile, listDir } = require('../../_github');
 
 function detectWeightInfo(filename) {
   const lower = filename.toLowerCase();
@@ -41,6 +41,83 @@ function addEntryToJSObject(src, markerStr, newLine) {
     }
   }
   return src;
+}
+
+/**
+ * Remove every line inside a marked JS object literal whose key matches `key`.
+ * The inverse of addEntryToJSObject — used when deleting a typeface so its
+ * entries in the font-path / font-dir / font-family maps are stripped out.
+ * `key` is matched both bare (`key:`) and quoted (`'key':` / `"key":`), and
+ * the whole line (including a trailing comma) is removed.
+ */
+function removeKeyFromJSObject(src, markerStr, key) {
+  const markerIdx = src.indexOf(markerStr);
+  if (markerIdx === -1) return src;
+  const openBrace = src.indexOf('{', markerIdx);
+  if (openBrace === -1) return src;
+  // Find the matching close brace for this object literal.
+  let depth = 0, closeBrace = -1;
+  for (let i = openBrace; i < src.length; i++) {
+    if (src[i] === '{') depth++;
+    if (src[i] === '}') { depth--; if (depth === 0) { closeBrace = i; break; } }
+  }
+  if (closeBrace === -1) return src;
+  const before = src.slice(0, openBrace + 1);
+  let body = src.slice(openBrace + 1, closeBrace);
+  const after = src.slice(closeBrace);
+  const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Match a whole line: optional indent, key (bare or quoted), colon, value, optional trailing comma, newline.
+  const lineRe = new RegExp(
+    `^[^\\S\\n]*(?:${esc}|'${esc}'|"${esc}")\\s*:\\s*[^\\n]*?,?[^\\S\\n]*\\n`,
+    'gm'
+  );
+  body = body.replace(lineRe, '');
+  // Tidy a dangling trailing comma left on the (new) last property, so
+  // repeated add/remove cycles don't accumulate commas: `x: 'y',\n}` -> `x: 'y'\n}`.
+  body = body.replace(/,(\s*)$/, '$1');
+  return before + body + after;
+}
+
+/**
+ * Strip every trace of a typeface from a styles.css string:
+ *   - its "/* <Font Name> Font Faces *\/" comment + all following @font-face blocks
+ *   - the .typeface-sample[data-font="<id>"] { ... } rule
+ *   - the body.typeface-<id> .typeface-title { ... } rule
+ * fontName is optional; when omitted only the id-based rules are removed.
+ */
+function removeTypefaceCSS(css, fontId, fontName) {
+  const escId = fontId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // 1. Sample rule
+  css = css.replace(
+    new RegExp(`\\n?\\.typeface-sample\\[data-font="${escId}"\\]\\s*\\{[^}]*\\}\\n`, 'g'),
+    '\n'
+  );
+  // 2. Title rule
+  css = css.replace(
+    new RegExp(`\\n?body\\.typeface-${escId}\\s+\\.typeface-title\\s*\\{[^}]*\\}\\n`, 'g'),
+    '\n'
+  );
+  // 3. Font-face block(s) grouped under a "/* <Font Name> Font Faces */" comment.
+  if (fontName) {
+    const escName = fontName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Remove the comment header and every consecutive @font-face block after it
+    // (up to the next comment or a run that isn't a font-face).
+    const blockRe = new RegExp(
+      `\\n?/\\* ${escName} Font Faces \\*/\\n(?:@font-face\\s*\\{[^}]*\\}\\n*)+`,
+      'g'
+    );
+    css = css.replace(blockRe, '\n');
+    // Also catch any stray @font-face blocks referencing this family that
+    // weren't under the comment header.
+    const strayRe = new RegExp(
+      `\\n?@font-face\\s*\\{[^}]*font-family:\\s*'${escName}'[^}]*\\}\\n*`,
+      'g'
+    );
+    css = css.replace(strayRe, '\n');
+  }
+  // Collapse 3+ blank lines left behind into a single blank line.
+  css = css.replace(/\n{3,}/g, '\n\n');
+  return css;
 }
 
 /**
@@ -136,7 +213,8 @@ function buildFontFaceCSS(weights, dirName, fontName) {
   return css;
 }
 
-// GET = list font files, POST = create new font, PUT = update existing font files, DELETE = remove a file
+// GET = list font files, POST = create new font, PUT = update existing font files,
+// DELETE = remove a single file (?path=) or an entire typeface (?typeface=<id>)
 module.exports = async function (req, res) {
   if (!['GET', 'POST', 'PUT', 'DELETE'].includes(req.method)) return res.status(405).end();
   const session = await requireAdmin(req, res);
@@ -147,6 +225,10 @@ module.exports = async function (req, res) {
       return await handleListFiles(req, res);
     }
     if (req.method === 'DELETE') {
+      // Deleting a whole typeface (data + CSS + JS maps + files) vs a single file.
+      if (req.query.typeface) {
+        return await handleDeleteTypeface(req, res);
+      }
       return await handleDeleteFile(req, res);
     }
     const { fields, files: uploadedFiles } = await parseMultipart(req);
@@ -237,6 +319,111 @@ async function handleDeleteFile(req, res) {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+}
+
+/**
+ * Delete an entire typeface and every trace of it, in one atomic commit:
+ *   - data/index-content.json           (entry by id)
+ *   - data/typeface-detail-content.json  (entry by id)
+ *   - styles.css                         (@font-face block, sample rule, title rule)
+ *   - typeface-detail-renderer.js        (TYPEFACE_FONT_PATHS entry)
+ *   - script.js                          (fontFileMap + fontFamilyMap entries)
+ *   - server.js                          (TYPEFACE_FONT_DIRS entry)
+ *   - api/_font-dirs.js                  (TYPEFACE_FONT_DIRS entry)
+ *   - fonts/<dir>/*                      (all font files, when deleteFiles=true)
+ *
+ * Query params: typeface=<id>  [deleteFiles=true]
+ */
+async function handleDeleteTypeface(req, res) {
+  const fontId = req.query.typeface;
+  const deleteFiles = req.query.deleteFiles === 'true';
+  if (!fontId) return res.status(400).json({ error: 'typeface (id) is required' });
+
+  // Read every file the add-font flow writes, so we can reverse each one.
+  const [
+    indexData, detailData, cssData, rendererData, scriptData, serverData, fontDirsData,
+  ] = await Promise.all([
+    readFile('data/index-content.json'),
+    readFile('data/typeface-detail-content.json'),
+    readFile('styles.css'),
+    readFile('typeface-detail-renderer.js'),
+    readFile('script.js'),
+    readFile('server.js'),
+    readFile('api/_font-dirs.js'),
+  ]);
+
+  // 1. index-content.json — find the entry (to learn its name) and remove it.
+  const indexContent = JSON.parse(indexData.content);
+  const entry = indexContent.find(f => f.id === fontId);
+  const fontName = entry ? entry.name : null;
+  const newIndex = indexContent.filter(f => f.id !== fontId);
+
+  // Resolve the font directory from the _font-dirs map (bare or quoted key).
+  let dirName = null;
+  const dirMatch = fontDirsData.content.match(
+    new RegExp(`(?:${fontId}|'${fontId}'|"${fontId}")\\s*:\\s*'([^']+)'`)
+  );
+  if (dirMatch) dirName = dirMatch[1];
+
+  // 2. typeface-detail-content.json
+  const detailContent = JSON.parse(detailData.content);
+  delete detailContent[fontId];
+
+  // 3. styles.css (needs the family name to remove @font-face blocks)
+  const css = removeTypefaceCSS(cssData.content, fontId, fontName);
+
+  // 4. typeface-detail-renderer.js — TYPEFACE_FONT_PATHS keyed by id
+  const renderer = removeKeyFromJSObject(rendererData.content, 'var TYPEFACE_FONT_PATHS', fontId);
+
+  // 5. script.js — fontFileMap keyed by name, fontFamilyMap keyed by id
+  let script = scriptData.content;
+  if (fontName) script = removeKeyFromJSObject(script, 'const fontFileMap', fontName);
+  script = removeKeyFromJSObject(script, 'const fontFamilyMap', fontId);
+
+  // 6. server.js — TYPEFACE_FONT_DIRS keyed by id
+  const serverSrc = removeKeyFromJSObject(serverData.content, 'const TYPEFACE_FONT_DIRS', fontId);
+
+  // 7. api/_font-dirs.js — TYPEFACE_FONT_DIRS keyed by id
+  const fontDirsSrc = removeKeyFromJSObject(fontDirsData.content, 'const TYPEFACE_FONT_DIRS', fontId);
+
+  const filesToCommit = [
+    { path: 'data/index-content.json', content: JSON.stringify(newIndex, null, 2) + '\n' },
+    { path: 'data/typeface-detail-content.json', content: JSON.stringify(detailContent, null, 2) + '\n' },
+    { path: 'styles.css', content: css },
+    { path: 'typeface-detail-renderer.js', content: renderer },
+    { path: 'script.js', content: script },
+    { path: 'server.js', content: serverSrc },
+    { path: 'api/_font-dirs.js', content: fontDirsSrc },
+  ];
+
+  // 8. Optionally remove the font files on disk. Also remove the generated
+  //    detail page (<id>.html) if it exists.
+  const deletedFiles = [];
+  if (deleteFiles && dirName) {
+    const dirEntries = await listDir(`fonts/${dirName}`);
+    for (const e of dirEntries) {
+      if (e.type === 'file') {
+        filesToCommit.push({ path: e.path, delete: true });
+        deletedFiles.push(e.path);
+      }
+    }
+  }
+
+  const result = await commitFiles(
+    filesToCommit,
+    `Remove typeface: ${fontName || fontId}`,
+    'main'
+  );
+
+  res.json({
+    ok: true,
+    message: `Removed ${fontName || fontId}`,
+    id: fontId,
+    name: fontName,
+    dirName,
+    filesDeleted: deletedFiles,
+    commit: result.url,
+  });
 }
 
 async function handleCreate(fields, uploadedFiles, res) {

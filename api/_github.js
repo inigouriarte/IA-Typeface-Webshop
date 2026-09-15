@@ -55,9 +55,21 @@ async function commitFiles(files, message, branch = 'main') {
   const commit = await api(`/git/commits/${commitSHA}`);
   const baseTreeSHA = commit.tree.sha;
 
-  // 2. Create blobs for each file
+  // 2. Create blobs for each file, and build tree entries.
+  //    A file with `delete: true` is removed from the tree (GitHub deletes a
+  //    path when its tree entry has sha: null), so the same call can both
+  //    write and delete files in one atomic commit.
   const tree = [];
   for (const file of files) {
+    if (file.delete) {
+      tree.push({
+        path: file.path,
+        mode: '100644',
+        type: 'blob',
+        sha: null,
+      });
+      continue;
+    }
     const blob = await api('/git/blobs', {
       method: 'POST',
       body: JSON.stringify({
@@ -116,4 +128,19 @@ async function readFile(path, branch = 'main') {
   return { content, sha: data.sha };
 }
 
-module.exports = { commitFiles, readFile, getBranchSHA };
+/**
+ * List the entries in a directory of the repo. Returns an array of
+ * { path, type, sha }. Returns [] if the directory doesn't exist.
+ */
+async function listDir(dirPath, branch = 'main') {
+  try {
+    const encoded = dirPath.split('/').map(s => encodeURIComponent(s)).join('/');
+    const data = await api(`/contents/${encoded}?ref=${branch}`);
+    if (!Array.isArray(data)) return [];
+    return data.map(e => ({ path: e.path, type: e.type, sha: e.sha }));
+  } catch (e) {
+    return [];
+  }
+}
+
+module.exports = { commitFiles, readFile, getBranchSHA, listDir };
