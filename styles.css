@@ -226,56 +226,6 @@
     font-display: swap;
 }
 
-/* INDIG Test Font Faces */
-@font-face {
-    font-family: 'INDIG Test';
-    src: url('fonts/INDIG Test/INDGAlvica-Black.woff2') format('woff2'),\n         url('fonts/INDIG Test/INDGAlvica-Black.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDIG Test';
-    src: url('fonts/INDIG Test/INDGAlvica-Bold.woff2') format('woff2'),\n         url('fonts/INDIG Test/INDGAlvica-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDIG Test';
-    src: url('fonts/INDIG Test/INDGAlvica-Light.woff2') format('woff2'),\n         url('fonts/INDIG Test/INDGAlvica-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDIG Test';
-    src: url('fonts/INDIG Test/INDGAlvica-Regular.woff2') format('woff2'),\n         url('fonts/INDIG Test/INDGAlvica-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDIG Test';
-    src: url('fonts/INDIG Test/INDGAlvica-Semibold.woff2') format('woff2'),\n         url('fonts/INDIG Test/INDGAlvica-Semibold.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'INDIG Test';
-    src: url('fonts/INDIG Test/INDGAlvica-Thin.woff2') format('woff2'),\n         url('fonts/INDIG Test/INDGAlvica-Thin.woff') format('woff');
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-}
-
-
 /* INDG Stycka Font Faces */
 /* INDG Wovo Font Faces */
 @font-face {
@@ -1824,10 +1774,6 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
 .typeface-sample[data-font="oequadrat"] {
     font-family: 'Old English Quadrat', sans-serif;
     font-weight: 400 !important;
-}
-
-.typeface-sample[data-font="Test"] {
-    font-family: 'INDIG Test', sans-serif;
 }
 
 .typeface-sample[data-font="stycka"] {

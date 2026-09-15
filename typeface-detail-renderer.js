@@ -409,8 +409,8 @@ ${buttonsRowHTML || ''}
  */
 function generateFooterColumns(allFonts, styleAttr) {
     const style = styleAttr || 'text-decoration: none;';
-    // Filter out test fonts and fonts without links
-    const fonts = (allFonts || []).filter(f => f.hasLink !== false && f.id !== 'Test');
+    // Filter out fonts without links
+    const fonts = (allFonts || []).filter(f => f.hasLink !== false);
     const colSize = Math.ceil(fonts.length / 3);
     const cols = [fonts.slice(0, colSize), fonts.slice(colSize, colSize * 2), fonts.slice(colSize * 2)];
     return cols.map(col => {

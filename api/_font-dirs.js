@@ -17,7 +17,6 @@ const TYPEFACE_FONT_DIRS = {
   zigrid: 'Zigrid',
   stycka: 'Stycka',
   oequadrat: 'Old English Quadrat',
-  Test: 'INDIG Test',
   stycka: 'Stycka',
   wovo: 'Wovo'
 };
