@@ -2302,6 +2302,8 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     .intro {
         width: 100%;
         box-sizing: border-box;
+        padding-top: 150px;
+        padding-bottom: 150px;
         padding-left: var(--text-padding);
         padding-right: var(--text-padding);
     }
