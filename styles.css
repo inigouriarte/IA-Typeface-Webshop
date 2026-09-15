@@ -2453,15 +2453,22 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         margin: 0;
     }
 
-    /* Pricing rows: 40px, same padding as Typeface Data rows.
-       Must use :first-child variant too — the base rule .control-box:first-child
-       sets padding-left:0 which wins over the generic selector below. */
+    /* Pricing rows on mobile — rebuilt to mirror Typeface Data (.detail-item)
+       formatting exactly: same min-height, same symmetric text-padding on
+       both sides, left-aligned. Targets :first-child and :last-child too so
+       the base .control-box:first-child{padding-left:0} and any last-child
+       right-padding rules don't win by specificity. */
     .typeface-pricing .typeface-controls-row .control-box,
-    .typeface-pricing .typeface-controls-row .control-box:first-child {
+    .typeface-pricing .typeface-controls-row .control-box:first-child,
+    .typeface-pricing .typeface-controls-row .control-box:last-child {
         min-height: 40px;
         height: auto;
-        padding: var(--box-text-padding);
+        padding-top: var(--box-text-padding);
+        padding-bottom: var(--box-text-padding);
         padding-left: var(--text-padding);
+        padding-right: var(--text-padding);
+        text-align: left;
+        justify-content: flex-start;
     }
     /* Typeface Data rows: 40px min-height */
     .typeface-details-content .detail-item {
@@ -2673,7 +2680,8 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
     .typeface-details-content .details-column:nth-child(4) .detail-item:nth-child(3) { order: 12; }
 
     .typeface-details-content .detail-item,
-    .typeface-details-content .details-column:first-child .detail-item {
+    .typeface-details-content .details-column:first-child .detail-item,
+    .typeface-details-content .details-column:last-child .detail-item {
         min-height: 50px;
         border-left: none;
         border-right: none;
