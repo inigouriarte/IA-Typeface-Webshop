@@ -275,15 +275,6 @@
     font-display: swap;
 }
 
-/* INDG DAJO Font Faces */
-@font-face {
-    font-family: 'INDG DAJO';
-    src: url('fonts/DAJO/INDGDracma-Naturalis.woff2') format('woff2'),
-         url('fonts/DAJO/INDGDracma-Naturalis.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* INDG Stycka Font Faces */
 /* INDG Wovo Font Faces */
@@ -1837,10 +1828,6 @@ body:has(.typeface-hero-buttons-floating) #control-hint-tooltip {
 
 .typeface-sample[data-font="Test"] {
     font-family: 'INDIG Test', sans-serif;
-}
-
-.typeface-sample[data-font="dajo"] {
-    font-family: 'INDG DAJO', sans-serif;
 }
 
 .typeface-sample[data-font="stycka"] {

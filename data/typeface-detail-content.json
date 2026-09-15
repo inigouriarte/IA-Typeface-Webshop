@@ -732,28 +732,6 @@
       }
     ]
   },
-  "dracma": {
-    "description": "INDG Dracma is a jagged, faceted display typeface with sharp shard-like forms and a dynamic italic slant. Its aggressive, rune-inspired geometry radiates a dark, fantasy-tinged energy that feels equally at home in metal album art, gaming, and experimental branding. A bold statement face for designers chasing edge, movement, and a sense of the mythic.",
-    "details": {
-      "designer": "Iñigo Uriarte",
-      "version": "º1",
-      "formats": "wr",
-      "styles": "r",
-      "glyphs": "gwV",
-      "unicodeRanges": [
-        "1ABETH"
-      ]
-    },
-    "hasOpenType": false,
-    "openTypeFeatures": [],
-    "samples": [],
-    "pricing": [
-      {
-        "name": "INDG Dracma",
-        "price": "50"
-      }
-    ]
-  },
   "stycka": {
     "description": "INDG Stycka is a bitmap cursive typeface based on an alphabet found in a Swedish stitching book — an antique embroidery script translated to a pixel grid. Its swashy, high-contrast italic capitals and flowing lowercase carry genuine handcraft warmth, while the bitmap construction gives it a charming retro-digital texture. Stycka is a characterful choice for editorial accents, packaging, music and craft branding, and any project celebrating the meeting of traditional craft and pixel-era type.",
     "details": {

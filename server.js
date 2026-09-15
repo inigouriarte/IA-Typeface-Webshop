@@ -139,8 +139,6 @@ const TYPEFACE_DETAIL_CONTENT_PATH = path.join(DATA_DIR, 'typeface-detail-conten
     zigrid: 'Zigrid',
     stycka: 'Stycka',
     oequadrat: 'Old English Quadrat',
-    Test: 'INDIG Test',
-    dajo: 'DAJO',
     stycka: 'Stycka',
     wovo: 'Wovo'
   };
