@@ -19,34 +19,40 @@
     "samples": [
       {
         "sampleId": "regular",
-        "weight": 400,
-        "fontSize": 160,
+        "weight": 300,
+        "fontSize": 100,
         "text": "The Empire Strikes Back (1980)",
-        "stretch": "expanded"
+        "fontSizeMobile": 50
       },
       {
         "sampleId": "alphabet",
         "weight": 400,
-        "fontSize": 100,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+        "fontSize": 80,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "fontSizeMobile": 40
       },
       {
         "sampleId": "bold",
         "weight": 700,
         "fontSize": 180,
         "text": "AUTECHRE",
-        "stretch": "expanded"
+        "stretch": "expanded",
+        "letterSpacing": -0.04,
+        "defaultOtFeatures": "ss01"
       },
       {
         "sampleId": "expanded",
         "weight": 200,
         "fontSize": 100,
         "text": "Abuse of power comes as no surprise.",
-        "stretch": "expanded"
+        "stretch": "expanded",
+        "fontSizeMobile": 50,
+        "letterSpacing": -0.04,
+        "defaultOtFeatures": "ss01"
       },
       {
         "sampleId": "expanded-body",
-        "weight": 400,
+        "weight": 300,
         "fontSize": 36,
         "text": "Som apotekerlærling i Grimstad fikk Ibsen øynene opp for teateret som karrierevei. I 1850 flyttet han til Christiania, samme år ga han ut sitt første skuespill Catilina og året etter ble han knyttet til Ole Bulls teater i Bergen, der han fikk praktisk erfaring som sceneinstruktør og teaterdikter. I årene som fulgte utga han en rekke skuespill. I 1863 fikk han et reisestipend og året etter reiste han via København og Venezia til Roma. Dette innledet et 27 år langt selvvalgt eksil i Italia og Tyskland, der han skrev sine viktigste verk. Han bodde i Roma, Dresden og i München, men oppholdt seg i perioder også andre steder.",
         "fontSizeMobile": 16
