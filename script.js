@@ -195,11 +195,19 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         var type = getDropdownPortalType(dropdown);
         var c = DROPDOWN_PORTAL_ALIGN[type] || DROPDOWN_PORTAL_ALIGN.styleDetail;
         var box = dropdown.closest('.control-box');
-        var r = (isMobile() && box) ? box.getBoundingClientRect() : trigger.getBoundingClientRect();
-        var w = r.width + (c.widthDelta || 0);
+        var onMobile = isMobile() && box;
+        var r = onMobile ? box.getBoundingClientRect() : trigger.getBoundingClientRect();
+        // The homepage left/width nudges (leftOffset/widthDelta) were calibrated
+        // for the desktop control-box border model. On mobile we anchor directly
+        // to the control-box's own edges, which already line up with the menu's
+        // border-box border — applying the nudge there pushes the menu 1-2px off
+        // to the left (the reported bug). So zero the nudge on mobile.
+        var leftOffset = onMobile ? 0 : (c.leftOffset || 0);
+        var widthDelta = onMobile ? 0 : (c.widthDelta || 0);
+        var w = r.width + widthDelta;
         menu.style.top = r.bottom + 'px';
         menu.style.width = w + 'px';
-        menu.style.left = (r.left + (c.leftOffset || 0)) + 'px';
+        menu.style.left = (r.left + leftOffset) + 'px';
     }
 
     function openTypefaceInPortal(dropdown) {
