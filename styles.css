@@ -555,6 +555,13 @@ html {
        control labels) visibly grow in landscape even though font-size is fixed. */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Paint the whole physical screen — including the iOS safe-area insets
+       around the status bar and the URL/home-indicator bubble — with the
+       page background. Without this, those inset zones show through as grey
+       gaps once the URL bar collapses on scroll, so the page looks "cropped"
+       rather than edge-to-edge integrated like native Safari sites. */
+    background-color: var(--color-background);
+    min-height: 100%;
 }
 
 html::-webkit-scrollbar {
@@ -947,6 +954,12 @@ main {
     display: flex;
     flex-direction: column;
     content-visibility: auto;
+    /* Pair content-visibility:auto with a realistic size estimate. Without
+       this, off-screen sections (especially the last, which may never be
+       measured) reserve an oversized default height, showing as a large
+       phantom gap below the final sample on both desktop and mobile. ~560px
+       ≈ a real section (control row + 150px sample + margins). */
+    contain-intrinsic-size: auto 560px;
 }
 
 .typeface-section:first-of-type {
@@ -2283,6 +2296,9 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         padding: 16px 0;
         /* Extend header background into the iOS status bar area */
         padding-top: calc(16px + env(safe-area-inset-top, 0px));
+        /* Solid (not translucent) so the status-bar inset is fully painted
+           rather than showing a washed-out blur over nothing. */
+        background-color: var(--color-background);
     }
 
     /* Mobile header height: 16+16 padding + 1px border + 44px (menu toggle / content row) */
@@ -3188,7 +3204,12 @@ body.typeface-wovo .typeface-title {
         bottom: 0;
         padding-left: 0;
         padding-right: 0;
-        padding-bottom: env(safe-area-inset-bottom, 0px); /* iOS: clear the home indicator / URL bar area */
+        /* Extend the bar's background down through the home-indicator / URL
+           inset so it paints edge-to-edge instead of leaving a translucent
+           gap. The buttons themselves keep their position (padding-bottom
+           holds their content above the inset); the background fills below. */
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        background-color: var(--color-background);
         width: 100%;
     }
 }
