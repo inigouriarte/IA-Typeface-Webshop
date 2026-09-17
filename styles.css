@@ -954,12 +954,13 @@ main {
     display: flex;
     flex-direction: column;
     content-visibility: auto;
-    /* Pair content-visibility:auto with a realistic size estimate. Without
-       this, off-screen sections (especially the last, which may never be
-       measured) reserve an oversized default height, showing as a large
-       phantom gap below the final sample on both desktop and mobile. ~560px
-       ≈ a real section (control row + 150px sample + margins). */
-    contain-intrinsic-size: auto 560px;
+    /* Pair content-visibility:auto with a realistic size estimate. Without a
+       correct value, off-screen sections (especially the last) reserve the
+       wrong height and show a phantom gap below the sample. Measured real
+       section heights on the homepage are ~227–287px (control row + ~120px
+       sample + 50px margins), so ~240px is a close estimate; the `auto`
+       keyword lets each section snap to its true measured size once viewed. */
+    contain-intrinsic-size: auto 240px;
 }
 
 .typeface-section:first-of-type {
