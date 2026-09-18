@@ -2767,7 +2767,6 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
         padding-left: 0;
         padding-right: 0;
-        margin-top: 0; /* No extra space above on mobile */
     }
 
     .typeface-pricing {
@@ -3440,8 +3439,10 @@ body:not(:has(.typeface-hero-buttons-floating)) .footer {
    all three transitions rather than the larger 150px meant for coming
    straight after the (much taller) samples section. */
 .typeface-description-section {
-    margin-top: 50px; /* Extra breathing room above the section on desktop */
-    padding-top: 50px;
+    padding-top: 50px; /* Matches Typeface Data/Pricing: 50px top padding is
+        the standard section rhythm. (A previous margin-top:50px here stacked
+        on top of this, producing a 100px gap that read as excess padding
+        below the last sample.) */
     padding-right: var(--layout-content-padding);
     padding-bottom: 0;
     padding-left: var(--layout-content-padding);
