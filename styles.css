@@ -2672,8 +2672,8 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
         padding-left: var(--text-padding);
         padding-right: var(--text-padding);
-        padding-top: 100px; /* Desktop-only increase above shouldn't affect mobile */
-        padding-bottom: 80px;
+        padding-top: 80px;
+        padding-bottom: 50px;
         text-align: left;
     }
 
