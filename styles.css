@@ -2666,8 +2666,15 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         text-align: left;
     }
 
-    /* Typeface detail page: no layout margins; use text/box padding only; hero text half size; body text left-aligned */
-    .typeface-hero {
+    /* Typeface detail page: no layout margins; use text/box padding only; hero text half size; body text left-aligned.
+       Specificity bumped with `body` — this mobile block sits earlier in the
+       file than the base .typeface-hero/.typeface-hero-content rules (line
+       ~3037), and with equal specificity + later source order, the base
+       rules were silently winning at ALL viewport widths, nullifying this
+       entire block (padding, text-align, max-width — confirmed via computed
+       styles). Discovered when the mobile padding-top/bottom change didn't
+       take effect live. */
+    body .typeface-hero {
         width: 100%;
         box-sizing: border-box;
         padding-left: var(--text-padding);
@@ -2677,7 +2684,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         text-align: left;
     }
 
-    .typeface-hero-content {
+    body .typeface-hero-content {
         max-width: 100%;
         margin: 0;
     }
