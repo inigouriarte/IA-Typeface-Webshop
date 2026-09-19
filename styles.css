@@ -2672,6 +2672,8 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         box-sizing: border-box;
         padding-left: var(--text-padding);
         padding-right: var(--text-padding);
+        padding-top: 100px; /* Desktop-only increase above shouldn't affect mobile */
+        padding-bottom: 80px;
         text-align: left;
     }
 
@@ -3033,7 +3035,7 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
 
 /* Typeface Hero Section */
 .typeface-hero {
-    padding: 100px var(--layout-content-padding) 80px;
+    padding: 150px var(--layout-content-padding) 130px;
     text-align: center;
     /* Fit content height: avoids an uneven empty gap below the description that
        a fixed 100vh hero leaves when the title + description are shorter than the viewport */
