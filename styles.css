@@ -2810,12 +2810,6 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         min-width: 80px;
     }
 
-    /* Mobile: hero text margin */
-    .typeface-hero .typeface-title {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
     /* Mobile: modal options extend to viewport limits */
     .pm-body {
         padding: 0;
