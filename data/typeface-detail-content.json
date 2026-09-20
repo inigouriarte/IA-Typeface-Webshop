@@ -753,7 +753,9 @@
         "Latin 1-Supplement"
       ]
     },
+    "heroFontSize": 170,
     "heroLetterSpacing": 0,
+    "heroFontSizeMobile": 80,
     "heroLetterSpacingMobile": 0,
     "isFree": false,
     "hasOpenType": false,
