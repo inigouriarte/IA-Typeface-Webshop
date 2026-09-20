@@ -963,6 +963,7 @@
     }
     async function manualSave() {
       if (!editingFontId || !_isDirty) return;
+      if (!canSaveDetail()) { updateAutosaveStatus('error'); return; }
       updateAutosaveStatus('saving');
       try {
         const { idxEntry, detEntry } = collectEditorData();
@@ -1026,7 +1027,7 @@
       async saveDetailContent(d){const r=await fetch('/api/admin/content?type=detail',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
       async getStats(){const r=await fetch('/api/admin/stats');if(!r.ok)throw new Error('Failed');return r.json();},
       async getOrders(sa){let u='/api/admin/orders?limit=30';if(sa)u+='&starting_after='+sa;const r=await fetch(u);if(!r.ok)throw new Error('Failed');return r.json();},
-      async saveBatch(data){const r=await fetch('/api/admin/content?type=batch',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Save failed');}},
+      async saveBatch(data){const r=await fetch('/api/admin/content?type=batch',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!r.ok){const e=await parseJson(r).catch(()=>({}));if(r.status===409){throw new Error((e?.reason||'Save blocked to prevent data loss')+' '+(e?.hint||''));}throw new Error(e?.error||'Save failed');}},
       async deleteTypeface(id, deleteFiles){const u=`/api/admin/fonts?typeface=${encodeURIComponent(id)}${deleteFiles?'&deleteFiles=true':''}`;const r=await fetch(u,{method:'DELETE'});if(!r.ok){const e=await parseJson(r).catch(()=>({}));throw new Error(e?.error||'Delete failed');}return parseJson(r);},
     };
 
@@ -1069,6 +1070,19 @@
     const INDEX_MAIN_KEYS = ['id','name','displayName','linkUrl','dropdownType','fontSize','letterSpacing','isOneStyle','fontWeight','hasLink','styles'];
     let indexData = [], detailData = {};
     let editingFontId = null;
+    // True only once the full typeface-detail-content has loaded successfully.
+    // Saving is blocked while false, because saveBatch persists the ENTIRE
+    // detailData and an empty/partial one would wipe all typefaces.
+    let _detailLoaded = false;
+
+    // Guard called before every save. Returns true if it's safe to write.
+    function canSaveDetail() {
+      if (!_detailLoaded || !detailData || Object.keys(detailData).length === 0) {
+        toast('Save blocked: detail content didn\u2019t load correctly. Reload the admin page before editing, so your changes don\u2019t overwrite existing data.', 'error');
+        return false;
+      }
+      return true;
+    }
 
     function getExtra(row) {
       const extra = {};
@@ -1713,6 +1727,7 @@
     }
 
     async function saveEditor() {
+      if (!canSaveDetail()) return;
       try {
         const { idxEntry, detEntry } = collectEditorData();
         const oldId = editingFontId;
@@ -1805,7 +1820,28 @@
     /* Load fonts */
     async function loadFonts() {
       try { indexData = await API.getIndexContent(); } catch(e) { showMsg(document.getElementById('fonts-msg'), e.message, 'error'); }
-      try { detailData = await API.getDetailContent(); } catch(_) {}
+      // Track whether detail content loaded successfully. If it did NOT, we must
+      // NOT let a save proceed — saveBatch writes the ENTIRE detailData object,
+      // so saving while detailData is empty (a failed/partial load) would
+      // overwrite every typeface's samples/description/pricing with nothing.
+      // This is exactly the data-loss bug that wiped all 13 typefaces once.
+      _detailLoaded = false;
+      try {
+        detailData = await API.getDetailContent();
+        // Sanity check: a healthy file is a non-empty object of typefaces.
+        if (detailData && typeof detailData === 'object' && Object.keys(detailData).length > 0) {
+          _detailLoaded = true;
+        } else {
+          throw new Error('Detail content loaded empty');
+        }
+      } catch(e) {
+        detailData = {};
+        _detailLoaded = false;
+        showMsg(document.getElementById('fonts-msg'),
+          'Could not load typeface detail content (' + (e.message || 'unknown error') +
+          '). Editing is disabled to protect existing data — reload the page to try again.',
+          'error');
+      }
       renderFontList();
     }
 
