@@ -536,6 +536,13 @@ function updateTime() {
 
 // Custom cursor functionality
 function initCustomCursor() {
+    // Skip the custom cursor entirely on touch / no-hover devices. The cursor
+    // is display:none there via CSS anyway, but without this the animation
+    // loop below would still run forever, animating an invisible element and
+    // burning CPU/battery on phones and tablets.
+    var hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!hasFinePointer) return;
+
     const cursor = document.createElement('div');
     cursor.id = 'custom-cursor';
     document.body.appendChild(cursor);
@@ -548,6 +555,14 @@ function initCustomCursor() {
     let cursorInitialized = false;
     let cursorVisible = false;
     let currentRotation = 0;
+    // The animation loop is now on-demand: it runs only while the cursor is
+    // still easing toward the mouse, and parks itself once it has caught up.
+    // `rafId !== null` means the loop is currently active.
+    let rafId = null;
+
+    function startLoop() {
+        if (rafId === null) rafId = requestAnimationFrame(animateCursor);
+    }
 
     // Mouse movement handler
     document.addEventListener('mousemove', function(e) {
@@ -565,6 +580,8 @@ function initCustomCursor() {
             cursor.style.opacity = '1';
             cursorVisible = true;
         }
+        // A new target position: make sure the easing loop is running.
+        startLoop();
     });
 
     // Hide cursor when mouse leaves the viewport
@@ -608,17 +625,32 @@ function initCustomCursor() {
 
     function animateCursor() {
         if (cursorInitialized && mouseX !== null && mouseY !== null) {
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
+            var dx = mouseX - cursorX;
+            var dy = mouseY - cursorY;
+            cursorX += dx * 0.15;
+            cursorY += dy * 0.15;
             cursor.style.left = cursorX + 'px';
             cursor.style.top = cursorY + 'px';
+            // Once the cursor has essentially caught up to the mouse, snap to
+            // the exact position and park the loop. It restarts on the next
+            // mousemove. This stops ~60 wasted frames/sec (each writing the
+            // same left/top and forcing layout) whenever the mouse is still.
+            if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+                cursorX = mouseX;
+                cursorY = mouseY;
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                rafId = null;
+                return;
+            }
         }
-        requestAnimationFrame(animateCursor);
+        rafId = requestAnimationFrame(animateCursor);
     }
 
     // Start hidden until first mousemove
     cursor.style.opacity = '0';
-    animateCursor();
+    // The animation loop is started on-demand by the mousemove handler
+    // (startLoop), and parks itself when idle — no perpetual rAF here.
 }
 
 // Typeface details: keep table rows aligned – row height = max content height in row, rounded up to 50px
