@@ -1,18 +1,869 @@
 {
-  "naora": {
-    "description": "",
+  "actio": {
+    "description": "INDG Actio is a wide, rounded techno sans-serif with a distinctly futuristic character. Its squared geometry, open counters, and soft monolinear terminals give it a confident, sci-fi feel that works beautifully for technology brands, gaming, motorsport, and editorial display. Available across multiple weights in both Normal and Expanded widths, Actio scales from tight UI labels to sprawling headline settings. A flexible display and text family for designers who want a clean, forward-looking voice.",
     "details": {
-      "designer": "",
-      "version": "",
-      "formats": "",
-      "styles": "",
-      "glyphs": "",
-      "unicodeRanges": []
+      "designer": "Iñigo Uriarte",
+      "version": "2.1",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "10",
+      "glyphs": "650",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement",
+        "Latin Extended-A"
+      ]
     },
     "isFree": false,
     "hasOpenType": false,
     "openTypeFeatures": [],
-    "samples": [],
-    "pricing": []
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 300,
+        "fontSize": 100,
+        "text": "The Empire Strikes Back (1980)",
+        "fontSizeMobile": 50
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 400,
+        "fontSize": 80,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "fontSizeMobile": 40
+      },
+      {
+        "sampleId": "bold",
+        "weight": 700,
+        "fontSize": 180,
+        "text": "AUTECHRE",
+        "stretch": "expanded",
+        "letterSpacing": -0.04,
+        "defaultOtFeatures": "ss01"
+      },
+      {
+        "sampleId": "expanded",
+        "weight": 200,
+        "fontSize": 100,
+        "text": "Abuse of power comes as no surprise.",
+        "stretch": "expanded",
+        "fontSizeMobile": 50,
+        "letterSpacing": -0.04,
+        "defaultOtFeatures": "ss01"
+      },
+      {
+        "sampleId": "expanded-body",
+        "weight": 300,
+        "fontSize": 36,
+        "text": "Som apotekerlærling i Grimstad fikk Ibsen øynene opp for teateret som karrierevei. I 1850 flyttet han til Christiania, samme år ga han ut sitt første skuespill Catilina og året etter ble han knyttet til Ole Bulls teater i Bergen, der han fikk praktisk erfaring som sceneinstruktør og teaterdikter. I årene som fulgte utga han en rekke skuespill. I 1863 fikk han et reisestipend og året etter reiste han via København og Venezia til Roma. Dette innledet et 27 år langt selvvalgt eksil i Italia og Tyskland, der han skrev sine viktigste verk. Han bodde i Roma, Dresden og i München, men oppholdt seg i perioder også andre steder.",
+        "fontSizeMobile": 16
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Actio Family",
+        "price": "150€"
+      },
+      {
+        "name": "INDG Actio Thin",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Thin Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Light",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Light Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Regular",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Regular Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Bold",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Bold Expanded",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Black",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Actio Black Expanded",
+        "price": "20€"
+      }
+    ]
+  },
+  "alvica": {
+    "description": "INDG Alvica is a versatile grotesque sans-serif typeface family — a true Swiss-knife for graphic designers. Spanning six weights from Thin to Black, its clean, neutral letterforms handle everything from small-size body text to bold display headlines. Beneath that sober, functional surface hides a broad set of quirky stylistic alternates that let designers inject unexpected personality into branding, editorial layouts, and visual identities. With 794 glyphs and extended Latin, Greek, and Cyrillic coverage, Alvica is a dependable multilingual workhorse for logos, posters, packaging, and everyday typography.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "otf, ttf, woff, woff2",
+      "styles": "6",
+      "glyphs": "794",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement",
+        "Latin Extended-A",
+        "Greek and Coptic",
+        "Cyrillic",
+        "Cyrillic Supplement",
+        "General Punctuation",
+        "Cyrillic Extended A",
+        "Supplemental Punctuation",
+        "Cyrillic Extended B",
+        "Alphabetic Presentation Forms"
+      ]
+    },
+    "isFree": false,
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "liga",
+      "ss02",
+      "zero",
+      "ss03",
+      "dlig",
+      "ss04",
+      "smcp",
+      "ss05",
+      "salt",
+      "ss06",
+      "ss01",
+      "ss07"
+    ],
+    "samples": [
+      {
+        "sampleId": "semibold",
+        "weight": 600,
+        "fontSize": 120,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "letterSpacing": -0.025
+      },
+      {
+        "sampleId": "regular",
+        "weight": 400,
+        "fontSize": 100,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+      },
+      {
+        "sampleId": "bold",
+        "weight": 700,
+        "fontSize": 240,
+        "text": "\"IRREVERSIBLE\"",
+        "letterSpacing": -0.06
+      },
+      {
+        "sampleId": "text-german",
+        "weight": 400,
+        "fontSize": 30,
+        "text": "Die Verwendung von Schwüngen bzw. Schnörkeln gilt zum einen als kunstvoll, zum andern ist sie aber auch negativ konnotiert – etwa weil darunter die Leserlichkeit leiden kann – und wird dann als „Schnörkelei“ oder „Geschnörkel“ bezeichnet. Das Adjektiv „verschnörkelt“ kann sich auf Schrift, aber auch auf kunsthandwerkliche Gegenstände wie etwa Kunstschmiede- oder Tischlerarbeiten beziehen sowie metaphorisch auf ganz anderes, beispielsweise auf Musik oder sprachliche Formulierungen. Das Adjektiv „schnörkellos“ bezeichnet die Beschränkung auf das Wesentliche.\n\nIm Englischen werden in der Kalligrafie geschwungene Zierlinien aller Arten allgemein flourish genannt. Bestimmte Arten von flourishes können mit Begriffen wie swirls, swoops und swashes näher bezeichnet werden. Im Bereich der Typografie bezieht sich der Begriff swash auf Zierlinien, die fest zu einer Glyphe gehören, sowie auf Zierformen einer Glyphe. Dekorative Zierlinien, die nicht mit Glyphen verbunden sind, werden hingegen nicht als swash bezeichnet, sondern nur als flourish.",
+        "fontSizeMobile": 16
+      },
+      {
+        "sampleId": "greek",
+        "weight": 400,
+        "fontSize": 70,
+        "text": "Τα Εξάρχεια είναι συνοικία της Αθήνας που βρίσκεται βόρεια της οδού Αχαρνών και ανατολικά της οδού Πατησίων. Η περιοχή είναι γνωστή για το πλούσιο πολιτιστικό και κοινωνικό της ιστορικό.",
+        "fontSizeMobile": 24
+      },
+      {
+        "sampleId": "cyrillic",
+        "weight": 400,
+        "fontSize": 70,
+        "text": "У 1964 році на Печерську відкрито музей історії України, який розповідає про багатовікову спадщину країни та її культуру. Це місце стало важливим центром для дослідження національної ідентичності.",
+        "fontSizeMobile": 24
+      },
+      {
+        "sampleId": "",
+        "weight": 400,
+        "fontSize": 200,
+        "text": "Upside Down",
+        "letterSpacing": -0.06,
+        "defaultOtFeatures": "salt, smcp"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Alvica Family",
+        "price": "102€"
+      },
+      {
+        "name": "INDG Alvica Thin",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Light",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Regular",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Semibold",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Bold",
+        "price": "17€"
+      },
+      {
+        "name": "INDG Alvica Black",
+        "price": "17€"
+      }
+    ]
+  },
+  "dale": {
+    "description": "INDG Dale is a light bitmap typeface built on a soft, rounded pixel grid — a contemporary take on early screen and dot-matrix lettering. Its low-resolution charm is offset by a surprisingly broad system of five styles: Regular, Italic, Oblique, a serif companion, and an exaggerated Superitalic. That range makes Dale unusually flexible for a pixel font, suited to retro-tech branding, digital-native editorial design, music and poster work, and any project that wants a warm, nostalgic 8-bit personality with real typographic versatility.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "3",
+      "glyphs": "420",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement",
+        "Latin Extended-A"
+      ]
+    },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 500,
+        "fontSize": 140,
+        "text": "Sphinx of black quartz, judge my vow."
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 500,
+        "fontSize": 140,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "fontSizeMobile": 60
+      },
+      {
+        "sampleId": "italian",
+        "weight": 500,
+        "fontSize": 45,
+        "text": "La tenzone poetica rappresenta il culmine della rivalità tra Dante e Forese, politici avversi all'interno dei guelfi fiorentini, ma privatamente amici intimi. I due, quindi, nella finzione poetica, procedono a lanciarsi una serie di invettive e accuse infamanti di natura giocosa. Ad aprire la tenzone è Dante, mentre Forese la prosegue e la chiude. Forese è per Dante goloso, degenerato e criminale, mentre Dante è per Forese miserabile, povero e disonorato. Dai commentatori Dante è generalmente ritenuto il vincitore della contesa, soprattutto per la maggior qualità e ricercatezza dei suoi versi, ricchi di rimandi ed allusioni.",
+        "fontSizeMobile": 20
+      },
+      {
+        "sampleId": "svenska",
+        "weight": 500,
+        "fontSize": 45,
+        "text": "Vid tolv års ålder trolovades han med Gemma Donati, och gifte sig senare med henne. De fick troligen tre söner och två döttrar. Två söner, Jacopo och Pietro, skulle senare gå till eftervärlden för sina kommentarer till faderns verk. Dante fick dessutom åtminstone en dotter, Antonia, som blev nunna i Ravenna och då antog namnet syster Beatrice. 1289 deltog han som kavallerist i striden vid Campaldino mellan Florens och Arezzo 11 juni samt i fälttåget mot Pisa. I Florens var det en ständig maktkamp mellan partier, i vilken lantadeln, borgarskapet och proletärerna stred.",
+        "fontSizeMobile": 20
+      },
+      {
+        "sampleId": "oblique",
+        "weight": 502,
+        "fontSize": 230,
+        "text": "ANIMALI FANTASTICI",
+        "style": "oblique",
+        "fontSizeMobile": 90
+      },
+      {
+        "sampleId": "pixels",
+        "weight": 500,
+        "fontSize": 180,
+        "text": "8,417,299 pixels",
+        "fontSizeMobile": 40
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Dale Family",
+        "price": "20€"
+      },
+      {
+        "name": "INDG Dale Regular",
+        "price": "10€"
+      },
+      {
+        "name": "INDG Dale Italic",
+        "price": "10€"
+      },
+      {
+        "name": "INDG Dale Oblique",
+        "price": "10€"
+      }
+    ]
+  },
+  "heron2": {
+    "description": "INDG Heron is an ultra-bold display typeface bursting with retro character. Fat, high-contrast strokes meet playful geometric cutaways and rounded, chopped terminals for a funky, 1970s-flavored personality that commands attention. Designed for maximum impact at large sizes, Heron is made for punchy headlines, record covers, packaging, logotypes, and posters that need to feel loud, warm, and unmistakably characterful.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "320",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "heroLetterSpacing": 0,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "display",
+        "weight": 700,
+        "fontSize": 180,
+        "text": "PIECES OF A MAN (1971)"
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 700,
+        "fontSize": 120,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+      },
+      {
+        "sampleId": "regular",
+        "weight": 700,
+        "fontSize": 120,
+        "text": "\"We gotta do something to save the children.\""
+      },
+      {
+        "sampleId": "numbers",
+        "weight": 700,
+        "fontSize": 120,
+        "text": "0123456789"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Heron",
+        "price": "25€"
+      }
+    ]
+  },
+  "luara": {
+    "description": "INDG Luara is an ornate cursive script rendered on a coarse pixel grid — Victorian-era penmanship reimagined as 8-bit lettering. Its looping, connected letterforms and decorative capitals carry a romantic, handwritten elegance, while the bitmap treatment gives it an unexpected retro-digital edge. A characterful display face for invitations, editorial accents, music and fashion branding, and any design that wants to fuse antique charm with pixel-art nostalgia.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "350",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "heroLetterSpacing": 0,
+    "heroLetterSpacingMobile": 0,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 400,
+        "fontSize": 140,
+        "text": "Sphinx of black quartz, judge my vow!"
+      },
+      {
+        "sampleId": "phrase",
+        "weight": 400,
+        "fontSize": 320,
+        "text": "1234567890"
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 400,
+        "fontSize": 100,
+        "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy & Zz"
+      },
+      {
+        "sampleId": "body",
+        "weight": 400,
+        "fontSize": 80,
+        "text": "Dear Mario:\nPlease come to the castle. I've baked a cake for you.\nYours truly,\nPrincess Toadstool"
+      },
+      {
+        "sampleId": "quill",
+        "weight": 400,
+        "fontSize": 240,
+        "text": "Quintessential"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Luara",
+        "price": "25€"
+      }
+    ]
+  },
+  "modus": {
+    "description": "INDG Modus is a radically experimental display typeface built from pure geometric primitives — bold circles, triangles, half-moons, and bars, often reduced to their most minimal fragments. Legibility gives way to visual impact, making each word read almost like a constructed pattern or logo. Offered in the conceptual weights Grey, White, and Black, Modus is a tool for graphic designers and artists working on experimental posters, brand marks, album art, and typographic explorations that prize form over convention.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "3",
+      "glyphs": "450",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "grey",
+        "weight": 400,
+        "fontSize": 120,
+        "text": "It all began in Weimar"
+      },
+      {
+        "sampleId": "grey-alphabet",
+        "weight": 400,
+        "fontSize": 100,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+      },
+      {
+        "sampleId": "black",
+        "weight": 900,
+        "fontSize": 200,
+        "text": "DESIGN UND..."
+      },
+      {
+        "sampleId": "white",
+        "weight": 100,
+        "fontSize": 200,
+        "text": "ARCHITEKTUR"
+      },
+      {
+        "sampleId": "body",
+        "weight": 400,
+        "fontSize": 60,
+        "text": "Gestalt bezeichnet ein geordnetes Ganzes, das mehr ist als die Summe seiner Teile. Es beschreibt die äußere Form, Struktur oder Erscheinung von Personen und Objekten. In der Psychologie (Gestalttherapie) ist es ein subjektives Erlebnis oder Bedürfnis, das als \"Figur\" vor dem Hintergrund des Erlebens hervortritt."
+      },
+      {
+        "sampleId": "numbers",
+        "weight": 400,
+        "fontSize": 320,
+        "text": "012456789"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Modus Family",
+        "price": "60€"
+      },
+      {
+        "name": "INDG Modus Grey",
+        "price": "16€"
+      },
+      {
+        "name": "INDG Modus Black",
+        "price": "16€"
+      },
+      {
+        "name": "INDG Modus White",
+        "price": "16€"
+      }
+    ]
+  },
+  "naora": {
+    "description": "INDG Naora is a heavy, angular display typeface with a raw, uncompromising presence. Sharp diagonal cuts and dense, blackletter-influenced forms give it a brutalist, almost gothic-industrial energy that reads powerfully at large sizes. Built for maximum attitude, Naora Display suits music and fashion branding, event posters, editorial titling, and any project that calls for a bold, confrontational typographic statement.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "360",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "heroFontSizeMobile": 70,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 400,
+        "fontSize": 110,
+        "text": "Naora"
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 400,
+        "fontSize": 140,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+      },
+      {
+        "sampleId": "phrase",
+        "weight": 400,
+        "fontSize": 75,
+        "text": "Delicate proportions, refined details."
+      },
+      {
+        "sampleId": "body",
+        "weight": 400,
+        "fontSize": 26,
+        "text": "A single weight with careful spacing makes Naora ideal for elegant headings, invitations, and short paragraphs."
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Naora",
+        "price": "25€"
+      }
+    ]
+  },
+  "oequadrat": {
+    "description": "INDG Old English Quadrat is a blackletter typeface rendered on a coarse quadrat pixel grid — traditional Old English textura meets bitmap construction. The result fuses the historical gravitas of medieval letterforms with a distinctly digital, low-resolution aesthetic. It brings gothic character and old-world authority to headlines, certificates, band logos, editorial accents, and any design looking to bridge historical typography and pixel-era style.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "280",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 700,
+        "fontSize": 130,
+        "text": "Old English Quadrat",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 700,
+        "fontSize": 75,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 700,
+        "fontSize": 90,
+        "text": "Thus was the doom of men decreed.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 700,
+        "fontSize": 36,
+        "text": "Blackletter brings historical character to headlines, certificates, and editorial accents.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "Old English Quadrat",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "peqat": {
+    "description": "INDG Peqat is a smooth, high-contrast blackletter typeface with genuine calligraphic flair. It comes in two complementary styles: Norma, a flowing mixed-case fraktur for expressive text and titling, and Capitalis, an all-caps set that lends a classical, monumental tone. Peqat brings gothic elegance and craft to editorial design, packaging, music and luxury branding, certificates, and any project that wants the drama of blackletter with a refined, contemporary finish.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "2",
+      "glyphs": "400",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 110,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "norma"
+      },
+      {
+        "weight": 400,
+        "fontSize": 68,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
+        "sampleId": "norma-alphabet"
+      },
+      {
+        "weight": 700,
+        "fontSize": 140,
+        "text": "PEQAT CAPITALIS",
+        "sampleId": "capitalis"
+      },
+      {
+        "weight": 700,
+        "fontSize": 85,
+        "text": "Capitalis lends a classical, monumental tone.",
+        "sampleId": "capitalis-phrase"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Peqat Family",
+        "price": "45€"
+      },
+      {
+        "name": "INDG Peqat Norma",
+        "price": "25€"
+      },
+      {
+        "name": "INDG Peqat Capitalis",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "sifora": {
+    "description": "INDG Sifora is an angular, high-contrast display typeface with sharp, calligraphic cuts and pronounced diagonal stress. Its expressive, blade-like forms give it a decorative, almost editorial-couture character that stands out in headlines and logotypes. Distinctive and design-forward, Sifora is made for fashion and beauty branding, magazine titling, posters, and packaging that demand a striking, unconventional voice.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "340",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "samples": [
+      {
+        "weight": 400,
+        "fontSize": 115,
+        "text": "Sphinx of black quartz, judge my vow.",
+        "sampleId": "regular"
+      },
+      {
+        "weight": 400,
+        "fontSize": 72,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789",
+        "sampleId": "alphabet"
+      },
+      {
+        "weight": 400,
+        "fontSize": 85,
+        "text": "Clean lines and modern aesthetics.",
+        "sampleId": "phrase"
+      },
+      {
+        "weight": 400,
+        "fontSize": 28,
+        "text": "Sifora works for interfaces, titles, and body text where clarity and a contemporary look are needed.",
+        "sampleId": "body"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Sifora",
+        "price": "25€"
+      }
+    ],
+    "hasOpenType": false,
+    "openTypeFeatures": []
+  },
+  "zigrid": {
+    "description": "INDG Zigrid is a blackletter typeface constructed on a bold pixel grid — ornate textura letterforms reimagined as bitmap art. It marries the dense, decorative texture of gothic script with the crisp, blocky logic of low-resolution type, giving it a striking dual personality. Zigrid is built for band logos, poster art, editorial accents, gaming and music branding, and any design that wants medieval character with an unmistakable pixel-era twist.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "OTF, TTF, WOFF, WOFF2",
+      "styles": "1",
+      "glyphs": "380",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "heroLetterSpacing": 0,
+    "heroLetterSpacingMobile": 0,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 400,
+        "fontSize": 130,
+        "text": "ZIGRID"
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 400,
+        "fontSize": 72,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+      },
+      {
+        "sampleId": "phrase",
+        "weight": 400,
+        "fontSize": 85,
+        "text": "Grid-based construction, geometric clarity."
+      },
+      {
+        "sampleId": "numbers",
+        "weight": 400,
+        "fontSize": 55,
+        "text": "0123456789"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Zigrid",
+        "price": "15€"
+      }
+    ]
+  },
+  "stycka": {
+    "description": "INDG Stycka is a bitmap cursive typeface based on an alphabet found in a Swedish stitching book — an antique embroidery script translated to a pixel grid. Its swashy, high-contrast italic capitals and flowing lowercase carry genuine handcraft warmth, while the bitmap construction gives it a charming retro-digital texture. Stycka is a characterful choice for editorial accents, packaging, music and craft branding, and any project celebrating the meeting of traditional craft and pixel-era type.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "ttf, woff, woff",
+      "styles": "1",
+      "glyphs": "215",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "heroLetterSpacing": 0,
+    "heroLetterSpacingMobile": 0,
+    "isFree": false,
+    "hasOpenType": false,
+    "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "pangram",
+        "weight": 400,
+        "fontSize": 120,
+        "text": "The quick brown fox jumps over the lazy dog."
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 400,
+        "fontSize": 100,
+        "text": "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"
+      },
+      {
+        "sampleId": "phrase",
+        "weight": 400,
+        "fontSize": 48,
+        "text": "Wild Combination is director Matt Wolf’s visually absorbing portrait of the seminal avant-garde composer, singer-songwriter, cellist, and disco producer Arthur Russell. Before his untimely death from AIDS in 1992, Arthur prolifically created music that spanned both pop and the transcendent possibilities of abstract art. Now, over fifteen years since his passing, Arthur's work is finally finding its audience. Wolf incorporates rare archival footage and commentary from Arthur's family, friends, and closest collaborators—including Philip Glass and Allen Ginsberg—to tell this poignant and important story.",
+        "fontSizeMobile": 24
+      },
+      {
+        "sampleId": "numbers",
+        "weight": 400,
+        "fontSize": 120,
+        "text": "0123456789"
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Stycka",
+        "price": "12"
+      }
+    ]
+  },
+  "wovo": {
+    "description": "INDG Wovo is an experimental geometric typeface inspired by Wim Crouwel's legendary New Alphabet. It strips letterforms down to their most radical essentials, built on a strict grid of diagonals and vertical stems for a systematic, unmistakably modernist look. Available in five weights from Fine to Ultra, Wovo is made for avant-garde posters, exhibition graphics, album covers, and conceptual branding that wants the rigor and edge of classic Dutch modernism.",
+    "details": {
+      "designer": "Iñigo Uriarte",
+      "version": "1.0",
+      "formats": "TTF, WOFF, WOFF2",
+      "styles": "5",
+      "glyphs": "192",
+      "unicodeRanges": [
+        "Basic Latin",
+        "Latin 1-Supplement"
+      ]
+    },
+    "heroText": "INDG Wovo",
+    "isFree": false,
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "ss01",
+      "kern"
+    ],
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 500,
+        "fontSize": 120,
+        "text": "The quick brown fox jumps over the lazy dog."
+      },
+      {
+        "sampleId": "crouwel",
+        "weight": 300,
+        "fontSize": 36,
+        "text": "Crouwel began his career in 1955 creating exhibition, graphic, and product designs along with Kho Liang Ie. In 1963, he was one of the founders of the design studio Total Design (currently named Total Identity). From 1964 onwards, Crouwel was responsible for the design of the posters, catalogues and exhibitions of the Stedelijk Museum in Amsterdam. In 1967 he designed the typeface New Alphabet, a design that embraces the limitations of the cathode-ray tube technology used by early data display screens and phototypesetting equipment, thus only containing horizontal and vertical strokes.",
+        "fontSizeMobile": 18
+      },
+      {
+        "sampleId": "lowercase",
+        "weight": 700,
+        "fontSize": 120,
+        "text": "abcdefghijklmnopqrstuvwxy & z",
+        "fontSizeMobile": 40
+      },
+      {
+        "sampleId": "ultra",
+        "weight": 950,
+        "fontSize": 220,
+        "text": "ULTIMATE!",
+        "letterSpacing": -0.08
+      }
+    ],
+    "pricing": [
+      {
+        "name": "INDG Wovo Family",
+        "price": "15"
+      },
+      {
+        "name": "INDG Wovo Fine",
+        "price": "5"
+      },
+      {
+        "name": "INDG Wovo Light",
+        "price": "5"
+      },
+      {
+        "name": "INDG Wovo Regular",
+        "price": "5"
+      },
+      {
+        "name": "INDG Wovo Bold",
+        "price": "5"
+      },
+      {
+        "name": "INDG Wovo Ultra",
+        "price": "5"
+      }
+    ]
   }
 }
