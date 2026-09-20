@@ -243,6 +243,8 @@
         "Latin Extended-A"
       ]
     },
+    "heroFontSize": 260,
+    "heroFontSizeMobile": 150,
     "isFree": false,
     "hasOpenType": false,
     "openTypeFeatures": [],

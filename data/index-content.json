@@ -169,7 +169,9 @@
     "dropdownType": "style",
     "fontSize": 140,
     "letterSpacing": 0,
+    "fontSizeMobile": 80,
     "isOneStyle": false,
+    "defaultStyleIndex": 0,
     "styles": [
       {
         "weight": 500,
@@ -198,8 +200,7 @@
         "label": "Superitalic",
         "family": "INDG Dale Superitalic"
       }
-    ],
-    "defaultStyleIndex": 0
+    ]
   },
   {
     "id": "heron2",
