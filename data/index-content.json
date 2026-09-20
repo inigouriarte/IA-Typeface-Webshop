@@ -37,6 +37,7 @@
     "dropdownType": "weight-stretch",
     "fontSize": 120,
     "letterSpacing": 0,
+    "fontSizeMobile": 50,
     "isOneStyle": false,
     "weights": [
       {
