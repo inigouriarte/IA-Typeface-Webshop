@@ -13,6 +13,10 @@
         "Latin Extended-A"
       ]
     },
+    "heroFontSize": 200,
+    "heroLetterSpacing": -0.04,
+    "heroFontSizeMobile": 60,
+    "heroLetterSpacingMobile": -0.04,
     "isFree": false,
     "hasOpenType": false,
     "openTypeFeatures": [],
