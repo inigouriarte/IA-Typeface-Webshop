@@ -81,6 +81,23 @@ function filterFontFiles(allFiles, productName) {
   return filtered.length > 0 ? filtered : allFiles;
 }
 
+// Filter font files by an EXPLICIT list of file-name stems (the part after the
+// last hyphen, or the whole base name when there's no hyphen). This is the
+// authoritative path: the purchase flow records exactly which styles were
+// bought as stems in the session metadata, so there's no name-guessing.
+// e.g. stems ["ThinNormal","BoldExpanded"] match INDGActio-ThinNormal.woff2 etc.
+function filterFontFilesByStems(allFiles, stems) {
+  if (!stems || !stems.length) return null; // signal "no explicit list"
+  var wanted = stems.map(function (s) { return String(s).toLowerCase(); });
+  var filtered = allFiles.filter(function (file) {
+    var base = file.replace(/\.[^.]+$/, '');
+    var hyphenIdx = base.lastIndexOf('-');
+    var fileStem = (hyphenIdx === -1 ? base : base.substring(hyphenIdx + 1)).toLowerCase();
+    return wanted.indexOf(fileStem) !== -1;
+  });
+  return filtered;
+}
+
 // --- Deterministic invoice number from session ID ---
 function generateInvoiceNumber(sessionId) {
   const year = new Date().getFullYear();
@@ -273,9 +290,19 @@ module.exports = async function (req, res) {
       return res.status(500).json({ error: 'Font files not found for: ' + fontDirName });
     }
 
-    // Filter to only include purchased styles (not the entire family)
+    // Filter to only include purchased styles (not the entire family).
+    // Prefer the explicit file-stem list recorded at checkout (authoritative,
+    // no name-guessing). Fall back to legacy name-matching only when it's
+    // absent (older sessions / not-yet-migrated typefaces).
     const productName = session.metadata?.productName || '';
-    fontFiles = filterFontFiles(fontFiles, productName);
+    const stemsStr = session.metadata?.fontFiles || '';
+    const stems = stemsStr ? stemsStr.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+    const byStems = filterFontFilesByStems(fontFiles, stems);
+    if (byStems && byStems.length > 0) {
+      fontFiles = byStems;
+    } else {
+      fontFiles = filterFontFiles(fontFiles, productName);
+    }
 
     // Generate invoice
     const invoiceNumber = generateInvoiceNumber(sessionId);

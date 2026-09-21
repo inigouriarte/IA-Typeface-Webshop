@@ -107,7 +107,83 @@
         "name": "INDG Actio Black Expanded",
         "price": "20€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": 80,
+      "styles": [
+        {
+          "label": "Black Expanded",
+          "price": 10,
+          "files": [
+            "BlackExpanded"
+          ]
+        },
+        {
+          "label": "Black Normal",
+          "price": 10,
+          "files": [
+            "BlackNormal"
+          ]
+        },
+        {
+          "label": "Bold Expanded",
+          "price": 10,
+          "files": [
+            "BoldExpanded"
+          ]
+        },
+        {
+          "label": "Bold Normal",
+          "price": 10,
+          "files": [
+            "BoldNormal"
+          ]
+        },
+        {
+          "label": "Light Expanded",
+          "price": 10,
+          "files": [
+            "LightExpanded"
+          ]
+        },
+        {
+          "label": "Light Normal",
+          "price": 10,
+          "files": [
+            "LightNormal"
+          ]
+        },
+        {
+          "label": "Regular Expanded",
+          "price": 10,
+          "files": [
+            "RegularExpanded"
+          ]
+        },
+        {
+          "label": "Regular Normal",
+          "price": 10,
+          "files": [
+            "RegularNormal"
+          ]
+        },
+        {
+          "label": "Thin Expanded",
+          "price": 10,
+          "files": [
+            "ThinExpanded"
+          ]
+        },
+        {
+          "label": "Thin Normal",
+          "price": 10,
+          "files": [
+            "ThinNormal"
+          ]
+        }
+      ]
+    }
   },
   "alvica": {
     "description": "INDG Alvica is a versatile grotesque sans-serif typeface family — a true Swiss-knife for graphic designers. Spanning six weights from Thin to Black, its clean, neutral letterforms handle everything from small-size body text to bold display headlines. Beneath that sober, functional surface hides a broad set of quirky stylistic alternates that let designers inject unexpected personality into branding, editorial layouts, and visual identities. With 794 glyphs and extended Latin, Greek, and Cyrillic coverage, Alvica is a dependable multilingual workhorse for logos, posters, packaging, and everyday typography.",
@@ -227,7 +303,55 @@
         "name": "INDG Alvica Black",
         "price": "17€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 15,
+      "familyPrice": 72,
+      "styles": [
+        {
+          "label": "Black",
+          "price": 15,
+          "files": [
+            "Black"
+          ]
+        },
+        {
+          "label": "Bold",
+          "price": 15,
+          "files": [
+            "Bold"
+          ]
+        },
+        {
+          "label": "Light",
+          "price": 15,
+          "files": [
+            "Light"
+          ]
+        },
+        {
+          "label": "Regular",
+          "price": 15,
+          "files": [
+            "Regular"
+          ]
+        },
+        {
+          "label": "Semibold",
+          "price": 15,
+          "files": [
+            "Semibold"
+          ]
+        },
+        {
+          "label": "Thin",
+          "price": 15,
+          "files": [
+            "Thin"
+          ]
+        }
+      ]
+    }
   },
   "dale": {
     "description": "INDG Dale is a light bitmap typeface built on a soft, rounded pixel grid — a contemporary take on early screen and dot-matrix lettering. Its low-resolution charm is offset by a surprisingly broad system of five styles: Regular, Italic, Oblique, a serif companion, and an exaggerated Superitalic. That range makes Dale unusually flexible for a pixel font, suited to retro-tech branding, digital-native editorial design, music and poster work, and any project that wants a warm, nostalgic 8-bit personality with real typographic versatility.",
@@ -309,7 +433,48 @@
         "name": "INDG Dale Oblique",
         "price": "10€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": 40,
+      "styles": [
+        {
+          "label": "Italic",
+          "price": 10,
+          "files": [
+            "Italic"
+          ]
+        },
+        {
+          "label": "Oblique",
+          "price": 10,
+          "files": [
+            "Oblique"
+          ]
+        },
+        {
+          "label": "Regular",
+          "price": 10,
+          "files": [
+            "Regular"
+          ]
+        },
+        {
+          "label": "Serif",
+          "price": 10,
+          "files": [
+            "Serif"
+          ]
+        },
+        {
+          "label": "Superitalic",
+          "price": 10,
+          "files": [
+            "Superitalic"
+          ]
+        }
+      ]
+    }
   },
   "heron2": {
     "description": "INDG Heron is an ultra-bold display typeface bursting with retro character. Fat, high-contrast strokes meet playful geometric cutaways and rounded, chopped terminals for a funky, 1970s-flavored personality that commands attention. Designed for maximum impact at large sizes, Heron is made for punchy headlines, record covers, packaging, logotypes, and posters that need to feel loud, warm, and unmistakably characterful.",
@@ -359,7 +524,20 @@
         "name": "INDG Heron",
         "price": "25€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 25,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 25,
+          "files": [
+            "ST"
+          ]
+        }
+      ]
+    }
   },
   "luara": {
     "description": "INDG Luara is an ornate cursive script rendered on a coarse pixel grid — Victorian-era penmanship reimagined as 8-bit lettering. Its looping, connected letterforms and decorative capitals carry a romantic, handwritten elegance, while the bitmap treatment gives it an unexpected retro-digital edge. A characterful display face for invitations, editorial accents, music and fashion branding, and any design that wants to fuse antique charm with pixel-art nostalgia.",
@@ -416,7 +594,20 @@
         "name": "INDG Luara",
         "price": "25€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 25,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 25,
+          "files": [
+            "INDG Luara"
+          ]
+        }
+      ]
+    }
   },
   "modus": {
     "description": "INDG Modus is a radically experimental display typeface built from pure geometric primitives — bold circles, triangles, half-moons, and bars, often reduced to their most minimal fragments. Legibility gives way to visual impact, making each word read almost like a constructed pattern or logo. Offered in the conceptual weights Grey, White, and Black, Modus is a tool for graphic designers and artists working on experimental posters, brand marks, album art, and typographic explorations that prize form over convention.",
@@ -489,7 +680,34 @@
         "name": "INDG Modus White",
         "price": "16€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": 24,
+      "styles": [
+        {
+          "label": "Black",
+          "price": 10,
+          "files": [
+            "Black"
+          ]
+        },
+        {
+          "label": "Grey",
+          "price": 10,
+          "files": [
+            "Grey"
+          ]
+        },
+        {
+          "label": "White",
+          "price": 10,
+          "files": [
+            "White"
+          ]
+        }
+      ]
+    }
   },
   "naora": {
     "description": "INDG Naora is a heavy, angular display typeface with a raw, uncompromising presence. Sharp diagonal cuts and dense, blackletter-influenced forms give it a brutalist, almost gothic-industrial energy that reads powerfully at large sizes. Built for maximum attitude, Naora Display suits music and fashion branding, event posters, editorial titling, and any project that calls for a bold, confrontational typographic statement.",
@@ -541,7 +759,20 @@
         "name": "INDG Naora",
         "price": "25€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 25,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 25,
+          "files": [
+            "INDG Naora"
+          ]
+        }
+      ]
+    }
   },
   "oequadrat": {
     "description": "INDG Old English Quadrat is a blackletter typeface rendered on a coarse quadrat pixel grid — traditional Old English textura meets bitmap construction. The result fuses the historical gravitas of medieval letterforms with a distinctly digital, low-resolution aesthetic. It brings gothic character and old-world authority to headlines, certificates, band logos, editorial accents, and any design looking to bridge historical typography and pixel-era style.",
@@ -589,7 +820,20 @@
       }
     ],
     "hasOpenType": false,
-    "openTypeFeatures": []
+    "openTypeFeatures": [],
+    "styleProducts": {
+      "defaultStylePrice": 25,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 25,
+          "files": [
+            "English-Quadrat"
+          ]
+        }
+      ]
+    }
   },
   "peqat": {
     "description": "INDG Peqat is a smooth, high-contrast blackletter typeface with genuine calligraphic flair. It comes in two complementary styles: Norma, a flowing mixed-case fraktur for expressive text and titling, and Capitalis, an all-caps set that lends a classical, monumental tone. Peqat brings gothic elegance and craft to editorial design, packaging, music and luxury branding, certificates, and any project that wants the drama of blackletter with a refined, contemporary finish.",
@@ -645,7 +889,27 @@
       }
     ],
     "hasOpenType": false,
-    "openTypeFeatures": []
+    "openTypeFeatures": [],
+    "styleProducts": {
+      "defaultStylePrice": 5,
+      "familyPrice": 8,
+      "styles": [
+        {
+          "label": "Capitalis",
+          "price": 5,
+          "files": [
+            "Capitalis"
+          ]
+        },
+        {
+          "label": "Norma",
+          "price": 5,
+          "files": [
+            "Norma"
+          ]
+        }
+      ]
+    }
   },
   "sifora": {
     "description": "INDG Sifora is an angular, high-contrast display typeface with sharp, calligraphic cuts and pronounced diagonal stress. Its expressive, blade-like forms give it a decorative, almost editorial-couture character that stands out in headlines and logotypes. Distinctive and design-forward, Sifora is made for fashion and beauty branding, magazine titling, posters, and packaging that demand a striking, unconventional voice.",
@@ -693,7 +957,20 @@
       }
     ],
     "hasOpenType": false,
-    "openTypeFeatures": []
+    "openTypeFeatures": [],
+    "styleProducts": {
+      "defaultStylePrice": 25,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 25,
+          "files": [
+            "Regular"
+          ]
+        }
+      ]
+    }
   },
   "zigrid": {
     "description": "INDG Zigrid is a blackletter typeface constructed on a bold pixel grid — ornate textura letterforms reimagined as bitmap art. It marries the dense, decorative texture of gothic script with the crisp, blocky logic of low-resolution type, giving it a striking dual personality. Zigrid is built for band logos, poster art, editorial accents, gaming and music branding, and any design that wants medieval character with an unmistakable pixel-era twist.",
@@ -744,7 +1021,20 @@
         "name": "INDG Zigrid",
         "price": "15€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 15,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 15,
+          "files": [
+            "INDG Zigrid"
+          ]
+        }
+      ]
+    }
   },
   "stycka": {
     "description": "INDG Stycka is a bitmap cursive typeface based on an alphabet found in a Swedish stitching book — an antique embroidery script translated to a pixel grid. Its swashy, high-contrast italic capitals and flowing lowercase carry genuine handcraft warmth, while the bitmap construction gives it a charming retro-digital texture. Stycka is a characterful choice for editorial accents, packaging, music and craft branding, and any project celebrating the meeting of traditional craft and pixel-era type.",
@@ -798,7 +1088,20 @@
         "name": "INDG Stycka",
         "price": "12"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 12,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 12,
+          "files": [
+            "Stycka"
+          ]
+        }
+      ]
+    }
   },
   "wovo": {
     "description": "INDG Wovo is an experimental geometric typeface inspired by Wim Crouwel's legendary New Alphabet. It strips letterforms down to their most radical essentials, built on a strict grid of diagonals and vertical stems for a systematic, unmistakably modernist look. Available in five weights from Fine to Ultra, Wovo is made for avant-garde posters, exhibition graphics, album covers, and conceptual branding that wants the rigor and edge of classic Dutch modernism.",
@@ -874,6 +1177,47 @@
         "name": "INDG Wovo Ultra",
         "price": "5"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 5,
+      "familyPrice": 20,
+      "styles": [
+        {
+          "label": "Bold",
+          "price": 5,
+          "files": [
+            "Bold"
+          ]
+        },
+        {
+          "label": "Fine",
+          "price": 5,
+          "files": [
+            "Fine"
+          ]
+        },
+        {
+          "label": "Light",
+          "price": 5,
+          "files": [
+            "Light"
+          ]
+        },
+        {
+          "label": "Regular",
+          "price": 5,
+          "files": [
+            "Regular"
+          ]
+        },
+        {
+          "label": "Ultra",
+          "price": 5,
+          "files": [
+            "Ultra"
+          ]
+        }
+      ]
+    }
   }
 }

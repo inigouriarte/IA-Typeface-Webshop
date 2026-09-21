@@ -575,6 +575,7 @@ ${generateFooterColumns(allFonts)}
     window.__TYPEFACE_ID__ = ${JSON.stringify(typefaceId)};
     window.__TYPEFACE_NAME__ = ${JSON.stringify(config.displayName)};
     window.__TYPEFACE_PRICING__ = ${JSON.stringify(detailConfig.pricing)};
+    window.__TYPEFACE_STYLE_PRODUCTS__ = ${JSON.stringify(detailConfig.styleProducts || null)};
     </script>
 ${openTypeScript}    <script src="https://js.stripe.com/v3/" defer></script>
     <script src="script.js" defer></script>

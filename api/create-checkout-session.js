@@ -15,13 +15,19 @@ module.exports = async function (req, res) {
 
   try {
     const body = JSON.parse(await readBody(req));
-    const { productName, priceAmount, typefaceId, embedded, metadata: extraMeta } = body;
+    const { productName, priceAmount, typefaceId, embedded, fontFiles, metadata: extraMeta } = body;
     if (!productName || !priceAmount) {
       return res.status(400).json({ error: 'Missing productName or priceAmount' });
     }
 
     const baseUrl = process.env.BASE_URL || process.env.BETTER_AUTH_URL || 'https://alphabets.indigoindigo.org';
     const isEmbedded = !!embedded;
+
+    // Explicit list of font-file stems for exactly what was purchased. Stored
+    // in metadata so the download endpoint ships precisely these files instead
+    // of guessing from the product name. Stripe metadata values are strings
+    // capped at 500 chars, so store as a comma-joined string.
+    const fontFilesStr = Array.isArray(fontFiles) ? fontFiles.join(',') : '';
 
     const sessionConfig = {
       payment_method_types: ['card'],
@@ -35,7 +41,7 @@ module.exports = async function (req, res) {
         quantity: 1,
       }],
       mode: 'payment',
-      metadata: { typefaceId: typefaceId || '', productName, ...(extraMeta || {}) },
+      metadata: { typefaceId: typefaceId || '', productName, fontFiles: fontFilesStr.slice(0, 490), ...(extraMeta || {}) },
     };
 
     if (isEmbedded) {
