@@ -274,7 +274,21 @@ initializeSliders('.letter-spacing-slider', 'letterSpacing', '0', 'em');
         reposition: repositionPortalMenu
     };
 
-    window.addEventListener('scroll', repositionPortalMenu, true);
+    // rAF-throttle scroll: the capture-phase scroll listener fires very
+    // frequently, and repositionPortalMenu reads layout (getBoundingClientRect).
+    // Coalesce to at most one run per frame. (It already early-returns when no
+    // dropdown is open, so this only matters while one is open — but that's
+    // exactly when the per-scroll layout read would otherwise thrash.)
+    var _portalScrollPending = false;
+    function onPortalScroll() {
+        if (_portalScrollPending) return;
+        _portalScrollPending = true;
+        requestAnimationFrame(function () {
+            _portalScrollPending = false;
+            repositionPortalMenu();
+        });
+    }
+    window.addEventListener('scroll', onPortalScroll, true);
     window.addEventListener('resize', repositionPortalMenu);
 })();
 
@@ -503,13 +517,24 @@ document.addEventListener('click', function(e) {
 });
 
 // Bottom bar functionality: cursor coordinates, date, and time
+// Throttled to one DOM write per animation frame. The mousemove event can fire
+// far more often than the screen refreshes; without this it wrote textContent on
+// every event (layout-affecting work) many times per frame for no visible gain.
+var _coordsPending = false;
+var _coordsLastEvent = null;
 function updateCursorCoordinates(e) {
-    const coordsElement = document.getElementById('cursor-coords');
-    if (coordsElement) {
-        const x = String(Math.round(e.clientX)).padStart(4, '0');
-        const y = String(Math.round(e.clientY)).padStart(4, '0');
-        coordsElement.textContent = `X ${x} px Y ${y} px`;
-    }
+    _coordsLastEvent = e;
+    if (_coordsPending) return;
+    _coordsPending = true;
+    requestAnimationFrame(function () {
+        _coordsPending = false;
+        const coordsElement = document.getElementById('cursor-coords');
+        if (coordsElement && _coordsLastEvent) {
+            const x = String(Math.round(_coordsLastEvent.clientX)).padStart(4, '0');
+            const y = String(Math.round(_coordsLastEvent.clientY)).padStart(4, '0');
+            coordsElement.textContent = `X ${x} px Y ${y} px`;
+        }
+    });
 }
 
 function updateDate() {
@@ -919,7 +944,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     syncTypefaceDetailRowHeights();
-    window.addEventListener('resize', syncTypefaceDetailRowHeights);
+    // Debounce on resize: syncTypefaceDetailRowHeights does a read-write-read
+    // layout pass in a nested loop, which is expensive to run on every one of
+    // the many resize events a drag emits. Run it once, 150ms after resizing
+    // settles.
+    var _syncResizeTimer = null;
+    window.addEventListener('resize', function () {
+        clearTimeout(_syncResizeTimer);
+        _syncResizeTimer = setTimeout(syncTypefaceDetailRowHeights, 150);
+    });
 });
 
 // OpenType Feature Detection and Toggling
@@ -1515,7 +1548,14 @@ if (document.readyState === 'loading') {
     } else {
         applyMobileFontSizes();
     }
-    window.addEventListener('resize', applyMobileFontSizes);
+    // Debounce: applyMobileFontSizes queries and writes to the DOM twice; only
+    // the mobile/desktop breakpoint crossing actually matters, so running once
+    // after resize settles is enough.
+    var _mobileFontTimer = null;
+    window.addEventListener('resize', function () {
+        clearTimeout(_mobileFontTimer);
+        _mobileFontTimer = setTimeout(applyMobileFontSizes, 150);
+    });
 })();
 
 // Preload every font variant the page offers so switching styles within a family is
