@@ -446,22 +446,9 @@
     "pricing": [
       {
         "name": "INDG Heron",
-        "price": "25€"
+        "price": "10€"
       }
-    ],
-    "styleProducts": {
-      "defaultStylePrice": 25,
-      "familyPrice": null,
-      "styles": [
-        {
-          "label": "Regular",
-          "price": 25,
-          "files": [
-            "ST"
-          ]
-        }
-      ]
-    }
+    ]
   },
   "luara": {
     "description": "INDG Luara is an ornate cursive script rendered on a coarse pixel grid — Victorian-era penmanship reimagined as 8-bit lettering. Its looping, connected letterforms and decorative capitals carry a romantic, handwritten elegance, while the bitmap treatment gives it an unexpected retro-digital edge. A characterful display face for invitations, editorial accents, music and fashion branding, and any design that wants to fuse antique charm with pixel-art nostalgia.",
