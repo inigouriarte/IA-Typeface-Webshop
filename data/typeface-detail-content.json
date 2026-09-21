@@ -516,22 +516,9 @@
     "pricing": [
       {
         "name": "INDG Luara",
-        "price": "25€"
+        "price": "10€"
       }
-    ],
-    "styleProducts": {
-      "defaultStylePrice": 25,
-      "familyPrice": null,
-      "styles": [
-        {
-          "label": "Regular",
-          "price": 25,
-          "files": [
-            "INDG Luara"
-          ]
-        }
-      ]
-    }
+    ]
   },
   "modus": {
     "description": "INDG Modus is a radically experimental display typeface built from pure geometric primitives — bold circles, triangles, half-moons, and bars, often reduced to their most minimal fragments. Legibility gives way to visual impact, making each word read almost like a constructed pattern or logo. Offered in the conceptual weights Grey, White, and Black, Modus is a tool for graphic designers and artists working on experimental posters, brand marks, album art, and typographic explorations that prize form over convention.",
