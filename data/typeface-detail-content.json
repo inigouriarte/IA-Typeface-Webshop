@@ -65,125 +65,49 @@
     "pricing": [
       {
         "name": "INDG Actio Family",
-        "price": "150€"
+        "price": "80€"
       },
       {
         "name": "INDG Actio Thin",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Thin Expanded",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Light",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Light Expanded",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Regular",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Regular Expanded",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Bold",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Bold Expanded",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Black",
-        "price": "20€"
+        "price": "10€"
       },
       {
         "name": "INDG Actio Black Expanded",
-        "price": "20€"
+        "price": "10€"
       }
-    ],
-    "styleProducts": {
-      "defaultStylePrice": 10,
-      "familyPrice": 80,
-      "styles": [
-        {
-          "label": "Black Expanded",
-          "price": 10,
-          "files": [
-            "BlackExpanded"
-          ]
-        },
-        {
-          "label": "Black Normal",
-          "price": 10,
-          "files": [
-            "BlackNormal"
-          ]
-        },
-        {
-          "label": "Bold Expanded",
-          "price": 10,
-          "files": [
-            "BoldExpanded"
-          ]
-        },
-        {
-          "label": "Bold Normal",
-          "price": 10,
-          "files": [
-            "BoldNormal"
-          ]
-        },
-        {
-          "label": "Light Expanded",
-          "price": 10,
-          "files": [
-            "LightExpanded"
-          ]
-        },
-        {
-          "label": "Light Normal",
-          "price": 10,
-          "files": [
-            "LightNormal"
-          ]
-        },
-        {
-          "label": "Regular Expanded",
-          "price": 10,
-          "files": [
-            "RegularExpanded"
-          ]
-        },
-        {
-          "label": "Regular Normal",
-          "price": 10,
-          "files": [
-            "RegularNormal"
-          ]
-        },
-        {
-          "label": "Thin Expanded",
-          "price": 10,
-          "files": [
-            "ThinExpanded"
-          ]
-        },
-        {
-          "label": "Thin Normal",
-          "price": 10,
-          "files": [
-            "ThinNormal"
-          ]
-        }
-      ]
-    }
+    ]
   },
   "alvica": {
     "description": "INDG Alvica is a versatile grotesque sans-serif typeface family — a true Swiss-knife for graphic designers. Spanning six weights from Thin to Black, its clean, neutral letterforms handle everything from small-size body text to bold display headlines. Beneath that sober, functional surface hides a broad set of quirky stylistic alternates that let designers inject unexpected personality into branding, editorial layouts, and visual identities. With 794 glyphs and extended Latin, Greek, and Cyrillic coverage, Alvica is a dependable multilingual workhorse for logos, posters, packaging, and everyday typography.",
