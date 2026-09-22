@@ -790,53 +790,58 @@
         "Latin 1-Supplement"
       ]
     },
-    "samples": [
-      {
-        "weight": 700,
-        "fontSize": 130,
-        "text": "Old English Quadrat",
-        "sampleId": "regular"
-      },
-      {
-        "weight": 700,
-        "fontSize": 75,
-        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz",
-        "sampleId": "alphabet"
-      },
-      {
-        "weight": 700,
-        "fontSize": 90,
-        "text": "Thus was the doom of men decreed.",
-        "sampleId": "phrase"
-      },
-      {
-        "weight": 700,
-        "fontSize": 36,
-        "text": "Blackletter brings historical character to headlines, certificates, and editorial accents.",
-        "sampleId": "body"
-      }
-    ],
-    "pricing": [
-      {
-        "name": "Old English Quadrat",
-        "price": "25€"
-      }
-    ],
+    "heroFontSize": 170,
+    "heroLetterSpacing": -0.04,
+    "heroFontSizeMobile": 80,
+    "heroLetterSpacingMobile": -0.04,
+    "isFree": false,
     "hasOpenType": false,
     "openTypeFeatures": [],
+    "samples": [
+      {
+        "sampleId": "regular",
+        "weight": 700,
+        "fontSize": 130,
+        "text": "Old English Quadrat"
+      },
+      {
+        "sampleId": "alphabet",
+        "weight": 700,
+        "fontSize": 75,
+        "text": "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+      },
+      {
+        "sampleId": "phrase",
+        "weight": 700,
+        "fontSize": 90,
+        "text": "Thus was the doom of men decreed."
+      },
+      {
+        "sampleId": "body",
+        "weight": 700,
+        "fontSize": 36,
+        "text": "Blackletter brings historical character to headlines, certificates, and editorial accents."
+      }
+    ],
     "styleProducts": {
       "defaultStylePrice": 25,
       "familyPrice": null,
       "styles": [
         {
           "label": "Regular",
-          "price": 25,
           "files": [
             "English-Quadrat"
-          ]
+          ],
+          "price": 25
         }
       ]
-    }
+    },
+    "pricing": [
+      {
+        "name": "Old English Quadrat Regular",
+        "price": "25€"
+      }
+    ]
   },
   "peqat": {
     "description": "INDG Peqat is a smooth, high-contrast blackletter typeface with genuine calligraphic flair. It comes in two complementary styles: Norma, a flowing mixed-case fraktur for expressive text and titling, and Capitalis, an all-caps set that lends a classical, monumental tone. Peqat brings gothic elegance and craft to editorial design, packaging, music and luxury branding, certificates, and any project that wants the drama of blackletter with a refined, contemporary finish.",

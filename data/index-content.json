@@ -274,11 +274,11 @@
     "name": "Old English Quadrat",
     "displayName": "Old English Quadrat",
     "linkUrl": "oequadrat.html",
+    "hasLink": true,
     "dropdownType": "",
     "fontSize": 120,
     "letterSpacing": 0,
-    "isOneStyle": true,
-    "hasLink": true
+    "isOneStyle": true
   },
   {
     "id": "zigrid",
