@@ -2307,6 +2307,10 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         background-color: var(--color-background);
     }
 
+    .logo {
+        font-size: 20px;
+    }
+
     /* Mobile header height: 16+16 padding + 1px border + 44px (menu toggle / content row) */
     :root {
         --header-height: calc(77px + env(safe-area-inset-top, 0px));
