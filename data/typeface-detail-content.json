@@ -521,8 +521,11 @@
       ]
     },
     "isFree": false,
-    "hasOpenType": false,
-    "openTypeFeatures": [],
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "ss01",
+      "kern"
+    ],
     "samples": [
       {
         "sampleId": "grey",
@@ -564,48 +567,21 @@
     "pricing": [
       {
         "name": "INDG Modus Family",
-        "price": "60€"
+        "price": "24€"
       },
       {
         "name": "INDG Modus Grey",
-        "price": "16€"
+        "price": "10€"
       },
       {
         "name": "INDG Modus Black",
-        "price": "16€"
+        "price": "10€"
       },
       {
         "name": "INDG Modus White",
-        "price": "16€"
+        "price": "10€"
       }
-    ],
-    "styleProducts": {
-      "defaultStylePrice": 10,
-      "familyPrice": 24,
-      "styles": [
-        {
-          "label": "Black",
-          "price": 10,
-          "files": [
-            "Black"
-          ]
-        },
-        {
-          "label": "Grey",
-          "price": 10,
-          "files": [
-            "Grey"
-          ]
-        },
-        {
-          "label": "White",
-          "price": 10,
-          "files": [
-            "White"
-          ]
-        }
-      ]
-    }
+    ]
   },
   "naora": {
     "description": "INDG Naora is a heavy, angular display typeface with a raw, uncompromising presence. Sharp diagonal cuts and dense, blackletter-influenced forms give it a brutalist, almost gothic-industrial energy that reads powerfully at large sizes. Built for maximum attitude, Naora Display suits music and fashion branding, event posters, editorial titling, and any project that calls for a bold, confrontational typographic statement.",
