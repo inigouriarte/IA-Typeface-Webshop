@@ -2302,9 +2302,30 @@ html[data-theme="dark"] .footer-bottom .footer-link:hover {
         padding: 16px 0;
         /* Extend header background into the iOS status bar area */
         padding-top: calc(16px + env(safe-area-inset-top, 0px));
-        /* Solid (not translucent) so the status-bar inset is fully painted
-           rather than showing a washed-out blur over nothing. */
+        /* Keep the translucent surface + blur (same as desktop) so the nav bar
+           keeps its frosted-glass look on mobile. A previous fix set this to the
+           opaque --color-background to stop the status-bar inset showing a
+           washed-out blur, but that killed the blur across the whole header.
+           The inset is now covered separately by the ::before below, which
+           paints ONLY the safe-area strip opaque, leaving the rest translucent. */
+        background-color: var(--color-surface);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Opaque backing for just the iOS status-bar inset strip at the very top,
+       so that area is fully painted (no washed-out blur over nothing) while the
+       rest of the header stays translucent/blurred. Zero-height where there's
+       no inset (non-notch devices / desktop), so it's invisible there. */
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: env(safe-area-inset-top, 0px);
         background-color: var(--color-background);
+        pointer-events: none;
     }
 
     .logo {
