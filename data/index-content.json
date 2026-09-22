@@ -276,8 +276,10 @@
     "linkUrl": "oequadrat.html",
     "hasLink": true,
     "dropdownType": "",
-    "fontSize": 120,
-    "letterSpacing": 0,
+    "fontSize": 124,
+    "letterSpacing": -0.04,
+    "fontSizeMobile": 60,
+    "letterSpacingMobile": -0.04,
     "isOneStyle": true
   },
   {

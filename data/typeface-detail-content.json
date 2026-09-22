@@ -792,7 +792,7 @@
     },
     "heroFontSize": 170,
     "heroLetterSpacing": -0.04,
-    "heroFontSizeMobile": 80,
+    "heroFontSizeMobile": 90,
     "heroLetterSpacingMobile": -0.04,
     "isFree": false,
     "hasOpenType": false,
@@ -801,8 +801,9 @@
       {
         "sampleId": "regular",
         "weight": 700,
-        "fontSize": 130,
-        "text": "Old English Quadrat"
+        "fontSize": 120,
+        "text": "Waltz, bad nymph, for quick jigs vex.",
+        "fontSizeMobile": 65
       },
       {
         "sampleId": "alphabet",
@@ -813,14 +814,15 @@
       {
         "sampleId": "phrase",
         "weight": 700,
-        "fontSize": 90,
-        "text": "Thus was the doom of men decreed."
+        "fontSize": 112,
+        "text": "\"Thus was the doom of men decreed.\""
       },
       {
         "sampleId": "body",
         "weight": 700,
-        "fontSize": 36,
-        "text": "Blackletter brings historical character to headlines, certificates, and editorial accents."
+        "fontSize": 26,
+        "text": "On set, Kubrick devoted his personal breaks to lengthy discussions with his actors. Among those who valued his attention was Tony Curtis, star of Spartacus, who said Kubrick was his favorite director, adding, \"his greatest effectiveness was his one-on-one relationship with actors.\" He added, \"Kubrick had his own approach to film-making. He wanted to see the actor's faces. He didn't want cameras always in a wide shot twenty-five feet away, he wanted close-ups, he wanted to keep the camera moving.\" Similarly, Malcolm McDowell recalls the long discussions he had with Kubrick to help him develop his character in A Clockwork Orange, noting that on set he felt entirely uninhibited and free, which is what made Kubrick \"such a great director\".\nKubrick also allowed actors at times to improvise and to \"break the rules\", particularly with Peter Sellers in Lolita, which became a turning point in his career as it allowed him to work creatively during the shooting, as opposed to the preproduction stage. During an interview, Ryan O'Neal recalled Kubrick's directing style: \"God, he works you hard. He moves you, pushes you, helps you, gets cross with you, but above all he teaches you the value of a good director. Stanley brought out aspects of my personality and acting instincts that had been dormant ... My strong suspicion [was] that I was involved in something great\".",
+        "fontSizeMobile": 16
       }
     ],
     "styleProducts": {
