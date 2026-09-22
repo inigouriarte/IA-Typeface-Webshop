@@ -991,8 +991,12 @@
     "heroLetterSpacing": 0,
     "heroLetterSpacingMobile": 0,
     "isFree": false,
-    "hasOpenType": false,
-    "openTypeFeatures": [],
+    "hasOpenType": true,
+    "openTypeFeatures": [
+      "liga",
+      "ss01",
+      "ss02"
+    ],
     "samples": [
       {
         "sampleId": "regular",
@@ -1019,25 +1023,25 @@
         "text": "0123456789"
       }
     ],
-    "pricing": [
-      {
-        "name": "INDG Zigrid",
-        "price": "15€"
-      }
-    ],
     "styleProducts": {
-      "defaultStylePrice": 15,
+      "defaultStylePrice": 10,
       "familyPrice": null,
       "styles": [
         {
           "label": "Regular",
-          "price": 15,
           "files": [
             "INDG Zigrid"
-          ]
+          ],
+          "price": 10
         }
       ]
-    }
+    },
+    "pricing": [
+      {
+        "name": "INDG Zigrid Regular",
+        "price": "10€"
+      }
+    ]
   },
   "stycka": {
     "description": "INDG Stycka is a bitmap cursive typeface based on an alphabet found in a Swedish stitching book — an antique embroidery script translated to a pixel grid. Its swashy, high-contrast italic capitals and flowing lowercase carry genuine handcraft warmth, while the bitmap construction gives it a charming retro-digital texture. Stycka is a characterful choice for editorial accents, packaging, music and craft branding, and any project celebrating the meeting of traditional craft and pixel-era type.",
