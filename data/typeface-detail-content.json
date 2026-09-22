@@ -107,7 +107,83 @@
         "name": "INDG Actio Black Expanded",
         "price": "10€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": 80,
+      "styles": [
+        {
+          "label": "Black Expanded",
+          "price": 10,
+          "files": [
+            "BlackExpanded"
+          ]
+        },
+        {
+          "label": "Black Normal",
+          "price": 10,
+          "files": [
+            "BlackNormal"
+          ]
+        },
+        {
+          "label": "Bold Expanded",
+          "price": 10,
+          "files": [
+            "BoldExpanded"
+          ]
+        },
+        {
+          "label": "Bold Normal",
+          "price": 10,
+          "files": [
+            "BoldNormal"
+          ]
+        },
+        {
+          "label": "Light Expanded",
+          "price": 10,
+          "files": [
+            "LightExpanded"
+          ]
+        },
+        {
+          "label": "Light Normal",
+          "price": 10,
+          "files": [
+            "LightNormal"
+          ]
+        },
+        {
+          "label": "Regular Expanded",
+          "price": 10,
+          "files": [
+            "RegularExpanded"
+          ]
+        },
+        {
+          "label": "Regular Normal",
+          "price": 10,
+          "files": [
+            "RegularNormal"
+          ]
+        },
+        {
+          "label": "Thin Expanded",
+          "price": 10,
+          "files": [
+            "ThinExpanded"
+          ]
+        },
+        {
+          "label": "Thin Normal",
+          "price": 10,
+          "files": [
+            "ThinNormal"
+          ]
+        }
+      ]
+    }
   },
   "alvica": {
     "description": "INDG Alvica is a versatile grotesque sans-serif typeface family — a true Swiss-knife for graphic designers. Spanning six weights from Thin to Black, its clean, neutral letterforms handle everything from small-size body text to bold display headlines. Beneath that sober, functional surface hides a broad set of quirky stylistic alternates that let designers inject unexpected personality into branding, editorial layouts, and visual identities. With 794 glyphs and extended Latin, Greek, and Cyrillic coverage, Alvica is a dependable multilingual workhorse for logos, posters, packaging, and everyday typography.",
@@ -448,7 +524,20 @@
         "name": "INDG Heron",
         "price": "10€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 10,
+          "files": [
+            "ST"
+          ]
+        }
+      ]
+    }
   },
   "luara": {
     "description": "INDG Luara is an ornate cursive script rendered on a coarse pixel grid — Victorian-era penmanship reimagined as 8-bit lettering. Its looping, connected letterforms and decorative capitals carry a romantic, handwritten elegance, while the bitmap treatment gives it an unexpected retro-digital edge. A characterful display face for invitations, editorial accents, music and fashion branding, and any design that wants to fuse antique charm with pixel-art nostalgia.",
@@ -505,7 +594,20 @@
         "name": "INDG Luara",
         "price": "10€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": null,
+      "styles": [
+        {
+          "label": "Regular",
+          "price": 10,
+          "files": [
+            "INDG Luara"
+          ]
+        }
+      ]
+    }
   },
   "modus": {
     "description": "INDG Modus is a radically experimental display typeface built from pure geometric primitives — bold circles, triangles, half-moons, and bars, often reduced to their most minimal fragments. Legibility gives way to visual impact, making each word read almost like a constructed pattern or logo. Offered in the conceptual weights Grey, White, and Black, Modus is a tool for graphic designers and artists working on experimental posters, brand marks, album art, and typographic explorations that prize form over convention.",
@@ -581,7 +683,34 @@
         "name": "INDG Modus White",
         "price": "10€"
       }
-    ]
+    ],
+    "styleProducts": {
+      "defaultStylePrice": 10,
+      "familyPrice": 24,
+      "styles": [
+        {
+          "label": "Black",
+          "price": 10,
+          "files": [
+            "Black"
+          ]
+        },
+        {
+          "label": "Grey",
+          "price": 10,
+          "files": [
+            "Grey"
+          ]
+        },
+        {
+          "label": "White",
+          "price": 10,
+          "files": [
+            "White"
+          ]
+        }
+      ]
+    }
   },
   "naora": {
     "description": "INDG Naora is a heavy, angular display typeface with a raw, uncompromising presence. Sharp diagonal cuts and dense, blackletter-influenced forms give it a brutalist, almost gothic-industrial energy that reads powerfully at large sizes. Built for maximum attitude, Naora Display suits music and fashion branding, event posters, editorial titling, and any project that calls for a bold, confrontational typographic statement.",

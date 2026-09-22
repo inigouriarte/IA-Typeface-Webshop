@@ -1390,6 +1390,7 @@
       const form = document.getElementById('font-editor-form');
       const samplesStr = JSON.stringify(detail.samples || [], null, 2);
       const pricingArr = detail.pricing || [];
+      const styleProducts = detail.styleProducts || { defaultStylePrice: '', familyPrice: null, styles: [] };
       const extraObj = getExtra(indexEntry) || {};
 
       form.innerHTML = `
@@ -1503,12 +1504,27 @@
           </div>
         </div>
 
-        <!-- Pricing -->
+        <!-- Pricing (styleProducts — the source of truth the purchase modal charges from) -->
         <div class="editor-section">
-          <div class="editor-section-header">Pricing</div>
+          <div class="editor-section-header">Pricing &amp; Styles</div>
           <div class="editor-section-body">
-            <div id="editor-pricing">${pricingArr.map(p => `<div class="pricing-row"><input class="input" value="${esc(p.name||'')}"><input class="input" value="${esc(p.price||'')}"><button type="button" class="btn btn-sm btn-destructive" data-remove-row>×</button></div>`).join('')}</div>
-            <button type="button" class="btn btn-sm" style="margin-top:0.25rem" id="editor-add-pricing">+ Add tier</button>
+            <p class="editor-hint" style="margin:0 0 0.75rem;font-size:0.85em;opacity:0.75">
+              These are the exact styles and prices the purchase modal offers and charges. Each style maps to its font file(s). Prices are in € (number only).
+            </p>
+            <div class="pricing-row" style="align-items:center">
+              <label style="flex:1">Default price / style (€)
+                <input class="input" data-f="spDefaultPrice" type="number" min="0" step="1" value="${esc(styleProducts.defaultStylePrice != null ? styleProducts.defaultStylePrice : '')}">
+              </label>
+              <label style="flex:1">Family price (€, blank = no family option)
+                <input class="input" data-f="spFamilyPrice" type="number" min="0" step="1" value="${esc(styleProducts.familyPrice != null ? styleProducts.familyPrice : '')}">
+              </label>
+            </div>
+            <div style="margin-top:0.75rem;font-size:0.85em;font-weight:600">Styles</div>
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.25rem;font-size:0.75em;opacity:0.6">
+              <span style="flex:2">Label</span><span style="width:90px">Price €</span><span style="flex:2">File(s) — comma-separated stems</span><span style="width:28px"></span>
+            </div>
+            <div id="editor-style-products">${(styleProducts.styles||[]).map(s => styleProductRowHTML(s)).join('')}</div>
+            <button type="button" class="btn btn-sm" style="margin-top:0.25rem" id="editor-add-style-product">+ Add style</button>
           </div>
         </div>
 
@@ -1588,10 +1604,10 @@
 
       document.getElementById('editor-save-btn').addEventListener('click', saveEditor);
       document.getElementById('editor-delete-btn').addEventListener('click', deleteFont);
-      document.getElementById('editor-add-pricing').addEventListener('click', () => addEditorPricing('',''));
+      document.getElementById('editor-add-style-product').addEventListener('click', () => addStyleProductRow());
 
-      // Wire up pricing row remove buttons
-      form.querySelectorAll('[data-remove-row]').forEach(btn => {
+      // Wire up style-product row remove buttons
+      form.querySelectorAll('#editor-style-products [data-remove-sp]').forEach(btn => {
         btn.addEventListener('click', () => { btn.closest('.pricing-row').remove(); markDirty(); });
       });
 
@@ -1643,13 +1659,25 @@
       });
     }
 
-    window.addEditorPricing = function(n,p) {
-      const row = document.createElement('div');
-      row.className = 'pricing-row';
-      row.innerHTML = `<input class="input" placeholder="e.g. INDG Font Family" value="${esc(n||'')}"><input class="input" placeholder="e.g. 80€" value="${esc(p||'')}"><button type="button" class="btn btn-sm btn-destructive">×</button>`;
-      row.querySelector('button').addEventListener('click', () => { row.remove(); markDirty(); });
-      row.querySelectorAll('input').forEach(i => { i.addEventListener('input', markDirty); });
-      document.getElementById('editor-pricing').appendChild(row);
+    // One editable style row: label, price, and the font-file stem(s) it maps to.
+    function styleProductRowHTML(s) {
+      s = s || {};
+      const files = Array.isArray(s.files) ? s.files.join(', ') : (s.files || '');
+      return `<div class="pricing-row sp-row" style="align-items:center">` +
+        `<input class="input sp-label" style="flex:2" placeholder="e.g. Regular" value="${esc(s.label||'')}">` +
+        `<input class="input sp-price" style="width:90px" type="number" min="0" step="1" placeholder="€" value="${esc(s.price!=null?s.price:'')}">` +
+        `<input class="input sp-files" style="flex:2" placeholder="e.g. RegularNormal" value="${esc(files)}">` +
+        `<button type="button" class="btn btn-sm btn-destructive" data-remove-sp>×</button>` +
+        `</div>`;
+    }
+
+    window.addStyleProductRow = function(s) {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = styleProductRowHTML(s || {});
+      const row = wrap.firstChild;
+      row.querySelector('[data-remove-sp]').addEventListener('click', () => { row.remove(); markDirty(); });
+      row.querySelectorAll('input').forEach(i => { i.addEventListener('input', markDirty); i.addEventListener('change', markDirty); });
+      document.getElementById('editor-style-products').appendChild(row);
       markDirty();
     };
 
@@ -1715,13 +1743,32 @@
       detEntry.hasOpenType = chk('hasOpenType');
       detEntry.openTypeFeatures = val('openTypeFeatures').split(',').map(s=>s.trim()).filter(Boolean);
       detEntry.samples = collectSamplesFromDOM();
-      // Pricing
-      const pricing = [];
-      document.querySelectorAll('#editor-pricing .pricing-row').forEach(row => {
-        const inputs = row.querySelectorAll('input');
-        if (inputs[0].value.trim() && inputs[1].value.trim()) pricing.push({ name: inputs[0].value.trim(), price: inputs[1].value.trim() });
+
+      // Pricing → styleProducts (the source of truth the purchase modal charges from)
+      const spDefaultRaw = val('spDefaultPrice');
+      const spFamilyRaw = val('spFamilyPrice');
+      const spStyles = [];
+      document.querySelectorAll('#editor-style-products .sp-row').forEach(row => {
+        const label = row.querySelector('.sp-label').value.trim();
+        const priceRaw = row.querySelector('.sp-price').value.trim();
+        const filesRaw = row.querySelector('.sp-files').value.trim();
+        if (!label) return; // skip empty rows
+        const files = filesRaw.split(',').map(s => s.trim()).filter(Boolean);
+        const style = { label: label, files: files };
+        if (priceRaw !== '') style.price = Number(priceRaw);
+        spStyles.push(style);
       });
-      detEntry.pricing = pricing;
+      detEntry.styleProducts = {
+        defaultStylePrice: spDefaultRaw !== '' ? Number(spDefaultRaw) : null,
+        familyPrice: spFamilyRaw !== '' ? Number(spFamilyRaw) : null,
+        styles: spStyles,
+      };
+      // Keep the legacy pricing array in sync (derived) so anything still reading
+      // it shows correct values; styleProducts remains authoritative.
+      detEntry.pricing = spStyles.map(s => ({
+        name: (idxEntry.name ? idxEntry.name + ' ' : '') + s.label,
+        price: (s.price != null ? s.price : detEntry.styleProducts.defaultStylePrice) + '€',
+      }));
 
       return { idxEntry, detEntry };
     }
